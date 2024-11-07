@@ -50,9 +50,7 @@ const StarshipCaptains = () => {
           CERTIFICATION AND AWARDS
         </h1>
       </div>
-      <div className='flex flex-col gap-5 mt-32  items-center'>
-        <CardSection />
-
+      <div className='flex flex-col gap-5 items-center'>
         <div className='relative flex flex-col justify-center items-center text-center space-y-10 md:space-y-0 md:flex-row md:space-x-20 mt-10 mb-20'>
           <div className='flex flex-row flex-wrap items-center justify-center'>
             <img
@@ -106,6 +104,10 @@ const StarshipCaptains = () => {
             />
           </div>
         </div>
+        <div className='flex flex-col gap-5 mb-2 items-center'>
+        <CardSection />
+        </div>
+        
       </div>
     </div>
   );

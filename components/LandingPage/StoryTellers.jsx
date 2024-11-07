@@ -32,12 +32,6 @@ function StoryTellers() {
             role: "Chief Operations Officer"
         },
         {
-            name: "Sam Villacorta",
-            img: "/LandingPageAssets/storytellers/sam_formal.webp",
-            imgColored: "/LandingPageAssets/storytellers/sam_wacky.webp",
-            role: "Strategy Manager"
-        },
-        {
             name: "A FREDERICK SANSAIT",
             img: "/LandingPageAssets/storytellers/a_formal.webp",
             imgColored: "/LandingPageAssets/storytellers/a_wacky.webp",
