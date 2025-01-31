@@ -16,7 +16,7 @@ publicationDate: '2025-01-29'
   </h2>
   
   <p className="text-[#FFFFFF] text-[18px] sm:text-[16px] pb-5 sm:pb-10">
-5
+
 
     The campaign, which celebrated Daily Guardian’s legacy as a trusted regional news brand, featured innovative ‘markers’ placed at locations in Iloilo where significant news stories had occurred, significantly boosting Daily Guardian’s online impressions and solidifying its connection with the Ilonggo community.
 <br/>
