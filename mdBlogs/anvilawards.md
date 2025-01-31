@@ -11,12 +11,12 @@ publicationDate: '2025-01-29'
 <div style="display: flex; flex-direction: column; gap: 1rem;">
   <img src="/BlogsAssets/anvilawards.jpg" alt="Prometheus logo with the tagline 'Ideas Engineered'" style="border-radius: 15px;">
 
-  <h2 className="text-[#FFFFFF] text-[20px] font-bold sm:text-[30px] pt-10 pb-1">
+  <h2 className="text-[#FFFFFF] text-[20px] font-bold sm:text-[20px] pt-10 pb-1">
     Prometheus, the only award-winning and full-service marketing agency in Western Visayas, wins two prestigious accolades at the 60th Anvil Awards. The agency was honored for its exceptional work on Daily Guardian’s 22nd Anniversary campaign, “Ilonggo Stories That Continue With You”, earning a Silver Anvil Award for ‘Best Public Relations-Led Integrated Campaign’ and another Silver Anvil Award for ‘Public Relations Tools – Special Events’.
   </h2>
   
-  <p className="text-[#FFFFFF] text-[18px] sm:text-[15px] pb-5 sm:pb-10">
-
+  <p className="text-[#FFFFFF] text-[18px] sm:text-[16px] pb-5 sm:pb-10">
+5
 
     The campaign, which celebrated Daily Guardian’s legacy as a trusted regional news brand, featured innovative ‘markers’ placed at locations in Iloilo where significant news stories had occurred, significantly boosting Daily Guardian’s online impressions and solidifying its connection with the Ilonggo community.
 <br/>
