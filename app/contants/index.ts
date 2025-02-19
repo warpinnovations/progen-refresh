@@ -17,10 +17,6 @@ export const NavData = [
         Link: "/blogs",
     },{
 
-        nav: "Recon",
-        Link: "/recon",
-    },{
-
         nav: "Contact Us",
         Link: "/contact",
     }
