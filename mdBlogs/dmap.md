@@ -9,7 +9,7 @@ publicationDate: '2025-01-29'
 ---
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
-  <img src="/BlogsAssets/dmap.png" alt="Prometheus logo with the tagline 'Ideas Engineered'" style="border-radius: 15px;">
+  <img src="/BlogsAssets/dmap.png" alt="DMAP Gino and Lcid" style="border-radius: 15px;">
 
   <h2 className="text-[#FFFFFF] text-[20px] font-bold sm:text-[20px] pt-10 pb-1">
 Prometheus, the first and only full-service marketing agency and public relations firm in Western Visayas, is officially a member of the Digital Marketing Association of the Philippines (DMAP), a premier organization dedicated to empowering marketing professionals through knowledge, collaboration, and innovation. 

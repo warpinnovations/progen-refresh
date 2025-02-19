@@ -9,7 +9,7 @@ publicationDate: '2024-14-8'
 ---
 
 <div style="display: flex; flex-direction: column; gap: 1rem;">
-  <img src="/BlogsAssets/Strategy/ideasengineered.jpg" alt="Prometheus logo with the tagline 'Ideas Engineered'" style="border-radius: 15px;">
+  <img src="/BlogsAssets/Strategy/ideasengineered.jpg" alt="Prometheus logo with the tagline 'Ideas Engineered'" style="border-radius: 15px; margin-bottom: 20px;">
  <h2 className="text-[#FFFFFF] text-[18px] font-bold sm:text-[30px] pt-10 pb-1">
     How Strategy Is Essential In Every Marketing Campaign
   </h2>
