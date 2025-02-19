@@ -143,5 +143,9 @@ These necessary steps to determine your target market will help you improve your
 </p>
 
 <br/>
-
+   <div style="color: white; display: flex; flex-direction: column; gap: 3.5rem;">
+    <ul className="text-[#FFFFFF] sm:text-[15px] flex flex-col gap-5">
+      <p className="text-[#FFFFFF] sm:text-[15px]"><a href="https://www.prometheus.ph/works" className="text-blue-500">Discover the campaigns of Prometheus</a> where every execution is fueled by a meticulously crafted strategy tailored for each client. To learn more about Prometheus, follow its official pages on <a href="https://www.facebook.com/PrometheusPr" className="text-blue-500">Facebook</a> and <a href="https://www.linkedin.com/company/prometheusph/" className="text-blue-500">LinkedIn</a>.  Reach Prometheus via email at <a href="mailto:marketing@prometheus.ph" className="text-blue-500">marketing@prometheus.ph</a>.</p>
+    </ul>
+  </div>
 </div>
