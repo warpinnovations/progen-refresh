@@ -1,7 +1,7 @@
 ---
 title: "How to Determine Your Target Market"
 image: "https://www.prometheus.ph/BlogsAssets/Strategy/ideasengineered.jpg"
-authors: "Prometheus"
+authors: "Lcid Crescent Fernandez"
 description: "What is a Target Market and why is it important?"
 blogTitle: "How to Determine Your Target Market"
 number: "10"
