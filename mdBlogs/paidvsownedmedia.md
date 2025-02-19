@@ -4,8 +4,8 @@ image: "https://www.prometheus.ph/BlogsAssets/Strategy/ideasengineered.jpg"
 authors: "Lcid Crescent Fernandez"
 description: "Understanding the three types of marketing communication"
 blogTitle: "Differentiating Paid Media, Owned Media, and Earned Media"
-number: "3"
-publicationDate: "2025-01-29"
+number: "12"
+publicationDate: "2025-01-30"
 ---
 
 <img src="/BlogsAssets/Strategy/ideasengineered.jpg" alt="Prometheus logo with the tagline 'Ideas Engineered'" style="border-radius: 15px; margin-bottom: 20px;">
@@ -14,7 +14,7 @@ publicationDate: "2025-01-29"
 
 <br/>
 
-<span class="font-bold text-3xl">Differentiating Paid Media, Owned Media, and Earned Media</span>
+<span class="font-bold text-3xl">Differentiating Paid Media, Owned Media, and Earned Media.</span>
 
 <br/>
 
