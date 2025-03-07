@@ -52,7 +52,7 @@ const Footer = () => {
             </SocialLink> */}
           </div>
           <p className="text-center text-sm mt-6 font-medium tracking-wide text-white font-ox">
-            &copy; Copyright 2024, Prometheus. All Rights Reserved.
+            &copy; Copyright 2025, Prometheus. All Rights Reserved.
           </p>
         </div>
       </div>
