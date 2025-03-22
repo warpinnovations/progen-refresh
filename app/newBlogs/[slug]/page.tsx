@@ -9,7 +9,6 @@ import BlogButton from '@/components/Blogs/BlogButton';
 import Footer from '@/components/Global/Footer';
 import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import Head from 'next/head';
-import { useEffect } from 'react';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
@@ -36,53 +35,6 @@ export default function PostPage() {
       : null,
     fetcher
   );
-
-  // Add ability to handle anchors and format WordPress content
-  useEffect(() => {
-    // Add styles for WordPress content
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .wp-content img {
-        max-width: 100%;
-        height: auto;
-        margin: 1.5rem 0;
-      }
-      .wp-content p {
-        margin-bottom: 1.5rem;
-        line-height: 1.8;
-      }
-      .wp-content h2, .wp-content h3, .wp-content h4 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        font-weight: bold;
-      }
-      .wp-content a {
-        color: #00A3FF;
-        text-decoration: underline;
-      }
-      .wp-content ul, .wp-content ol {
-        margin-left: 1.5rem;
-        margin-bottom: 1.5rem;
-      }
-      .wp-content blockquote {
-        border-left: 4px solid #333;
-        padding-left: 1rem;
-        font-style: italic;
-        margin: 1.5rem 0;
-      }
-      .wp-content pre {
-        background: #111;
-        padding: 1rem;
-        overflow-x: auto;
-        margin: 1.5rem 0;
-      }
-    `;
-    document.head.appendChild(style);
-
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
 
   if (error)
     return (
