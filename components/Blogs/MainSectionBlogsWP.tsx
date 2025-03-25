@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import Header from '@/components/Global/HeaderHero';
 import PageTitle from '@/components/Global/PageTitle';
@@ -10,7 +10,11 @@ import PageTransition from '@/components/Global/PageTransition';
 import BlogCardWP from '@/components/Blogs/BlogPostsWP';
 // import BlogsSectionWP from "@/components/Blogs/BlogsSectionWP";
 
-const API_URL = 'https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts';
+// Base API URL
+const BASE_API_URL =
+  'https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts';
+// Set a higher per_page value (WordPress max is 100 per page)
+const PER_PAGE = 100;
 
 interface WPPost {
   id: number;
@@ -25,7 +29,39 @@ interface WPPost {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const MainSectionBlogsWP = () => {
+  const [page, setPage] = useState(1);
+  const [allPosts, setAllPosts] = useState<WPPost[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  // Construct API URL with pagination parameters
+  const API_URL = `${BASE_API_URL}?per_page=${PER_PAGE}&page=${page}`;
+
   const { data, error } = useSWR<WPPost[]>(API_URL, fetcher);
+
+  useEffect(() => {
+    if (data) {
+      if (data.length === 0) {
+        // No more posts to load
+        setHasMore(false);
+      } else if (data.length < PER_PAGE) {
+        // This is the last page
+        setAllPosts((prev) => [...prev, ...data]);
+        setHasMore(false);
+      } else {
+        // More posts might be available
+        setAllPosts((prev) => [...prev, ...data]);
+      }
+      setIsLoadingMore(false);
+    }
+  }, [data]);
+
+  const loadMore = () => {
+    if (hasMore && !isLoadingMore) {
+      setIsLoadingMore(true);
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   if (error)
     return (
@@ -33,12 +69,15 @@ const MainSectionBlogsWP = () => {
         Failed to load posts.
       </div>
     );
-  if (!data)
+
+  if (!data && allPosts.length === 0)
     return (
       <div className='bg-black text-white min-h-screen flex items-center justify-center'>
         Loading...
       </div>
     );
+
+  const displayPosts = allPosts.length > 0 ? allPosts : data || [];
 
   return (
     <div className='bg-black'>
@@ -49,10 +88,23 @@ const MainSectionBlogsWP = () => {
           <BlogsSectionWP />
         </div> */}
         <div className='bg-black z-0 relative postsContainer'>
-          {data.map((post) => (
+          {displayPosts.map((post) => (
             <BlogCardWP key={post.id} post={post} />
           ))}
         </div>
+
+        {hasMore && (
+          <div className='flex justify-center pb-10'>
+            <button
+              onClick={loadMore}
+              disabled={isLoadingMore}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            >
+              {isLoadingMore ? 'Loading...' : 'Load More Posts'}
+            </button>
+          </div>
+        )}
+
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>

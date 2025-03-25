@@ -12,7 +12,16 @@ import Head from 'next/head';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+// Improved fetcher with error handling
+const fetcher = async (url: string) => {
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+};
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -29,9 +38,12 @@ export default function PostPage() {
     date?: string;
   }
 
+  // Ensure the slug is properly decoded and escaped for the API call
+  const encodedSlug = slug ? encodeURIComponent(String(slug)) : '';
+
   const { data, error, isLoading } = useSWR<WPPost[]>(
-    slug
-      ? `https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts?slug=${slug}`
+    encodedSlug
+      ? `https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts?slug=${encodedSlug}`
       : null,
     fetcher
   );
@@ -42,6 +54,7 @@ export default function PostPage() {
         <div className='text-center p-8'>
           <h2 className={`text-2xl mb-4 ${oxaniumFont.className}`}>Failed to load post</h2>
           <p>There was an error loading this content. Please try again later.</p>
+          <p className='mt-4 text-red-400'>{error.message}</p>
         </div>
       </div>
     );
