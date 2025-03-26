@@ -3,13 +3,11 @@
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { Oxanium } from 'next/font/google';
-import { FaRegUserCircle } from 'react-icons/fa';
 import NavbarGroup from '@/components/Global/NavbarGroup';
-import BlogButton from '@/components/Blogs/BlogButton';
-import BlogHeader from '@/components/Blogs/BlogHeader';
 import Footer from '@/components/Global/Footer';
 import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import Head from 'next/head';
+import BlogSidebar from '@/components/Blogs/BlogSidebar';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
@@ -98,31 +96,13 @@ export default function PostPage() {
         <NavbarGroup />
         <article className='flex flex-col lg:flex-row pt-[10%] pb-10'>
           {/*Left Side*/}
-          <div className='w-full lg:w-[45%] flex h-full justify-center'>
-            <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5'>
-              <BlogButton />
-              <BlogHeader
-                blogTitle={blogTitle}
-                description={description}
-                formattedDate={formattedDate}
-              />
-
-              <div className='flex gap-3 pb-5 px-10'>
-                <FaRegUserCircle className='text-[#FFFFFF] text-[20px]' />
-                <p className='text-[#FFFFFF] text-[15px] text-opacity-[63%] font-ox'>{author}</p>
-              </div>
-
-              {imageUrl && (
-                <div className='px-10 lg:hidden'>
-                  <img
-                    src={imageUrl}
-                    alt={blogTitle}
-                    className='w-full h-auto object-cover rounded-lg mb-6'
-                  />
-                </div>
-              )}
-            </div>
-          </div>
+          <BlogSidebar
+            blogTitle={blogTitle}
+            description={description}
+            formattedDate={formattedDate}
+            author={author}
+            imageUrl={imageUrl}
+          />
           {/*Right Side */}
           <div className={`w-full px-10 lg:w-[55%] h-full ${oxaniumFont.className} text-white`}>
             {imageUrl && (
