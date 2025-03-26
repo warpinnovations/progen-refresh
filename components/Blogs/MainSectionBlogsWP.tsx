@@ -8,6 +8,8 @@ import Footer from '@/components/Global/Footer';
 import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import PageTransition from '@/components/Global/PageTransition';
 import BlogCardWP from '@/components/Blogs/BlogPostsWP';
+import ErrorState from '@/components/Global/ErrorState';
+import LoadingState from '@/components/Global/LoadingState';
 // import BlogsSectionWP from "@/components/Blogs/BlogsSectionWP";
 
 // Base API URL
@@ -63,19 +65,13 @@ const MainSectionBlogsWP = () => {
     }
   };
 
-  if (error)
-    return (
-      <div className='bg-black text-white min-h-screen flex items-center justify-center'>
-        Failed to load posts.
-      </div>
-    );
+  if (error) {
+    return <ErrorState title='Failed to load posts' errorDetails={error.message} />;
+  }
 
-  if (!data && allPosts.length === 0)
-    return (
-      <div className='bg-black text-white min-h-screen flex items-center justify-center'>
-        Loading...
-      </div>
-    );
+  if (!data && allPosts.length === 0) {
+    return <LoadingState message='Loading blog posts...' />;
+  }
 
   const displayPosts = allPosts.length > 0 ? allPosts : data || [];
 

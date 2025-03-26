@@ -7,6 +7,8 @@ import NavbarGroup from '@/components/Global/NavbarGroup';
 import ResponsiveFooter from '@/components/Global/ResponsiveFooter';
 import Head from 'next/head';
 import BlogSidebar from '@/components/Blogs/BlogSidebar';
+import ErrorState from '@/components/Global/ErrorState';
+import LoadingState from '@/components/Global/LoadingState';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
@@ -46,26 +48,13 @@ export default function PostPage() {
     fetcher
   );
 
-  if (error)
-    return (
-      <div className='flex items-center justify-center min-h-screen bg-black text-white'>
-        <div className='text-center p-8'>
-          <h2 className={`text-2xl mb-4 ${oxaniumFont.className}`}>Failed to load post</h2>
-          <p>There was an error loading this content. Please try again later.</p>
-          <p className='mt-4 text-red-400'>{error.message}</p>
-        </div>
-      </div>
-    );
+  if (error) {
+    return <ErrorState title='Failed to load post' errorDetails={error.message} />;
+  }
 
-  if (isLoading || !data || data.length === 0)
-    return (
-      <div className='flex items-center justify-center min-h-screen bg-black text-white'>
-        <div className='text-center p-8'>
-          <h2 className={`text-2xl mb-4 ${oxaniumFont.className}`}>Loading...</h2>
-          <div className='w-12 h-12 border-t-2 border-b-2 border-white rounded-full animate-spin mx-auto'></div>
-        </div>
-      </div>
-    );
+  if (isLoading || !data || data.length === 0) {
+    return <LoadingState />;
+  }
 
   const post = data[0];
   const blogTitle = post.title.rendered || 'Blog Post';
