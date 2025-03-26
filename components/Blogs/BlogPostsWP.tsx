@@ -18,13 +18,11 @@ export default function BlogCardWP(props: { post: WPPost }) {
         {/*Left Div*/}
         <div className='w-full md:w-[60%]  flex'>
           {post.jetpack_featured_media_url ? (
-            <div className='w-full h-full aspect-[16/9] overflow-hidden rounded-2xl'>
-              <img
-                src={post.jetpack_featured_media_url}
-                alt={post.title.rendered}
-                className='w-full h-full object-cover rounded-2xl'
-              />
-            </div>
+            <img
+              src={post.jetpack_featured_media_url}
+              alt={post.title.rendered}
+              className='rounded-2xl'
+            />
           ) : (
             <div className='rounded-2xl bg-gray-800 w-full aspect-[16/9] flex items-center justify-center'>
               No Image
