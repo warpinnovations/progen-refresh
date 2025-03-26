@@ -6,6 +6,7 @@ import { Oxanium } from 'next/font/google';
 import { FaRegUserCircle } from 'react-icons/fa';
 import NavbarGroup from '@/components/Global/NavbarGroup';
 import BlogButton from '@/components/Blogs/BlogButton';
+import BlogHeader from '@/components/Blogs/BlogHeader';
 import Footer from '@/components/Global/Footer';
 import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import Head from 'next/head';
@@ -100,23 +101,11 @@ export default function PostPage() {
           <div className='w-full lg:w-[45%] flex h-full justify-center'>
             <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5'>
               <BlogButton />
-              <div className='flex px-10 flex-col w-full justify-center text-left'>
-                <h1
-                  className={`text-[#FFFFFF] relative font-bold text-[30px] text-wrap md:text-[40px] 2xl:text-[40px] uppercase ${oxaniumFont.className}`}
-                  dangerouslySetInnerHTML={{ __html: blogTitle }}
-                />
-                <p
-                  className={`text-[#FFFFFF] text-[20px] text-wrap text-opacity-[63%] ${oxaniumFont.className} mt-4`}
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-                {formattedDate && (
-                  <p
-                    className={`text-[#FFFFFF] text-[16px] text-opacity-[70%] ${oxaniumFont.className} mt-2`}
-                  >
-                    {formattedDate}
-                  </p>
-                )}
-              </div>
+              <BlogHeader
+                blogTitle={blogTitle}
+                description={description}
+                formattedDate={formattedDate}
+              />
 
               <div className='flex gap-3 pb-5 px-10'>
                 <FaRegUserCircle className='text-[#FFFFFF] text-[20px]' />
