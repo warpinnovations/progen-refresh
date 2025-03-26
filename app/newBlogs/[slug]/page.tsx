@@ -4,8 +4,7 @@ import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { Oxanium } from 'next/font/google';
 import NavbarGroup from '@/components/Global/NavbarGroup';
-import Footer from '@/components/Global/Footer';
-import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
+import ResponsiveFooter from '@/components/Global/ResponsiveFooter';
 import Head from 'next/head';
 import BlogSidebar from '@/components/Blogs/BlogSidebar';
 
@@ -131,15 +130,7 @@ export default function PostPage() {
           </div>
         </article>
 
-        <footer>
-          <div className='md:hidden'>
-            <Footer />
-          </div>
-
-          <div className='hidden md:block'>
-            <ThreeColumnFooter />
-          </div>
-        </footer>
+        <ResponsiveFooter />
       </div>
     </>
   );
