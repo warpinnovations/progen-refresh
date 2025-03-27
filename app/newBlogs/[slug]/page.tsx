@@ -114,7 +114,7 @@ const extractStyles = (content: string) => {
     
     /* Line Height */
     .has-normal-line-height { line-height: normal !important; }
-    .has-tiny-line-height { line-height: 1 !important; }
+    .has-tiny-line-height { line-height: 1.0 !important; }
     .has-small-line-height { line-height: 1.2 !important; }
     .has-medium-line-height { line-height: 1.5 !important; }
     .has-large-line-height { line-height: 1.8 !important; }
@@ -137,6 +137,45 @@ const extractStyles = (content: string) => {
     .has-medium-padding { padding: 2em !important; }
     .has-large-padding { padding: 3em !important; }
     
+    /* --- WordPress Table Classes --- */
+    /* Custom Dark Theme Table Styles - exactly matching example */
+    .wp-block-table table, table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      background-color: #000 !important; 
+      color: white !important; 
+      border: 1px solid white !important;
+      margin-bottom: 1.5rem;
+    }
+    
+    .wp-block-table th, th { 
+      font-weight: bold !important; 
+      background-color: #000 !important; 
+      color: white !important; 
+      text-align: left !important;
+      padding: 1rem !important;
+      border: 1px solid white !important;
+      vertical-align: top !important;
+    }
+    
+    .wp-block-table td, td { 
+      padding: 1rem !important; 
+      border: 1px solid white !important; 
+      background-color: #000 !important;
+      color: white !important;
+      text-align: left !important;
+      vertical-align: top !important;
+    }
+    
+    .wp-block-table tr, tr {
+      background-color: #000 !important;
+    }
+    
+    /* Preserve proper formatting for table rows */
+    .wp-block-table tr:first-child th {
+      font-weight: bold !important;
+    }
+    
     /* Ensure inline styles take precedence - allows direct styling in WordPress editor */
     [style*="font-size"] { font-size: var(--wp-custom-font-size, inherit) !important; }
     [style*="font-family"] { font-family: var(--wp-custom-font-family, inherit) !important; }
@@ -146,6 +185,8 @@ const extractStyles = (content: string) => {
     [style*="padding"] { padding: var(--wp-custom-padding, inherit) !important; }
     [style*="text-align"] { text-align: var(--wp-custom-text-align, inherit) !important; }
     [style*="line-height"] { line-height: var(--wp-custom-line-height, inherit) !important; }
+    [style*="border"] { border: var(--wp-custom-border, inherit) !important; }
+    [style*="width"] { width: var(--wp-custom-width, inherit) !important; }
   `;
 
   return allStyles;
@@ -193,6 +234,156 @@ const preprocessContent = (content: string): string => {
     /style=["']([^"']*)line-height:\s*([^";]+)([^"']*)["']/g,
     (match, before, lineHeight, after) => {
       return `style="${before}--wp-custom-line-height: ${lineHeight}; line-height: var(--wp-custom-line-height);${after}"`;
+    }
+  );
+
+  // Process table-specific styles for better WordPress table compatibility
+  processedContent = processedContent.replace(
+    /style=["']([^"']*)border(?:-[^:]+)?:\s*([^";]+)([^"']*)["']/g,
+    (match, before, borderValue, after) => {
+      return `style="${before}--wp-custom-border: ${borderValue}; border: var(--wp-custom-border);${after}"`;
+    }
+  );
+
+  processedContent = processedContent.replace(
+    /style=["']([^"']*)width:\s*([^";]+)([^"']*)["']/g,
+    (match, before, widthValue, after) => {
+      return `style="${before}--wp-custom-width: ${widthValue}; width: var(--wp-custom-width);${after}"`;
+    }
+  );
+
+  processedContent = processedContent.replace(
+    /style=["']([^"']*)background(?:-color)?:\s*([^";]+)([^"']*)["']/g,
+    (match, before, bgValue, after) => {
+      return `style="${before}--wp-custom-background: ${bgValue}; background: var(--wp-custom-background);${after}"`;
+    }
+  );
+
+  // Process vertical-align styles
+  processedContent = processedContent.replace(
+    /style=["']([^"']*)vertical-align:\s*([^";]+)([^"']*)["']/g,
+    (match, before, valign, after) => {
+      return `style="${before}--wp-custom-vertical-align: ${valign}; vertical-align: var(--wp-custom-vertical-align);${after}"`;
+    }
+  );
+
+  // Process text-align styles
+  processedContent = processedContent.replace(
+    /style=["']([^"']*)text-align:\s*([^";]+)([^"']*)["']/g,
+    (match, before, align, after) => {
+      return `style="${before}--wp-custom-text-align: ${align}; text-align: var(--wp-custom-text-align);${after}"`;
+    }
+  );
+
+  // Process all tables to ensure they match the example
+  processedContent = processedContent.replace(/<table([^>]*)>/g, (match, attrs) => {
+    // Add our custom black background with white border style
+    if (attrs.includes('style=')) {
+      return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+        return `style="${styleContent}; background-color: #000; color: white; border: 1px solid white;"`;
+      });
+    } else {
+      return `<table${attrs} style="background-color: #000; color: white; border: 1px solid white;">`;
+    }
+  });
+
+  // Process table cells (th and td) to ensure white borders and proper padding
+  processedContent = processedContent.replace(/<(th|td)([^>]*)>/g, (match, tag, attrs) => {
+    if (attrs.includes('style=')) {
+      return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+        return `style="${styleContent}; border: 1px solid white; padding: 1rem; background-color: #000; color: white;"`;
+      });
+    } else {
+      return `<${tag}${attrs} style="border: 1px solid white; padding: 1rem; background-color: #000; color: white;">`;
+    }
+  });
+
+  // Handle table alignment classes
+  processedContent = processedContent.replace(
+    /<table([^>]*)class=["']([^"']*)["']/g,
+    (match, beforeAttrs, classNames) => {
+      // Preserve all table classes and add a helper class for responsive tables
+      return `<table${beforeAttrs}class="${classNames} wp-table-responsive"`;
+    }
+  );
+
+  // Handle tables without class attributes - add a responsive class
+  processedContent = processedContent.replace(/<table(?![^>]*class=)([^>]*)>/g, (match, attrs) => {
+    if (attrs.includes('style=')) {
+      return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+        return `style="${styleContent}; background-color: #000; color: white; border: 1px solid white;" class="wp-table-responsive"`;
+      });
+    } else {
+      return `<table${attrs} style="background-color: #000; color: white; border: 1px solid white;" class="wp-table-responsive">`;
+    }
+  });
+
+  // Make sure WordPress Gutenberg table blocks are properly handled
+  processedContent = processedContent.replace(
+    /<figure([^>]*)class=["']([^"']*)(wp-block-table)([^"']*)["']/g,
+    (match, beforeAttrs, beforeClass, tableClass, afterClass) => {
+      // Add our responsive class to WordPress table blocks
+      return `<figure${beforeAttrs}class="${beforeClass}${tableClass} wp-table-block-responsive${afterClass}"`;
+    }
+  );
+
+  // Process table cells for better styling
+  processedContent = processedContent.replace(/<(td|th)([^>]*)>/g, (match, tag, attrs) => {
+    // If no class attribute, add one
+    if (!attrs.includes('class=')) {
+      if (attrs.includes('style=')) {
+        return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+          return `style="${styleContent}; border: 1px solid white; padding: 1rem; background-color: #000; color: white;" class="wp-table-cell"`;
+        });
+      } else {
+        return `<${tag}${attrs} class="wp-table-cell" style="border: 1px solid white; padding: 1rem; background-color: #000; color: white;">`;
+      }
+    }
+    // If already has a class, add our cell class and style
+    return match.replace(/class=["']([^"']*)["']/, (m, classes) => {
+      if (attrs.includes('style=')) {
+        return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+          return `style="${styleContent}; border: 1px solid white; padding: 1rem; background-color: #000; color: white;" class="${classes} wp-table-cell"`;
+        });
+      } else {
+        return `class="${classes} wp-table-cell" style="border: 1px solid white; padding: 1rem; background-color: #000; color: white;"`;
+      }
+    });
+  });
+
+  // Process special table attributes - colspan, rowspan, etc.
+  processedContent = processedContent.replace(
+    /<(td|th)([^>]*)(colspan|rowspan)=["'](\d+)["']([^>]*)>/gi,
+    (match, tag, before, attr, value, after) => {
+      const dataAttr = `data-${attr.toLowerCase()}`;
+      // Add a visual class to make it more distinguishable
+      let classAddition = '';
+      if (attr.toLowerCase() === 'colspan') {
+        classAddition = ` wp-cell-colspan-${value}`;
+      } else if (attr.toLowerCase() === 'rowspan') {
+        classAddition = ` wp-cell-rowspan-${value}`;
+      }
+
+      // Keep the original attribute but add our data attribute and class
+      if (before.includes('class=') || after.includes('class=')) {
+        match = match.replace(/class=["']([^"']*)["']/, (m, classes) => {
+          return `class="${classes}${classAddition}"`;
+        });
+      } else {
+        match = `<${tag}${before}${attr}="${value}"${after} class="wp-table-cell${classAddition}" ${dataAttr}="${value}">`;
+      }
+
+      // Also ensure it has the black background and white border style
+      if (match.includes('style=')) {
+        return match.replace(/style=["']([^"']*)["']/, (styleMatch, styleContent) => {
+          return `style="${styleContent}; border: 1px solid white; padding: 1rem; background-color: #000; color: white;"`;
+        });
+      } else {
+        return match.replace(
+          '>',
+          ' style="border: 1px solid white; padding: 1rem; background-color: #000; color: white;">'
+        );
+      }
     }
   );
 
@@ -387,6 +578,15 @@ const createWPStyles = (post: WPPost) => {
       overflow-wrap: break-word;
     }
     
+    /* Remove underlines from all links in WordPress content */
+    .wp-content a,
+    .wp-content a:link,
+    .wp-content a:visited,
+    .wp-content a:hover,
+    .wp-content a:active {
+      text-decoration: none !important;
+    }
+    
     /* Direct CSS variable selectors - highest priority */
     [style*="--wp-custom-font-family"] {
       font-family: var(--wp-custom-font-family) !important;
@@ -394,6 +594,280 @@ const createWPStyles = (post: WPPost) => {
     
     [style*="--wp-custom-font-size"] {
       font-size: var(--wp-custom-font-size) !important;
+    }
+    
+    /* Table Styles for WordPress - Updated to match the example */
+    .wp-content table {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      border-collapse: collapse;
+      border-spacing: 0;
+      background-color: #000;
+      color: white;
+      border: 1px solid white;
+    }
+    
+    .wp-content table th,
+    .wp-content table td {
+      padding: 1rem;
+      border: 1px solid white;
+      text-align: left;
+      vertical-align: top;
+    }
+    
+    .wp-content table th {
+      font-weight: bold;
+      background-color: #000;
+      color: white;
+      border-bottom: 1px solid white;
+    }
+    
+    .wp-content table tr {
+      background-color: #000;
+    }
+    
+    .wp-content table tr:nth-child(even) {
+      background-color: #000;
+    }
+    
+    .wp-content table caption {
+      margin-bottom: 0.5rem;
+      font-style: italic;
+      text-align: center;
+      color: white;
+    }
+    
+    /* WordPress Gutenberg Table Block */
+    .wp-content .wp-block-table {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+    
+    .wp-content .wp-block-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #000;
+      border: 1px solid white;
+    }
+    
+    .wp-content .wp-block-table figcaption {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: white;
+    }
+    
+    /* Custom Table Styles - Exact match to example */
+    .wp-content table,
+    .wp-content .wp-block-table table,
+    .wp-block-table table,
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #000 !important;
+      color: white !important;
+      border: 1px solid white !important;
+      margin-bottom: 1.5rem;
+    }
+    
+    .wp-content table th,
+    .wp-content .wp-block-table th,
+    .wp-block-table th,
+    th {
+      font-weight: bold !important;
+      background-color: #000 !important;
+      color: white !important;
+      text-align: left !important;
+      padding: 1rem !important;
+      border: 1px solid white !important;
+      vertical-align: top !important;
+    }
+    
+    .wp-content table td,
+    .wp-content .wp-block-table td,
+    .wp-block-table td,
+    td {
+      padding: 1rem !important;
+      border: 1px solid white !important;
+      background-color: #000 !important;
+      color: white !important;
+      text-align: left !important;
+      vertical-align: top !important;
+    }
+    
+    .wp-content table tr,
+    .wp-content .wp-block-table tr,
+    .wp-block-table tr,
+    tr {
+      background-color: #000 !important;
+    }
+    
+    /* Force all border colors to be white for all table elements */
+    .wp-content table,
+    .wp-content table th,
+    .wp-content table td,
+    .wp-content .wp-block-table table,
+    .wp-content .wp-block-table th,
+    .wp-content .wp-block-table td {
+      border-color: white !important;
+    }
+    
+    /* Ensure proper cell spacing */
+    .wp-content table td,
+    .wp-content .wp-block-table td {
+      padding: 1rem !important;
+    }
+    
+    /* Table Variations */
+    .wp-content .is-style-stripes table {
+      border-spacing: 0;
+    }
+    
+    .wp-content .is-style-stripes table tr {
+      background-color: #000;
+    }
+    
+    .wp-content .is-style-stripes table tr:nth-child(odd) {
+      background-color: #000;
+    }
+    
+    .wp-content .is-style-stripes table tr:nth-child(even) {
+      background-color: #000;
+    }
+    
+    /* Responsive Tables */
+    @media screen and (max-width: 768px) {
+      .wp-content table,
+      .wp-content .wp-block-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+    
+    /* Table Responsive Helper Classes */
+    .wp-table-responsive {
+      overflow-x: auto;
+      display: block;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Table Cell Styles */
+    .wp-table-cell {
+      padding: 1rem;
+      border: 1px solid white;
+      text-align: left;
+      vertical-align: top;
+      background-color: #000;
+      color: white;
+    }
+    
+    /* Override for wp-table-cell with inline styles */
+    .wp-table-cell[style] {
+      padding: var(--wp-custom-padding, 1rem) !important;
+      border: var(--wp-custom-border, 1px solid white) !important;
+      text-align: var(--wp-custom-text-align, left) !important;
+      vertical-align: var(--wp-custom-vertical-align, top) !important;
+      background: var(--wp-custom-background, #000) !important;
+      color: var(--wp-custom-color, white) !important;
+    }
+    
+    /* Colspan and Rowspan Classes */
+    .wp-cell-colspan-2 { min-width: calc(200% - 2px); }
+    .wp-cell-colspan-3 { min-width: calc(300% - 2px); }
+    .wp-cell-colspan-4 { min-width: calc(400% - 2px); }
+    .wp-cell-colspan-5 { min-width: calc(500% - 2px); }
+    .wp-cell-colspan-6 { min-width: calc(600% - 2px); }
+    
+    .wp-cell-rowspan-2 { min-height: calc(200% - 2px); }
+    .wp-cell-rowspan-3 { min-height: calc(300% - 2px); }
+    .wp-cell-rowspan-4 { min-height: calc(400% - 2px); }
+    .wp-cell-rowspan-5 { min-height: calc(500% - 2px); }
+    .wp-cell-rowspan-6 { min-height: calc(600% - 2px); }
+    
+    /* Table Utility Classes for WordPress Compatibility */
+    .wp-content table.has-fixed-layout {
+      table-layout: fixed;
+      width: 100%;
+    }
+
+    .wp-content table.has-text-align-center th,
+    .wp-content table.has-text-align-center td {
+      text-align: center;
+    }
+
+    .wp-content table.has-text-align-right th,
+    .wp-content table.has-text-align-right td {
+      text-align: right;
+    }
+
+    .wp-content table.has-text-align-left th,
+    .wp-content table.has-text-align-left td {
+      text-align: left;
+    }
+
+    /* Table CSS Variable Support */
+    .wp-content table [style*="--wp-custom-border"],
+    .wp-content td [style*="--wp-custom-border"],
+    .wp-content th [style*="--wp-custom-border"] {
+      border: var(--wp-custom-border, 1px solid white) !important;
+    }
+    
+    .wp-content table [style*="--wp-custom-width"],
+    .wp-content td [style*="--wp-custom-width"],
+    .wp-content th [style*="--wp-custom-width"] {
+      width: var(--wp-custom-width) !important;
+    }
+    
+    .wp-content table [style*="--wp-custom-background"],
+    .wp-content td [style*="--wp-custom-background"],
+    .wp-content th [style*="--wp-custom-background"] {
+      background: var(--wp-custom-background, #000) !important;
+    }
+    
+    /* Add specific styles for tables with alignment classes */
+    .wp-content table.aligncenter,
+    .wp-content table.alignleft,
+    .wp-content table.alignright {
+      display: table;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .wp-content table.alignleft {
+      margin-right: 1.5rem;
+      margin-left: 0;
+      float: left;
+    }
+    
+    .wp-content table.alignright {
+      margin-left: 1.5rem;
+      margin-right: 0;
+      float: right;
+    }
+    
+    /* Helper for Gutenberg table blocks */
+    .wp-table-block-responsive {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    /* Support for direct table attributes */
+    .wp-content table[cellpadding] th,
+    .wp-content table[cellpadding] td {
+      padding: attr(cellpadding);
+    }
+    
+    .wp-content table[cellspacing] {
+      border-spacing: attr(cellspacing);
+      border-collapse: separate;
+    }
+    
+    .wp-content table[border] th,
+    .wp-content table[border] td {
+      border-width: attr(border);
     }
     
     /* Font Families with higher specificity */
@@ -519,6 +993,14 @@ export default function PostPage() {
       {/* Add WordPress styles extracted from content */}
       <style dangerouslySetInnerHTML={{ __html: wpStyles }} />
 
+      {/* Add global styles for the blog post page */}
+      <style>{`
+        /* Remove underlines from all links in the blog post page */
+        article a {
+          text-decoration: none !important;
+        }
+      `}</style>
+
       <div className='bg-black w-full flex flex-col relative h-full min-h-screen'>
         <NavbarGroup />
         <article className='flex flex-col lg:flex-row pt-[10%] pb-10'>
@@ -542,16 +1024,6 @@ export default function PostPage() {
               </div>
             )}
             <div className='wp-content' dangerouslySetInnerHTML={{ __html: processedContent }} />
-            <div className='mt-8 pb-10'>
-              <a
-                href={post.link}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='text-[#00A3FF] hover:underline'
-              >
-                Read original post on WordPress
-              </a>
-            </div>
           </div>
         </article>
 
