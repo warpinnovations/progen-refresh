@@ -42,7 +42,6 @@ export default function BlogCardWP(props: { post: WPPost }) {
             </div>
             <h3 className='flex'>Prometheus</h3>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }} />
         </div>
       </div>
     </div>
