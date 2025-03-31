@@ -13,10 +13,6 @@ export const NavData = [
   },
   {
     nav: 'Blogs',
-    Link: '/blogs'
-  },
-  {
-    nav: 'Headless Blog',
     Link: '/newBlogs'
   },
   {
