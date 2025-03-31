@@ -19,7 +19,6 @@ const BlogHeader = ({ blogTitle, description, formattedDate }: BlogHeaderProps) 
       />
       <p
         className={`text-[#FFFFFF] text-[20px] text-wrap text-opacity-[63%] ${oxaniumFont.className} mt-4`}
-        dangerouslySetInnerHTML={{ __html: description }}
       />
       {formattedDate && (
         <p
