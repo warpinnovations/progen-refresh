@@ -13,7 +13,7 @@ export const NavData = [
   },
   {
     nav: 'Blogs',
-    Link: '/newBlogs'
+    Link: '/blogs'
   },
   {
     nav: 'Contact Us',
