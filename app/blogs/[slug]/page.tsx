@@ -59,6 +59,21 @@ const extractStyles = (content: string) => {
   // 2. Add support for ALL WordPress typography and formatting classes
   allStyles += `
     /* WordPress Core Classes - Ensure all WordPress styling is preserved */
+
+    ul {
+      list-style-type: disc !important; /* Ensures default bullets are visible */
+      margin-left: 1.5em !important; /* Adds proper indentation */
+    }
+
+    ol {
+      list-style-type: decimal !important; /* Ensures ordered lists display numbers */
+      margin-left: 1.5em !important;
+    }
+
+    ul ul, ol ol, ul ol, ol ul {
+      list-style-type: circle !important; /* Nested lists use a different bullet style */
+    }
+
     
     /* --- Typography Classes --- */
     /* Font Sizes */
