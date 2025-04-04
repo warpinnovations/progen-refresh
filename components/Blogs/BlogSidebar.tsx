@@ -21,7 +21,7 @@ const BlogSidebar = ({
 }: BlogSidebarProps) => {
   return (
     <div className='w-full lg:w-[45%] flex h-full justify-center'>
-      <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5'>
+      <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5 text-justify '>
         <BlogButton />
         <BlogHeader blogTitle={blogTitle} excerpt={excerpt} formattedDate={formattedDate} />
 

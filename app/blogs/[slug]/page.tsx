@@ -59,6 +59,16 @@ const extractStyles = (content: string) => {
   // 2. Add support for ALL WordPress typography and formatting classes
   allStyles += `
     /* WordPress Core Classes - Ensure all WordPress styling is preserved */
+
+    ul {
+      list-style-type: circle !important;
+      list-style-type: disc !important;
+    }
+
+    ol {
+      list-style-type: decimal !important;
+      margin-left: 2em !important;
+    }
     
     /* --- Typography Classes --- */
     /* Font Sizes */
