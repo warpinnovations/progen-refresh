@@ -43,18 +43,37 @@ const MainSectionBlogsWP = () => {
 
   useEffect(() => {
     if (data) {
-      if (data.length === 0) {
-        // No more posts to load
-        setHasMore(false);
-      } else if (data.length < PER_PAGE) {
-        // This is the last page
-        setAllPosts((prev) => [...prev, ...data]);
-        setHasMore(false);
-      } else {
-        // More posts might be available
-        setAllPosts((prev) => [...prev, ...data]);
-      }
-      setIsLoadingMore(false);
+      // Only update state if there's actually new data to process
+      setAllPosts((prevPosts) => {
+        // Create a Set of existing post IDs for efficient lookup
+        const existingIds = new Set(prevPosts.map(p => p.id));
+
+        // Filter the newly fetched data to include only posts not already present
+        const newUniquePosts = data.filter(post => !existingIds.has(post.id));
+
+        // If there are no truly new posts, return the previous state to avoid unnecessary re-renders
+        if (newUniquePosts.length === 0 && data.length > 0) {
+           // Check if this batch was the last page even if no new posts were added (e.g., due to revalidation)
+           if (data.length < PER_PAGE) {
+                setHasMore(false);
+           }
+           setIsLoadingMore(false); // Ensure loading state is reset
+           return prevPosts; // Return previous state unmodified
+        }
+
+        // Append only the truly new posts
+        const updatedPosts = [...prevPosts, ...newUniquePosts];
+
+        // Check if this fetch indicates the end of the posts
+        if (data.length === 0 || data.length < PER_PAGE) {
+            setHasMore(false);
+        }
+
+        // Reset loading state *after* processing
+        setIsLoadingMore(false);
+
+        return updatedPosts; // Return the updated list
+      });
     }
   }, [data]);
 
