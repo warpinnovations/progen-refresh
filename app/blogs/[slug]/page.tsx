@@ -10,7 +10,7 @@ import BlogSidebar from '@/components/Blogs/BlogSidebar';
 import ErrorState from '@/components/Global/ErrorState';
 import LoadingState from '@/components/Global/LoadingState';
 import { useEffect, useState } from 'react';
-import BlogContactUs from '@/components/Blogs/BlogContact';
+import BlogContactUs from '@/components/Blogs/BlogContactUs';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
