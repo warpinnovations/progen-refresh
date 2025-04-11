@@ -41,7 +41,6 @@ export default function BlogCardWP(props: { post: WPPost }) {
             dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
           ></p>
           </Link>
-          
           <div className='flex flex-row w-full space-x-2'>
             <div className='flex items-center text-2xl'>
               <CgProfile />

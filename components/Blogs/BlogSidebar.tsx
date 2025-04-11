@@ -24,7 +24,6 @@ const BlogSidebar = ({
       <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5 text-justify '>
         <BlogButton />
         <BlogHeader blogTitle={blogTitle} excerpt={excerpt} formattedDate={formattedDate} />
-
         <div className='flex gap-3 pb-5 px-10'>
           <FaRegUserCircle className='text-[#FFFFFF] text-[20px]' />
           <p className='text-[#FFFFFF] text-[15px] text-opacity-[63%] font-ox'>{author}</p>
