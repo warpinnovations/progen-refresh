@@ -1,7 +1,7 @@
 'use client';
 
 import { FaRegUserCircle } from 'react-icons/fa';
-import BlogButton from './BlogButton';
+import BlogButtonWP from './BlogButtonWP';
 import BlogHeader from './BlogHeader';
 
 interface BlogSidebarProps {
@@ -22,7 +22,7 @@ const BlogSidebar = ({
   return (
     <div className='w-full lg:w-[45%] flex h-full justify-center'>
       <div className='lg:fixed lg:w-[45%] lg:px-30 flex flex-col gap-5 text-justify '>
-        <BlogButton />
+        <BlogButtonWP />
         <BlogHeader blogTitle={blogTitle} excerpt={excerpt} formattedDate={formattedDate} />
         <div className='flex gap-3 pb-5 px-10'>
           <FaRegUserCircle className='text-[#FFFFFF] text-[20px]' />
