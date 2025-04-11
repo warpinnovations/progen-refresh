@@ -2,8 +2,6 @@ import React from "react";
 
 
 const BlogDescription = () => {
-
-
   return (
     <div className=" flex flex-col  w-full justify-center h-auto">
 

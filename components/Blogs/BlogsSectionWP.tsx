@@ -47,7 +47,7 @@ const BlogsSectionWP = () => {
           </div>
 
           <div className='w-full md:w-[40%] flex flex-col md:ml-14 my-4 mr-4 space-y-4'>
-            <Link href={`/newBlogs/${post.slug}`}>
+            <Link href={`/blogs/${post.slug}`}>
               <h1 className='text-xl md:text-3xl text-white font-bold cursor-pointer'>
                 {post.title.rendered.replace(/&nbsp;/g, ' ')}
               </h1>

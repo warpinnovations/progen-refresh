@@ -10,6 +10,7 @@ import BlogSidebar from '@/components/Blogs/BlogSidebar';
 import ErrorState from '@/components/Global/ErrorState';
 import LoadingState from '@/components/Global/LoadingState';
 import { useEffect, useState } from 'react';
+import BlogContactUs from '@/components/Blogs/BlogContactUs';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
@@ -59,6 +60,16 @@ const extractStyles = (content: string) => {
   // 2. Add support for ALL WordPress typography and formatting classes
   allStyles += `
     /* WordPress Core Classes - Ensure all WordPress styling is preserved */
+
+    ul {
+      list-style-type: circle !important;
+      list-style-type: disc !important;
+    }
+
+    ol {
+      list-style-type: decimal !important;
+      margin-left: 2em !important;
+    }
     
     /* --- Typography Classes --- */
     /* Font Sizes */
@@ -926,7 +937,6 @@ export default function PostPage() {
 
   // Ensure the slug is properly decoded and escaped for the API call
   const encodedSlug = slug ? encodeURIComponent(String(slug)) : '';
-
   const { data, error, isLoading } = useSWR<WPPost[]>(
     encodedSlug
       ? `https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts?slug=${encodedSlug}`
@@ -963,6 +973,7 @@ export default function PostPage() {
 
   const post = data[0];
   const blogTitle = post.title.rendered || 'Blog Post';
+  const excerpt = post.excerpt.rendered.replace(/<[^>]*>/g, '');
   const description = post.excerpt.rendered.replace(/<[^>]*>/g, '') || 'No description available';
   const author = post.author?.name || 'Prometheus';
   const imageUrl = post.jetpack_featured_media_url;
@@ -1007,7 +1018,7 @@ export default function PostPage() {
           {/*Left Side*/}
           <BlogSidebar
             blogTitle={blogTitle}
-            description={description}
+            excerpt={excerpt}
             formattedDate={formattedDate}
             author={author}
             imageUrl={imageUrl}
@@ -1024,6 +1035,7 @@ export default function PostPage() {
               </div>
             )}
             <div className='wp-content' dangerouslySetInnerHTML={{ __html: processedContent }} />
+            <BlogContactUs/>
           </div>
         </article>
 

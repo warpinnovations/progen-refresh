@@ -5,6 +5,7 @@ interface WPPost {
   id: number;
   title: { rendered: string };
   excerpt: { rendered: string };
+  author?: string;
   link: string;
   slug: string;
   jetpack_featured_media_url?: string;
@@ -31,10 +32,14 @@ export default function BlogCardWP(props: { post: WPPost }) {
         </div>
         {/*Right Div*/}
         <div className='w-full md:w-[40%] flex flex-col md:ml-14 my-4 mr-4 space-y-4'>
-          <Link href={`/newBlogs/${post.slug}`}>
+          <Link href={`/blogs/${post.slug}`}>
             <h2 className='text-xl md:text-3xl  text-white font-bold  cursor-pointer'>
               {post.title.rendered.replace(/&nbsp;/g, ' ')}
-            </h2>
+            </h2><br/>
+            <p
+            className='text-justify text-gray-400 leading-relaxed w-[95%]'
+            dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
+          ></p>
           </Link>
           <div className='flex flex-row w-full space-x-2'>
             <div className='flex items-center text-2xl'>

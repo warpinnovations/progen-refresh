@@ -7,7 +7,7 @@ const BlogButtonWP = () => {
   const navigate = useRouter();
 
   const handleNavigation = () => {
-    navigate.push('/newBlogs');
+    navigate.push('/blogs');
   };
 
   return (
