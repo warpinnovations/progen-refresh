@@ -38,7 +38,6 @@ export default function BlogCardWP(props: { post: WPPost }) {
             </h2><br/>
             <p
             className='text-justify text-gray-400 leading-relaxed w-[95%]'
-            dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
           ></p>
           </Link>
           <div className='flex flex-row w-full space-x-2'>

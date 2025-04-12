@@ -21,7 +21,6 @@ const BlogHeader = ({ blogTitle, excerpt, formattedDate }: BlogHeaderProps) => {
         <p
         className={`text-[#FFFFFF] text-[20px] text-wrap text-opacity-[63%] ${oxaniumFont.className} mt-4`}
       >
-        {excerpt}
         </p>
         )}
       {formattedDate && (
