@@ -6,6 +6,7 @@ import Services from "@/components/LandingPage/Services";
 import Footer from "@/components/Global/Footer";
 import StarshipCaptains from "@/components/LandingPage/StarshipCaptains";
 import dynamic from "next/dynamic";
+import Contact from "@/components/LandingPage/ContactUs"
 import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter";
 import NavbarGroup from "@/components/Global/NavbarGroup";
 const StarshipandBrandsNoSSR = dynamic(
@@ -31,6 +32,7 @@ const LandingPage = () => {
         <Services />
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
+        <Contact/>
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
