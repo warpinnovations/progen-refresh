@@ -23,7 +23,7 @@ function OurServices(){
 
     const [ref, inView] = useInView({
         triggerOnce: true,
-        threshold: 0.7,
+        threshold: .3,
     });
 
     const isVisibleInAnimation = inView;
@@ -33,7 +33,7 @@ function OurServices(){
     >
        <motion.div
         ref={ref}
-        className="grid grid-cols-1 md:grid-cols-2 justify-center items-center text-center z-10 mb-20 "
+        className="relative grid grid-cols-1 md:grid-cols-2 justify-center items-center text-center z-10 mb-20 "
         initial="hidden"
         animate={isVisibleInAnimation ? "visible":"hidden"}
         variants={{
@@ -60,11 +60,11 @@ function OurServices(){
                     </h1>
                 </div>
             </motion.div>
-           <div className={`${MoonlanderFont.className} text-md md:text-4xl text-white flex flex-col gap-2 `}>
+           <div className={`${MoonlanderFont.className} text-md md:text-2xl lg:text-4xl text-white flex flex-col lg:gap-2`}>
                 {services.map((item, index) => (
                     <motion.div
                         key={index}
-                        className={`flex relative md:p-5 justify-center md:justify-start`}
+                        className={`relative flex md:p-3 justify-center md:justify-start md:ml-5 mb-2 md:mb-0`}
                         variants={{
                             hidden: {opacity: 0, x: "30%"},
                             visible: {opacity: 1, x:"0%", transition: {type: "spring", stiffness: 120, damping: 20 }},
