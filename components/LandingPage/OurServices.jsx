@@ -26,18 +26,13 @@ function OurServices(){
         threshold: 0.7,
     });
 
-    const animationSlideFromRight = {
-        hidden: {opacity: 0, x: "50%"},
-        visible: {opacity: 1, x:"0%", transition: {type: "spring"}},
-    };
-
     const isVisibleInAnimation = inView;
 
     return <div
     className='w-full flex flex-col justify-center md:py-40 mb-8'
 
     >
-       <motion.div
+       <div
         ref={ref}
         className="grid grid-cols-1 md:grid-cols-2 justify-center items-center text-center z-10 mb-20 "
         >
@@ -77,7 +72,7 @@ function OurServices(){
                     </motion.div>
                 ))}
            </div>
-       </motion.div>
+       </div>
    </div>
 }
 
