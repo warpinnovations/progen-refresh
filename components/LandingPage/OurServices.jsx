@@ -26,7 +26,9 @@ function OurServices(){
         threshold: .4,
     });
 
+    const isMobile = window.innerWidth <= 500;
     const isVisibleInAnimation = inView;
+    
 
     return <div
     className='w-full flex flex-col justify-center md:py-40 mb-8 bg-cover bg-no-repeat bg-center'
@@ -43,9 +45,9 @@ function OurServices(){
                 opacity: 1,
                 y: "0%",
                 transition:{
-                    duration: .5,
+                    duration: isMobile ? 3 : .5,
                     ease: "easeInOut",
-                    delayChildren: .15,
+                    delayChildren: isMobile ? 3.15 : .15,
                     staggerChildren: .15
                 }
             }
