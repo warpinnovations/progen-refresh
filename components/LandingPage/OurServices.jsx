@@ -53,12 +53,12 @@ function OurServices(){
             }
         }}
         >
-            <motion.div className="w-full flex justify-center md:justify-end lg:justify-center lg:pr-10">
+            <motion.div className="w-full flex justify-center pr-0 md:pr-5 md:justify-end lg:justify-center lg:pr-10">
                 <div className="flex flex-row md:flex-col mb-10 md:mb-20 gap-2 md:gap-4 w-fit justify-center md:justify-start mt-10">
-                    <h1 className={`${MoonlanderFont.className} flex font-black justify-center text-md md:text-5xl lg:w-1/3 text-[#f5f5f5] md:justify-start `}>
+                    <h1 className={`${MoonlanderFont.className} flex font-black justify-center text-md md:text-4xl lg:w-1/3 text-[#f5f5f5] md:justify-start lg:text-5xl`}>
                         OUR
                     </h1>
-                    <h1 className={`${MoonlanderFont.className} flex font-black justify-center text-md md:text-5xl lg:w-1/3 text-prOrange md:justify-start `}>
+                    <h1 className={`${MoonlanderFont.className} flex font-black justify-center text-md md:text-4xl lg:w-1/3 text-prOrange md:justify-start lg:text-5xl`}>
                         SERVICES
                     </h1>
                 </div>
