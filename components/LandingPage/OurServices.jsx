@@ -23,7 +23,7 @@ function OurServices(){
 
     const [ref, inView] = useInView({
         triggerOnce: true,
-        threshold: .3,
+        threshold: .4,
     });
 
     const isVisibleInAnimation = inView;
@@ -43,10 +43,10 @@ function OurServices(){
                 opacity: 1,
                 y: "0%",
                 transition:{
-                    duration: 1,
+                    duration: .5,
                     ease: "easeInOut",
                     delayChildren: .15,
-                    staggerChildren: 0.15
+                    staggerChildren: .15
                 }
             }
         }}
@@ -67,8 +67,8 @@ function OurServices(){
                         key={index}
                         className={`relative flex md:p-3 justify-center md:justify-start md:ml-5 mb-5 md:mb-0`}
                         variants={{
-                            hidden: {opacity: 0, x: "30%"},
-                            visible: {opacity: 1, x:"0%", transition: {type: "spring", stiffness: 120, damping: 20 }},
+                            hidden: {opacity: 0, x: 50},
+                            visible: {opacity: 1, x:"0%", transition: {type: "tween", duration: 0.3, ease: "easeInOut"}},
                         }}
                     >
                         <p className="text-center md:text-left ">{item}</p>
