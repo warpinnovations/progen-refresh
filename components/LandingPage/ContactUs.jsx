@@ -1,7 +1,9 @@
 "use client"
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 import localFont from 'next/font/local';
+import { Imprima } from 'next/font/google';
 const MoonlanderFont = localFont({src:'../../Fonts/Moonlander.ttf'});
 
 
@@ -15,9 +17,9 @@ function Contact() {
 
     return(
         <div
-            className="z-0 relative w-full bg-top md:py-48 py-24
+            className="z-0 relative w-full bg-top md:py-48 py-24 m-auto
                 bg-[url('/LandingPageAssets/galaxybg.webp')] 
-                bg-cover bg-center flex flex-col items-center justify-center py-20">
+                bg-cover bg-center flex flex-col items-center justify-center py-40">
             <div className='absolute  z-1 inset-0  bg-gradient-to-b from-black/80 to-transparent'/>
             <div className='flex flex-col items-center text-center z-20 content-center'>
                 <motion.div
@@ -63,9 +65,9 @@ function Contact() {
                         },
                     }}
                 >
-                    <a href="" className={`${MoonlanderFont.className} md:w-auto md:mt-4 md:mb-24 px-8 py-8 md:px-16 md:py-8 inline-block border border-yellow-500 text-white font-semibold rounded hover:bg-yellow-500 text-xl md:text-4xl hover:text-[#1B1A1A] transition duration-300`}>
+                    <Link href="/contact" className={`${MoonlanderFont.className} md:w-auto md:mt-4 md:mb-24 px-8 py-8 md:px-16 md:py-8 inline-block border border-yellow-500 text-white font-semibold rounded hover:bg-yellow-500 text-xl md:text-4xl hover:text-[#1B1A1A] transition duration-300`}>
                         CONTACT US
-                    </a>
+                    </Link>
                 </motion.div>
             </div>
         </div>
