@@ -43,7 +43,7 @@ function OurServices(){
                 opacity: 1,
                 y: "0%",
                 transition:{
-                    duration: 0.6,
+                    duration: 1,
                     ease: "easeInOut",
                     delayChildren: .15,
                     staggerChildren: 0.15
@@ -67,7 +67,7 @@ function OurServices(){
                         key={index}
                         className={`relative flex md:p-3 justify-center md:justify-start md:ml-5 mb-5 md:mb-0`}
                         variants={{
-                            hidden: {opacity: 0, x: "-30%"},
+                            hidden: {opacity: 0, x: "30%"},
                             visible: {opacity: 1, x:"0%", transition: {type: "spring", stiffness: 120, damping: 20 }},
                         }}
                     >
