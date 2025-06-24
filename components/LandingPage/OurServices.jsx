@@ -29,7 +29,8 @@ function OurServices(){
     const isVisibleInAnimation = inView;
 
     return <div
-    className='w-full flex flex-col justify-center md:py-40 mb-8'
+    className='w-full flex flex-col justify-center md:py-40 mb-8 bg-cover bg-no-repeat bg-center'
+    style={{backgroundImage: "url('/LandingPageAssets/servicesbg.png')"}}
     >
        <motion.div
         ref={ref}
@@ -51,7 +52,7 @@ function OurServices(){
         }}
         >
             <motion.div className="w-full flex justify-center md:justify-end lg:justify-center lg:pr-10">
-                <div className="flex flex-row md:flex-col mb-5 md:mb-20 gap-2 md:gap-4 w-fit justify-center md:justify-start mt-10">
+                <div className="flex flex-row md:flex-col mb-10 md:mb-20 gap-2 md:gap-4 w-fit justify-center md:justify-start mt-10">
                     <h1 className={`${MoonlanderFont.className} flex font-black justify-center text-md md:text-5xl lg:w-1/3 text-[#f5f5f5] md:justify-start `}>
                         OUR
                     </h1>
@@ -64,9 +65,9 @@ function OurServices(){
                 {services.map((item, index) => (
                     <motion.div
                         key={index}
-                        className={`relative flex md:p-3 justify-center md:justify-start md:ml-5 mb-2 md:mb-0`}
+                        className={`relative flex md:p-3 justify-center md:justify-start md:ml-5 mb-5 md:mb-0`}
                         variants={{
-                            hidden: {opacity: 0, x: "30%"},
+                            hidden: {opacity: 0, x: "-30%"},
                             visible: {opacity: 1, x:"0%", transition: {type: "spring", stiffness: 120, damping: 20 }},
                         }}
                     >
