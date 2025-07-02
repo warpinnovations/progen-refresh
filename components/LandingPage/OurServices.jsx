@@ -45,7 +45,8 @@ function OurServices(){
                 opacity: 1,
                 y: "0%",
                 transition:{
-                    duration: isMobile ? 3 : .5,
+                    delay: isMobile && 2.5 ,
+                    duration:  .5,
                     ease: "easeInOut",
                     delayChildren: isMobile ? 3.15 : .15,
                     staggerChildren: .15
