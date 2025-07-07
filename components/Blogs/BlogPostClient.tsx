@@ -18,39 +18,43 @@ import PostContentDisplay from '@/components/Blogs/PostContentDisplay';
 
 // Hook and Utils (Utils are fine to import in client components)
 import { useWordPressPost } from '@/hooks/useWordPressPost';
+import { WPPost } from '@/utils/wordpressUtils';
 // WPPost type might be needed if you type props/state here
 // import { WPPost } from '@/utils/wordpressUtils';
 
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
 // --- Client-Side Page Component Logic (Moved Here) ---
-export default function BlogPostClient() {
+export default function BlogPostClient({posts}: {posts: WPPost[]}) {
   const params = useParams();
   // Ensure slug is treated as a string, taking the first element if it's an array
   const slugParam = params.slug;
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   // Use the custom hook to fetch and process data
-  const { post, processedContent, wpStyles, fontLinks, isLoading, error } = useWordPressPost(slug);
+  // const { post, processedContent, wpStyles, fontLinks, isLoading, error } = useWordPressPost(slug);
 
-  // Handle Not Found - triggered by SWR error or if post is null after loading
-  const isNotFound = !isLoading && !error && !post && slug;
-  if (isNotFound) {
-    notFound(); // Trigger Next.js 404 page
-  }
+  const { post, processedContent, wpStyles, fontLinks } = useWordPressPost(posts);
 
-  // Handle Error State
-  if (error) {
-    console.error("Error loading post:", error);
-    // Check if the error indicates a 404
-    if (error.message.includes('404') || error.message.includes('Failed to fetch: 404')) {
-        notFound();
-    }
-    return <ErrorState title='Failed to load post' errorDetails={error.message} />;
-  }
+
+  // // Handle Not Found - triggered by SWR error or if post is null after loading
+  // const isNotFound = !isLoading && !error && !post && slug;
+  // if (isNotFound) {
+  //   notFound(); // Trigger Next.js 404 page
+  // }
+
+  // // Handle Error State
+  // if (error) {
+  //   console.error("Error loading post:", error);
+  //   // Check if the error indicates a 404
+  //   if (error.message.includes('404') || error.message.includes('Failed to fetch: 404')) {
+  //       notFound();
+  //   }
+  //   return <ErrorState title='Failed to load post' errorDetails={error.message} />;
+  // }
 
   // Handle Loading State
-  if (isLoading || !post) {
+  if (!post) {
     return <LoadingState />;
   }
 
