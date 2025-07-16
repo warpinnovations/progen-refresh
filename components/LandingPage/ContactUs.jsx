@@ -65,7 +65,7 @@ function Contact() {
                         },
                     }}
                 >
-                    <Link href="/contact" className={`${MoonlanderFont.className} md:w-auto md:mt-4 md:mb-24 px-8 py-8 md:px-16 md:py-8 inline-block border border-yellow-500 text-white font-semibold rounded hover:bg-yellow-500 text-xl md:text-4xl hover:text-[#1B1A1A] transition duration-300`}>
+                    <Link href="/contact" className={`${MoonlanderFont.className} md:w-auto md:mt-4 md:mb-24 px-8 py-8 md:px-16 md:py-8 inline-block border border-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-500 text-xl md:text-4xl hover:text-[#1B1A1A] transition duration-300`}>
                         CONTACT US
                     </Link>
                 </motion.div>
