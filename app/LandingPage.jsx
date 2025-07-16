@@ -3,6 +3,7 @@ import HeroSection from "@/components/LandingPage/HeroSection";
 import PageTransition from "@/components/Global/PageTransition";
 import PrometheusPlayer from "@/components/LandingPage/PrometheusPlayer";
 import Services from "@/components/LandingPage/Services";
+import OurServices from "@/components/LandingPage/OurServices";
 import Footer from "@/components/Global/Footer";
 import StarshipCaptains from "@/components/LandingPage/StarshipCaptains";
 import dynamic from "next/dynamic";
@@ -29,7 +30,8 @@ const LandingPage = () => {
             <PrometheusPlayer />
           </div>
         </div>
-        <Services />
+        {/* <Services /> */}
+        <OurServices/>
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
         <Contact/>
