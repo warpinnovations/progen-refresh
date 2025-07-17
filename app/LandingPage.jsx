@@ -8,6 +8,7 @@ import StarshipCaptains from "@/components/LandingPage/StarshipCaptains";
 import dynamic from "next/dynamic";
 import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter";
 import NavbarGroup from "@/components/Global/NavbarGroup";
+import Certifications from "@/components/LandingPage/Certifications";
 const StarshipandBrandsNoSSR = dynamic(
   () => import("@/components/LandingPage/StarshipsAndBrands"),
   { ssr: false }
@@ -22,6 +23,7 @@ const LandingPage = () => {
     <div className="h-auto w-full flex flex-col justify-center  bg-black overflow-x-hidden ">
       <PageTransition>
         <NavbarGroup />
+        <Certifications />
         <HeroSectionDynamicNoSSR />
         <div className="w-full">
           <div className="flex justify-center items-center">
