@@ -46,7 +46,23 @@ function Certifications(){
     return <section
     className='w-full flex flex-col justify-center md:py-40 mb-8'
     >
-        <motion.div className="container mx-auto px-4 text-center text-white">
+        <motion.div className="container mx-auto px-4 text-center text-white" ref={ref}
+            initial="hidden"
+            animate={isVisibleInAnimation ? "visible":"hidden"}
+            variants={{
+                hidden:{opacity: 0, y:20},
+                visible: {
+                    opacity: 1,
+                    y: "0%",
+                    transition:{
+                        duration:  .5,
+                        ease: "easeInOut",
+                        delayChildren: .15,
+                        staggerChildren: .15
+                    }
+                }
+            }}
+        >
             <h1 className={`${MoonlanderFont.className} font-black justify-center text-md md:text-4xl text-prOrange mb-32 text-center`}>
                 CERTIFICATIONS
             </h1>

@@ -23,7 +23,6 @@ const LandingPage = () => {
     <div className="h-auto w-full flex flex-col justify-center  bg-black overflow-x-hidden ">
       <PageTransition>
         <NavbarGroup />
-        <Certifications />
         <HeroSectionDynamicNoSSR />
         <div className="w-full">
           <div className="flex justify-center items-center">
@@ -33,6 +32,7 @@ const LandingPage = () => {
         <Services />
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
+        <Certifications />
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
