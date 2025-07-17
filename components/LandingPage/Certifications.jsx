@@ -8,7 +8,7 @@ const MoonlanderFont = localFont({src:'../../Fonts/Moonlander.ttf'});
 function Certifications(){
     const [ref, inView] = useInView({
         triggerOnce: true,
-        threshold: 0.7,
+        threshold: 0.3,
     });
 
     const isVisibleInAnimation = inView;
@@ -58,7 +58,7 @@ function Certifications(){
                         duration:  .5,
                         ease: "easeInOut",
                         delayChildren: .15,
-                        staggerChildren: .15
+                        staggerChildren: .3
                     }
                 }
             }}
@@ -69,7 +69,12 @@ function Certifications(){
             {/* 3-column rows */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-10">
                 {certificates.slice(0, lenTopRows).map((cert, i) => (
-                    <motion.div key={cert.emblems + cert.titles + i.toString()} className="flex flex-col items-center">
+                    <motion.div key={cert.emblems + cert.titles + i.toString()} className="flex flex-col items-center"
+                        variants={{
+                            hidden: {opacity: 0, y: 50},
+                            visible: {opacity: 1, y:"0%", transition: {duration: 0.5, ease: "easeInOut"}},
+                        }}
+                    >
                         <div className="flex space-x-2 mb-4">
                             {cert.emblems.map((src, i) => (
                                 <img key={src + i.toString()} src={src} alt="" className="h-32 w-auto" />
@@ -90,7 +95,10 @@ function Certifications(){
             <div className="flex flex-col md:flex-row items-center justify-center gap-x-52 gap-y-12 mt-16">
                 {certificates.slice(lenTopRows).map((cert, i) => (
                     <motion.div key={JSON.stringify(cert.titles) + i.toString()} className="flex flex-col items-center"
-                    // variants={}
+                        variants={{
+                            hidden: {opacity: 0, y: 50},
+                            visible: {opacity: 1, y:"0%", transition: {duration: 0.5, ease: "easeInOut"}},
+                        }}
                     >
                         <div className="flex space-x-2 mb-4">
                             {cert.emblems.map((src, i) => (
@@ -99,7 +107,7 @@ function Certifications(){
                         </div>
                         <p className="text-sm uppercase tracking-wider">{cert.linkPhrase}</p>
                             {cert.titles.map((line, i) => (
-                                <p key={JSON.stringify(cert.titles) + line} className="mt-1 font-bold uppercase text-center">
+                                <p key={JSON.stringify(cert.titles) + line + i.toString()} className="mt-1 font-bold uppercase text-center">
                                     {line}
                                 </p>
                             ))}
