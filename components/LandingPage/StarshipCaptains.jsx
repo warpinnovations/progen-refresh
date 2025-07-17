@@ -5,6 +5,7 @@ import StoryTellers from './StoryTellers';
 import { Oxanium } from 'next/font/google';
 import localFont from 'next/font/local';
 import CardSection from '@/components/LandingPage/ProminentCardSection';
+import ProminentSection from './ProminentSection';
 const OxaniumFont = Oxanium({ weights: 100, subsets: ['latin'] });
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
@@ -50,7 +51,7 @@ const StarshipCaptains = () => {
           CERTIFICATION AND AWARDS
         </h1>
       </div>
-      <div className='flex flex-col gap-5 items-center'>
+      <div className='flex flex-col gap-5 items-center z-10'>
         <div className='relative flex flex-col justify-center items-center text-center space-y-10 md:space-y-0 md:flex-row md:space-x-20 mt-10 mb-20'>
           <div className='flex flex-row flex-wrap items-center justify-center'>
             <img
@@ -104,8 +105,8 @@ const StarshipCaptains = () => {
             />
           </div>
         </div>
-        <div className='flex flex-col gap-5 mb-2 items-center'>
-        <CardSection />
+        <div>
+          <ProminentSection/>
         </div>
         
       </div>
