@@ -8,6 +8,8 @@ import StarshipCaptains from "@/components/LandingPage/StarshipCaptains";
 import dynamic from "next/dynamic";
 import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter";
 import NavbarGroup from "@/components/Global/NavbarGroup";
+import Awards from "@/components/LandingPage/Awards";
+
 const StarshipandBrandsNoSSR = dynamic(
   () => import("@/components/LandingPage/StarshipsAndBrands"),
   { ssr: false }
@@ -31,6 +33,7 @@ const LandingPage = () => {
         <Services />
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
+        <Awards></Awards>
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
