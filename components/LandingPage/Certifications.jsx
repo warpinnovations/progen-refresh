@@ -44,7 +44,7 @@ function Certifications(){
     const lenLastRow = certificates.length % 3;
     const lenTopRows = certificates.length - lenLastRow;
     return <section
-    className='w-full flex flex-col justify-center md:py-40 mb-8'
+    className='w-full flex flex-col justify-center md:py-40 my-20'
     >
         <motion.div className="container mx-auto px-4 text-center text-white" ref={ref}
             initial="hidden"
@@ -63,7 +63,7 @@ function Certifications(){
                 }
             }}
         >
-            <h1 className={`${MoonlanderFont.className} font-black justify-center text-md md:text-4xl text-prOrange mb-32 text-center`}>
+            <h1 className={`${MoonlanderFont.className} font-black justify-center text-xl md:text-4xl text-prOrange mb-10 md:mb-32 text-center`}>
                 CERTIFICATIONS
             </h1>
             {/* 3-column rows */}
@@ -97,7 +97,7 @@ function Certifications(){
                     <motion.div key={JSON.stringify(cert.titles) + i.toString()} className="flex flex-col items-center"
                         variants={{
                             hidden: {opacity: 0, y: 50},
-                            visible: {opacity: 1, y:"0%", transition: {duration: 0.5, ease: "easeInOut"}},
+                            visible: {opacity: 1, y:"0%", transition: {duration: .3, ease: "easeInOut"}},
                         }}
                     >
                         <div className="flex space-x-2 mb-4">
