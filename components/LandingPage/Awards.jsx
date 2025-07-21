@@ -94,7 +94,7 @@ const Awards = () => {
     return (
         <main className="min-h-120vh md:min-h-90vh bg-cover bg-center bg-no-repeat bg-[url('/LandingPageAssets/awardsbg.png')] py-40">
             <div className='z-50'>
-                <h1 className={`${MoonlanderFont.className} text-center font-black justify-center text-md md:text-4xl text-prOrange md:mb-20`}>AWARDS</h1>
+                <h1 className={`${MoonlanderFont.className} text-center font-black justify-center text-xl md:text-4xl text-prOrange md:mb-20`}>AWARDS</h1>
                 <div className='relative w-full h-[500px] md:h-[700px] flex items-center justify-center overflow-hidden md:pb-80'>
                     <button
                         onClick={() => paginate(-1)}
@@ -152,7 +152,7 @@ const Awards = () => {
                                     <div className='md:hidden flex flex-col text-white text-center md:text-left md:w-80 m-0'>
                                         <motion.h3
                                             key={awarditems[currentIndex].title}
-                                            className='text-md md:text-4xl font-thin tracking-widest uppercase mb:mb-4 mb:h-16 flex items-center justify-start'
+                                            className='text-xl md:text-4xl font-thin tracking-widest uppercase mb:mb-4 mb:h-16 flex items-center justify-start'
                                             variants={containerVariants}
                                             initial="hidden"
                                             animate="visible"
@@ -176,7 +176,7 @@ const Awards = () => {
                                                 ease: 'easeInOut',
                                                 delay: 1.5,
                                             }}
-                                            className='text-md md:text-3xl text-[#DAAF5B] font-semibold text-start'
+                                            className='text-xl md:text-3xl text-[#DAAF5B] font-semibold text-start'
                                         >
                                             {awarditems[currentIndex].category}
                                         </motion.h4>
