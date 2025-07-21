@@ -198,8 +198,8 @@ const Awards = () => {
                                         <Image
                                             src={awarditems[currentIndex].awardimg}
                                             alt={awarditems[currentIndex].title}
-                                            height={170}
-                                            width={170}
+                                            height={200}
+                                            width={200}
                                             className='hidden md:block md:relative'
                                         />
                                 </motion.div>
@@ -218,7 +218,7 @@ const Awards = () => {
                                 <div className='hidden md:flex md:flex-col text-white text-center md:text-left w-full md:w-80'>
                                     <motion.h3
                                         key={awarditems[currentIndex].title}
-                                        className='text-4xl font-thin tracking-widest uppercase mb-4 h-16 flex items-center justify-center md:justify-start'
+                                        className='text-6xl font-thin tracking-widest uppercase mb-4 h-16 flex items-center justify-center md:justify-start'
                                         variants={containerVariants}
                                         initial="hidden"
                                         animate="visible"
@@ -242,7 +242,7 @@ const Awards = () => {
                                             ease: 'easeInOut',
                                             delay: 1.5,
                                         }}
-                                        className='text-3xl text-[#DAAF5B] font-semibold'
+                                        className='text-5xl text-[#DAAF5B] font-semibold'
                                     >
                                         {awarditems[currentIndex].category}
                                     </motion.h4>
