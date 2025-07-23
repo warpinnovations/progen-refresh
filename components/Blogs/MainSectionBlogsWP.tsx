@@ -30,7 +30,8 @@ interface WPPost {
 // Fetcher function to get data from API
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const MainSectionBlogsWP = () => {
+const MainSectionBlogsWP = (props : {data: WPPost[]}) => {
+  const { data } = props;
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState<WPPost[]>([]);
   const [hasMore, setHasMore] = useState(true);
@@ -39,7 +40,7 @@ const MainSectionBlogsWP = () => {
   // Construct API URL with pagination parameters
   const API_URL = `${BASE_API_URL}?per_page=${PER_PAGE}&page=${page}`;
 
-  const { data, error } = useSWR<WPPost[]>(API_URL, fetcher);
+  // const { data, error } = useSWR<WPPost[]>(API_URL, fetcher);
 
   useEffect(() => {
     if (data) {
@@ -84,9 +85,13 @@ const MainSectionBlogsWP = () => {
     }
   };
 
-  if (error) {
-    return <ErrorState title='Failed to load posts' errorDetails={error.message} />;
-  }
+
+  //TODO: handle error
+  // if (error) {
+  //   console.log("Error here!");
+    
+  //   return <ErrorState title='Failed to load posts' errorDetails={error.message} />;
+  // }
 
   if (!data && allPosts.length === 0) {
     return <LoadingState message='Loading blog posts...' />;

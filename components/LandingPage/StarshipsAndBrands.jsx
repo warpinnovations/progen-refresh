@@ -147,7 +147,7 @@ const StarshipsAndBrands = () => {
 
         <div className="mt-10 flex justify-center items-center">
           <img
-            src={"/LandingPageAssets/brands.webp"}
+            src={"/LandingPageAssets/brands2.webp"}
             className="w-[90%]"
             alt=""
           />

@@ -14,19 +14,21 @@ interface UseWordPressPostResult {
   processedContent: string;
   wpStyles: string;
   fontLinks: string[];
-  isLoading: boolean;
-  error: Error | null;
+  // isLoading: boolean;
+  // error: Error | null;
 }
 
-export function useWordPressPost(slug: string | string[] | undefined): UseWordPressPostResult {
-  const validSlug = Array.isArray(slug) ? slug[0] : slug; // Handle array slugs if needed
-  const encodedSlug = validSlug ? encodeURIComponent(validSlug) : null;
+// export function useWordPressPost(slug: string | string[] | undefined): UseWordPressPostResult {
+export function useWordPressPost(posts : WPPost[]): UseWordPressPostResult {
 
-  const apiUrl = encodedSlug
-    ? `https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts?slug=${encodedSlug}&_embed` // Added _embed
-    : null;
+  // const validSlug = Array.isArray(slug) ? slug[0] : slug; // Handle array slugs if needed
+  // const encodedSlug = validSlug ? encodeURIComponent(validSlug) : null;
 
-  const { data: posts, error, isLoading } = useSWR<WPPost[]>(apiUrl, fetcher);
+  // const apiUrl = encodedSlug
+  //   ? `https://public-api.wordpress.com/wp/v2/sites/prometheusblog2.wordpress.com/posts?slug=${encodedSlug}&_embed` // Added _embed
+  //   : null;
+
+  // const { data: posts, error, isLoading } = useSWR<WPPost[]>(apiUrl, fetcher);
 
   const post = useMemo(() => (posts && posts.length > 0 ? posts[0] : null), [posts]);
 
@@ -70,7 +72,7 @@ export function useWordPressPost(slug: string | string[] | undefined): UseWordPr
     processedContent: processedData.processedContent,
     wpStyles: processedData.wpStyles,
     fontLinks: processedData.fontLinks,
-    isLoading: isLoading || (apiUrl !== null && !post && !error), // Adjust loading state
-    error: error ? error : null,
+    // isLoading: isLoading || (apiUrl !== null && !post && !error), // Adjust loading state
+    // error: error ? error : null,
   };
 }
