@@ -121,14 +121,13 @@ const Awards = () => {
                             animate="center"
                             exit="exit"
                             transition={{
-                                duration: 1, ease: "easeInOut", delay: 0.05
+                                duration: 1, ease: "easeInOut",
                             }}
-                            className="absolute w-full h-full flex items-center justify-center p-4"
+                            className="absolute w-full h-full"
                         >
-                            <div className='relative flex flex-col items-center z-10 md:flex-row md:items-center md:justify-start md:pl-[130px]'>
-                                <div className='flex items-center justify-center space-x-4 p-4 md:hidden'>
-
-                            {/* MobileView */}
+                            <div className='w-full h-full flex flex-col items-center justify-center gap-4 md:flex-row md:gap-8 lg:gap-12 px-6 max-w-7xl mx-auto'>
+                                <div className='flex items-center justify-center gap-4 md:contents'>
+                                    {/* awardimage */}
                                     <motion.div
                                         key={awarditems[currentIndex].awardimg}
                                         initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
@@ -138,21 +137,22 @@ const Awards = () => {
                                             ease: 'easeInOut',
                                             delay: 1.5,
                                         }}
-                                        className='md:relative'
+                                        className='md:order-1'
                                     >
+
                                         <Image
                                             src={awarditems[currentIndex].awardimg}
                                             alt={awarditems[currentIndex].title}
-                                            height={80}
-                                            width={80}
-                                            className='drop-shadow-lg flex-row'
+                                            height={200}
+                                            width={200}
+                                            className='drop-shadow-lg w-20 md:w-32 lg:w-48 h-auto'
                                         />
                                     </motion.div>
-
-                                    <div className='md:hidden flex flex-col text-white text-center md:text-left md:w-80 m-0'>
+                                    
+                                    <div className='order-2 flex flex-col text-left md:order-3'>
                                         <motion.h3
                                             key={awarditems[currentIndex].title}
-                                            className='text-xl md:text-4xl font-thin tracking-widest uppercase mb:mb-4 mb:h-16 flex items-center justify-start'
+                                            className='text-xl text-white md:text-4xl lg:text-6xl font-thin tracking-widest uppercase'
                                             variants={containerVariants}
                                             initial="hidden"
                                             animate="visible"
@@ -176,77 +176,24 @@ const Awards = () => {
                                                 ease: 'easeInOut',
                                                 delay: 1.5,
                                             }}
-                                            className='text-xl md:text-3xl text-[#DAAF5B] font-semibold text-start'
+                                            className='text-lg md:text-3xl lg:text-4xl text-[#DAAF5B] font-semibold'
                                         >
                                             {awarditems[currentIndex].category}
                                         </motion.h4>
                                     </div>
                                 </div>
 
-                                {/* Desktop View */}
-                                <motion.div
-                                        key={awarditems[currentIndex].awardimg}
-                                        initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
-                                        animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)'}}
-                                        transition={{
-                                            duration: 1.2,
-                                            ease: 'easeInOut',
-                                            delay: 1.5,
-                                        }}
-                                        className='md:relative md:ml-20'
-                                    >
-                                        <Image
-                                            src={awarditems[currentIndex].awardimg}
-                                            alt={awarditems[currentIndex].title}
-                                            height={200}
-                                            width={200}
-                                            className='hidden md:block md:relative'
-                                        />
-                                </motion.div>
-
-                                <div className='inline-block my-4 size-80 md:size-[500px]'>
+                                <div className='w-64 h-64 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] md:order-2'>
                                     <Image  
                                         src={awarditems[currentIndex].planetimg}
                                         alt={awarditems[currentIndex].title}
-                                        width={0}
-                                        height={0}
-                                        sizes='200vw'
+                                        width={500}
+                                        height={500}
+                                        sizes='(max-width: 768px) 60vw, 40vw'
                                         className='drop-shadow-lg size-full object-contain'
                                     />    
                                 </div>
 
-                                <div className='hidden md:flex md:flex-col text-white text-center md:text-left w-full md:w-80'>
-                                    <motion.h3
-                                        key={awarditems[currentIndex].title}
-                                        className='text-6xl font-thin tracking-widest uppercase mb-4 h-16 flex items-center justify-center md:justify-start'
-                                        variants={containerVariants}
-                                        initial="hidden"
-                                        animate="visible"
-                                    >
-                                        {awarditems[currentIndex].title.split('').map((char, index) => (
-                                            <motion.span
-                                                key={index}
-                                                variants={characterVariants}
-                                            >
-                                                {char === ' ' ? '\u00A0' : char}
-                                            </motion.span>
-                                        ))}
-                                    </motion.h3>
-                                    <motion.h4
-                                        key={awarditems[currentIndex].category}
-                                        initial={{ opacity: 0, y: 20 * direction}}
-                                        animate={{ opacity: 1, y: 0}}
-                                        exit={{ opacity: 0, y: 0}}
-                                        transition={{
-                                            duration: 0.8,
-                                            ease: 'easeInOut',
-                                            delay: 1.5,
-                                        }}
-                                        className='text-5xl text-[#DAAF5B] font-semibold'
-                                    >
-                                        {awarditems[currentIndex].category}
-                                    </motion.h4>
-                                </div>
                             </div>
                         </motion.div>
                     </AnimatePresence>
