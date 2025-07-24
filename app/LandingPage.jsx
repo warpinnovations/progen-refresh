@@ -11,6 +11,8 @@ import Contact from '@/components/LandingPage/ContactUs';
 import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import NavbarGroup from '@/components/Global/NavbarGroup';
 import Certifications from '@/components/LandingPage/Certifications';
+import Awards from "@/components/LandingPage/Awards";
+
 const StarshipandBrandsNoSSR = dynamic(
   () => import('@/components/LandingPage/StarshipsAndBrands'),
   { ssr: false }
@@ -37,6 +39,7 @@ const LandingPage = () => {
         <StarshipCaptains />
         <Certifications />
         <Contact />
+        <Awards></Awards>
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
