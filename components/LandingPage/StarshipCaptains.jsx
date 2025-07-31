@@ -41,12 +41,12 @@ const StarshipCaptains = () => {
         <StoryTellers />
       </div>
 
-      <div className='w-3/5 text-center z-10 mt-40 mb-10'>
+      {/* <div className='w-3/5 text-center z-10 mt-40 mb-10'>
         <h1 className={`${MoonlanderFont.className} font-black text-xl md:text-4xl text-prOrange`}>
           CERTIFICATION AND AWARDS
         </h1>
-      </div>
-      <div className='flex flex-col gap-5 items-center'>
+      </div> */}
+      {/* <div className='flex flex-col gap-5 items-center'>
         <div className='relative flex flex-col justify-center items-center text-center space-y-10 md:space-y-0 md:flex-row md:space-x-20 mt-10 mb-20'>
           <div className='flex flex-row flex-wrap items-center justify-center'>
             <img
@@ -104,7 +104,7 @@ const StarshipCaptains = () => {
         <CardSection />
         </div>
         
-      </div>
+      </div> */}
     </div>
   );
 };
