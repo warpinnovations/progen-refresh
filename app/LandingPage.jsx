@@ -38,8 +38,9 @@ const LandingPage = () => {
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
         <Certifications />
-        <Contact />
+     
         <Awards></Awards>
+           <Contact />
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
