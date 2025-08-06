@@ -23,10 +23,6 @@ const StarshipCaptains = () => {
         </div>
       </div>
 
-      <div className=' absolute inset-0 z-0'>
-        <StarsCanvas hidden={true} />
-      </div>
-
       <div className='absolute inset-0 z-0 h-auto'>
         <img src='/LandingPageAssets/galaxybg.webp' className='h-full w-full object-cover' />
         <div className='absolute inset-0 z-10 bg-gradient-to-b from-black via-transparent to-black opacity-90' />
