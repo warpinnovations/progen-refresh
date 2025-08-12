@@ -36,7 +36,6 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
 
   const { post, processedContent, wpStyles, fontLinks } = useWordPressPost(posts);
 
-  
   // // Handle Not Found - triggered by SWR error or if post is null after loading
   // const isNotFound = !isLoading && !error && !post && slug;
   // if (isNotFound) {
@@ -122,6 +121,3 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
     </Fragment>
   );
 }
-
-
-
