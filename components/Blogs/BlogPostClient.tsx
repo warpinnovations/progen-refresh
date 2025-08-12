@@ -87,8 +87,7 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
         }
       `}</style>
 
-      <div className={`bg-black w-full flex flex-col relative h-full min-h-screen
-${oxaniumFont.className}`}>
+      <div className={`bg-black w-full flex flex-col relative h-full min-h-screen ${oxaniumFont.className}`}>
         <NavbarGroup />
 
         <article className='flex flex-col lg:flex-row pt-[10%] pb-10'>
