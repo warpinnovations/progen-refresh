@@ -25,7 +25,7 @@ import { WPPost } from '@/utils/wordpressUtils';
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
 // --- Client-Side Page Component Logic (Moved Here) ---
-export default function BlogPostClient({ posts }: { posts: WPPost[] }) {
+export default function BlogPostClient({posts}: {posts: WPPost[]}) {
   const params = useParams();
   // Ensure slug is treated as a string, taking the first element if it's an array
   const slugParam = params.slug;
@@ -64,9 +64,7 @@ export default function BlogPostClient({ posts }: { posts: WPPost[] }) {
   const imageUrl = post.jetpack_featured_media_url;
   const formattedDate = post.date
     ? new Date(post.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+        year: 'numeric', month: 'long', day: 'numeric',
       })
     : '';
 
@@ -79,20 +77,17 @@ export default function BlogPostClient({ posts }: { posts: WPPost[] }) {
         into the <head>. This works alongside generateMetadata.
       */}
       {fontLinks.map((link, index) => (
-        <link key={`font-link-${index}`} rel='stylesheet' href={link} crossOrigin='anonymous' />
+         <link key={`font-link-${index}`} rel="stylesheet" href={link} crossOrigin="anonymous" />
       ))}
 
       {/* Global link style (optional, could be in global CSS or layout) */}
       <style jsx global>{`
-        article a,
-        .wp-content a {
+        article a, .wp-content a {
           text-decoration: none !important;
         }
       `}</style>
 
-      <div
-        className={`bg-black w-full flex flex-col relative h-full min-h-screen ${oxaniumFont.className}`}
-      >
+      <div className={`bg-black w-full flex flex-col relative h-full min-h-screen ${oxaniumFont.className}`}>
         <NavbarGroup />
 
         <article className='flex flex-col lg:flex-row pt-[10%] pb-10'>
