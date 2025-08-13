@@ -25,7 +25,7 @@ import { WPPost } from '@/utils/wordpressUtils';
 const oxaniumFont = Oxanium({ weight: '500', subsets: ['latin'] });
 
 // --- Client-Side Page Component Logic (Moved Here) ---
-export default function BlogPostClient({posts}: {posts: WPPost[]}) {
+export default function BlogPostClient({ posts }: { posts: WPPost[] }) {
   const params = useParams();
   // Ensure slug is treated as a string, taking the first element if it's an array
   const slugParam = params.slug;
@@ -35,7 +35,6 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
   // const { post, processedContent, wpStyles, fontLinks, isLoading, error } = useWordPressPost(slug);
 
   const { post, processedContent, wpStyles, fontLinks } = useWordPressPost(posts);
-
 
   // // Handle Not Found - triggered by SWR error or if post is null after loading
   // const isNotFound = !isLoading && !error && !post && slug;
@@ -65,7 +64,9 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
   const imageUrl = post.jetpack_featured_media_url;
   const formattedDate = post.date
     ? new Date(post.date).toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
       })
     : '';
 
@@ -78,17 +79,20 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
         into the <head>. This works alongside generateMetadata.
       */}
       {fontLinks.map((link, index) => (
-         <link key={`font-link-${index}`} rel="stylesheet" href={link} crossOrigin="anonymous" />
+        <link key={`font-link-${index}`} rel='stylesheet' href={link} crossOrigin='anonymous' />
       ))}
 
       {/* Global link style (optional, could be in global CSS or layout) */}
       <style jsx global>{`
-        article a, .wp-content a {
+        article a,
+        .wp-content a {
           text-decoration: none !important;
         }
       `}</style>
 
-      <div className={`bg-black w-full flex flex-col relative h-full min-h-screen ${oxaniumFont.className}`}>
+      <div
+        className={`bg-black w-full flex flex-col relative h-full min-h-screen ${oxaniumFont.className}`}
+      >
         <NavbarGroup />
 
         <article className='flex flex-col lg:flex-row pt-[10%] pb-10'>
@@ -110,10 +114,12 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
           />
         </article>
 
-        {/* Contact Form - positioning might need adjustment based on layout */}
-        <div className="w-full px-10 lg:w-[55%] lg:ml-auto lg:mr-[10%] xl:mr-[20%] text-white pb-10"> {/* Example alignment */}
-            <BlogContactUs/>
-        </div>
+        {/* Contact Form - Separate section with proper spacing */}
+        <section className='w-full px-10 lg:px-20 py-16 bg-black'>
+          <div className='w-full lg:w-[53%] lg:mr-0 lg:ml-auto lg:pr-12'>
+            <BlogContactUs />
+          </div>
+        </section>
 
         <ResponsiveFooter />
       </div>
