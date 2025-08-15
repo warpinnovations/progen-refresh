@@ -42,7 +42,6 @@ const LandingPage = () => {
      
         <Awards></Awards>
         <ProminentSection />
-           <Contact />
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
