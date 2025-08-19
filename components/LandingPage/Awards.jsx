@@ -1,35 +1,70 @@
 "use client";
 
-import { AnimatePresence, easeIn, easeInOut, motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { AnimatePresence, motion } from 'framer-motion';
 import localFont from 'next/font/local';
 import Image from 'next/image';
-import { useState, useEffect, useRef, useLayoutEffect} from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 const MoonlanderFont = localFont({src:'../../Fonts/Moonlander.ttf'});
 
 const awarditems = [
     {   
         id: 1,
-        title: 'FINALIST1',
-        category: 'MARKETING EXCELLENCE AWARDS',  
+        title: 'FINALIST',
+        category: 'BEST EXPERIMENTAL CAMPAIGN',  
         planetimg: '/LandingPageAssets/planets/moon.png',
-        awardimg: '/LandingPageAssets/planets/medal.png',
+        awardimg: '/LandingPageAssets/awards/pr-awards-2025.png',
     },
     {
         id: 2, 
-        title: 'FINALIST2',
-        category: 'MARKETING EXCELLENCE AWARDS',
+        title: 'SILVER AWARD',
+        category: 'EXCELLENCE IN URBAN GUERRILLA MARKETING',
         planetimg: '/LandingPageAssets/planets/planet2.png',
-        awardimg: '/LandingPageAssets/planets/medal.png',
+        awardimg: '/LandingPageAssets/awards/medal.png',
     },
     {
         id: 3, 
-        title: 'FINALIST3',
-        category: 'MARKETING EXCELLENCE AWARDS',
+        title: 'SILVER AWARD',
+        category: 'EXCELLENCE IN ANNIVERSARY MARKETING',
         planetimg: '/LandingPageAssets/planets/moon.png',
-        awardimg: '/LandingPageAssets/planets/medal.png',
+        awardimg: '/LandingPageAssets/awards/medal.png',
     },
+    {
+        id: 4, 
+        title: 'FINALIST',
+        category: 'EXCELLENCE IN RELATIONSHIP MARKETING',
+        planetimg: '/LandingPageAssets/planets/moon.png',
+        awardimg: '/LandingPageAssets/awards/medal.png',
+    },
+    {
+        id: 5, 
+        title: 'SILVER ANVIL',
+        category: 'PR TOOLS - SPECIAL EVENTS',
+        planetimg: '/LandingPageAssets/planets/moon.png',
+        awardimg: '/LandingPageAssets/awards/anvil-awards.png',
+    },
+    {
+        id: 6, 
+        title: 'SILVER ANVIL',
+        category: 'BEST PR-LED INTEGRATED CAMPAIGN',
+        planetimg: '/LandingPageAssets/planets/moon.png',
+        awardimg: '/LandingPageAssets/awards/anvil-awards.png',
+    },
+    {
+        id: 7, 
+        title: 'FINALIST',
+        category: 'EXCELLENCE IN PUBLIC SECTOR MARKETING',
+        planetimg: '/LandingPageAssets/planets/moon.png',
+        awardimg: '/LandingPageAssets/awards/medal.png',
+    },
+    {
+        id: 8, 
+        title: 'MARKETING LEADER OF THE YEAR',
+        category: 'LCID CRESCENT FERNANDEZ',
+        planetimg: '/LandingPageAssets/planets/moon.png',
+        awardimg: '/LandingPageAssets/awards/medal.png',
+    },
+    
 ];
 
 const slideVariants = {
@@ -52,12 +87,28 @@ const slideVariants = {
     }),
 };
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.05, delayChildren: 0.5 },
+    },
+};
+
+const characterVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { duration: 0.8, ease: "easeInOut" },
+    },
+};
+
 const Awards = () => {
     const [[currentIndex, direction], setIndex] = useState([0,0]);
     
-    const paginate = (newDirection) => {
-        setIndex([ (currentIndex + newDirection + awarditems.length) % awarditems.length, newDirection]);
-    };
+    const paginate = useCallback((newDirection) => {
+        setIndex([(currentIndex + newDirection + awarditems.length) % awarditems.length, newDirection]);
+    }, [currentIndex]);
 
     useEffect(() => {
         const intervalId = setInterval(() => { 
@@ -65,31 +116,14 @@ const Awards = () => {
             paginate(nextDirection); 
         }, 10000);
         return () => clearInterval(intervalId);
-    
-    }, [currentIndex, direction]);
-    if (!awarditems) {
+    }, [direction, paginate]);
+
+    const currentAward = useMemo(() => awarditems[currentIndex], [currentIndex]);
+    const isAnvilImage = useMemo(() => currentAward.awardimg.includes('anvil-awards'), [currentAward.awardimg]);
+
+    if (!awarditems.length) {
         return null;
     }
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1, delayChildren: 1.3 },
-        },
-    };
-
-    const characterVariants = {
-        hidden: {
-            opacity: 0,
-        },
-        visible: {
-            opacity: 1,
-            transition: { 
-                duration: 1.5, ease: "easeInOut",
-                },
-            },
-        };
 
     return (
         <main className="min-h-120vh md:min-h-90vh bg-cover bg-center bg-no-repeat bg-[url('/LandingPageAssets/awardsbg.png')] py-40">
@@ -98,7 +132,7 @@ const Awards = () => {
                 <div className='relative w-full h-[500px] md:h-[700px] flex items-center justify-center overflow-hidden md:pb-80'>
                     <button
                         onClick={() => paginate(-1)}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-full w-12 items-center justify-center rounded-full text-opacity-10 hover:text-opacity-100 text-white text-2xl transition-all hover:bg-gradient-to-bl from-white/0 to-white/10 "
+                        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-full w-12 items-center justify-center rounded-full text-opacity-10 hover:text-opacity-100 text-white text-2xl transition-all hover:bg-gradient-to-bl from-white/0 to-white/10"
                         aria-label="Previous slide"
                     >
                         ❮
@@ -121,7 +155,8 @@ const Awards = () => {
                             animate="center"
                             exit="exit"
                             transition={{
-                                duration: 1, ease: "easeInOut",
+                                duration: 0.6,
+                                ease: "easeInOut",
                             }}
                             className="absolute w-full h-full"
                         >
@@ -129,68 +164,94 @@ const Awards = () => {
                                 <div className='flex items-center justify-center gap-4 md:contents'>
                                     {/* awardimage */}
                                     <motion.div
-                                        key={awarditems[currentIndex].awardimg}
+                                        key={currentAward.awardimg}
                                         initial={{ opacity: 0, clipPath: 'inset(0% 0% 100% 0%)' }}
                                         animate={{ opacity: 1, clipPath: 'inset(0% 0% 0% 0%)'}}
                                         transition={{
-                                            duration: 1.2,
+                                            duration: 0.8,
                                             ease: 'easeInOut',
-                                            delay: 1.5,
+                                            delay: 0.3,
                                         }}
                                         className='md:order-1'
                                     >
 
                                         <Image
-                                            src={awarditems[currentIndex].awardimg}
-                                            alt={awarditems[currentIndex].title}
-                                            height={200}
-                                            width={200}
-                                            className='drop-shadow-lg w-20 md:w-32 lg:w-48 h-auto'
+                                            src={currentAward.awardimg}
+                                            alt={currentAward.title}
+                                            height={300}
+                                            width={300}
+                                            priority={currentIndex < 2}
                                         />
                                     </motion.div>
                                     
                                     <div className='order-2 flex flex-col text-left md:order-3'>
                                         <motion.h3
-                                            key={awarditems[currentIndex].title}
+                                            key={currentAward.title}
                                             className='text-xl text-white md:text-4xl lg:text-6xl font-thin tracking-widest uppercase'
                                             variants={containerVariants}
                                             initial="hidden"
                                             animate="visible"
                                         >
-                                            {awarditems[currentIndex].title.split('').map((char, index) => (
-                                                <motion.span
-                                                    key={index}
-                                                    variants={characterVariants}
-                                                >
-                                                    {char === ' ' ? '\u00A0' : char}
-                                                </motion.span>
-                                            ))}
+                                            {currentAward.title === 'MARKETING LEADER OF THE YEAR' ? (
+                                                <>
+                                                    <div>
+                                                        {currentAward.title.split(' ').slice(0, 2).join(' ').split('').map((char, index) => (
+                                                            <motion.span
+                                                                key={index}
+                                                                variants={characterVariants}
+                                                            >
+                                                                {char === ' ' ? '\u00A0' : char}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        {currentAward.title.split(' ').slice(2).join(' ').split('').map((char, index) => (
+                                                            <motion.span
+                                                                key={index + 1000}
+                                                                variants={characterVariants}
+                                                            >
+                                                                {char === ' ' ? '\u00A0' : char}
+                                                            </motion.span>
+                                                        ))}
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                currentAward.title.split('').map((char, index) => (
+                                                    <motion.span
+                                                        key={index}
+                                                        variants={characterVariants}
+                                                    >
+                                                        {char === ' ' ? '\u00A0' : char}
+                                                    </motion.span>
+                                                ))
+                                            )}
                                         </motion.h3>
                                         <motion.h4
-                                            key={awarditems[currentIndex].category}
+                                            key={currentAward.category}
                                             initial={{ opacity: 0, y: 20 * direction}}
                                             animate={{ opacity: 1, y: 0}}
                                             exit={{ opacity: 0, y: 0}}
                                             transition={{
-                                                duration: 0.8,
+                                                duration: 0.6,
                                                 ease: 'easeInOut',
-                                                delay: 1.5,
+                                                delay: 0.3,
                                             }}
                                             className='text-lg md:text-3xl lg:text-4xl text-[#DAAF5B] font-semibold'
                                         >
-                                            {awarditems[currentIndex].category}
+                                            {currentAward.category}
                                         </motion.h4>
                                     </div>
                                 </div>
 
                                 <div className='w-64 h-64 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] md:order-2'>
                                     <Image  
-                                        src={awarditems[currentIndex].planetimg}
-                                        alt={awarditems[currentIndex].title}
+                                        src={currentAward.planetimg}
+                                        alt={currentAward.title}
                                         width={500}
                                         height={500}
                                         sizes='(max-width: 768px) 60vw, 40vw'
                                         className='drop-shadow-lg size-full object-contain'
+                                        priority={currentIndex < 2}
                                     />    
                                 </div>
 

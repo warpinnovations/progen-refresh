@@ -15,7 +15,7 @@ function Certifications(){
 
     const certificates = [
         {
-            emblems:    ['./LandingPageAssets/certificates/cdp.png'],
+            emblems:    ['./LandingPageAssets/certificates/cdp.png','./LandingPageAssets/certificates/cdm.png'],
             linkPhrase: 'Certified',
             titles:     ['Digital Marketer'],        
           },
@@ -35,10 +35,27 @@ function Certifications(){
             titles:     ['Meltwater'],
           },
           {
-            emblems:    ['./LandingPageAssets/certificates/google-analytics.png'],
+            emblems:    ['./LandingPageAssets/certificates/google-analytics-02.webp'],
+            linkPhrase: 'Certified by',
+            titles:     ['Google Analytics'],
+          },           
+          {
+            emblems:    ['./LandingPageAssets/certificates/cisco.png'],
+            linkPhrase: 'Certified by',
+            titles:     ['Cisco'],
+          },
+          {
+            emblems:    ['./LandingPageAssets/certificates/google-analytics-03.png'],
             linkPhrase: 'Certified by',
             titles:     ['Google Analytics'],
           },
+          {
+            emblems:    ['./LandingPageAssets/certificates/google-ads.png'],
+            linkPhrase: 'Certified by',
+            titles:     ['Google Ads'],
+          },
+          
+          
     ]
 
     const lenLastRow = certificates.length % 3;

@@ -36,7 +36,6 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
 
   const { post, processedContent, wpStyles, fontLinks } = useWordPressPost(posts);
 
-
   // // Handle Not Found - triggered by SWR error or if post is null after loading
   // const isNotFound = !isLoading && !error && !post && slug;
   // if (isNotFound) {
@@ -110,10 +109,12 @@ export default function BlogPostClient({posts}: {posts: WPPost[]}) {
           />
         </article>
 
-        {/* Contact Form - positioning might need adjustment based on layout */}
-        <div className="w-full px-10 lg:w-[55%] lg:ml-auto lg:mr-[10%] xl:mr-[20%] text-white pb-10"> {/* Example alignment */}
-            <BlogContactUs/>
-        </div>
+        {/* Contact Form - Separate section with proper spacing */}
+        <section className='w-full px-10 lg:px-20 py-16 bg-black'>
+          <div className='w-full lg:w-[53%] lg:mr-0 lg:ml-auto lg:pr-12'>
+            <BlogContactUs />
+          </div>
+        </section>
 
         <ResponsiveFooter />
       </div>
