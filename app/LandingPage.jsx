@@ -13,6 +13,7 @@ import NavbarGroup from '@/components/Global/NavbarGroup';
 import Certifications from '@/components/LandingPage/Certifications';
 import Awards from "@/components/LandingPage/Awards";
 import ProminentSection from '@/components/LandingPage/ProminentSection';
+import AnniversarySection from '@/components/LandingPage/AnniversarySection'
 
 const StarshipandBrandsNoSSR = dynamic(
   () => import('@/components/LandingPage/StarshipsAndBrands'),
@@ -39,9 +40,10 @@ const LandingPage = () => {
         <StarshipandBrandsNoSSR />
         <StarshipCaptains />
         <Certifications />
-     
+
         <Awards></Awards>
         <ProminentSection />
+        <AnniversarySection />
         <ThreeColumnFooter />
         <Footer />
       </PageTransition>
