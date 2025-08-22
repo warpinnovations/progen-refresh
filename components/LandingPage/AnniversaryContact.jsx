@@ -47,7 +47,7 @@ const AnniversaryContact = () => {
                     <Link
                         href='/contact'
                         // THE FIX: ml-auto is removed, parent has flex-wrap, and a responsive margin is added.
-                        className='mt-4 md:mt-0 flex items-center justify-center bg-[#96875A] text-black font-mono font-bold px-6 py-3 rounded-lg transition-all duration-300 ease-in-out hover:bg-[#8a7c54] hover:scale-105 shadow-lg'
+                        className='inline-flex items-center rounded-lg bg-gradient-to-r from-[#96875A] to-[#B19B6A] px-8 py-4 text-lg font-bold text-black shadow-lg shadow-[#96875A]/30 transition-all duration-300 hover:scale-105 hover:shadow-xl'
                     >
                         Contact Us
                         <svg className='ml-2 w-5 h-5' fill='none' stroke='currentColor' viewBox='o 0 24 24'>

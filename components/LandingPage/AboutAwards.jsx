@@ -48,7 +48,7 @@ const AboutAwards = () => {
                 <StarsCanvas hidden={true} />
             </div>
 
-            <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="relative z-10 mx-auto px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
 
                     {/* Left Column: Awards Carousel */}
@@ -91,7 +91,8 @@ const AboutAwards = () => {
                         </div>
                     </div>
 
-                    <div>
+                    {/* Right Column: AboutAwardSection - Give it more space */}
+                    <div className="w-full">
                         <AboutAwardSection />
                     </div>
                 </div>

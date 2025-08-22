@@ -218,12 +218,6 @@ const SubSectionPage = () => {
                 </p>
               </section>
             </div>
-
-            <section className='text-center pt-10'>
-              <Link href='/contact'>
-                <AboutContactSection />
-              </Link>
-            </section>
           </div>
         </div>
 
