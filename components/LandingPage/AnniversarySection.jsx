@@ -12,7 +12,7 @@ const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
 const AnniversarySection = () => {
     return (
-        <section className="relative pt-24 sm:pt-32 pb-24 overflow-hidden">
+        <section className="relative pt-8 sm:pt-12 pb-24 overflow-hidden">
 
             <div className="absolute inset-0 z-0">
                 <img
@@ -32,7 +32,7 @@ const AnniversarySection = () => {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className={`${MoonlanderFont.className} font-black text-4xl md:text-6xl text-[#96875A] mb-20 text-center tracking-wider`}
                 >
-                    6 Years of Service
+                    {/* 6 Years of Service */}
                 </motion.h1>
 
                 {/* LAYOUT REWORK: Switched to Flexbox for better control (60/40 split) */}
@@ -45,7 +45,7 @@ const AnniversarySection = () => {
                         viewport={{ once: true, amount: 0.5 }}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
                         // SUPERIOR FADE: Fades only the right side to blend with the contact card
-                        className="[mask-image:radial-gradient(ellipse_at_center,white_50%,transparent_95%)]"
+                        className="[mask-image:radial-gradient(ellipse_at_center,white_50%,transparent_70%)]"
                     >
                         <Image
                             src="/6yearLogo.jpg"
