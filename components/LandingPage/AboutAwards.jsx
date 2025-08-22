@@ -37,7 +37,9 @@ const AboutAwards = () => {
     const currentAward = useMemo(() => awarditems[currentIndex], [currentIndex]);
 
     return (
-        <section className="relative text-white pt-8 pb-16 sm:pb-24 overflow-hidden">
+        // THE CHANGE IS HERE: Reduced vertical padding
+        // from "pt-8 pb-16 sm:pb-24" to "pt-0 pb-12"
+        <section className="relative text-white pt-0 pb-12 overflow-hidden">
             <div className="absolute inset-0 z-0">
                 <img
                     src="/LandingPageAssets/galaxybg.webp"
