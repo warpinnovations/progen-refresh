@@ -6,28 +6,31 @@ import StarShipsSection from '@/components/About/StarShipSection'
 import Footer from '@/components/Global/Footer'
 import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter"
 import NavbarGroup from '../Global/NavbarGroup'
-import AboutContactSection from "./AboutContactSection"; // 1. Import the new component
+import AboutContactSection from "./AboutContactSection";
+import AboutAwards from '../LandingPage/AboutAwards'
+
 
 const MainSectionAbout = () => {
   return (
     <main>
-    
-     <NavbarGroup/>
+
+      <NavbarGroup />
       <Header />
       <PageTitle title="About" />
-      <CardComponentSection/>
+      <CardComponentSection />
+      <AboutAwards />
       <PageTitle title="StarShips" />
-      <StarShipsSection/>
+      <StarShipsSection />
       <AboutContactSection></AboutContactSection>
       <footer>
-          <div className="md:hidden">
-            <Footer />
-          </div>
+        <div className="md:hidden">
+          <Footer />
+        </div>
 
-          <div className="hidden md:block">
-            <ThreeColumnFooter />
-          </div>
-        </footer>
+        <div className="hidden md:block">
+          <ThreeColumnFooter />
+        </div>
+      </footer>
     </main>
   )
 }
