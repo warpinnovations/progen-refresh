@@ -21,14 +21,14 @@ const AnniversaryContact = () => {
                     </h3>
 
                     <p className='text-gray-300 leading-relaxed text-lg'>
-                        Inspired by our journey? Let&apos;s engineer your brand&apos;s success together. We combine meticulously crafted strategy with creative innovation to achieve stellar results.
+                        Let&apos;s engineer your brand&apos;s success together. We combine meticulously crafted strategy with creative innovation to achieve stellar results.
                     </p>
                 </div>
 
                 <hr className="my-8 border-t border-[#96875A]/20" />
 
-                {/* Call to Action Area - NOW FULLY RESPONSIVE */}
-                <div className='flex flex-wrap justify-between items-center gap-x-6'>
+                {/* THE CHANGE IS HERE: Added a vertical gap for more noticeable spacing */}
+                <div className='flex flex-wrap justify-between items-center gap-x-6 gap-y-6'>
 
                     {/* Vertically stacked text on the left */}
                     <div className='flex flex-col'>
@@ -43,14 +43,14 @@ const AnniversaryContact = () => {
                         </a>
                     </div>
 
-                    {/* Button on the right, now wraps on mobile */}
+                    {/* Button on the right */}
                     <Link
                         href='/contact'
-                        // THE FIX: ml-auto is removed, parent has flex-wrap, and a responsive margin is added.
+                        // Individual margin is no longer needed
                         className='inline-flex items-center rounded-lg bg-gradient-to-r from-[#96875A] to-[#B19B6A] px-8 py-4 text-lg font-bold text-black shadow-lg shadow-[#96875A]/30 transition-all duration-300 hover:scale-105 hover:shadow-xl'
                     >
                         Contact Us
-                        <svg className='ml-2 w-5 h-5' fill='none' stroke='currentColor' viewBox='o 0 24 24'>
+                        <svg className='ml-2 w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
                         </svg>
                     </Link>

@@ -74,17 +74,8 @@ const awardsData = [
 const MilestonesSection = () => {
   return (
     // REMOVED bg-white to let the page background show through
-    <section className="py-16 px-6">
+    <section className="py-8 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Restyled "Our Impact" tag for a dark theme */}
-        <span className="text-sm font-semibold text-[#B19B6A] bg-[#96875A]/20 rounded-full px-4 py-1">
-          Our Impact
-        </span>
-        {/* Changed text colors to be light */}
-        <h2 className="text-4xl font-bold text-white mt-4">Milestones & Achievements</h2>
-        <p className="text-gray-300 mt-2 max-w-2xl mx-auto">
-          Our journey has been marked by continuous growth, innovation, and recognition.
-        </p>
       </div>
 
       <div className="max-w-6xl mx-auto mt-12 grid grid-cols-1 lg:grid-cols-5 gap-12">
