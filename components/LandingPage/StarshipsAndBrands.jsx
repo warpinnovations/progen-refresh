@@ -31,7 +31,7 @@ const StarshipsAndBrands = () => {
   const isMobile = window.innerWidth <= 500;
   return (
     <div className="flex flex-col items-center justify-center relative">
-      <div className="absolute inset-0 z-0 h-auto">
+      {/* <div className="absolute inset-0 z-0 h-auto">
         <img
           src="/LandingPageAssets/galaxybg.webp"
           className="h-full w-full object-cover"
@@ -59,10 +59,9 @@ const StarshipsAndBrands = () => {
 
       <div className="absolute inset-0 z-0">
         <StarsCanvas hidden={true} />
-      </div>
-      <div
-        className={`mb-52 mt-24 px-5 md:px-0 z-10 w-auto flex flex-col items-center text-center justify-center text-md sm:text-xl md:text-4xl lg:text-5xl text-white ${MoonlanderFont.className}`}
-      >
+      </div> */}
+      {/*
+      <div className={`mb-52 mt-24 px-5 md:px-0 z-10 w-auto flex flex-col items-center text-center justify-center text-md sm:text-xl md:text-4xl lg:text-5xl text-white ${MoonlanderFont.className}`}>
         <div className="relative w-auto mt-24">
           <motion.span
             ref={ref}
@@ -86,7 +85,7 @@ const StarshipsAndBrands = () => {
               scaleX: isVisibleInAnimation ? [0, 1, 0] : 0,
             }}
             transition={{ duration: 2, delay: isMobile ? 1.5 : 0 }}
-            className={`${
+            className={`$${
               isVisibleInAnimation ? "bg-prOrange" : ""
             } h-8 md:h-10 lg:h-12 absolute inset-0`}
             style={{ transformOrigin: "left" }}
@@ -116,13 +115,14 @@ const StarshipsAndBrands = () => {
               scaleX: isVisibleInAnimation ? [0, 1, 0] : 0,
             }}
             transition={{ duration: 2, delay: isMobile ? 2.5 : 1 }}
-            className={`${
+            className={`$${
               isVisibleInAnimation ? "bg-prOrange" : ""
             } h-8 md:h-10 lg:h-12 absolute inset-0`}
             style={{ transformOrigin: "left" }}
           />
         </div>
       </div>
+      */}
 
       <div className="w-3/5 text-center z-10">
         <h1

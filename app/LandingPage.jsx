@@ -42,7 +42,7 @@ const LandingPage = () => {
         <Certifications />
 
         <Awards></Awards>
-        <ProminentSection />
+        {/* <ProminentSection /> */}
         <AnniversarySection />
         <ThreeColumnFooter />
         <Footer />
