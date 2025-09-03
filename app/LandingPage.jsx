@@ -38,7 +38,7 @@ const LandingPage = () => {
         {/* <Services /> */}
         <OurServices />
         <StarshipandBrandsNoSSR />
-        <StarshipCaptains />
+        {/* <StarshipCaptains /> */}
         <Certifications />
 
         <Awards></Awards>
