@@ -16,31 +16,14 @@ const escapeHTML = (str) => {
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
-    number: "",
     message: "",
-    services: [],
   });
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
-  const handleServiceToggle = (service) => {
-    setFormData((prevData) => {
-      const updatedServices = prevData.services.includes(service)
-        ? prevData.services.filter((item) => item !== service)
-        : [...prevData.services, service];
-
-      return {
-        ...prevData,
-        services: updatedServices,
-      };
-    });
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -49,52 +32,31 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.services.length === 0) {
-      toast.error("Please select at least one service.");
-      return; 
-    }
-
     const sanitizedData = {
       ...formData,
-      firstName: escapeHTML(DOMPurify.sanitize(formData.firstName)),
-      lastName: escapeHTML(DOMPurify.sanitize(formData.lastName)),
+      fullName: escapeHTML(DOMPurify.sanitize(formData.fullName)),
       email: escapeHTML(DOMPurify.sanitize(formData.email)),
-      number: escapeHTML(DOMPurify.sanitize(formData.number)),
       message: escapeHTML(DOMPurify.sanitize(formData.message)),
     };
-
     setFormData({
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
-      number: "",
       message: "",
-      services: [],
     });
-
     console.log("this is form Data", sanitizedData);
-
     sendEmail({
       from_email: "marketing@prometheus.ph",
       from_name: "Prometheus",
-      to_name: sanitizedData.firstName + " " + sanitizedData.lastName,
+      to_name: sanitizedData.fullName,
       user_email: sanitizedData.email,
-      number: sanitizedData.number,
+      number: "",
       message: `
-        First Name: ${sanitizedData.firstName} \n
-
-        Last Name: ${sanitizedData.lastName} \n
-
-        Number: ${sanitizedData.number} \n
-
+        Full Name: ${sanitizedData.fullName} \n
         Email: ${sanitizedData.email} \n 
-
-        Services Selected: ${sanitizedData.services.join(", ")} \n
 
         Message: ${sanitizedData.message}
       `,
     });
-
     toast.success("Email has been sent!");
   };
 
@@ -146,58 +108,19 @@ const ContactForm = () => {
                   <div className="flex-1 flex flex-col md:flex-col justify-center w-full space-y-5 font-ox">
                     <div className="w-full">
                       <label
-                        htmlFor="firstName"
+                        htmlFor="fullName"
                         className="block text-sm font-medium font-ox"
                       >
-                        First Name
+                        Full Name
                       </label>
                       <input
                         type="text"
-                        id="firstName"
-                        name="firstName"
-                        placeholder="Peter"
-                        value={formData.firstName}
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Peter Weyland"
+                        value={formData.fullName}
                         onChange={handleChange}
                         className="mt-1 p-2 block w-full bg-[#3A3737] rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
-                    <div className="w-full">
-                      <label
-                        htmlFor="lastName"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        placeholder="Weyland"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-4">
-                      <label
-                        htmlFor="number"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        Contact Number
-                      </label>
-                      <input
-                        type="text"
-                        id="number"
-                        placeholder="Enter your contact number"
-                        name="number"
-                        value={formData.number}
-                        onChange={handleChange}
-                        pattern="[0-9]{11}"
-                        title="Please enter a 11-digit phone number e.g. (09123456789)"
-                        className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
                         required
                       />
                     </div>
@@ -222,40 +145,6 @@ const ContactForm = () => {
                     </div>
                   </div>
 
-                  <div className="mt-2">
-                    <label
-                      htmlFor="services"
-                      className="block text-sm font-medium font-ox"
-                    >
-                      Select Services:
-                    </label>
-                    <div className="flex flex-col">
-                      {[
-                        "Strategy",
-                        "Creative",
-                        "Branding",
-                        "Digital Marketing",
-                        "Media",
-                        "Social Media",
-                        "Event Management",
-                        "Software Solutions",
-                        "Wedding Studio",
-                      ].map((service) => (
-                        <div key={service} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            id={service}
-                            name="services"
-                            value={service}
-                            checked={formData.services.includes(service)}
-                            onChange={() => handleServiceToggle(service)}
-                            className="mr-2"
-                          />
-                          <label htmlFor={service}>{service}</label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
                   <div className="flex-1 mt-2">
                     <label
                       htmlFor="message"
@@ -285,7 +174,7 @@ const ContactForm = () => {
                     type="submit"
                     className="py-3 px-6 bg-[#3A3737] hover:bg-gray-700 font-black rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
 
-                    // disabled={!isCaptchaVerified}
+                  // disabled={!isCaptchaVerified}
                   >
                     SEND MESSAGE
                   </button>

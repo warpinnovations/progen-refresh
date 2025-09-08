@@ -8,7 +8,7 @@ import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter"
 import NavbarGroup from '../Global/NavbarGroup'
 import AboutContactSection from "./AboutContactSection";
 import AboutAwards from '../LandingPage/AboutAwards'
-
+import StarshipCaptains from '@/components/LandingPage/StarshipCaptains'
 
 const MainSectionAbout = () => {
   return (
@@ -21,6 +21,7 @@ const MainSectionAbout = () => {
       <AboutAwards />
       <PageTitle title="StarShips" />
       <StarShipsSection />
+      <StarshipCaptains />
       <AboutContactSection></AboutContactSection>
       <footer>
         <div className="md:hidden">

@@ -38,11 +38,11 @@ const LandingPage = () => {
         {/* <Services /> */}
         <OurServices />
         <StarshipandBrandsNoSSR />
-        <StarshipCaptains />
+        {/* <StarshipCaptains /> */}
         <Certifications />
 
         <Awards></Awards>
-        <ProminentSection />
+        {/* <ProminentSection /> */}
         <AnniversarySection />
         <ThreeColumnFooter />
         <Footer />
