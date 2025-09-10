@@ -32,9 +32,8 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed w-full  py-10 z-20 overflow-y-hidden font-bold font-ox ${
-        !isScrolled ? "scrolled-nav" : "bg-black/50"
-      }  `}
+      className={`fixed w-full  py-10 z-20 overflow-y-hidden font-bold font-ox ${!isScrolled ? "scrolled-nav" : "bg-black/50"
+        }  `}
     >
       <div
         className={`hidden lg:flex  justify-between items-center w-[90%] gap-10`}
@@ -49,15 +48,32 @@ const Navbar = () => {
           />
         </Link>
 
-        {NavData.map((nav, index) => (
-          <Link href={nav.Link} key={index}>
-            <div
-              className={`font-bold uppercase font-ox hover:scale-110 cursor-pointer ease-in-out duration-300 transition text-white ${OxaniumFont.className} `}
-            >
-              {nav.nav}
-            </div>
-          </Link>
-        ))}
+        <div className="hidden lg:flex justify-end items-center w-full">
+          {/* Main nav links, tightly grouped */}
+          <div className="flex gap-6">
+            {NavData.filter(nav => nav.nav !== "Contact Us").map((nav, index) => (
+              <Link href={nav.Link} key={index}>
+                <div
+                  className={`font-bold uppercase font-ox hover:scale-110 cursor-pointer ease-in-out duration-300 transition text-white ${OxaniumFont.className}`}
+                >
+                  {nav.nav}
+                </div>
+              </Link>
+            ))}
+          </div>
+          {/* Contact Us button */}
+          <div className="ml-6">
+            {NavData.filter(nav => nav.nav === "Contact Us").map((nav, index) => (
+              <Link href={nav.Link} key={index}>
+                <div
+                  className="px-6 py-2 border border-white rounded-full text-white font-bold uppercase font-ox hover:bg-white hover:text-black transition duration-300 cursor-pointer"
+                >
+                  {nav.nav}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="flex lg:hidden">
