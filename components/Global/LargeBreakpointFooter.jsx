@@ -97,14 +97,14 @@ const ThreeColumnFooter = () => {
           <FooterColumn>
             <h5 className="font-bold uppercase lg:text-left sm:text-center">MISSION</h5>
             <p className="mt-4 ml-4 max-w-xs font-medium text-sm mx-auto lg:mx-0 lg:mr-8 leading-loose text-center lg:text-left sm:mr-4" >
-            To forever chase excellence with curiosity as our guide.
+              To forever chase excellence with curiosity as our guide.
             </p>
           </FooterColumn>
           <FooterColumn>
             <h5 className="font-bold uppercase lg:text-left sm:text-center">VISION</h5>
             <p className="mt-4 max-w-xs font-medium text-sm mx-auto lg:mx-0 lg:mr-8 leading-loose text-center lg:text-left">
-                To build powerful connections through creativity and innovation across
-                the widest variety of mediums and platforms.
+              To build powerful connections through creativity and innovation across
+              the widest variety of mediums and platforms.
             </p>
           </FooterColumn>
         </div>

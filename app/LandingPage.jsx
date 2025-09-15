@@ -14,6 +14,8 @@ import Certifications from '@/components/LandingPage/Certifications';
 import Awards from "@/components/LandingPage/Awards";
 import ProminentSection from '@/components/LandingPage/ProminentSection';
 import AnniversarySection from '@/components/LandingPage/AnniversarySection'
+import FeaturedWorksGrid from '@/components/OurWorks/FeaturedWorksGrid';
+import { worksData } from '@/app/contants';
 
 const StarshipandBrandsNoSSR = dynamic(
   () => import('@/components/LandingPage/StarshipsAndBrands'),
@@ -30,18 +32,17 @@ const LandingPage = () => {
       <PageTransition>
         <NavbarGroup />
         <HeroSectionDynamicNoSSR />
+        <Certifications />
         <div className='w-full'>
           <div className='flex justify-center items-center'>
             <PrometheusPlayer />
           </div>
         </div>
         {/* <Services /> */}
-        <OurServices />
         <StarshipandBrandsNoSSR />
         {/* <StarshipCaptains /> */}
-        <Certifications />
-
-        <Awards></Awards>
+        <OurServices />
+        <FeaturedWorksGrid />
         {/* <ProminentSection /> */}
         <AnniversarySection />
         <ThreeColumnFooter />

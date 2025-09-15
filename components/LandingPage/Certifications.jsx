@@ -1,138 +1,126 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import localFont from 'next/font/local';
-const MoonlanderFont = localFont({src:'../../Fonts/Moonlander.ttf'});
+import React from 'react'; // Imported React for Fragments
+import StarsCanvas from '@/components/Global/StarCanvas';
 
-function Certifications(){
-    const [ref, inView] = useInView({
-        triggerOnce: true,
-        threshold: 0.3,
-    });
-
-    const isVisibleInAnimation = inView;
-
+function Certifications() {
     const certificates = [
         {
-            emblems:    ['./LandingPageAssets/certificates/cdp.png','./LandingPageAssets/certificates/cdm.png'],
+            emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'],
             linkPhrase: 'Certified',
-            titles:     ['Digital Marketer'],        
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/cdp.png','./LandingPageAssets/certificates/cdm.png'],
+            titles: ['Digital Marketer'],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'],
             linkPhrase: 'Certified in',
-            titles:     ['Search Engine Optimization'],    
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/cdp.png','./LandingPageAssets/certificates/cdm.png'],
+            titles: ['Search Engine Optimization'],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'],
             linkPhrase: 'Certified in',
-            titles:     ['Digital Marketing', 'App Marketing',],
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/meltwater.png'],
+            titles: ['Digital Marketing', 'App Marketing'],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/meltwater.png'],
             linkPhrase: 'Partners with',
-            titles:     ['Meltwater'],
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/google-analytics-02.webp'],
-            linkPhrase: 'Certified by',
-            titles:     ['Google Analytics'],
-          },           
-          {
-            emblems:    ['./LandingPageAssets/certificates/cisco.png'],
-            linkPhrase: 'Certified by',
-            titles:     ['Cisco'],
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/google-analytics-03.png'],
-            linkPhrase: 'Certified by',
-            titles:     ['Google Analytics'],
-          },
-          {
-            emblems:    ['./LandingPageAssets/certificates/google-ads.png'],
-            linkPhrase: 'Certified by',
-            titles:     ['Google Ads'],
-          },
-          
-          
-    ]
+            titles: ['Meltwater'],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/google-analytics-02.webp'],
+            alt: 'Google Analytics',
+            titles: [''],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/cisco.png'],
+            alt: 'Cisco Certified',
+            titles: [''],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/google-analytics-03.png'],
+            alt: 'Google Analytics IQ',
+            titles: [''],
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/google-ads.png'],
+            alt: 'Google Ads Certified',
+            titles: [''],
+        },
+    ];
 
-    const lenLastRow = certificates.length % 3;
-    const lenTopRows = certificates.length - lenLastRow;
-    return <section
-    className='w-full flex flex-col justify-center md:py-40 my-20'
-    >
-        <motion.div className="container mx-auto px-4 text-center text-white" ref={ref}
-            initial="hidden"
-            animate={isVisibleInAnimation ? "visible":"hidden"}
-            variants={{
-                hidden:{opacity: 0, y:20},
-                visible: {
-                    opacity: 1,
-                    y: "0%",
-                    transition:{
-                        duration:  .5,
-                        ease: "easeInOut",
-                        delayChildren: .15,
-                        staggerChildren: .3
-                    }
-                }
-            }}
-        >
-            <h1 className={`${MoonlanderFont.className} font-black justify-center text-xl md:text-4xl text-prOrange mb-10 md:mb-32 text-center`}>
-                CERTIFICATIONS
-            </h1>
-            {/* 3-column rows */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-10">
-                {certificates.slice(0, lenTopRows).map((cert, i) => (
-                    <motion.div key={cert.emblems + cert.titles + i.toString()} className="flex flex-col items-center"
-                        variants={{
-                            hidden: {opacity: 0, y: 50},
-                            visible: {opacity: 1, y:"0%", transition: {duration: 0.5, ease: "easeInOut"}},
-                        }}
-                    >
-                        <div className="flex space-x-2 mb-4">
-                            {cert.emblems.map((src, i) => (
-                                <img key={src + i.toString()} src={src} alt="" className="h-32 w-auto" />
-                            ))}
-                        </div>
-                
-                        <p className="text-sm uppercase tracking-wider">{cert.linkPhrase}</p>
-                
-                        {cert.titles.map((line, i) => (
-                            <p key={JSON.stringify(cert.titles) + line} className="mt-1 font-bold uppercase text-center">
-                                {line}
-                            </p>
-                        ))}
-                    </motion.div>
-                ))}
+    const duplicatedCertificates = [...certificates, ...certificates];
+
+    return (
+        <section className='w-full flex flex-col justify-center py-20 md:py-28 relative overflow-hidden'>
+            <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+                <StarsCanvas />
             </div>
-            {/* centered bottom rows regardless of item nums*/}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-x-52 gap-y-12 mt-16">
-                {certificates.slice(lenTopRows).map((cert, i) => (
-                    <motion.div key={JSON.stringify(cert.titles) + i.toString()} className="flex flex-col items-center"
-                        variants={{
-                            hidden: {opacity: 0, y: 50},
-                            visible: {opacity: 1, y:"0%", transition: {duration: .3, ease: "easeInOut"}},
-                        }}
-                    >
-                        <div className="flex space-x-2 mb-4">
-                            {cert.emblems.map((src, i) => (
-                                <img key={JSON.stringify(cert.emblems) + i.toString()} src={src} alt="" className="h-32 w-auto" />
-                            ))}
-                        </div>
-                        <p className="text-sm uppercase tracking-wider">{cert.linkPhrase}</p>
-                            {cert.titles.map((line, i) => (
-                                <p key={JSON.stringify(cert.titles) + line + i.toString()} className="mt-1 font-bold uppercase text-center">
-                                    {line}
-                                </p>
-                            ))}
-                    </motion.div>
-                ))}
+            <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-r from-black via-transparent to-black"></div>
+
+            <div className="relative z-10 w-full">
+                <div className="group flex items-center w-max animate-marquee hover:[animation-play-state:paused]">
+                    {duplicatedCertificates.map((cert, i) => (
+                        // Use a React Fragment to group the card and its separator
+                        <React.Fragment key={`cert-wrapper-${i}`}>
+                            {/* --- THE UPGRADED PREMIUM CARD --- */}
+                            <div
+                                className="
+                                    group/card relative flex flex-col items-center justify-start text-center 
+                                    mx-8 flex-shrink-0 w-64 p-6 
+                                    bg-black/20 backdrop-blur-sm
+                                    border border-slate-800 rounded-2xl 
+                                    shadow-lg shadow-black/30
+                                    transform-gpu transition-all duration-300 ease-in-out
+                                    hover:scale-105 hover:-translate-y-1 hover:border-prOrange
+                                    hover:shadow-2xl hover:shadow-prOrange/20
+                                "
+                            >
+                                {/* Logo container */}
+                                <div className="flex justify-center items-center space-x-4 mb-4 h-24">
+                                    {cert.emblems.map((src, j) => (
+                                        <img
+                                            key={`emblem-${i}-${j}`}
+                                            src={src}
+                                            alt={cert.alt || cert.titles[0]}
+                                            className="
+                                                max-h-full w-auto transition-all duration-300 
+                                                filter grayscale group-hover/card:grayscale-0
+                                            "
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* --- FIXED TEXT CONTAINER --- */}
+                                <div className="flex flex-col justify-center items-center min-h-[4.5rem]">
+                                    {/* Always render the linkPhrase if it exists */}
+                                    {cert.linkPhrase && (
+                                        <p className="text-sm uppercase tracking-wider text-slate-400">{cert.linkPhrase}</p>
+                                    )}
+
+                                    {/* Render titles from the titles array if they're not empty */}
+                                    {cert.titles && cert.titles[0] && cert.titles.map((line, k) => (
+                                        <p key={`title-${i}-${k}`} className={`font-semibold uppercase text-slate-100 ${cert.linkPhrase ? 'mt-1 text-base' : 'text-lg'}`}>
+                                            {line}
+                                        </p>
+                                    ))}
+
+                                    {/* Render the alt text as a title ONLY IF the titles array is empty */}
+                                    {(!cert.titles || !cert.titles[0]) && cert.alt && (
+                                        <p className="font-semibold uppercase text-slate-100 text-lg">
+                                            {cert.alt}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* --- GLOWING SEPARATOR LINE --- */}
+                            <div className="flex-shrink-0 w-px h-40 bg-gradient-to-b from-transparent via-slate-700 to-transparent group-hover:via-prOrange/50 transition-colors duration-300"></div>
+
+                        </React.Fragment>
+                    ))}
+                </div>
             </div>
-        </motion.div>
-    </section>
+        </section>
+    );
 }
 
 export default Certifications;

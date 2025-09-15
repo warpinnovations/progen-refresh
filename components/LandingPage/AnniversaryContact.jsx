@@ -6,53 +6,42 @@ import { motion } from 'framer-motion';
 
 const AnniversaryContact = () => {
     return (
+        // --- REDESIGNED CARD CONTAINER ---
+        // It's wider, uses a more subtle blur and border, and aligns text to the left.
         <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.4 }}
-            className='rounded-lg p-10 border border-[#96875A]/50 h-full flex flex-col justify-center backdrop-blur-md shadow-[inset_0_0_15px_0_rgba(150,135,90,0.15)]'
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
+            className='w-full max-w-3xl rounded-2xl p-8 md:p-10 border border-[#96875A]/20 bg-black/20 backdrop-blur-lg text-left'
         >
-            <div className='text-white flex flex-col'>
+            <div className='flex flex-col text-white'>
+
                 {/* Main Content Area */}
-                <div className="space-y-5">
-                    <h3 className='text-3xl font-semibold text-[#96875A]'>
+                <div className="space-y-4">
+                    <h3 className='text-2xl md:text-3xl font-semibold text-[#96875A]'>
                         Ready for Your Next Mission?
                     </h3>
-
-                    <p className='text-gray-300 leading-relaxed text-lg'>
+                    <p className='text-gray-300 leading-relaxed max-w-2xl'>
                         Let&apos;s engineer your brand&apos;s success together. We combine meticulously crafted strategy with creative innovation to achieve stellar results.
                     </p>
                 </div>
 
-                <hr className="my-8 border-t border-[#96875A]/20" />
+                {/* A more subtle separator line */}
+                <hr className="my-6 border-t border-[#96875A]/25" />
 
-                {/* THE CHANGE IS HERE: Added a vertical gap for more noticeable spacing */}
-                <div className='flex flex-wrap justify-between items-center gap-x-6 gap-y-6'>
+                {/* --- NEW VERTICAL CTA LAYOUT --- */}
+                {/* This section now stacks the elements for a cleaner look */}
+                <div className='flex flex-col items-start gap-y-5'>
 
-                    {/* Vertically stacked text on the left */}
-                    <div className='flex flex-col'>
-                        <p className='text-gray-400 text-sm'>
-                            Reach us at:
-                        </p>
-                        <a
-                            href='mailto:marketing@prometheus.ph'
-                            className='text-[#96875A] hover:text-[#B19B6A] hover:underline transition-colors'
-                        >
-                            marketing@prometheus.ph
-                        </a>
-                    </div>
-
-                    {/* Button on the right */}
+                    {/* --- REDESIGNED BUTTON --- */}
+                    {/* The button is now flat, more subtle, and matches the image perfectly. */}
                     <Link
                         href='/contact'
-                        // Individual margin is no longer needed
-                        className='inline-flex items-center rounded-lg bg-gradient-to-r from-[#96875A] to-[#B19B6A] px-8 py-4 text-lg font-bold text-black shadow-lg shadow-[#96875A]/30 transition-all duration-300 hover:scale-105 hover:shadow-xl'
+                        className='inline-flex items-center rounded-md bg-[#A89773] px-6 py-3 text-base font-semibold text-black transition-colors hover:bg-[#B19B6A]'
                     >
                         Contact Us
-                        <svg className='ml-2 w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
-                        </svg>
+                        <span className='ml-2 font-light'>&gt;</span>
                     </Link>
                 </div>
             </div>
