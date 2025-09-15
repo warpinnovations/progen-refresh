@@ -31,6 +31,10 @@ const StarshipsAndBrands = () => {
   const isMobile = window.innerWidth <= 500;
   return (
     <div className="flex flex-col items-center justify-center relative">
+      {/* Starry background */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+        <StarsCanvas />
+      </div>
       {/* <div className="absolute inset-0 z-0 h-auto">
         <img
           src="/LandingPageAssets/galaxybg.webp"
@@ -124,7 +128,7 @@ const StarshipsAndBrands = () => {
       </div>
       */}
 
-      <div className="w-3/5 text-center z-10">
+      <div className="w-3/5 text-center z-10 mt-24">
         <h1
           className={`text-sm md:text-4xl text-white text-center ${MoonlanderFont.className}`}
         >

@@ -8,8 +8,10 @@ import { Oxanium } from "next/font/google";
 import { motion } from "framer-motion";
 import localFont from "next/font/local";
 
-
-const OxaniumFont = Oxanium({ weights: 100, subsets: ["latin"] });
+const OxaniumFont = Oxanium({
+  weight: "400",
+  subsets: ["latin"],
+});
 const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
 
 const HeroSection = () => {
@@ -19,20 +21,27 @@ const HeroSection = () => {
   const glitchCharacterOptions =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}|;:,<.>/?";
   const starshipsLogos = [
-    "CORTX",
-    "CRAETR",
-    "JPEP",
-    "NERV",
-    "SPECTR",
-    "WARP",
-    "PROMISES",
+    {
+      filename: "MEA Logo.png",
+      alt: "Marketing Excellence Awards Logo",
+    },
+    {
+      filename: "Anvil Awards Logo.png",
+      alt: "Anvil Awards Logo",
+    },
+    {
+      filename: "Asia CEO Awards.PNG",
+      alt: "Asia CEO Awards Logo",
+    },
   ];
+
   const click = () => {
     if (activeText === textArray.length - 1) {
       setActiveText(0);
     }
     setPlay(true);
   };
+
   useEffect(() => {
     let interval = null;
     if (play && activeText < textArray.length - 1) {
@@ -44,6 +53,7 @@ const HeroSection = () => {
     }
     return () => clearInterval(interval);
   }, [play, activeText]);
+
   const generateGlitch = (text) => {
     let glitchedText = "";
     for (let i = 0; i < text.length; i++) {
@@ -59,10 +69,11 @@ const HeroSection = () => {
     }
     return glitchedText;
   };
+
   const gen = () => {
     let textArray = [];
     if (heroText.text) {
-      for (let i = 0; i < heroText.text.length + 15; i++) {
+      for (let i = 0; i < heroText.length + 15; i++) {
         textArray.push(generateGlitch(heroText.text.substring(0, i)));
       }
       textArray.push(heroText.text);
@@ -71,6 +82,51 @@ const HeroSection = () => {
   };
 
   const [textArray] = useState(gen);
+
+  // --- NEW "WARP DRIVE" ANIMATION VARIANTS ---
+
+  const logoContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        // A delay before the first logo starts its animation
+        delayChildren: 1.5,
+        // Each subsequent logo will start 0.4s after the previous one
+        staggerChildren: 0.8,
+      },
+    },
+  };
+
+  const logoWarpVariants = {
+    hidden: {
+      opacity: 0,
+
+    },
+    visible: {
+      opacity: [0, 1, 1], // Fade in, then stay visible
+      scale: [0.4, 0.8, 1.1], // Start small, grow to an intermediate size, then land at the final size
+      filter: ["blur(15px)", "blur(5px)", "blur(0px)"], // Start very blurry, become less blurry, then sharp
+      y: [100, 0, 0], // Start below the center, warp to the center, then stay for the dash
+
+      transition: {
+        duration: 0.8, // Total duration for the entire sequence for one icon
+        ease: "easeOut",
+        // 'times' maps each keyframe to a point in the duration.
+        // [0, 0.4, 1] means:
+        // - The first keyframe is at the start (0%)
+        // - The second keyframe (Phase 1 complete) is at 40% of the duration
+        // - The final keyframe (Phase 2 complete) is at the end (100%)
+        times: [0, 0.4, 1],
+      },
+    },
+  };
+
+  const logoHover = {
+    scale: 1.1,
+    transition: { type: "spring", stiffness: 300 },
+  };
+
+
   return (
     <PageTransition>
       <div className="">
@@ -93,11 +149,9 @@ const HeroSection = () => {
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-black opacity-50"></div>
 
-            {/* --- POSITIONING CHANGES ARE HERE --- */}
-            {/* This container is now centered and vertically stacks the content */}
-            <div className={`flex flex-col space-y-8 absolute inset-0 text-white text-center items-center justify-center p-4`}>
-
-              {/* 1. "BE LIMITLESS" Headline - Unchanged but now centered by the parent div */}
+            <div
+              className={`flex flex-col space-y-8 absolute inset-0 text-white text-center items-center justify-center p-4`}
+            >
               <div className="flex flex-row">
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
@@ -114,36 +168,32 @@ const HeroSection = () => {
                 </motion.h1>
               </div>
 
-              {/* 2. Sub-headline - Unchanged but now centered by the parent div */}
               <div className="w-auto md:w-1/2 z-10">
-                <h1 className={`text-sm md:text-base ${OxaniumFont.className} font-semibold text-white text-center`}>
+                <h1
+                  className={`text-sm md:text-base ${OxaniumFont.className} font-semibold text-white text-center`}
+                >
                   Prometheus is Western Visayas&apos;s leading full-service
                   marketing agency and public relations firm.
                 </h1>
               </div>
 
-              {/* 3. Starship Logos - Unchanged but now centered by the parent div */}
               <motion.div
                 className="flex flex-row flex-wrap justify-center items-center gap-x-6 gap-y-4 pt-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 100 }}
-                transition={{ delay: 1 }}
+                variants={logoContainerVariants}
+                initial="hidden"
+                animate="visible"
               >
-                {starshipsLogos.map((starship, index) => (
+                {starshipsLogos.map((logo) => (
                   <motion.div
-                    key={starship}
-                    initial={{ opacity: 0, y: 100, scale: 0.001 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{
-                      duration: 0.5,
-                      ease: "easeInOut",
-                      delay: index * 0.7,
-                    }}
+                    key={logo.filename}
+                    variants={logoWarpVariants}
+                    whileHover={logoHover}
                     className="w-10 h-10 md:w-14 md:h-14 lg:w-24 lg:h-24 xl:w-32 xl:h-32 flex justify-center items-center text-center"
                   >
                     <img
-                      src={`../../LandingPageAssets/starships/${starship}.png`}
-                      alt={`Starship ${starship}`}
+                      src={`/LandingPageAssets/awards/${logo.filename}`}
+                      alt={logo.alt}
+                      className="object-contain w-full h-full"
                     />
                   </motion.div>
                 ))}

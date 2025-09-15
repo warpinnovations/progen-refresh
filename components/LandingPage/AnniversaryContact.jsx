@@ -33,17 +33,6 @@ const AnniversaryContact = () => {
                 {/* --- NEW VERTICAL CTA LAYOUT --- */}
                 {/* This section now stacks the elements for a cleaner look */}
                 <div className='flex flex-col items-start gap-y-5'>
-                    <div className='flex flex-col'>
-                        <p className='text-gray-400 text-sm'>
-                            Reach us at:
-                        </p>
-                        <a
-                            href='mailto:marketing@prometheus.ph'
-                            className='text-[#96875A] hover:text-[#B19B6A] transition-colors text-base'
-                        >
-                            marketing@prometheus.ph
-                        </a>
-                    </div>
 
                     {/* --- REDESIGNED BUTTON --- */}
                     {/* The button is now flat, more subtle, and matches the image perfectly. */}

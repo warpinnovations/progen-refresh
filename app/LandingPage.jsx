@@ -14,7 +14,7 @@ import Certifications from '@/components/LandingPage/Certifications';
 import Awards from "@/components/LandingPage/Awards";
 import ProminentSection from '@/components/LandingPage/ProminentSection';
 import AnniversarySection from '@/components/LandingPage/AnniversarySection'
-import WorksCarousel from '@/components/OurWorks/WorksCarousel';
+import FeaturedWorksGrid from '@/components/OurWorks/FeaturedWorksGrid';
 import { worksData } from '@/app/contants';
 
 const StarshipandBrandsNoSSR = dynamic(
@@ -32,7 +32,6 @@ const LandingPage = () => {
       <PageTransition>
         <NavbarGroup />
         <HeroSectionDynamicNoSSR />
-        <Awards />
         <Certifications />
         <div className='w-full'>
           <div className='flex justify-center items-center'>
@@ -43,14 +42,7 @@ const LandingPage = () => {
         <StarshipandBrandsNoSSR />
         {/* <StarshipCaptains /> */}
         <OurServices />
-        <div className="w-full flex justify-center items-center">
-          <h1 className="text-[#96895f] text-center font-bold uppercase text-xl md:text-4xl mb-8">
-            Our Works
-          </h1>
-        </div>
-        <div className="w-full flex justify-center items-center">
-          <WorksCarousel worksData={worksData} />
-        </div>
+        <FeaturedWorksGrid />
         {/* <ProminentSection /> */}
         <AnniversarySection />
         <ThreeColumnFooter />
