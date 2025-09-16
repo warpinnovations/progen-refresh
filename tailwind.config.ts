@@ -1,3 +1,4 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -11,9 +12,7 @@ const config: Config = {
       fontFamily: {
         ox: ['Oxanium', 'Arial', 'sans-serif'],
         moonlander: ['MBF Moonlander', 'Arial', 'sans-serif'],
-        // Add more font families as needed
       },
-
       colors: {
         customOrange: '#67574C',
         customGray: '#232323',
@@ -27,11 +26,18 @@ const config: Config = {
       },
       animation: {
         marquee: 'marquee 60s linear infinite',
+        // --- ADD THIS LINE ---
+        glint: 'glint 1s ease-in-out',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        // --- ADD THIS WHOLE BLOCK ---
+        glint: {
+          '0%': { transform: 'translateX(-100%) skewX(-20deg)' },
+          '100%': { transform: 'translateX(200%) skewX(-20deg)' },
         },
       },
     },
