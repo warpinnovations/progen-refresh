@@ -16,10 +16,11 @@ const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
 
 const HeroSection = () => {
   const [activeText, setActiveText] = useState(0);
-  const [play, setPlay] = useState(false);
-  const heroText = { text: "BE LIMITLESS" };
+
+  const heroText = "BE LIMITLESS";
   const glitchCharacterOptions =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}|;:,<.>/?";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>?/";
+
   const starshipsLogos = [
     {
       filename: "MEA Logo.png",
@@ -35,53 +36,64 @@ const HeroSection = () => {
     },
   ];
 
-  const click = () => {
-    if (activeText === textArray.length - 1) {
-      setActiveText(0);
+  const textArray = React.useMemo(() => {
+    const generateGlitch = (text) => {
+      let glitchedText = "";
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === ' ') {
+          glitchedText += ' ';
+          continue;
+        }
+        if (Math.random() < 0.2) {
+          const randomIndex = Math.floor(
+            Math.random() * glitchCharacterOptions.length
+          );
+          glitchedText += glitchCharacterOptions[randomIndex];
+        } else {
+          glitchedText += text[i];
+        }
+      }
+      return glitchedText;
+    };
+
+    const frames = [];
+    const revealSteps = heroText.length;
+    // --- CHANGE 1: Increased the number of flicker frames for a longer glitch effect ---
+    const flickerSteps = 20;
+
+    // 1. Reveal the text character by character
+    for (let i = 0; i <= revealSteps; i++) {
+      const partialText = heroText.substring(0, i);
+      const randomJunk = Array.from({ length: revealSteps - i }, () => glitchCharacterOptions[Math.floor(Math.random() * glitchCharacterOptions.length)]).join('');
+      frames.push(partialText + randomJunk);
     }
-    setPlay(true);
-  };
+
+    // 2. Add more "flicker" frames
+    for (let i = 0; i < flickerSteps; i++) {
+      frames.push(generateGlitch(heroText));
+    }
+
+    // 3. Add the final, clean text
+    frames.push(heroText);
+
+    return frames;
+  }, [heroText]);
 
   useEffect(() => {
-    let interval = null;
-    if (play && activeText < textArray.length - 1) {
-      interval = setInterval(() => {
-        setActiveText(activeText + 1);
-      }, 90);
-    } else if (!play) {
-      click();
-    }
+    const interval = setInterval(() => {
+      setActiveText(current => {
+        if (current >= textArray.length - 1) {
+          clearInterval(interval);
+          return textArray.length - 1;
+        }
+        return current + 1;
+      });
+      // --- CHANGE 2: Increased the interval delay to slow down the frame rate ---
+    }, 90);
+
     return () => clearInterval(interval);
-  }, [play, activeText]);
+  }, [textArray]);
 
-  const generateGlitch = (text) => {
-    let glitchedText = "";
-    for (let i = 0; i < text.length; i++) {
-      const originalChar = text[i];
-      if (Math.random() < 0.5) {
-        const randomIndex = Math.floor(
-          Math.random() * glitchCharacterOptions.length
-        );
-        glitchedText += glitchCharacterOptions[randomIndex];
-      } else {
-        glitchedText += originalChar;
-      }
-    }
-    return glitchedText;
-  };
-
-  const gen = () => {
-    let textArray = [];
-    if (heroText.text) {
-      for (let i = 0; i < heroText.length + 15; i++) {
-        textArray.push(generateGlitch(heroText.text.substring(0, i)));
-      }
-      textArray.push(heroText.text);
-    }
-    return textArray;
-  };
-
-  const [textArray] = useState(gen);
 
   const logoContainerVariants = {
     hidden: {},
@@ -118,7 +130,6 @@ const HeroSection = () => {
 
   return (
     <PageTransition>
-      {/* The main container remains relative */}
       <div className="relative">
         <div className="md:h-screen w-full md:w-full h-auto">
           <LazyLoadImage
@@ -131,8 +142,6 @@ const HeroSection = () => {
           />
         </div>
 
-        {/* --- NEW: Image Blending Gradient --- */}
-        {/* This div sits on top of the image and creates the fade-to-black effect */}
         <div
           className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent z-5 pointer-events-none"
         />
@@ -155,9 +164,9 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, ease: "easeInOut" }}
               >
                 <h1 className="text-white">
-                  {textArray[activeText].substring(0, 3)}{" "}
+                  {textArray[activeText]?.substring(0, 3)}{" "}
                   <span className="text-prOrange">
-                    {textArray[activeText].substring(3)}
+                    {textArray[activeText]?.substring(3)}
                   </span>
                 </h1>
               </motion.h1>

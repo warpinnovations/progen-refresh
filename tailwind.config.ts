@@ -1,4 +1,3 @@
-// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -26,18 +25,27 @@ const config: Config = {
       },
       animation: {
         marquee: 'marquee 60s linear infinite',
-        // --- ADD THIS LINE ---
         glint: 'glint 1s ease-in-out',
+        'spiral-in': 'spiral-in 0.8s ease-out forwards',
+        'kinetic-scroll': 'kinetic-scroll 80s linear infinite',
+        "meteor-effect": "meteor 5s linear infinite",
       },
       keyframes: {
-        marquee: {
+        marquee: { /* ... */ },
+        glint: { /* ... */ },
+        'spiral-in': { /* ... */ },
+        'kinetic-scroll': {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
         },
-        // --- ADD THIS WHOLE BLOCK ---
-        glint: {
-          '0%': { transform: 'translateX(-100%) skewX(-20deg)' },
-          '100%': { transform: 'translateX(200%) skewX(-20deg)' },
+        // --- THIS IS THE CORRECTED KEYFRAME ---
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: '1' },
+          "70%": { opacity: '1' },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: '0',
+          },
         },
       },
     },

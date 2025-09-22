@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 
 import AnniversaryContact from './AnniversaryContact';
 import StarsCanvas from '@/components/Global/StarCanvas';
+import { Meteors } from "@/components/Global/Meteor";
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
@@ -70,8 +71,7 @@ const AnniversarySection = () => {
                         <React.Fragment key={index}>
                             {/* --- THE NEW "GLASS" STAT POD --- */}
                             <motion.div
-                                className="
-                                    group flex flex-col items-center justify-center 
+                                className="relative group flex flex-col items-center justify-center 
                                     w-48 h-48 p-4
                                     bg-slate-900/40 backdrop-blur-md
                                     border border-slate-800 rounded-2xl
@@ -85,12 +85,18 @@ const AnniversarySection = () => {
                                 }}
                                 transition={{ duration: 0.5, ease: "easeOut" }}
                             >
-                                <div className="font-sans text-6xl md:text-7xl font-semibold tracking-tight text-[#A89773] [text-shadow:0_0_20px_rgba(168,151,115,0.4)]">
-                                    <AnimatedNumber to={stat.value} />
+                                {/* Meteor background */}
+                                <div className="absolute inset-0 z-0 pointer-events-none">
+                                    <Meteors number={3} />
                                 </div>
-                                <p className="mt-2 text-sm md:text-base leading-6 text-slate-400">
-                                    {stat.label}
-                                </p>
+                                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
+                                    <div className="font-sans text-6xl md:text-7xl font-semibold tracking-tight text-[#A89773] [text-shadow:0_0_20px_rgba(168,151,115,0.4)]">
+                                        <AnimatedNumber to={stat.value} />
+                                    </div>
+                                    <p className="mt-2 text-sm md:text-base leading-6 text-slate-400">
+                                        {stat.label}
+                                    </p>
+                                </div>
                             </motion.div>
 
                             {/* --- ELEGANT SEPARATOR LINE (for large screens) --- */}

@@ -45,7 +45,6 @@ const LandingPage = () => {
         <FeaturedWorksGrid />
         {/* <ProminentSection /> */}
         <AnniversarySection />
-        <ThreeColumnFooter />
         <Footer />
       </PageTransition>
     </div>
