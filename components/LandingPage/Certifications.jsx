@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import { Oxanium } from 'next/font/google';
@@ -126,11 +126,11 @@ const BlackHoleCanvas = () => {
 
 
 // --- Self-Contained OrbitalCard Component (No changes here) ---
-const OrbitalCard = ({ cert, index, totalCards, animationProgress }) => {
+const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart, onHoverEnd }) => {
     const angle = (index / totalCards) * 360;
     const currentAngle = useTransform(animationProgress, (latest) => angle + latest);
-    const radiusX = 500;
-    const radiusY = 160;
+    const radiusX = 550;
+    const radiusY = 180;
     const x = useTransform(currentAngle, (a) => radiusX * Math.cos(a * (Math.PI / 180)));
     const y = useTransform(currentAngle, (a) => radiusY * Math.sin(a * (Math.PI / 180)));
     const scale = useTransform(y, [-radiusY, radiusY], [0.7, 1.1]);
@@ -143,6 +143,8 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress }) => {
                 x, y, scale, zIndex,
                 top: '50%', left: '50%', marginTop: '-160px', marginLeft: '-144px',
             }}
+            onMouseEnter={onHoverStart}
+            onMouseLeave={onHoverEnd}
         >
             <motion.div
                 whileHover={{
@@ -183,15 +185,17 @@ function Certifications() {
     ];
 
     const rotationProgress = useMotionValue(0);
+    const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
+        if (isPaused) return;
         const controls = animate(rotationProgress, 360, {
             duration: 35,
             repeat: Infinity,
             ease: 'linear',
         });
         return controls.stop;
-    }, [rotationProgress]);
+    }, [rotationProgress, isPaused]);
 
     return (
         <motion.section
@@ -231,6 +235,8 @@ function Certifications() {
                             index={i}
                             totalCards={certificates.length}
                             animationProgress={rotationProgress}
+                            onHoverStart={() => setIsPaused(true)}
+                            onHoverEnd={() => setIsPaused(false)}
                         />
                     ))}
                 </div>
