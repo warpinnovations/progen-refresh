@@ -154,7 +154,7 @@ const HeroSection = () => {
           <div className="absolute inset-0 bg-black opacity-50 pointer-events-none"></div>
 
           <div
-            className={`flex flex-col space-y-8 absolute inset-0 text-white text-center items-center justify-center p-4 z-20 pointer-events-auto`}
+            className={`flex flex-col space-y-10 absolute inset-0 text-white text-center items-center justify-center p-4 z-20 pointer-events-auto`}
           >
             <div className="flex flex-row">
               <motion.h1
@@ -182,7 +182,7 @@ const HeroSection = () => {
             </div>
 
             <motion.div
-              className="flex flex-row flex-wrap justify-center items-center gap-x-6 gap-y-4 pt-10"
+              className="flex flex-row flex-wrap justify-center items-center gap-x-8 gap-y-4 pt-16"
               variants={logoContainerVariants}
               initial="hidden"
               animate="visible"
@@ -192,7 +192,7 @@ const HeroSection = () => {
                   key={logo.filename}
                   variants={logoWarpVariants}
                   whileHover={logoHover}
-                  className="w-10 h-10 md:w-14 md:h-14 lg:w-24 lg:h-24 xl:w-32 xl:h-32 flex justify-center items-center text-center"
+                  className="w-16 h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 xl:w-36 xl:h-36 flex justify-center items-center text-center"
                 >
                   <img
                     src={`/LandingPageAssets/awards/${logo.filename}`}

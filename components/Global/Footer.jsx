@@ -117,11 +117,6 @@ const Footer = () => {
         </div>
 
         {/* --- Gradient Divider & Hashtag --- */}
-        <div className="mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-gray-500 order-2 sm:order-1 mt-4 sm:mt-0">&copy; Copyright {new Date().getFullYear()}, Prometheus.</p>
-          <div className="h-px w-full sm:w-1/3 bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent order-1 sm:order-2"></div>
-          <p className="text-gray-400 font-semibold tracking-wider order-3 sm:order-3 mt-4 sm:mt-0">#IdeasEngineered</p>
-        </div>
       </div>
 
       {/* === BOTTOM BAR === */}

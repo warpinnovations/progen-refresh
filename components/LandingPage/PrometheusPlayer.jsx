@@ -16,7 +16,8 @@ const features = [
   {
     supertitle: "WORK",
     title: "Start",
-    videoUrl: "/VideoAssets/BeachLoop.mp4",
+    // This should point to public/VideoAssets/Pond.gif
+    videoUrl: "/VideoAssets/Pond.gif",
     isVertical: true,
   },
   {
@@ -28,7 +29,8 @@ const features = [
   {
     supertitle: "US",
     title: "with Us",
-    videoUrl: "/VideoAssets/SkyLoop.mp4",
+    // This should point to public/VideoAssets/Lake.gif
+    videoUrl: "/VideoAssets/Lake.gif",
     isVertical: true,
   },
 ];
@@ -59,13 +61,6 @@ const PrometheusFeatures = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* --- ENHANCED GRID LAYOUT --- 
-          - On mobile, it's a single column stack.
-          - On desktop (md), we use a 4-column grid to create the desired layout.
-            - Left Card: Spans 1 column (enhanced).
-            - Middle Card: Spans 2 columns (wider, enhanced).
-            - Right Card: Spans 1 column (enhanced).
-        */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 [perspective:1000px]">
           {features.map((feature, index) => (
             <motion.div
@@ -78,11 +73,9 @@ const PrometheusFeatures = () => {
               `}
               style={{ transformStyle: 'preserve-3d' }}
             >
-              {/* Main hoverable container */}
               <motion.div
                 className="w-full h-full"
               >
-                {/* Enhanced Bronze Glow */}
                 <motion.div
                   className="absolute inset-0 rounded-3xl"
                   style={{
@@ -93,10 +86,9 @@ const PrometheusFeatures = () => {
                   transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
 
-                {/* Subtle inner glow */}
                 <div className="absolute inset-1 rounded-3xl bg-gradient-to-br from-prOrange/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                {/* --- EMBEDDED VIDEO or IFRAME --- */}
+                {/* --- CONDITIONAL RENDERING LOGIC --- */}
                 {feature.iframeSrc ? (
                   <iframe
                     src={feature.iframeSrc}
@@ -109,19 +101,17 @@ const PrometheusFeatures = () => {
                     scrolling="no"
                   />
                 ) : (
-                  <video
+                  // --- *** THE FIX IS HERE *** ---
+                  // Replaced <video> tag with <img> tag to correctly display GIFs
+                  <img
                     src={feature.videoUrl}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                    alt={`${feature.supertitle} ${feature.title} animated background`}
                     className="absolute inset-0 h-full w-full object-cover rounded-3xl transition-transform duration-500 ease-in-out group-hover:scale-105"
                   />
                 )}
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent rounded-3xl pointer-events-none"></div>
 
-                {/* Enhanced border glow effect */}
                 <div className="absolute inset-0 rounded-3xl border border-prOrange/10 group-hover:border-prOrange/30 transition-all duration-500 pointer-events-none" />
 
                 <div
@@ -137,7 +127,6 @@ const PrometheusFeatures = () => {
                     </h3>
                   </div>
 
-                  {/* Subtle accent line */}
                   <div className="w-16 h-0.5 bg-gradient-to-r from-prOrange to-transparent mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </motion.div>
