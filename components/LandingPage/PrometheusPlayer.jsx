@@ -15,23 +15,20 @@ const OxaniumFont = Oxanium({ weight: "600", subsets: ["latin"] });
 const features = [
   {
     supertitle: "WORK",
-    title: "WARP",
-    // Replace with your actual 10-second loop montage video for the left card
-    videoUrl: "/LandingPageAssets/videos/montage-left.mp4",
+    title: "Start",
+    videoUrl: "/VideoAssets/BeachLoop.mp4",
     isVertical: true,
   },
   {
     supertitle: "WITH",
-    title: "Prominent Suite",
-    // Replace with your actual reel video for the middle card
-    videoUrl: "/LandingPageAssets/videos/main-reel.mp4",
+    title: "Your Business",
+    iframeSrc: "https://drive.google.com/file/d/1brGtnb6pnhMCr28Os2VjngRk2N-1q0HX/preview",
     isVertical: false,
   },
   {
     supertitle: "US",
-    title: "CRAETR",
-    // Replace with your actual 10-second loop montage video for the right card
-    videoUrl: "/LandingPageAssets/videos/montage-right.mp4",
+    title: "with Us",
+    videoUrl: "/VideoAssets/SkyLoop.mp4",
     isVertical: true,
   },
 ];
@@ -62,70 +59,86 @@ const PrometheusFeatures = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* --- REVISED GRID LAYOUT --- 
+        {/* --- ENHANCED GRID LAYOUT --- 
           - On mobile, it's a single column stack.
           - On desktop (md), we use a 4-column grid to create the desired layout.
-            - Left Card: Spans 1 column.
-            - Middle Card: Spans 2 columns (making it horizontal).
-            - Right Card: Spans 1 column.
+            - Left Card: Spans 1 column (enhanced).
+            - Middle Card: Spans 2 columns (wider, enhanced).
+            - Right Card: Spans 1 column (enhanced).
         */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 [perspective:1000px]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 [perspective:1000px]">
           {features.map((feature, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              whileHover="hover"
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className={`group relative rounded-2xl border border-white/10 bg-slate-900/50 transform-gpu 
-                ${feature.isVertical ? 'aspect-[3/4]' : 'md:col-span-2 md:aspect-video aspect-[16/9]'}
+              className={`group relative rounded-3xl border border-prOrange/20 bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-sm transform-gpu shadow-2xl shadow-black/50
+                ${feature.isVertical ? 'aspect-[3/4]' : 'md:col-span-2 aspect-[16/9]'}
+                hover:border-prOrange/40 hover:shadow-prOrange/20 hover:shadow-2xl transition-all duration-500
               `}
               style={{ transformStyle: 'preserve-3d' }}
             >
               {/* Main hoverable container */}
               <motion.div
                 className="w-full h-full"
-                variants={{
-                  hover: {
-                    scale: 1.05,
-                    rotateX: 10,
-                    // Apply Y-axis rotation only to the vertical side cards
-                    rotateY: feature.isVertical ? (index === 0 ? 5 : -5) : 0
-                  }
-                }}
               >
-                {/* Performant Bronze Glow */}
+                {/* Enhanced Bronze Glow */}
                 <motion.div
-                  className="absolute inset-0 rounded-2xl"
+                  className="absolute inset-0 rounded-3xl"
                   style={{
-                    background: 'radial-gradient(circle at 50% 50%, rgba(150, 137, 95, 0.3), transparent 70%)',
+                    background: 'radial-gradient(circle at 50% 50%, rgba(150, 137, 95, 0.4), transparent 60%)',
                     opacity: 0,
                   }}
                   variants={{ hover: { opacity: 1 } }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
 
-                {/* --- EMBEDDED VIDEO --- */}
-                <video
-                  src={feature.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="absolute inset-0 h-full w-full object-cover rounded-2xl transition-transform duration-500 ease-in-out group-hover:scale-110"
-                />
+                {/* Subtle inner glow */}
+                <div className="absolute inset-1 rounded-3xl bg-gradient-to-br from-prOrange/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent rounded-2xl"></div>
+                {/* --- EMBEDDED VIDEO or IFRAME --- */}
+                {feature.iframeSrc ? (
+                  <iframe
+                    src={feature.iframeSrc}
+                    width="100%"
+                    height="100%"
+                    allow="autoplay; fullscreen; accelerometer; gyroscope; picture-in-picture"
+                    className="absolute inset-0 h-full w-full object-cover rounded-3xl pointer-events-auto"
+                    allowFullScreen
+                    frameBorder="0"
+                    scrolling="no"
+                  />
+                ) : (
+                  <video
+                    src={feature.videoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 h-full w-full object-cover rounded-3xl transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  />
+                )}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent rounded-3xl pointer-events-none"></div>
+
+                {/* Enhanced border glow effect */}
+                <div className="absolute inset-0 rounded-3xl border border-prOrange/10 group-hover:border-prOrange/30 transition-all duration-500 pointer-events-none" />
 
                 <div
-                  className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end text-white pointer-events-none"
+                  className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end pointer-events-none group-hover:opacity-0 transition-all duration-500"
                   style={{ transform: 'translateZ(60px)' }}
                 >
-                  <p className={`text-sm tracking-widest text-prOrange ${OxaniumFont.className}`}>
-                    {feature.supertitle}
-                  </p>
-                  <h3 className={`text-3xl lg:text-4xl font-bold uppercase mt-2 text-slate-100 leading-tight ${MoonlanderFont.className}`}>
-                    {feature.title}
-                  </h3>
+                  <div className="space-y-3">
+                    <p className={`text-lg md:text-xl font-bold tracking-widest uppercase text-prOrange/80 mb-2 ${OxaniumFont.className} drop-shadow-lg`}>
+                      {feature.supertitle}
+                    </p>
+                    <h3 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-[#EAE2B7] leading-tight ${OxaniumFont.className} drop-shadow-2xl`}>
+                      {feature.title}
+                    </h3>
+                  </div>
+
+                  {/* Subtle accent line */}
+                  <div className="w-16 h-0.5 bg-gradient-to-r from-prOrange to-transparent mt-4 opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </motion.div>
             </motion.div>

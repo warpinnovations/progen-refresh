@@ -1,17 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import { Oxanium } from 'next/font/google';
+import localFont from 'next/font/local';
+
 const OxaniumFont = Oxanium({ weight: '700', subsets: ['latin'] });
+const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
 
-// --- NEW: Black Hole Particle Animation Component ---
+// --- Black Hole Particle Animation Component ---
 const BlackHoleCanvas = () => {
-    const canvasRef = React.useRef(null);
+    const canvasRef = useRef(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
@@ -47,6 +50,7 @@ const BlackHoleCanvas = () => {
             };
 
             this.draw = function () {
+                if (!ctx) return;
                 ctx.fillStyle = "rgba(255,255,255," + this.opacity + ")";
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
@@ -76,6 +80,7 @@ const BlackHoleCanvas = () => {
 
         Emitter.prototype = {
             draw: function () {
+                if (!ctx) return;
                 ctx.fillStyle = "rgba(0,0,0,1)";
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
@@ -94,7 +99,9 @@ const BlackHoleCanvas = () => {
         const loop = () => {
             if (ctx && canvas) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                emitter.update();
+                if (emitter) {
+                    emitter.update();
+                }
                 animationFrameId = requestAnimFrame(loop);
             }
         }
@@ -125,51 +132,78 @@ const BlackHoleCanvas = () => {
 };
 
 
-// --- Self-Contained OrbitalCard Component (No changes here) ---
+// --- Self-Contained OrbitalCard Component (With 3D Effect and Hover Fix) ---
 const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart, onHoverEnd }) => {
     const angle = (index / totalCards) * 360;
     const currentAngle = useTransform(animationProgress, (latest) => angle + latest);
+
     const radiusX = 550;
     const radiusY = 180;
+
     const x = useTransform(currentAngle, (a) => radiusX * Math.cos(a * (Math.PI / 180)));
     const y = useTransform(currentAngle, (a) => radiusY * Math.sin(a * (Math.PI / 180)));
+
     const scale = useTransform(y, [-radiusY, radiusY], [0.7, 1.1]);
     const zIndex = useTransform(y, [-radiusY, radiusY], [1, totalCards + 1]);
 
+    const rotateY = useTransform(x, [-radiusX, 0, radiusX], [45, 0, -45]);
+
+    // --- FIX: Define variants for the inner card to be controlled by the parent ---
+    const cardVariants = {
+        initial: {
+            y: 0,
+            scale: 1,
+            boxShadow: '0px 10px 30px -5px rgba(0, 0, 0, 0.5)',
+        },
+        hover: {
+            y: -15,
+            scale: 1.15,
+            boxShadow: '0px 25px 50px -12px rgba(150, 137, 95, 0.4)',
+        }
+    };
+
     return (
+        // This outer div is now the non-moving hitbox that triggers the hover state
         <motion.div
             className="absolute flex items-center justify-center"
             style={{
-                x, y, scale, zIndex,
+                x, y, scale, zIndex, rotateY,
                 top: '50%', left: '50%', marginTop: '-160px', marginLeft: '-144px',
+                transformStyle: 'preserve-3d',
             }}
             onMouseEnter={onHoverStart}
             onMouseLeave={onHoverEnd}
+            // --- FIX: These props tell the parent to control the 'hover' variant on its children ---
+            initial="initial"
+            whileHover="hover"
         >
+            {/* This inner div now animates based on the parent's hover state, not its own */}
             <motion.div
-                whileHover={{
-                    scale: 1.15, y: -15, boxShadow: '0px 25px 50px -12px rgba(150, 137, 95, 0.25)',
-                }}
+                // --- FIX: Apply the variants here instead of a direct whileHover prop ---
+                variants={cardVariants}
                 transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                className="group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl shadow-2xl shadow-black/50 transform-gpu overflow-hidden ring-1 ring-white/10"
+                className={`group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-gradient-to-br from-slate-900/80 to-slate-800/60 backdrop-blur-lg border border-prOrange/20 rounded-3xl shadow-2xl shadow-black/50 transform-gpu overflow-hidden ring-1 ring-prOrange/10 hover:border-prOrange/40 hover:shadow-prOrange/20 hover:shadow-2xl transition-all duration-500 ${OxaniumFont.className}`}
             >
+                {/* The rest of your card content remains unchanged */}
                 <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/card:opacity-100 group-hover/card:animate-glint" />
                 <div className="flex justify-center items-center space-x-4 mb-4 h-24">
                     {cert.emblems.map((src, j) => (
                         <img key={`emblem-${index}-${j}`} src={src} alt={cert.alt || cert.titles[0]} className="max-h-full w-auto transition-all duration-500 filter grayscale group-hover/card:grayscale-0" />
                     ))}
                 </div>
-                <div className="flex flex-col justify-center items-center min-h-[4.5rem]">
-                    {cert.linkPhrase && <p className="text-sm uppercase tracking-wider text-slate-400">{cert.linkPhrase}</p>}
+                <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2">
+                    {cert.linkPhrase && <p className="text-base md:text-lg uppercase tracking-wider text-prOrange/80 font-semibold mb-1 drop-shadow-lg">{cert.linkPhrase}</p>}
                     {cert.titles && cert.titles[0] && cert.titles.map((line, k) => (
-                        <p key={`title-${index}-${k}`} className={`font-semibold uppercase text-slate-100 ${cert.linkPhrase ? 'mt-1 text-base' : 'text-lg'}`}>{line}</p>
+                        <p key={`title-${index}-${k}`} className={`font-bold uppercase text-[#EAE2B7] text-lg md:text-2xl leading-tight drop-shadow-lg ${cert.linkPhrase ? 'mt-1' : ''}`}>{line}</p>
                     ))}
-                    {(!cert.titles || !cert.titles[0]) && cert.alt && <p className="font-semibold uppercase text-slate-100 text-lg">{cert.alt}</p>}
+                    {(!cert.titles || !cert.titles[0]) && cert.alt && <p className="font-bold uppercase text-[#EAE2B7] text-lg md:text-2xl leading-tight drop-shadow-lg">{cert.alt}</p>}
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-prOrange to-transparent mt-3 opacity-60 group-hover/card:opacity-100 transition-opacity duration-500" />
                 </div>
             </motion.div>
         </motion.div>
     );
 };
+
 
 // --- Main Certifications Component ---
 function Certifications() {
@@ -188,13 +222,16 @@ function Certifications() {
     const [isPaused, setIsPaused] = useState(false);
 
     useEffect(() => {
-        if (isPaused) return;
+        if (isPaused) {
+            rotationProgress.stop();
+            return;
+        };
         const controls = animate(rotationProgress, 360, {
             duration: 35,
             repeat: Infinity,
             ease: 'linear',
         });
-        return controls.stop;
+        return () => controls.stop();
     }, [rotationProgress, isPaused]);
 
     return (
@@ -214,20 +251,20 @@ function Certifications() {
             <div className="absolute inset-0 z-10 pointer-events-none bg-black/30"></div>
 
             <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-24">
-                <h2 className={`text-5xl md:text-6xl font-bold text-slate-100 ${OxaniumFont.className}`}>
-                    Our <span className="text-[#96895f]">Credentials</span> in Orbit
+                <h2 className={`font-black text-3xl md:text-5xl ${MoonlanderFont.className}`}>
+                    <span className="text-[#f5f5f5]">Our </span>
+                    <span className="text-prOrange">Credentials</span>
+                    <span className="text-[#f5f5f5]"> in Orbit</span>
                 </h2>
-                <p className={`text-lg text-white mt-4 max-w-2xl mx-auto ${OxaniumFont.className}`}>An interactive showcase of our proven expertise across the digital universe.</p>
+                <p className={`text-lg md:text-xl text-white/70 mt-6 max-w-2xl mx-auto ${MoonlanderFont.className}`}>An interactive showcase of our proven expertise across the digital universe.</p>
             </div>
 
             <div className="relative z-20 w-full h-[75vh] min-h-[700px] flex items-center justify-center">
-
-                {/* --- REPLACED: The Black Hole Canvas is now the centerpiece --- */}
                 <div className="absolute z-0 w-full h-full flex items-center justify-center pointer-events-none">
                     <BlackHoleCanvas />
                 </div>
 
-                <div className="relative w-full h-full flex items-center justify-center">
+                <div className="relative w-full h-full" style={{ perspective: '1200px' }}>
                     {certificates.map((cert, i) => (
                         <OrbitalCard
                             key={`cert-${i}`}

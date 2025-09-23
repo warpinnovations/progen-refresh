@@ -153,7 +153,7 @@ function OurServices() {
                             text=" / STRATEGY / BRANDING / CREATIVE / MARKETING / MEDIA / SOCIAL MEDIA / SOFTWARE / EVENTS"
                             radiusX={radii.secondary}
                             radiusY={Math.round(radii.secondary * 0.65)}
-                            duration={120}
+                            duration={30}
                             textColor="text-prOrange/60"
                             direction={-1}
                         />
@@ -162,10 +162,10 @@ function OurServices() {
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-50">
                         <CircularText
                             key={animationKey + '_primary'}
-                            text=" / HOW WE CAN HELP / HOW WE CAN HELP / HOW WE CAN HELP"
+                            text=" / HOW CAN WE ASSIST YOU / HOW CAN WE ASSIST YOU / HOW CAN WE ASSIST YOU"
                             radiusX={radii.primary}
                             radiusY={Math.round(radii.primary * 0.65)}
-                            duration={80}
+                            duration={20}
                             direction={1}
                         />
                     </div>
@@ -202,7 +202,7 @@ function OurServices() {
                                 key={index}
                                 custom={index}
                                 variants={itemVariants}
-                                className="text-xl md:text-2xl lg:text-3xl text-white/90 hover:text-prOrange transition-colors duration-300 cursor-pointer"
+                                className="text-xl md:text-2xl lg:text-3xl text-white/90 hover:text-prOrange transition-colors duration-300 cursor-pointer mb-4 md:mb-6"
                             >
                                 {service}
                             </motion.h2>

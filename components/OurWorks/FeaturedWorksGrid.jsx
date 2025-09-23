@@ -95,8 +95,8 @@ const FeaturedWorksGrid = () => {
     const [hoveredCard, setHoveredCard] = React.useState(null);
 
     const indexedWorks = allWorksData.map((work, index) => ({ ...work, originalIndex: index }));
-    const topRowWorks = indexedWorks.slice(0, 4);
-    const bottomRowWorks = indexedWorks.slice(4, 8);
+    const topRowWorks = indexedWorks.slice(0, 3);
+    const bottomRowWorks = indexedWorks.slice(3, 6);
 
     const rotationProgressTop = useMotionValue(0);
     const rotationProgressBottom = useMotionValue(0);
@@ -138,10 +138,11 @@ const FeaturedWorksGrid = () => {
                 <div className="absolute inset-0 bg-black/70"></div>
             </div>
             <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-20">
-                <h2 className={`text-5xl md:text-6xl font-bold text-white ${MoonlanderFont.className}`}>
-                    Our <span className="text-prOrange">Featured Works</span>
+                <h2 className={`font-black text-3xl md:text-5xl ${MoonlanderFont.className}`}>
+                    <span className="text-[#f5f5f5]">Our </span>
+                    <span className="text-prOrange">Featured Works</span>
                 </h2>
-                <p className={`text-lg text-white/70 mt-4 max-w-2xl mx-auto ${OxaniumFont.className}`}>
+                <p className={`text-lg md:text-xl text-white/70 mt-4 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
                     An interactive showcase of our creative and technical projects in orbit.
                 </p>
             </div>

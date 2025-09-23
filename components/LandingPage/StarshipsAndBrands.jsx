@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { Delaunay } from "d3-delaunay";
 import StarsCanvas from "../Global/StarCanvas"; // Make sure this path is correct
 import { Oxanium } from "next/font/google";
+import localFont from 'next/font/local';
+
+const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
 const oxanium = Oxanium({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -147,12 +150,12 @@ const BrandsConstellationSection = () => {
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
         <motion.h1
-          initial={{ opacity: 0, y: -40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className={`${oxanium.className} text-3xl md:text-5xl font-bold text-center tracking-widest uppercase mb-16 md:mb-20`}
-          style={{ color: baseColor, textShadow: `0 0 15px ${baseColor}60` }}
+          initial={{ y: "100%" }}
+          transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className={`${MoonlanderFont.className} font-black text-3xl md:text-5xl mb-16`}
         >
-          Brands in Our Orbit
+          <span className="text-[#f5f5f5]">Brands </span>
+          <span className="text-prOrange">in Orbit</span>
         </motion.h1>
 
         <motion.div
