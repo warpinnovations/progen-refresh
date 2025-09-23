@@ -15,21 +15,16 @@ const OxaniumFont = Oxanium({ weight: "600", subsets: ["latin"] });
 const features = [
   {
     supertitle: "WORK",
-    title: "Start",
-    // This should point to public/VideoAssets/Pond.gif
     videoUrl: "/VideoAssets/Pond.gif",
     isVertical: true,
   },
   {
     supertitle: "WITH",
-    title: "Your Business",
     iframeSrc: "https://drive.google.com/file/d/1brGtnb6pnhMCr28Os2VjngRk2N-1q0HX/preview",
     isVertical: false,
   },
   {
     supertitle: "US",
-    title: "with Us",
-    // This should point to public/VideoAssets/Lake.gif
     videoUrl: "/VideoAssets/Lake.gif",
     isVertical: true,
   },
