@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import PageTransition from "@/components/Global/PageTransition";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import StarsCanvas from "@/components/Global/StarCanvas";
+// import StarsCanvas from "@/components/Global/StarCanvas";
 import { Oxanium } from "next/font/google";
 import { motion } from "framer-motion";
 import localFont from "next/font/local";
@@ -146,9 +146,9 @@ const HeroSection = () => {
           className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent z-5 pointer-events-none"
         />
 
-        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
+        {/* <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
           <StarsCanvas />
-        </div>
+        </div> */}
 
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute inset-0 bg-black opacity-50 pointer-events-none"></div>
