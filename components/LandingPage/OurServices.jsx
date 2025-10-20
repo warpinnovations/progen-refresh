@@ -34,7 +34,7 @@ const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'text-prOr
             <motion.div
                 className="absolute w-full h-full"
                 animate={{ rotate: 360 * direction }}
-                transition={{ loop: Infinity, ease: "linear", duration: duration }}
+                transition={{ repeat: Infinity, repeatType: "loop", ease: "linear", duration: duration }}
             >
                 {characters.map((char, index) => {
                     const angle = (index / characters.length) * 2 * Math.PI;

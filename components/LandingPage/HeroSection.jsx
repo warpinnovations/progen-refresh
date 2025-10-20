@@ -116,9 +116,9 @@ const HeroSection = () => {
               <span className="text-prOrange">{textArray[activeText]?.substring(3)}</span>
             </motion.h1>
 
-            <p className={`text-sm md:text-base ${OxaniumFont.className} font-black w-auto md:w-1/2`}>
-              Prometheus is Western Visayas&apos;s leading full-service marketing agency and public relations firm.
-            </p>
+            <h1 className={`hidden md:flex md:text-2xl ${OxaniumFont.className} font-semibold text-white text-center w-auto md:w-3/4`}>
+              Prometheus is Western Visayas&apos;s leading full&nbsp;service marketing agency and public relations firm.
+            </h1>
 
             {/* AWARDS SECTION WITH METEORS */}
             <div className="relative w-full max-w-4xl pt-16 overflow-hidden">
@@ -145,7 +145,7 @@ const HeroSection = () => {
                         className="object-contain w-full h-full"
                       />
                     </div>
-                    <p className={`mt-4 text-sm md:text-base ${OxaniumFont.className}`}>
+                    <p className={`mt-4 text-sm md:text-base lg:text-lg ${OxaniumFont.className} font-bold`}>
                       {logo.alt}
                     </p>
                   </motion.div>

@@ -32,17 +32,17 @@ const LandingPage = () => {
       <PageTransition>
         <NavbarGroup />
         <HeroSectionDynamicNoSSR />
-        <Certifications />
+        <FeaturedWorksGrid />
         <div className='w-full'>
           <div className='flex justify-center items-center'>
             <PrometheusPlayer />
           </div>
         </div>
+        <Certifications />
         {/* <Services /> */}
         <StarshipandBrandsNoSSR />
         {/* <StarshipCaptains /> */}
         <OurServices />
-        <FeaturedWorksGrid />
         {/* <ProminentSection /> */}
         <AnniversarySection />
         <Footer />
