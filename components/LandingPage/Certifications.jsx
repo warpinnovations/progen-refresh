@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import { Oxanium } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -70,7 +70,7 @@ const BlackHoleCanvas = () => {
         function Emitter(x, y) {
             this.position = { x: x, y: y };
             this.radius = 30;
-            this.count = 3000;
+            this.count = 800; // Reduced from 3000 for better performance
             this.particles = [];
 
             for (var i = 0; i < this.count; i++) {
@@ -132,7 +132,7 @@ const BlackHoleCanvas = () => {
 };
 
 
-// --- Enhanced OrbitalCard Component ---
+// --- Original OrbitalCard Component with Enhanced Hover Effects ---
 const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart, onHoverEnd }) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -145,23 +145,9 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
     const x = useTransform(currentAngle, (a) => radiusX * Math.cos(a * (Math.PI / 180)));
     const y = useTransform(currentAngle, (a) => radiusY * Math.sin(a * (Math.PI / 180)));
 
-    const baseScale = useTransform(y, [-radiusY, radiusY], [0.7, 1.1]);
-    const baseZIndex = useTransform(y, [-radiusY, radiusY], [1, totalCards + 1]);
+    const scale = useTransform(y, [-radiusY, radiusY], [0.7, 1.1]);
+    const zIndex = useTransform(y, [-radiusY, radiusY], [1, totalCards + 1]);
     const rotateY = useTransform(x, [-radiusX, 0, radiusX], [45, 0, -45]);
-
-    // Smooth spring animations
-    const scale = useSpring(baseScale, { stiffness: 200, damping: 20 });
-    const zIndex = useSpring(baseZIndex, { stiffness: 300, damping: 25 });
-
-    useEffect(() => {
-        if (isHovered) {
-            scale.set(1.2);
-            zIndex.set(999);
-        } else {
-            scale.set(baseScale);
-            zIndex.set(baseZIndex);
-        }
-    }, [isHovered, baseScale, baseZIndex, scale, zIndex]);
 
     const handleHoverStart = () => {
         setIsHovered(true);
@@ -177,8 +163,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
         <motion.div
             className="absolute flex items-center justify-center will-change-transform"
             style={{
-                x, y, scale, zIndex,
-                rotateY: isHovered ? 0 : rotateY,
+                x, y, scale, zIndex, rotateY,
                 top: '50%', left: '50%',
                 marginTop: '-160px',
                 marginLeft: '-144px',
@@ -194,7 +179,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     boxShadow: isHovered
                         ? '0px 30px 60px -15px rgba(150, 137, 95, 0.5), 0 0 80px rgba(150, 137, 95, 0.3), inset 0 0 40px rgba(150, 137, 95, 0.05)'
                         : '0px 15px 35px -10px rgba(0, 0, 0, 0.6)',
-                    transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+                    transition: 'border 0.3s ease, box-shadow 0.3s ease',
                 }}
             >
                 {/* Animated gradient background on hover */}
@@ -202,12 +187,14 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     <div className="absolute inset-0 bg-gradient-to-br from-[#96895F]/15 via-transparent to-[#96895F]/10 pointer-events-none" />
                 )}
 
-                {/* Shimmer effect */}
-                <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover/card:opacity-100 group-hover/card:animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+                {/* Shimmer effect - Only render on hover */}
+                {isHovered && (
+                    <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+                )}
 
                 {/* Inner glow border */}
                 <div
-                    className="absolute inset-[1px] rounded-3xl pointer-events-none transition-all duration-400"
+                    className="absolute inset-[1px] rounded-3xl pointer-events-none transition-all duration-300"
                     style={{
                         border: isHovered ? '1px solid rgba(150, 137, 95, 0.3)' : '1px solid rgba(150, 137, 95, 0.1)',
                     }}
@@ -221,64 +208,38 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     </>
                 )}
 
-                {/* Floating particles on hover */}
+                {/* Floating particles on hover - Simplified CSS animation */}
                 {isHovered && (
                     <>
-                        <motion.div
-                            className="absolute w-1.5 h-1.5 rounded-full bg-[#96895F]/60"
+                        <div
+                            className="absolute w-1.5 h-1.5 rounded-full bg-[#96895F]/60 animate-[float_2s_ease-in-out_infinite]"
                             style={{ top: '20%', right: '15%' }}
-                            animate={{
-                                y: [0, -15, 0],
-                                opacity: [0.6, 1, 0.6],
-                            }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         />
-                        <motion.div
-                            className="absolute w-1 h-1 rounded-full bg-[#96895F]/40"
+                        <div
+                            className="absolute w-1 h-1 rounded-full bg-[#96895F]/40 animate-[float_2.5s_ease-in-out_infinite_0.5s]"
                             style={{ top: '30%', left: '10%' }}
-                            animate={{
-                                y: [0, -10, 0],
-                                opacity: [0.4, 0.8, 0.4],
-                            }}
-                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                         />
                     </>
                 )}
 
                 {/* Content */}
-                <motion.div
-                    className="flex justify-center items-center space-x-4 mb-6 h-24 relative z-10"
-                    animate={{
-                        y: isHovered ? -5 : 0,
-                    }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                >
+                <div className="flex justify-center items-center space-x-4 mb-6 h-24 relative z-10">
                     {cert.emblems.map((src, j) => (
-                        <motion.img
+                        <img
                             key={`emblem-${index}-${j}`}
                             src={src}
                             alt={cert.alt || cert.titles[0]}
-                            className="max-h-full w-auto transition-all duration-500"
+                            className="max-h-full w-auto transition-all duration-300"
                             style={{
                                 filter: isHovered ? 'grayscale(0) brightness(1.1)' : 'grayscale(1) brightness(0.8)',
                             }}
-                            animate={isHovered ? {
-                                scale: [1, 1.05, 1],
-                            } : {}}
-                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                         />
                     ))}
-                </motion.div>
+                </div>
 
-                <motion.div
-                    className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10"
-                    animate={{
-                        y: isHovered ? -5 : 0,
-                    }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                >
+                <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10">
                     {cert.linkPhrase && (
-                        <motion.p
+                        <p
                             className="text-base md:text-lg uppercase tracking-wider font-semibold mb-1 drop-shadow-lg"
                             style={{
                                 color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
@@ -287,7 +248,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                             }}
                         >
                             {cert.linkPhrase}
-                        </motion.p>
+                        </p>
                     )}
 
                     {cert.titles && cert.titles[0] && cert.titles.map((line, k) => (
@@ -317,7 +278,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
 
                     {/* Animated divider line */}
                     <div
-                        className="h-0.5 bg-gradient-to-r from-[#96895F] to-transparent mt-4 transition-all duration-400 ease-out"
+                        className="h-0.5 bg-gradient-to-r from-[#96895F] to-transparent mt-4 transition-all duration-300 ease-out"
                         style={{
                             width: isHovered ? '80%' : '40%',
                             opacity: isHovered ? 1 : 0.5,
@@ -325,20 +286,19 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     />
 
                     {/* Hover reveal badge */}
-                    <motion.div
-                        className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#96895F]/90 font-semibold mt-2"
-                        animate={{
+                    <div
+                        className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#96895F]/90 font-semibold mt-2 transition-all duration-300"
+                        style={{
                             opacity: isHovered ? 1 : 0,
-                            y: isHovered ? 0 : 10,
+                            transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
                         }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <span>Verified Credential</span>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
             </div>
         </motion.div>
     );
@@ -360,10 +320,32 @@ function Certifications() {
 
     const rotationProgress = useMotionValue(0);
     const [isPaused, setIsPaused] = useState(false);
+    const sectionRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    // Intersection observer to pause animation when not visible
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         let controls;
-        if (!isPaused) {
+        if (!isPaused && isVisible) {
             controls = animate(rotationProgress, rotationProgress.get() + 360, {
                 duration: 35,
                 repeat: Infinity,
@@ -374,10 +356,11 @@ function Certifications() {
         return () => {
             if (controls) controls.stop();
         };
-    }, [rotationProgress, isPaused]);
+    }, [rotationProgress, isPaused, isVisible]);
 
     return (
         <motion.section
+            ref={sectionRef}
             className='w-full flex flex-col justify-center py-36 md:py-48 relative overflow-hidden'
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -444,11 +427,15 @@ function Certifications() {
                 </div>
             </div>
 
-            {/* Add shimmer keyframe animation */}
+            {/* CSS Keyframe animations */}
             <style jsx>{`
                 @keyframes shimmer {
                     0% { left: -100%; }
                     100% { left: 200%; }
+                }
+                @keyframes float {
+                    0%, 100% { transform: translateY(0); opacity: 0.6; }
+                    50% { transform: translateY(-15px); opacity: 1; }
                 }
             `}</style>
         </motion.section>
