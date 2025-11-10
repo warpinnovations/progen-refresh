@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed w-full  py-10 z-20 overflow-y-hidden font-bold font-ox ${!isScrolled ? "scrolled-nav" : "bg-black/50"
+      className={`fixed w-full  py-10 z-[100] overflow-y-hidden font-bold font-ox ${!isScrolled ? "scrolled-nav" : "bg-black/50"
         }  `}
     >
       <div

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, Suspense, useEffect } from "react";
+import { useState, useRef, Suspense, useEffect, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
@@ -16,15 +16,16 @@ const Stars = React.memo(({ isVisible }) => {
   const { isMobile } = useDeviceNoSSR();
 
   // Memoize sphere positions so they are not recalculated on every render
-  const sphere = useState(() =>
-    random.inSphere(new Float32Array(isMobile ? 500 : 800), { radius: 1.2 })
-  )[0];
+  const sphere = useMemo(
+    () => random.inSphere(new Float32Array(isMobile ? 500 : 800), { radius: 1.2 }),
+    [isMobile]
+  );
 
   useFrame((state, delta) => {
-    // Only animate if visible
     if (ref.current && isVisible) {
-      ref.current.rotation.x -= delta / 10;
-      ref.current.rotation.y -= delta / 15;
+      const cappedDelta = Math.min(delta, 0.1);
+      ref.current.rotation.x -= cappedDelta / 10;
+      ref.current.rotation.y -= cappedDelta / 15;
     }
   });
 
@@ -77,7 +78,11 @@ const StarsCanvas = () => {
       {isVisible && (
         <Canvas
           camera={{ position: [0, 0, 1] }}
-          dpr={[1, 1.5]} // Limit pixel ratio for better performance
+          dpr={[1, 1.5]}
+          gl={{
+            antialias: false,
+            powerPreference: "high-performance"
+          }}
           performance={{ min: 0.5 }} // Allow frame rate to drop if needed
         >
           <Suspense fallback={null}>
