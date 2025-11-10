@@ -126,7 +126,7 @@ const MainSectionBlogsWP = (props : {data: WPPost[]}) => {
         )}
 
         <ThreeColumnFooter />
-        <Footer />
+        {/* <Footer /> */}
       </PageTransition>
     </div>
   );
