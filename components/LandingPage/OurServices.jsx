@@ -69,19 +69,17 @@ const ServiceCard = ({ service, index }) => {
             transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            className="relative group"
+            className="relative group h-full"
         >
-            {/* Card Container */}
+            {/* Card Container - Fixed height and compact padding */}
             <motion.div
-                // --- FIX APPLIED HERE ---
-                // Added `h-full` to make all cards in the same grid row have an equal height.
-                className="relative h-full p-6 md:p-8 rounded-2xl border border-[#96895F]/20 bg-black/40 backdrop-blur-sm overflow-hidden"
+                className="relative h-full p-5 md:p-6 rounded-xl border border-[#96895F]/20 bg-black/40 backdrop-blur-sm overflow-hidden flex flex-col"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
             >
                 {/* Animated border glow */}
                 <motion.div
-                    className="absolute inset-0 rounded-2xl"
+                    className="absolute inset-0 rounded-xl"
                     style={{
                         background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.3), transparent)',
                         backgroundSize: '200% 200%',
@@ -93,38 +91,38 @@ const ServiceCard = ({ service, index }) => {
                 />
 
                 {/* Inner border */}
-                <div className="absolute inset-[1px] rounded-2xl bg-black/60 backdrop-blur-sm" />
+                <div className="absolute inset-[1px] rounded-xl bg-black/60 backdrop-blur-sm" />
 
-                {/* Content */}
-                <div className="relative z-10 flex items-start gap-4">
-                    {/* Icon */}
+                {/* Content - Flex column to distribute space */}
+                <div className="relative z-10 flex items-center gap-3 md:gap-4 flex-1">
+                    {/* Icon - Smaller and more compact */}
                     <motion.div
-                        className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-[#96895F]/20 to-[#96895F]/5 border border-[#96895F]/30 flex items-center justify-center"
+                        className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[#96895F]/20 to-[#96895F]/5 border border-[#96895F]/30 flex items-center justify-center"
                         animate={isHovered ? {
                             rotate: [0, 5, -5, 0],
                             scale: [1, 1.1, 1],
                         } : {}}
                         transition={{ duration: 0.5 }}
                     >
-                        <span className="text-2xl md:text-3xl text-[#96895F]">{service.icon}</span>
+                        <span className="text-xl md:text-2xl text-[#96895F]">{service.icon}</span>
                     </motion.div>
 
-                    {/* Text Content */}
+                    {/* Text Content - Compact spacing */}
                     <div className="flex-1 min-w-0">
-                        <h3 className={`${MoonlanderFont.className} text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-[#96895F] transition-colors duration-300`}>
+                        <h3 className={`${MoonlanderFont.className} text-lg md:text-xl font-bold text-white mb-1.5 group-hover:text-[#96895F] transition-colors duration-300 leading-tight`}>
                             {service.name}
                         </h3>
 
-                        {/* Animated underline */}
+                        {/* Animated underline - Thinner */}
                         <motion.div
-                            className="h-[2px] bg-gradient-to-r from-[#96895F] to-transparent mb-3"
+                            className="h-[1.5px] bg-gradient-to-r from-[#96895F] to-transparent mb-1.5"
                             initial={{ width: '0%' }}
-                            animate={{ width: isHovered ? '100%' : '30%' }}
+                            animate={{ width: isHovered ? '100%' : '25%' }}
                             transition={{ duration: 0.4 }}
                         />
 
                         <motion.p
-                            className="text-sm md:text-base text-white/60"
+                            className="text-xs md:text-sm text-white/60 leading-snug"
                             animate={{ opacity: isHovered ? 1 : 0.6 }}
                             transition={{ duration: 0.3 }}
                         >
@@ -132,11 +130,11 @@ const ServiceCard = ({ service, index }) => {
                         </motion.p>
                     </div>
 
-                    {/* Arrow indicator */}
+                    {/* Arrow indicator - Smaller */}
                     <motion.div
-                        className="flex-shrink-0 w-8 h-8 rounded-full border border-[#96895F]/30 flex items-center justify-center"
+                        className="flex-shrink-0 w-7 h-7 rounded-full border border-[#96895F]/30 flex items-center justify-center"
                         animate={isHovered ? {
-                            x: [0, 5, 0],
+                            x: [0, 4, 0],
                             borderColor: 'rgba(150, 137, 95, 0.6)',
                         } : {
                             borderColor: 'rgba(150, 137, 95, 0.3)',
@@ -144,7 +142,7 @@ const ServiceCard = ({ service, index }) => {
                         transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
                     >
                         <svg
-                            className="w-4 h-4 text-[#96895F]"
+                            className="w-3.5 h-3.5 text-[#96895F]"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -155,21 +153,21 @@ const ServiceCard = ({ service, index }) => {
                     </motion.div>
                 </div>
 
-                {/* Hover particles */}
+                {/* Hover particles - Smaller */}
                 {isHovered && (
                     <>
                         <motion.div
-                            className="absolute top-4 right-4 w-1 h-1 rounded-full bg-[#96895F]/60"
+                            className="absolute top-3 right-3 w-1 h-1 rounded-full bg-[#96895F]/60"
                             animate={{
-                                y: [0, -20, 0],
+                                y: [0, -15, 0],
                                 opacity: [0.6, 1, 0.6],
                             }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
                         <motion.div
-                            className="absolute bottom-4 left-4 w-1 h-1 rounded-full bg-[#96895F]/40"
+                            className="absolute bottom-3 left-3 w-1 h-1 rounded-full bg-[#96895F]/40"
                             animate={{
-                                y: [0, 20, 0],
+                                y: [0, 15, 0],
                                 opacity: [0.4, 0.8, 0.4],
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
@@ -292,8 +290,8 @@ function OurServices() {
                     </motion.div>
                 </div>
 
-                {/* Services Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                {/* Services Grid - Tighter gaps */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 auto-rows-fr">
                     {services.map((service, index) => (
                         <ServiceCard key={index} service={service} index={index} />
                     ))}
