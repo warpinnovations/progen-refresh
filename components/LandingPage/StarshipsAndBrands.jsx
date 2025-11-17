@@ -5,6 +5,7 @@ import { Delaunay } from "d3-delaunay";
 import StarsCanvas from "../Global/StarCanvas"; // Make sure this path is correct
 import { Oxanium } from "next/font/google";
 import localFont from 'next/font/local';
+import FuturisticDivider from "../Global/FuturisticLine";
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
@@ -157,6 +158,7 @@ const BrandsConstellationSection = () => {
           <span className="text-[#f5f5f5]">Brands </span>
           <span className="text-prOrange">in Orbit</span>
         </motion.h1>
+        <FuturisticDivider color="#EAE2B7" className="mb-16" />
 
         <motion.div
           className="relative w-full h-[70vh]"

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, useMotionValue, useTransform, animate, useSpring } from 'framer-motion';
 import { worksData as allWorksData } from '@/app/contants';
 import StarsCanvas from '@/components/Global/StarCanvas';
+import FuturisticDivider from '@/components/Global/FuturisticLine'; // ADD THIS IMPORT
 
 // --- THEME-ALIGNED FONT IMPORTS ---
 import localFont from 'next/font/local';
@@ -240,6 +241,10 @@ const FeaturedWorksGrid = () => {
                     <span className="text-[#f5f5f5]">Our </span>
                     <span className="text-prOrange">Featured Works</span>
                 </h2>
+
+                {/* REPLACE THE ENTIRE DECORATION SECTION WITH THIS: */}
+                <FuturisticDivider color="#96895f" />
+
                 <p className={`text-lg md:text-xl text-white/70 mt-4 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
                     An interactive showcase of our creative and technical projects in orbit.
                 </p>

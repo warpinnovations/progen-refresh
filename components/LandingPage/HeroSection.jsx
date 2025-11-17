@@ -75,13 +75,20 @@ const HeroSection = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: [0, 1, 1],
-      scale: [0.4, 0.8, 1.1],
+      scale: [0.4, 0.8, 1],
       filter: ["blur(15px)", "blur(5px)", "blur(0px)"],
       y: [100, 0, 0],
       transition: { duration: 0.8, ease: "easeOut", times: [0, 0.4, 1] },
     },
   };
-  const logoHover = { scale: 1.1, transition: { type: "spring", stiffness: 300 } };
+  const logoHover = {
+    scale: 1.08,
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 15
+    }
+  };
 
   return (
     <PageTransition>
@@ -121,12 +128,12 @@ const HeroSection = () => {
             </h1>
 
             {/* AWARDS SECTION WITH METEORS */}
-            <div className="relative w-full max-w-4xl pt-16 overflow-hidden">
+            <div className="relative w-full max-w-4xl pt-20 pb-8">
               {/* Meteors render here, contained by the relative parent */}
               <Meteors number={30} />
 
               <motion.div
-                className="grid items-start grid-cols-3 gap-x-8 md:gap-x-16"
+                className="grid items-start grid-cols-3 gap-x-6 md:gap-x-12 lg:gap-x-16 px-4"
                 variants={logoContainerVariants}
                 initial="hidden"
                 animate="visible"
@@ -136,18 +143,34 @@ const HeroSection = () => {
                     key={logo.filename}
                     variants={logoWarpVariants}
                     whileHover={logoHover}
-                    className="z-10 flex flex-col items-center justify-start text-center"
+                    className="z-10 flex flex-col items-center justify-start text-center group"
                   >
-                    <div className="flex items-center justify-center w-24 h-24 md:w-32 md:h-32">
+                    {/* Logo Container with Clean Outlined Border */}
+                    <div className="relative flex items-center justify-center w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 p-4 md:p-5 lg:p-6 rounded-2xl border-2 border-[#96895f]/40 bg-gradient-to-br from-black/20 via-black/10 to-transparent backdrop-blur-sm shadow-xl transition-all duration-300 ease-out group-hover:border-[#96895f] group-hover:shadow-[0_0_25px_rgba(150,137,95,0.35)] group-hover:bg-black/30">
+                      {/* Subtle inner glow effect */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#96895f]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out" />
+
+                      {/* Corner accents */}
+                      <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t-2 border-l-2 border-[#96895f]/60 rounded-tl-md" />
+                      <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t-2 border-r-2 border-[#96895f]/60 rounded-tr-md" />
+                      <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b-2 border-l-2 border-[#96895f]/60 rounded-bl-md" />
+                      <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b-2 border-r-2 border-[#96895f]/60 rounded-br-md" />
+
                       <img
                         src={`/LandingPageAssets/awards/${logo.filename}`}
                         alt={logo.alt}
-                        className="object-contain w-full h-full"
+                        className="relative z-10 object-contain w-full h-full filter brightness-110 contrast-110"
                       />
                     </div>
-                    <p className={`mt-4 text-sm md:text-base lg:text-lg ${OxaniumFont.className} font-bold`}>
-                      {logo.alt}
-                    </p>
+
+                    {/* Clean Enhanced Label */}
+                    <div className="relative mt-4 px-2 w-full">
+                      <p className={`text-xs md:text-sm lg:text-base ${OxaniumFont.className} font-bold text-white tracking-wider uppercase transition-all duration-300 ease-out group-hover:text-[#96895f] leading-tight break-words`}>
+                        {logo.alt}
+                      </p>
+                      {/* Underline accent */}
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-transparent via-[#96895f] to-transparent group-hover:w-3/4 transition-all duration-300 ease-out" />
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>

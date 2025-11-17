@@ -3,8 +3,11 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import StarsCanvas from "../Global/StarCanvas";
-const MoonlanderFont = { className: 'font-bold' };
-const OxaniumFont = { className: 'font-semibold' };
+import localFont from 'next/font/local';
+import { Oxanium } from 'next/font/google';
+
+const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
+const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
 
 // --- Data for the feature cards ---
 const features = [
@@ -44,7 +47,7 @@ const cardVariants = {
   },
 };
 
-// Individual Card Component with enhanced effects
+// Individual Card Component
 const FeatureCard = ({ feature, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(0);
@@ -54,7 +57,7 @@ const FeatureCard = ({ feature, index }) => {
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-3, 3]);
 
   const handleMouseMove = (e) => {
-    if (!isHovered) return; // Only calculate on hover
+    if (!isHovered) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -78,43 +81,28 @@ const FeatureCard = ({ feature, index }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className={`group relative
-        ${feature.isVertical ? 'aspect-[3/4]' : 'md:col-span-2 aspect-[16/9]'}
-      `}
-      style={{
-        transformStyle: 'preserve-3d',
-        perspective: 1000,
-      }}
+      className={`group relative ${feature.isVertical ? 'aspect-[3/4]' : 'md:col-span-2 aspect-[16/9]'}`}
+      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
       <motion.div
         className="w-full h-full relative"
-        style={{
-          rotateX: rotateX,
-          rotateY: rotateY,
-          transformStyle: 'preserve-3d',
-        }}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         transition={{ type: 'spring', stiffness: 200, damping: 25 }}
       >
-        {/* Outer glow effect */}
         <motion.div
           className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-[#96895F]/40 via-[#96895F]/20 to-transparent blur-xl"
-          animate={{
-            opacity: isHovered ? 1 : 0,
-          }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.5 }}
         />
 
-        {/* Main card container */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden border border-[#96895F]/30 bg-gradient-to-br from-slate-900/90 to-slate-800/80 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/60 group-hover:shadow-[#96895F]/30 transition-all duration-500">
-
-          {/* Background Media */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden">
             {feature.iframeSrc ? (
               <iframe
                 src={feature.iframeSrc}
                 width="100%"
                 height="100%"
-                allow="autoplay; fullscreen; accelerometer; gyroscope; picture-in-picture"
+                allow="autoplay; fullscreen"
                 className="absolute inset-0 h-full w-full object-cover pointer-events-auto"
                 allowFullScreen
                 frameBorder="0"
@@ -123,35 +111,25 @@ const FeatureCard = ({ feature, index }) => {
             ) : (
               <motion.img
                 src={feature.videoUrl}
-                alt={`${feature.supertitle} background`}
+                alt={feature.supertitle}
                 className="w-full h-full object-cover"
-                style={{
-                  scale: isHovered ? 1.08 : 1,
-                }}
+                style={{ scale: isHovered ? 1.08 : 1 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               />
             )}
-
-            {/* Gradient overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10"
-              animate={{
-                opacity: isHovered ? 1 : 0,
-              }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
               transition={{ duration: 0.5 }}
             />
           </div>
 
-          {/* Shimmer effect - only on hover */}
           {isHovered && (
             <motion.div
               className="absolute inset-0 pointer-events-none"
               animate={{
-                background: [
-                  'linear-gradient(90deg, transparent 0%, rgba(150, 137, 95, 0.15) 50%, transparent 100%)',
-                  'linear-gradient(90deg, transparent 0%, rgba(150, 137, 95, 0.15) 50%, transparent 100%)'
-                ],
+                background: ['linear-gradient(90deg, transparent 0%, rgba(150, 137, 95, 0.15) 50%, transparent 100%)'],
                 backgroundPosition: ['-200%', '200%']
               }}
               transition={{ duration: 2, ease: 'linear', repeat: Infinity }}
@@ -159,48 +137,19 @@ const FeatureCard = ({ feature, index }) => {
             />
           )}
 
-          {/* Inner glow border */}
           <div className="absolute inset-[1px] rounded-3xl border border-[#96895F]/20 group-hover:border-[#96895F]/40 transition-all duration-500 pointer-events-none" />
 
-          {/* Floating particles effect - only on hover */}
-          {isHovered && (
-            <>
-              <motion.div
-                className="absolute top-8 right-8 w-2 h-2 rounded-full bg-[#96895F]/60"
-                animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.6, 1, 0.6],
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute top-16 right-16 w-1.5 h-1.5 rounded-full bg-[#96895F]/40"
-                animate={{
-                  y: [0, -15, 0],
-                  opacity: [0.4, 0.8, 0.4],
-                }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              />
-            </>
-          )}
-
-          {/* Content */}
           <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
             <motion.div
               className="space-y-4"
-              animate={{
-                y: isHovered ? -8 : 0,
-              }}
+              animate={{ y: isHovered ? -8 : 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Supertitle with glow */}
               <div className="relative inline-block">
                 <motion.p
                   className={`text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-[#96895F] mb-3 ${OxaniumFont.className}`}
                   animate={{
-                    textShadow: isHovered
-                      ? '0 0 20px rgba(150, 137, 95, 0.8)'
-                      : '0 0 8px rgba(150, 137, 95, 0.4)'
+                    textShadow: isHovered ? '0 0 20px rgba(150, 137, 95, 0.8)' : '0 0 8px rgba(150, 137, 95, 0.4)'
                   }}
                   transition={{ duration: 0.4 }}
                 >
@@ -209,15 +158,11 @@ const FeatureCard = ({ feature, index }) => {
                 <motion.div
                   className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/60 to-transparent"
                   initial={{ width: 0, opacity: 0 }}
-                  animate={{
-                    width: isHovered ? '100%' : '50%',
-                    opacity: 1
-                  }}
+                  animate={{ width: isHovered ? '100%' : '50%', opacity: 1 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 />
               </div>
 
-              {/* Hover reveal description */}
               <motion.div
                 initial={{ opacity: 0, y: 20, height: 0 }}
                 animate={{
@@ -233,14 +178,10 @@ const FeatureCard = ({ feature, index }) => {
                 </p>
               </motion.div>
 
-              {/* Animated CTA */}
               <motion.div
                 className="flex items-center gap-3 text-[#96895F]"
                 initial={{ opacity: 0, x: -10 }}
-                animate={{
-                  opacity: isHovered ? 1 : 0,
-                  x: isHovered ? 0 : -10
-                }}
+                animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
                 <span className={`text-xs md:text-sm font-semibold tracking-wider uppercase ${OxaniumFont.className}`}>
@@ -261,23 +202,16 @@ const FeatureCard = ({ feature, index }) => {
             </motion.div>
           </div>
 
-          {/* Corner accent glow */}
           {isHovered && (
             <>
               <motion.div
                 className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#96895F]/30 to-transparent rounded-3xl pointer-events-none"
-                animate={{
-                  opacity: [0.3, 0.6, 0.3]
-                }}
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
-
-              {/* Bottom left accent */}
               <motion.div
                 className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[#96895F]/20 to-transparent rounded-3xl pointer-events-none"
-                animate={{
-                  opacity: [0.2, 0.4, 0.2]
-                }}
+                animate={{ opacity: [0.2, 0.4, 0.2] }}
                 transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
               />
             </>
@@ -290,45 +224,214 @@ const FeatureCard = ({ feature, index }) => {
 
 const PrometheusFeatures = () => {
   return (
-    <div className="w-full relative overflow-hidden flex items-center justify-center py-20 md:py-36 bg-black">
-      {/* Enhanced Background */}
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-        <StarsCanvas />
-        <div className="absolute inset-0 bg-black/60" />
+    <div className="w-full relative overflow-hidden bg-black">
+      {/* Wave Transition with Prometheus Label */}
+      <div className="relative w-full h-48 md:h-64 overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-white" />
 
-        {/* Animated gradient orbs */}
         <motion.div
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#96895F]/12 rounded-full blur-[120px]"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.12, 0.18, 0.12],
-          }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          className="absolute top-0 left-0 w-64 h-64 bg-[#96895F]/8 rounded-full blur-3xl"
+          animate={{ x: [0, 30, 0], opacity: [0.08, 0.12, 0.08] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#96895F]/10 rounded-full blur-[120px]"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.18, 0.12, 0.18],
-          }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          className="absolute top-0 right-0 w-80 h-80 bg-[#96895F]/6 rounded-full blur-3xl"
+          animate={{ x: [0, -40, 0], opacity: [0.06, 0.1, 0.06] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+
+        {/* Top Wave */}
+        <svg className="absolute top-0 w-full h-1/3" viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <defs>
+            <filter id="glow-top">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <motion.path
+            fill="#000000"
+            d="M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110L1440,0L0,0Z"
+            animate={{
+              d: [
+                "M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110L1440,0L0,0Z",
+                "M0,90L60,95C120,100,240,110,360,115C480,120,600,120,720,115C840,110,960,100,1080,100C1200,100,1320,110,1380,115L1440,120L1440,0L0,0Z",
+                "M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110L1440,0L0,0Z"
+              ]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.path
+            fill="none"
+            stroke="#96895F"
+            strokeWidth="2"
+            opacity="0.7"
+            filter="url(#glow-top)"
+            d="M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110"
+            animate={{
+              d: [
+                "M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110",
+                "M0,90L60,95C120,100,240,110,360,115C480,120,600,120,720,115C840,110,960,100,1080,100C1200,100,1320,110,1380,115L1440,120",
+                "M0,80L60,90C120,100,240,120,360,120C480,120,600,100,720,95C840,90,960,100,1080,105C1200,110,1320,110,1380,110L1440,110"
+              ]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </svg>
+
+        {/* Prometheus Label */}
+        <div className="absolute inset-0 flex items-center justify-center z-10">
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-[#96895F]/10 rounded-2xl blur-xl"
+              animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.15, 0.1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            <div className="relative bg-white/80 backdrop-blur-sm border-2 border-[#96895F]/30 rounded-2xl px-8 py-4 md:px-12 md:py-6">
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#96895F] rounded-tl-lg" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#96895F] rounded-tr-lg" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#96895F] rounded-bl-lg" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#96895F] rounded-br-lg" />
+
+              <motion.div
+                className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#96895F]"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#96895F]"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+              />
+
+              <div className="relative flex items-center gap-3">
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
+                    <path d="M2,12L12,17L22,12" />
+                  </svg>
+                </motion.div>
+
+                <h3 className={`text-2xl md:text-4xl font-black uppercase tracking-wider ${MoonlanderFont.className}`}>
+                  <span className="bg-gradient-to-r from-[#96895F] via-[#B8A76F] to-[#96895F] bg-clip-text text-transparent">
+                    Prometheus
+                  </span>
+                </h3>
+
+                <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
+                    <path d="M2,12L12,17L22,12" />
+                  </svg>
+                </motion.div>
+              </div>
+
+              <motion.p
+                className={`text-center text-[#96895F]/70 text-xs md:text-sm tracking-widest mt-1 ${OxaniumFont.className}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                DIGITAL EXPERIENCE
+              </motion.p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom Wave */}
+        <svg className="absolute bottom-0 w-full h-1/2" viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <defs>
+            <filter id="glow-bottom">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <motion.path
+            fill="#000000"
+            d="M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130L1440,200L0,200Z"
+            animate={{
+              d: [
+                "M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130L1440,200L0,200Z",
+                "M0,110L60,115C120,120,240,130,360,135C480,140,600,140,720,135C840,130,960,120,1080,120C1200,120,1320,130,1380,135L1440,140L1440,200L0,200Z",
+                "M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130L1440,200L0,200Z"
+              ]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.path
+            fill="none"
+            stroke="#96895F"
+            strokeWidth="3"
+            opacity="0.8"
+            filter="url(#glow-bottom)"
+            d="M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130"
+            animate={{
+              d: [
+                "M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130",
+                "M0,110L60,115C120,120,240,130,360,135C480,140,600,140,720,135C840,130,960,120,1080,120C1200,120,1320,130,1380,135L1440,140",
+                "M0,100L60,110C120,120,240,140,360,140C480,140,600,120,720,115C840,110,960,120,1080,125C1200,130,1320,130,1380,130L1440,130"
+              ]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </svg>
+
+        <motion.div
+          className="absolute top-1/4 left-1/5 w-1.5 h-1.5 rounded-full bg-[#96895F]/50"
+          animate={{ y: [0, -30, 0], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-1 h-1 rounded-full bg-[#96895F]/40"
+          animate={{ y: [0, -25, 0], opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         />
       </div>
 
-      {/* Main Content */}
-      <motion.div
-        className="relative z-20 w-full max-w-7xl px-4"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8" style={{ perspective: '1500px' }}>
-          {features.map((feature, index) => (
-            <FeatureCard key={index} feature={feature} index={index} />
-          ))}
+      {/* Main Content Section */}
+      <div className="relative flex items-center justify-center py-20 md:py-36">
+        <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+          <StarsCanvas />
+          <div className="absolute inset-0 bg-black/60" />
+
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#96895F]/12 rounded-full blur-[120px]"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.18, 0.12] }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#96895F]/10 rounded-full blur-[120px]"
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.18, 0.12, 0.18] }}
+            transition={{ duration: 10, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
+          />
         </div>
-      </motion.div>
+
+        <motion.div
+          className="relative z-20 w-full max-w-7xl px-4"
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8" style={{ perspective: '1500px' }}>
+            {features.map((feature, index) => (
+              <FeatureCard key={index} feature={feature} index={index} />
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };

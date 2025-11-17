@@ -5,7 +5,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import { Oxanium } from 'next/font/google';
 import localFont from 'next/font/local';
-
+import FuturisticDivider from "../Global/FuturisticLine";
 const OxaniumFont = Oxanium({ weight: '700', subsets: ['latin'] });
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
@@ -401,6 +401,7 @@ function Certifications() {
                     <span className="text-prOrange">Credentials</span>
                     <span className="text-[#f5f5f5]"> in Orbit</span>
                 </h2>
+                <FuturisticDivider color="#96895F" className="mt-8" />
                 <p className={`text-lg md:text-xl text-white/70 mt-6 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
                     An interactive showcase of our proven expertise across the digital universe.
                 </p>
