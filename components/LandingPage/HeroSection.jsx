@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import PageTransition from "@/components/Global/PageTransition";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import StarsCanvas from "@/components/Global/StarCanvas";
-import { Meteors } from "@/components/Global/Meteor"
 import { Oxanium } from "next/font/google";
 import { motion } from "framer-motion";
 import localFont from "next/font/local";
@@ -14,6 +13,63 @@ const OxaniumFont = Oxanium({
   subsets: ["latin"],
 });
 const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
+
+// Fixed Meteor Component
+const Meteors = ({ number = 20 }) => {
+  const [meteors, setMeteors] = useState([]);
+
+  useEffect(() => {
+    // Generate meteor configurations only once on mount
+    const meteorConfigs = Array.from({ length: number }, (_, idx) => ({
+      id: idx,
+      left: `${Math.floor(Math.random() * (400 - -400) + -400)}px`,
+      animationDelay: `${Math.random() * (number * 0.1) + idx * 0.05}s`, // Better staggered delays
+      animationDuration: `${Math.floor(Math.random() * 4 + 2)}s`, // 2-6s faster duration
+    }));
+    setMeteors(meteorConfigs);
+  }, [number]);
+
+  return (
+    <>
+      {meteors.map((meteor) => (
+        <span
+          key={meteor.id}
+          className="animate-meteor-effect absolute top-1/2 left-1/2 h-0.5 w-0.5 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg]"
+          style={{
+            left: meteor.left,
+            animationDelay: meteor.animationDelay,
+            animationDuration: meteor.animationDuration,
+          }}
+        >
+          <div className="pointer-events-none absolute top-1/2 -z-10 h-[1px] w-[50px] -translate-y-1/2 bg-gradient-to-r from-slate-500 to-transparent" />
+        </span>
+      ))}
+
+      <style jsx>{`
+        @keyframes meteor-effect {
+          0% {
+            transform: rotate(215deg) translateX(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            transform: rotate(215deg) translateX(-500px);
+            opacity: 0;
+          }
+        }
+
+        .animate-meteor-effect {
+          animation: meteor-effect linear infinite;
+        }
+      `}</style>
+    </>
+  );
+};
 
 const HeroSection = () => {
   const [activeText, setActiveText] = useState(0);
@@ -129,8 +185,8 @@ const HeroSection = () => {
 
             {/* AWARDS SECTION WITH METEORS */}
             <div className="relative w-full max-w-4xl pt-20 pb-8">
-              {/* Meteors render here, contained by the relative parent */}
-              <Meteors number={30} />
+              {/* Fixed Meteors - controlled animation */}
+              <Meteors number={20} />
 
               <motion.div
                 className="grid items-start grid-cols-3 gap-x-6 md:gap-x-12 lg:gap-x-16 px-4"

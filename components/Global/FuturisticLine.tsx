@@ -228,7 +228,7 @@ const FuturisticDivider: React.FC<FuturisticDividerProps> = ({
                         background: `linear-gradient(to bottom, transparent, ${color}, transparent)`
                     }}
                     animate={{
-                        x: [0, 800, 0],
+                        x: [0, 650, 0],
                         opacity: [0, 1, 1, 0]
                     }}
                     transition={{
