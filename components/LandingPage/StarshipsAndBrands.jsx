@@ -86,9 +86,8 @@ const StarshipsAndBrands = () => {
               scaleX: isVisibleInAnimation ? [0, 1, 0] : 0,
             }}
             transition={{ duration: 2, delay: isMobile ? 1.5 : 0 }}
-            className={`${
-              isVisibleInAnimation ? "bg-prOrange" : ""
-            } h-8 md:h-10 lg:h-12 absolute inset-0`}
+            className={`${isVisibleInAnimation ? "bg-prOrange" : ""
+              } h-8 md:h-10 lg:h-12 absolute inset-0`}
             style={{ transformOrigin: "left" }}
           />
         </div>
@@ -116,9 +115,8 @@ const StarshipsAndBrands = () => {
               scaleX: isVisibleInAnimation ? [0, 1, 0] : 0,
             }}
             transition={{ duration: 2, delay: isMobile ? 2.5 : 1 }}
-            className={`${
-              isVisibleInAnimation ? "bg-prOrange" : ""
-            } h-8 md:h-10 lg:h-12 absolute inset-0`}
+            className={`${isVisibleInAnimation ? "bg-prOrange" : ""
+              } h-8 md:h-10 lg:h-12 absolute inset-0`}
             style={{ transformOrigin: "left" }}
           />
         </div>
@@ -133,7 +131,7 @@ const StarshipsAndBrands = () => {
           &nbsp; through &nbsp;
           <UnderlineWord word={"creativity"} delay={1} />
           &nbsp; and &nbsp;
-          <UnderlineWord word={"innovation"} delay={1.5} />
+          <UnderlineWord word={"innovations"} delay={1.5} />
           &nbsp; across the widest variety of mediums and platforms.
         </h1>
       </div>
