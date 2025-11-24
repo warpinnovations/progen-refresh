@@ -22,6 +22,80 @@ const features = [
   },
 ];
 
+// --- NEW: Wavy Lines Component ---
+const FloatingWaves = () => {
+  const waves = [
+    {
+      d: "M -400 80 Q -200 40 0 80 T 400 80 T 800 80 T 1200 80 T 1600 80 T 2000 80",
+      strokeWidth: 1,
+      opacity: 0.3,
+      dashArray: "200 300",
+      dashOffset: 500,
+      duration: 25,
+      delay: 0,
+    },
+    // {
+    //   d: "M -400 120 Q -200 160 0 120 T 400 120 T 800 120 T 1200 120 T 1600 120 T 2000 120",
+    //   strokeWidth: 1.5,
+    //   opacity: 0.5,
+    //   dashArray: "5 15", // Dotted line effect
+    //   dashOffset: 20,
+    //   duration: 35,
+    //   delay: 2,
+    // },
+    {
+      d: "M -400 180 Q -200 150 0 180 T 400 180 T 800 180 T 1200 180 T 1600 180 T 2000 180",
+      strokeWidth: 1,
+      opacity: 0.4,
+      dashArray: "300 200",
+      dashOffset: 500,
+      duration: 20,
+      delay: 5,
+    },
+  ];
+
+  return (
+    <svg
+      className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+      preserveAspectRatio="none"
+      viewBox="0 0 1440 256" // Assuming a max height of 256 for the white area
+    >
+      <defs>
+        <filter id="wave-glow">
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#wave-glow)">
+        {waves.map((wave, i) => (
+          <motion.path
+            key={i}
+            d={wave.d}
+            fill="none"
+            stroke="#96895F"
+            strokeWidth={wave.strokeWidth}
+            strokeLinecap="round"
+            opacity={wave.opacity}
+            strokeDasharray={wave.dashArray}
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: wave.dashOffset }}
+            transition={{
+              duration: wave.duration,
+              repeat: Infinity,
+              ease: "linear",
+              delay: wave.delay,
+            }}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+};
+
+
 // Animation variants
 const sectionVariants = {
   hidden: { opacity: 0 },
@@ -282,7 +356,10 @@ const PrometheusFeatures = () => {
           />
         </svg>
 
-        {/* ENHANCED: Additional Prometheus boxes scattered across the white area */}
+        {/* --- REPLACED with new FloatingWaves component --- */}
+        <FloatingWaves />
+
+        {/* Prometheus UI boxes */}
         <div className="absolute inset-0 flex items-center justify-between px-8 md:px-16 lg:px-24 z-10 pointer-events-none">
           {/* Left box - Enhanced Futuristic Tagline */}
           <motion.div
@@ -300,7 +377,6 @@ const PrometheusFeatures = () => {
               />
 
               <div className="relative bg-white/80 backdrop-blur-sm border-2 border-[#96895F]/30 rounded-xl px-6 py-3 overflow-hidden">
-                {/* Animated scan line */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-[#96895F]/10 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
@@ -312,7 +388,6 @@ const PrometheusFeatures = () => {
                 <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#96895F] rounded-bl-md" />
                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#96895F] rounded-br-md" />
 
-                {/* Pulsing dots at corners */}
                 <motion.div
                   className="absolute -top-0.5 -left-0.5 w-1.5 h-1.5 rounded-full bg-[#96895F]"
                   animate={{ opacity: [0.5, 1, 0.5] }}
@@ -344,7 +419,6 @@ const PrometheusFeatures = () => {
                       <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
                       <path d="M2,12L12,17L22,12" />
                     </svg>
-                    {/* Icon glow */}
                     <div className="absolute inset-0 blur-sm bg-[#96895F]/30 rounded-full" />
                   </motion.div>
 
@@ -439,7 +513,6 @@ const PrometheusFeatures = () => {
               />
 
               <div className="relative bg-white/80 backdrop-blur-sm border-2 border-[#96895F]/30 rounded-xl px-6 py-3 overflow-hidden">
-                {/* Animated scan line */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-[#96895F]/10 to-transparent"
                   animate={{ x: ['-100%', '200%'] }}
@@ -451,7 +524,6 @@ const PrometheusFeatures = () => {
                 <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#96895F] rounded-bl-md" />
                 <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#96895F] rounded-br-md" />
 
-                {/* Pulsing dots at corners */}
                 <motion.div
                   className="absolute -top-0.5 -left-0.5 w-1.5 h-1.5 rounded-full bg-[#96895F]"
                   animate={{ opacity: [0.5, 1, 0.5] }}
@@ -490,7 +562,6 @@ const PrometheusFeatures = () => {
                       <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
                       <path d="M2,12L12,17L22,12" />
                     </svg>
-                    {/* Icon glow */}
                     <div className="absolute inset-0 blur-sm bg-[#96895F]/30 rounded-full" />
                   </motion.div>
                 </div>
@@ -498,22 +569,6 @@ const PrometheusFeatures = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Additional small accent elements */}
-        <motion.div
-          className="absolute top-8 left-1/4 hidden md:block"
-          animate={{ y: [0, -10, 0], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        >
-          <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
-        </motion.div>
-        <motion.div
-          className="absolute top-12 right-1/3 hidden md:block"
-          animate={{ y: [0, -8, 0], opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-        >
-          <div className="w-1.5 h-1.5 rounded-full bg-[#96895F]/50" />
-        </motion.div>
 
         {/* Bottom Wave */}
         <svg className="absolute bottom-0 w-full h-1/2" viewBox="0 0 1440 200" preserveAspectRatio="none">
