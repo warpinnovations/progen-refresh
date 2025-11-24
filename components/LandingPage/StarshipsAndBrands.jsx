@@ -131,7 +131,7 @@ const StarshipsAndBrands = () => {
           &nbsp; through &nbsp;
           <UnderlineWord word={"creativity"} delay={1} />
           &nbsp; and &nbsp;
-          <UnderlineWord word={"innovations"} delay={1.5} />
+          <UnderlineWord word={"innovation"} delay={1.5} />
           &nbsp; across the widest variety of mediums and platforms.
         </h1>
       </div>
