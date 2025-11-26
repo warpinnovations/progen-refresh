@@ -1,0 +1,17 @@
+export const missions = [
+  { id: "a1f3b9c2", name: "Take a selfie with the event banner or entrance sign" },
+  { id: "b2d4e8f7", name: "Capture your team raising a toast (with drinks or just hands)" },
+  { id: "c3a9d1e4", name: "Show off your event outfit or accessory in a creative pose" },
+  { id: "d4b8f2a1", name: "Take a photo near the stage or main presentation area" },
+  { id: "e5c7a3b2", name: "Photograph your favorite treat or snack at the event" },
+  { id: "f6d2c4e3", name: "Snap a picture of the most visually appealing corner of the venue" },
+  { id: "g7e1b5d4", name: "Take a fun jumping photo with your team" },
+  { id: "h8f3d6c5", name: "Capture a picture with flowers, balloons, or props at the event" },
+  { id: "i9a4e7b6", name: "Take a photo with the official event hashtag displayed somewhere" },
+  { id: "j0b5f8d7", name: "Build a small human pyramid or creative group pose and photograph it" },
+  { id: "k1c6g9e8", name: "Take a funny or unexpected candid shot of a team member" },
+  { id: "l2d7h0f9", name: "Capture a selfie with an event staff member or host" },
+  { id: "m3e8i1g0", name: "Take an artistic photo using shadows or lighting in the venue" },
+  { id: "n4f9j2h1", name: "Line up your team and take a photo of everyone smiling" },
+  { id: "o5g0k3i2", name: "Recreate a spy, superhero, or action scene somewhere in the venue and snap it" },
+];
