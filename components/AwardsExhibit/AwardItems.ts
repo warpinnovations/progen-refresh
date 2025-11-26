@@ -39,9 +39,9 @@ export const awarditems = [
       mainImage: "/AwardsExhibitAssets/Logos/pr-awards-2025.png",
       videos: ["/VideoAssets/Lake.gif"],
       photos: [
-        "/AwardsExhibitAssets/Pr awards 2025/PR AWARDS 2025.webp",
-        "/AwardsExhibitAssets/Pr awards 2025/PR AWARDS 2025_2.webp",
-        "/AwardsExhibitAssets/Pr awards 2025/PR AWARDS 2025_3.webp",
+        "/AwardsExhibitAssets/PR Awards 2025/PR AWARDS 2025.webp",
+        "/AwardsExhibitAssets/PR Awards 2025/PR AWARDS 2025_2.webp",
+        "/AwardsExhibitAssets/PR Awards 2025/PR AWARDS 2025_3.webp",
       ],
     },
     award_body: "The PR Awards is organized by Marketing-Interactive, a leading media outlet for the advertising, marketing, and media industries in Asia.",
