@@ -10,6 +10,7 @@ import MediaCarousel, { MediaItem } from "@/components/AwardsExhibit/MediaCarous
 export default function AwardPage() {
   const { id } = useParams();
   const award = awarditems.find((a) => a.id === id);
+  const individualAwardIds = ["qhtlfmzra", "sdnqjhlwf", "fzqmrklpw"];
 
   if (!award)
     return (
@@ -142,7 +143,7 @@ export default function AwardPage() {
             <div className="flex items-center mb-4 sm:mb-6">
               <div className="w-1 h-8 sm:h-10 md:h-12 bg-gradient-to-t from-[#c8a45d] to-[#9d7d3a] rounded-full mr-4"></div>
               <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-semibold tracking-wide">
-                THE AWARD GIVING BODY
+                AWARD-GIVING BODY
               </h2>
             </div>
 
@@ -158,7 +159,7 @@ export default function AwardPage() {
             <div className="flex items-center mb-4 mt-6 sm:mt-6">
               <div className="w-1 h-8 sm:h-10 md:h-12 bg-gradient-to-t from-[#c8a45d] to-[#9d7d3a] rounded-full mr-4"></div>
               <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-semibold tracking-wide">
-                ABOUT THE CAMPAIGN
+                 {individualAwardIds.includes(award.id) ? "ABOUT THE AWARDEE" : "ABOUT THE CAMPAIGN"}
               </h2>
             </div>
 
