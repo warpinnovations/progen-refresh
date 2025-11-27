@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 export type MediaItem = {
@@ -20,6 +20,16 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
   const hasMultiple = media.length > 1;
   const peek = 80;
 
+    useEffect(() => {
+    media.forEach((item) => {
+      if (item.type === "image") {
+        const preload = new window.Image();
+        preload.src = item.src;
+      }
+    });
+  }, [media]);
+
+
   const handleNext = () => setCurrent((prev) => (prev + 1) % media.length);
   const handlePrev = () =>
     setCurrent((prev) => (prev - 1 + media.length) % media.length);
@@ -30,6 +40,23 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
 
   return (
     <div className="relative w-full flex justify-center items-center py-8">
+
+      {/* Hidden preloader using Next/Image */}
+      <div className="hidden">
+        {media
+          .filter((item) => item.type === "image")
+          .map((item) => (
+            <Image
+              key={item.src}
+              src={item.src}
+              alt="preload"
+              width={10}
+              height={10}
+              priority
+            />
+          ))}
+      </div>
+
       {/* Carousel */}
       <div className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex justify-center items-center overflow-hidden">
         {media.map((item, index) => {
@@ -53,12 +80,10 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
           return (
             <div
               key={item.src}
-              className={`absolute top-0 h-full transition-all duration-500 rounded-xl overflow-hidden shadow-2xl cursor-pointer`}
+              className="absolute top-0 h-full transition-all duration-500 rounded-xl overflow-hidden shadow-2xl cursor-pointer"
               style={{
                 width: isMain ? "100%" : "70%",
-                transform: `translateX(${translateX}px) scale(${
-                  isMain ? 1 : 0.85
-                })`,
+                transform: `translateX(${translateX}px) scale(${isMain ? 1 : 0.85})`,
                 zIndex: isMain ? 10 : 5,
               }}
               onClick={isMain ? handleOpenModal : undefined}
@@ -120,12 +145,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
@@ -139,12 +159,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </>
@@ -163,7 +178,6 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               className="relative flex justify-center items-center"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* X Button */}
               <button
                 onClick={handleCloseModal}
                 className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm p-2 rounded-full hover:bg-black/80 transition z-50"
@@ -176,11 +190,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 6l12 12M6 18L18 6"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
                 </svg>
               </button>
 
@@ -213,11 +223,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 6l12 12M6 18L18 6"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
                 </svg>
               </button>
 
