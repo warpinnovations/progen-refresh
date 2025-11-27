@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 
 export type MediaItem = {
@@ -15,12 +15,14 @@ interface MediaCarouselProps {
 export default function MediaCarousel({ media }: MediaCarouselProps) {
   const [current, setCurrent] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const imgRef = useRef<HTMLDivElement | null>(null);
 
   const hasMultiple = media.length > 1;
   const peek = 80;
 
   const handleNext = () => setCurrent((prev) => (prev + 1) % media.length);
-  const handlePrev = () => setCurrent((prev) => (prev - 1 + media.length) % media.length);
+  const handlePrev = () =>
+    setCurrent((prev) => (prev - 1 + media.length) % media.length);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -34,21 +36,15 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
           // Position calculation
           let position: number;
           if (media.length === 2) {
-            // Special handling for 2 items
-            position = (index - current + 2) % 2
-            if (position === 0) {
-              position = 0;
-            } else if (position === 1) {
-              position = -1;
-            }
+            position = (index - current + 2) % 2;
+            if (position === 0) position = 0;
+            else if (position === 1) position = -1;
           } else {
-            // Normal wrap-around for 3+ items
             position = index - current;
             if (position < -1) position += media.length;
             if (position > 1) position -= media.length;
           }
 
-          // Only render main and adjacent items
           if (Math.abs(position) > 1) return null;
 
           const isMain = position === 0;
@@ -60,7 +56,9 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               className={`absolute top-0 h-full transition-all duration-500 rounded-xl overflow-hidden shadow-2xl cursor-pointer`}
               style={{
                 width: isMain ? "100%" : "70%",
-                transform: `translateX(${translateX}px) scale(${isMain ? 1 : 0.85})`,
+                transform: `translateX(${translateX}px) scale(${
+                  isMain ? 1 : 0.85
+                })`,
                 zIndex: isMain ? 10 : 5,
               }}
               onClick={isMain ? handleOpenModal : undefined}
@@ -101,7 +99,9 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                 </div>
               )}
 
-              {!isMain && <div className="absolute inset-0 bg-black/40 pointer-events-none" />}
+              {!isMain && (
+                <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+              )}
             </div>
           );
         })}
@@ -114,8 +114,18 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
             onClick={handlePrev}
             className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 p-4 rounded-full hover:bg-black/60 z-20"
           >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
 
@@ -123,8 +133,18 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
             onClick={handleNext}
             className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 p-4 rounded-full hover:bg-black/60 z-20"
           >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </>
@@ -136,8 +156,34 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
           className="fixed inset-0 flex justify-center items-center z-50 bg-black/80"
           onClick={handleCloseModal}
         >
+          {/* IMAGE MODAL */}
           {media[current].type === "image" && (
-            <div className="flex justify-center items-center cursor-pointer" onClick={handleCloseModal}>
+            <div
+              ref={imgRef}
+              className="relative flex justify-center items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* X Button */}
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm p-2 rounded-full hover:bg-black/80 transition z-50"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6l12 12M6 18L18 6"
+                  />
+                </svg>
+              </button>
+
               <Image
                 src={media[current].src}
                 alt={media[current].alt || "Media"}
@@ -149,11 +195,32 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
             </div>
           )}
 
+          {/* VIDEO MODAL */}
           {media[current].type === "video" && (
             <div
               className="relative flex justify-center items-center"
               onClick={(e) => e.stopPropagation()}
             >
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-3 left-3 z-50 text-white bg-black/60 backdrop-blur-sm p-2 rounded-full hover:bg-black/80 transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6l12 12M6 18L18 6"
+                  />
+                </svg>
+              </button>
+
               <div className="relative w-[85vw] max-h-[70vh] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw] max-w-4xl rounded-lg shadow-xl">
                 <video
                   src={media[current].src}
@@ -161,14 +228,6 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                   autoPlay
                   className="w-full h-auto max-h-[70vh] rounded-lg"
                 />
-                <button
-                  onClick={handleCloseModal}
-                  className="absolute top-2 left-2 z-50 text-white bg-black/50 p-1.5 rounded-full hover:bg-black/70 transition"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
               </div>
             </div>
           )}
