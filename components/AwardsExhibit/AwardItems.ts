@@ -152,7 +152,11 @@ export const awarditems = [
       mainImage: "/AwardsExhibitAssets/Logos/MEA Logo.png",
       videos: ["/VideoAssets/Lake.gif"],
       photos: [
-        "/AwardsExhibitAssets/Mea awards 2024/MEA 2024.webp",
+        "/AwardsExhibitAssets/Mea_Awards_2023/033A1727.webp",
+        "/AwardsExhibitAssets/Mea_Awards_2023/033A1726.webp",
+        "/AwardsExhibitAssets/Mea_Awards_2023/033A1355.webp",
+        "/AwardsExhibitAssets/Mea_Awards_2023/033A1360.webp",
+        "/AwardsExhibitAssets/Mea_Awards_2023/033A1359.webp",
       ],
     },
     award_body: "The Marketing Excellence Awards (MEA) are a regional initiative organized by Marketing-Interactive to honor the best marketing campaigns in the Asia-Pacific.",
