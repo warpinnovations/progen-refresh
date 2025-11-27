@@ -32,9 +32,9 @@ export const awarditems = [
   },
   {
     id: "bzlfqmrha",
-    title: "PR Awards 2025",
-    category: "Finalist – Unlock New Adventures",
-    description: "The PR Awards is a highly respected regional recognition program that celebrates excellence in public relations. It specifically recognizes outstanding PR campaigns that have demonstrated innovative strategy and impressive results across the Asia-Pacific region. Prometheus secured a finalist spot in this competition.",
+    title: "PR Awards Singapore 2025",
+    category: "Best Experiential PR Campaign",
+    description: "The PR Awards is a highly respected regional recognition program held in Singapore that celebrates excellence in public relations. It specifically recognizes outstanding PR campaigns that have demonstrated innovative strategy and impressive results across the Asia-Pacific region. Prometheus secured a finalist spot in this competition.",
     media: {
       mainImage: "/AwardsExhibitAssets/Logos/pr-awards-2025.png",
       videos: ["/VideoAssets/Lake.gif"],
