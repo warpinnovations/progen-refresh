@@ -305,7 +305,8 @@ export default function MissionPage() {
                   <div className='flex items-center justify-between px-1 mt-2'>
                     <div />
                     <button
-                      onClick={() => fileInputRef.current?.click()}
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={isSubmitting}
                       className='text-gold-400 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-gold-400/10 transition cursor-pointer'
                     >
                       Change
