@@ -11,6 +11,8 @@ const config: Config = {
       fontFamily: {
         ox: ['Oxanium', 'Arial', 'sans-serif'],
         moonlander: ['MBF Moonlander', 'Arial', 'sans-serif'],
+        heading: ['var(--font-montserrat)', 'sans-serif'],
+        body: ['var(--font-lato)', 'sans-serif'],
         // Add more font families as needed
       },
 
