@@ -29,21 +29,21 @@ export async function POST(req: NextRequest) {
 
     const stream = Readable.from(buffer);
 
-    if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || !process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || !process.env.NEXT_PUBLIC_GOOGLE_REFRESH_TOKEN) {
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_REFRESH_TOKEN) {
       return NextResponse.json({ error: "Server not configured properly" }, { status: 500 });
     }
 
-    if (!process.env.NEXT_PUBLIC_GOOGLE_DRIVE_TROOPER_FOLDER_ID) {
+    if (!process.env.GOOGLE_DRIVE_TROOPER_FOLDER_ID) {
       return NextResponse.json({ error: "Drive folder ID not set" }, { status: 500 });
     }
 
     const oauth2 = new google.auth.OAuth2(
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET
     );
 
     oauth2.setCredentials({
-      refresh_token: process.env.NEXT_PUBLIC_GOOGLE_REFRESH_TOKEN,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
 
     const drive = google.drive({ version: "v3", auth: oauth2 });
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     const response = await drive.files.create({
       requestBody: {
         name: file.name,
-        parents: [process.env.NEXT_PUBLIC_GOOGLE_DRIVE_TROOPER_FOLDER_ID],
+        parents: [process.env.GOOGLE_DRIVE_TROOPER_FOLDER_ID],
       },
       media: {
         mimeType: file.type,
