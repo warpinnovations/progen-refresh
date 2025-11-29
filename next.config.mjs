@@ -9,6 +9,11 @@ const nextConfig = {
             sizeLimit: '100mb',
         },
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '100mb',
+        },
+    },
     redirects: async () => {
         return [
             {
