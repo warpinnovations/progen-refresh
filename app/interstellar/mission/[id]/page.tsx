@@ -117,7 +117,6 @@ export default function MissionPage() {
       formData.append('file', renamedFile);
 
       const res = await fetch('/api/mission/upload', {
-        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: formData
       });
