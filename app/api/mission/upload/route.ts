@@ -27,23 +27,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let fileStream: NodeJS.ReadableStream;
+    let buffer = Buffer.from(await file.arrayBuffer());
 
-    if (isImage) {
-      const arrayBuffer = await file.arrayBuffer();
-      let buffer = Buffer.from(arrayBuffer);
-      if (buffer.length > MAX_IMAGE_SIZE) { 
-        buffer = await sharp(buffer)
-          .resize({ width: 1280, withoutEnlargement: true })
-          .jpeg({ quality: 75 })
-          .toBuffer();
-      }
-
-      fileStream = Readable.from(buffer);
-    } else {
-      const webStream = file.stream();
-      fileStream = Readable.fromWeb(webStream as any);
+    if (isImage && buffer.length > MAX_IMAGE_SIZE) {
+      buffer = await sharp(buffer)
+        .resize({ width: 1280, withoutEnlargement: true })
+        .jpeg({ quality: 75 })
+        .toBuffer();
     }
+
+    const fileStream = Readable.from(buffer);
 
     if (
       !process.env.GOOGLE_CLIENT_ID ||
