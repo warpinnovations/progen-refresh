@@ -4,16 +4,10 @@ const nextConfig = {
     images: {
         domains: ["lh3.googleusercontent.com"],
     },
-    experimental: {
-        serverActions: {
-            bodySizeLimit: '100mb',
-        },
-    },
     api: {
         bodyParser: {
             sizeLimit: '100mb',
         },
-        responseLimit: false,
     },
     redirects: async () => {
         return [

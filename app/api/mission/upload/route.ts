@@ -11,12 +11,11 @@ export const runtime = "nodejs";
 export const config = {
   api: {
     bodyParser: false,
-    sizeLimit: "200mb",
+    sizeLimit: "100mb",
   },
 };
 
 export const maxDuration = 300; 
-export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
