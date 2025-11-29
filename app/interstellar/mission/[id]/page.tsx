@@ -117,18 +117,10 @@ export default function MissionPage() {
       formData.append('file', renamedFile);
 
       const res = await fetch('/api/mission/upload', {
+        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: formData
       });
-
-      const contentType = res.headers.get('content-type');
-      if (!contentType?.includes('application/json')) {
-        const text = await res.text();
-        console.error('Non-JSON response:', text);
-        throw new Error(
-          'The file may be too large or the server encountered an error.'
-        );
-      }
 
       const data = await res.json();
 
