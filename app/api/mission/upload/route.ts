@@ -8,15 +8,6 @@ const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
 
 export const runtime = "nodejs";
 
-export const config = {
-  api: {
-    bodyParser: false,
-    sizeLimit: "100mb",
-  },
-};
-
-export const maxDuration = 300; 
-
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
