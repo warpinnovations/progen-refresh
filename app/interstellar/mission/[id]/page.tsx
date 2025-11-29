@@ -35,11 +35,30 @@ export default function MissionPage() {
   };
 
   const handleFileSelect = (file: File) => {
+    const isImage = file.type.startsWith('image/');
+    const isVideo = file.type.startsWith('video/');
+    const maxSize = isImage ? 5 * 1024 * 1024 : 100 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      const fileType = isImage ? 'Image' : 'Video';
+      const limit = isImage ? '5MB' : '100MB';
+      alert(`${fileType} file size exceeds ${limit} limit. Please choose a smaller file.`);
+      return;
+    }
+
     setSelectedFile(file);
 
-    const reader = new FileReader();
-    reader.onload = (e) => setPreviewUrl(e.target?.result as string);
-    reader.readAsDataURL(file);
+    if (isVideo) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreviewUrl(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+
+    if (isImage) {
+      const reader = new FileReader();
+      reader.onload = (e) => setPreviewUrl(e.target?.result as string);
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +92,16 @@ export default function MissionPage() {
       return;
     }
 
+    const isImage = selectedFile.type.startsWith('image/');
+    const maxSize = isImage ? 5 * 1024 * 1024 : 100 * 1024 * 1024;
+
+    if (selectedFile.size > maxSize) {
+      const fileType = isImage ? 'Image' : 'Video';
+      const limit = isImage ? '5MB' : '100MB';
+      alert(`${fileType} file size exceeds ${limit} limit. Please choose a smaller file.`);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -91,6 +120,15 @@ export default function MissionPage() {
         method: 'POST',
         body: formData
       });
+
+      const contentType = res.headers.get('content-type');
+      if (!contentType?.includes('application/json')) {
+        const text = await res.text();
+        console.error('Non-JSON response:', text);
+        throw new Error(
+          'Upload failed. The file may be too large or the server encountered an error.'
+        );
+      }
 
       const data = await res.json();
 
@@ -174,6 +212,14 @@ export default function MissionPage() {
       console.error('Error fetching admin toggles:', error);
     }
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   if (checking || !enableEvent) {
     return (
@@ -305,8 +351,8 @@ export default function MissionPage() {
                   <div className='flex items-center justify-between px-1 mt-2'>
                     <div />
                     <button
-                        onClick={() => fileInputRef.current?.click()}
-                        disabled={isSubmitting}
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isSubmitting}
                       className='text-gold-400 font-semibold text-sm px-3 py-2 rounded-lg hover:bg-gold-400/10 transition cursor-pointer'
                     >
                       Change

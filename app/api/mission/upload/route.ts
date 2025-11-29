@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 import { Readable } from "stream";
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
 
 export const runtime = "nodejs";
 
@@ -16,12 +17,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
+    const isImage = file.type.startsWith("image/");
+    const isVideo = file.type.startsWith("video/");
+
+
+    if (isVideo && file.size > MAX_VIDEO_SIZE) {
+      return NextResponse.json(
+        { error: "Video file size exceeds 100MB limit" },
+        { status: 400 }
+      );
+    }
+
     let fileStream: NodeJS.ReadableStream;
 
-    if (file.type.startsWith("image/")) {
+    if (isImage) {
       const arrayBuffer = await file.arrayBuffer();
       let buffer = Buffer.from(arrayBuffer);
-
       if (buffer.length > MAX_IMAGE_SIZE) {
         buffer = await sharp(buffer)
           .resize({ width: 1920 })
@@ -67,6 +78,7 @@ export async function POST(req: NextRequest) {
         mimeType: file.type,
         body: fileStream,
       },
+      fields: 'id',
     });
 
     return NextResponse.json({ fileId: response.data.id });
