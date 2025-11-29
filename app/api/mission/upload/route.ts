@@ -8,6 +8,16 @@ const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
 
 export const runtime = "nodejs";
 
+export const config = {
+  api: {
+    bodyParser: false,
+    sizeLimit: "200mb",
+  },
+};
+
+export const maxDuration = 300; 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -20,10 +30,9 @@ export async function POST(req: NextRequest) {
     const isImage = file.type.startsWith("image/");
     const isVideo = file.type.startsWith("video/");
 
-
     if (isVideo && file.size > MAX_VIDEO_SIZE) {
       return NextResponse.json(
-        { error: "Video file size exceeds 100MB limit" },
+        { error: "Video file size exceeds 100MB limit. Please record a shorter video." },
         { status: 400 }
       );
     }
@@ -33,10 +42,10 @@ export async function POST(req: NextRequest) {
     if (isImage) {
       const arrayBuffer = await file.arrayBuffer();
       let buffer = Buffer.from(arrayBuffer);
-      if (buffer.length > MAX_IMAGE_SIZE) {
+      if (buffer.length > MAX_IMAGE_SIZE) { 
         buffer = await sharp(buffer)
-          .resize({ width: 1920 })
-          .jpeg({ quality: 80 })
+          .resize({ width: 1280, withoutEnlargement: true })
+          .jpeg({ quality: 75 })
           .toBuffer();
       }
 

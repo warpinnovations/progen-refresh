@@ -126,7 +126,7 @@ export default function MissionPage() {
         const text = await res.text();
         console.error('Non-JSON response:', text);
         throw new Error(
-          'Upload failed. The file may be too large or the server encountered an error.'
+          'The file may be too large or the server encountered an error.'
         );
       }
 
