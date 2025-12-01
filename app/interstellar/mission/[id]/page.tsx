@@ -264,11 +264,13 @@ export default function MissionPage() {
 
       <div className='relative z-30 flex flex-col items-center max-w-2xl mx-auto p-5 pb-10 min-h-screen overflow-hidden'>
         {missionId && alreadySubmitted ? (
-          <div className='flex flex-1 items-center justify-center mb-20 w-full'>
-            <div className='animate-fadeInUp mt-6 px-4 rounded-md text-center flex flex-col gap-3 items-center justify-center w-full'>
+          <div className='flex flex-1 items-center justify-center mb-20 w-full bg-slate-100/5 rounded-lg'>
+            <div className='animate-fadeInUp px-4 rounded-md text-center flex flex-col gap-2 items-center justify-center w-full'>
               <CheckCircle size={48} color='#ffff' />
-              <h2 className='text-2xl font-bold mt-2'>Submission Received</h2>
-              <p className='text-lg'>Thank you for your participation!</p>
+              <h2 className='text-3xl font-bold mt-2 bg-gradient-to-br from-yellow-600 to-yellow-400 bg-clip-text text-transparent'>
+                Mission Success!
+              </h2>
+              <p className='text-base -mt-1 '>Thank you for your participation!</p>
             </div>
           </div>
         ) : (
