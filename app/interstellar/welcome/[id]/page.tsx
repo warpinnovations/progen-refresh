@@ -159,7 +159,7 @@ export default function WelcomePage() {
         <div className='absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_20%_30%,rgba(212,175,55,0.15)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(255,215,0,0.15)_0%,transparent_50%)]' />
 
         <div className='relative z-30 flex flex-col mx-auto min-h-screen'>
-          <main className='lg:flex flex-1 min-h-screen relative flex-col items-center justify-center lg:px-72 px-6 overflow-hidden'>
+          <main className='lg:flex flex-1 min-h-screen relative flex-col items-center justify-center lg:px-72 px-4 overflow-hidden'>
             {!enableEvent ? (
               <div
                 className='w-full max-w-2xl mb-5 animate-fadeInUp'
@@ -303,13 +303,13 @@ export default function WelcomePage() {
                   </div>
                 ) : (
                   <div
-                    className='h-[75vh] flex flex-col items-center justify-center text-gray-300 lg:text-xl max-w-2xl animate-fadeIn font-medium'
+                    className='h-[75vh] flex flex-col items-center justify-center text-gray-300 lg:text-xl max-w-2xl animate-fadeIn font-medium bg-white/5 mt-8 p-4 rounded-xl'
                     style={{ animationDelay: '0.7s' }}
                   >
                     {/* Video Section */}
-                    <p className='text-center pb-5'>
+                    <p className='text-center pb-10'>
                       We&apos;re thrilled to have you here.
-                      <br />
+                          <br />
                       Join us for an unforgettable celestial celebration.
                     </p>
 
