@@ -133,8 +133,8 @@ export default function WelcomePage() {
           <Image
             src={interstellarLogo}
             alt='Loading...'
-            width={180}
-            height={180}
+            width={350}
+            height={350}
             className='animate-pulse-scale'
             priority
           />
