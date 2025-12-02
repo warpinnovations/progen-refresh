@@ -6,6 +6,8 @@ import Image from 'next/image';
 import interstellarLogo from '../../../../public/interstellar-logo.png';
 import backgroundImage from '../../../../public/awards-background.png';
 import PRLogo from '../../../../public/PR_logo_Silver.png';
+import { getClientConfig, getMuxPlayerUrl } from "../../../config/guest";
+import { useParams } from "next/navigation";
 
 interface FileDriveResponse {
   success: boolean;
@@ -38,6 +40,12 @@ export default function WelcomePage() {
   const [showGuestPhotos, setShowGuestPhotos] = useState(false);
   const [enableEvent, setEnableEvent] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const params = useParams();
+  const guestId = Array.isArray(params.id) ? params.id[0] : params.id ?? null;
+  const guest = getClientConfig(guestId);
+
+  const muxSrc = guest ? getMuxPlayerUrl(guest) : null;
 
   const handlePlay = () => {
     const video = videoRef.current as FullscreenVideoElement | null;
@@ -286,9 +294,8 @@ export default function WelcomePage() {
                         <button
                           key={idx}
                           onClick={() => setCurrentIndex(idx)}
-                          className={`shrink-0 border-2 ${
-                            currentIndex === idx ? 'border-yellow-400' : 'border-transparent'
-                          }`}
+                          className={`shrink-0 border-2 ${currentIndex === idx ? 'border-yellow-400' : 'border-transparent'
+                            }`}
                         >
                           <Image
                             src={`https://lh3.googleusercontent.com/d/${file.id}`}
@@ -303,28 +310,53 @@ export default function WelcomePage() {
                   </div>
                 ) : (
                   <div
-                    className='h-[75vh] flex flex-col items-center justify-center text-gray-300 lg:text-xl max-w-2xl animate-fadeIn font-medium'
+                    className='h-[75vh] flex flex-col items-center justify-center lg:text-xl max-w-2xl animate-fadeIn font-medium'
                     style={{ animationDelay: '0.7s' }}
                   >
-                    {/* Video Section */}
-                    <p className='text-center pb-5'>
-                      We&apos;re thrilled to have you here.
-                      <br />
-                      Join us for an unforgettable celestial celebration.
+
+                    <div className="text-center mb-5">
+                      <p
+                        className="text-gray-400 text-sm uppercase tracking-widest mb-2"
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                      >
+                        A message to
+                      </p>
+                      <h2
+                        className="text-3xl font-bold text-yellow-400"
+                        style={{ fontFamily: "'Cinzel', serif" }}
+                      >
+                        {guest?.displayName}
+                      </h2>
+                    </div>
+
+                    <p
+                      className="mt-5 text-center max-w-2xl mx-auto animate-fadeIn pb-5"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                      <span className="font-bold text-gray-200 block mb-3">
+                        The future is ours because of partners like you.
+                      </span>
+
+                      <span className="text-gray-400 text-base lg:text-lg block">
+                        Please tap below to view a special gift in appreciation of daring the future together.
+                      </span>
                     </p>
 
-                    <div className='rounded-2xl overflow-hidden shadow-2xl'>
-                      <video
-                        ref={videoRef}
-                        controls
-                        autoPlay
-                        onPlay={handlePlay}
-                        className='h-full w-full object-cover'
-                      >
-                        <source src='/sample-welcome.mp4' type='video/mp4' />
-                        Your browser does not support the video tag.
-                      </video>
+
+                    {/* Video Section */}
+
+                    <div className="rounded-2xl overflow-hidden shadow-2xl aspect-video w-full max-w-2xl mx-auto">
+                      {muxSrc && (
+                        <iframe
+                          src={muxSrc}
+                          className="w-full h-full"
+                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                          allowFullScreen
+                        />
+                      )}
                     </div>
+
+
                   </div>
                 )}
               </>
