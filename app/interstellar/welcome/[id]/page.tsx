@@ -141,8 +141,8 @@ export default function WelcomePage() {
           <Image
             src={interstellarLogo}
             alt='Loading...'
-            width={180}
-            height={180}
+            width={350}
+            height={350}
             className='animate-pulse-scale'
             priority
           />
@@ -167,7 +167,7 @@ export default function WelcomePage() {
         <div className='absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_20%_30%,rgba(212,175,55,0.15)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(255,215,0,0.15)_0%,transparent_50%)]' />
 
         <div className='relative z-30 flex flex-col mx-auto min-h-screen'>
-          <main className='lg:flex flex-1 min-h-screen relative flex-col items-center justify-center lg:px-72 px-6 overflow-hidden'>
+          <main className='lg:flex flex-1 min-h-screen relative flex-col items-center justify-center lg:px-72 px-4 overflow-hidden'>
             {!enableEvent ? (
               <div
                 className='w-full max-w-2xl mb-5 animate-fadeInUp'
