@@ -309,55 +309,46 @@ export default function WelcomePage() {
                     </div>
                   </div>
                 ) : (
-                  <div
-                    className='h-[75vh] flex flex-col items-center justify-center lg:text-xl max-w-2xl animate-fadeIn font-medium'
-                    style={{ animationDelay: '0.7s' }}
-                  >
-
-                    <div className="text-center mb-5">
-                      <p
-                        className="text-gray-400 text-sm uppercase tracking-widest mb-2"
-                        style={{ fontFamily: "'Playfair Display', serif" }}
+                      <div
+                        className="h-[75vh] w-full flex flex-col items-center justify-center lg:text-xl animate-fadeIn font-medium"
+                        style={{ animationDelay: '0.7s' }}
                       >
-                        A message to
-                      </p>
-                      <h2
-                        className="text-3xl font-bold text-yellow-400"
-                        style={{ fontFamily: "'Cinzel', serif" }}
-                      >
-                        {guest?.displayName}
-                      </h2>
-                    </div>
+                        <div className="text-center mb-5 max-w-2xl">
+                          <p
+                            className="text-gray-400 text-sm uppercase tracking-widest mb-5"
+                            style={{ fontFamily: "'Playfair Display', serif" }}
+                          >
+                            Our night begins now that you&apos;re with us,
+                          </p>
+                          <h2
+                            className="text-3xl font-bold text-yellow-400"
+                            style={{ fontFamily: "'Cinzel', serif" }}
+                          >
+                            {guest?.displayName}
+                          </h2>
+                          <p
+                            className="text-gray-400 text-sm uppercase tracking-widest mb-2 mt-8"
+                            style={{ fontFamily: "'Playfair Display', serif" }}
+                          >
+                            Thank you for joining us!
+                          </p>
+                        </div>
 
-                    <p
-                      className="mt-5 text-center max-w-2xl mx-auto animate-fadeIn pb-5"
-                      style={{ fontFamily: "'Playfair Display', serif" }}
-                    >
-                      <span className="font-bold text-gray-200 block mb-3">
-                        The future is ours because of partners like you.
-                      </span>
+                        {/* Video wrapper is full-width with its OWN max width */}
+                        <div className="w-full flex justify-center px-4">
+                          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-video w-full max-w-3xl mx-auto">
+                            {muxSrc && (
+                              <iframe
+                                src={muxSrc}
+                                className="w-full h-full"
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                                allowFullScreen
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
 
-                      <span className="text-gray-400 text-base lg:text-lg block">
-                        Please tap below to view a special gift in appreciation of daring the future together.
-                      </span>
-                    </p>
-
-
-                    {/* Video Section */}
-
-                    <div className="rounded-2xl overflow-hidden shadow-2xl aspect-video w-full max-w-2xl mx-auto">
-                      {muxSrc && (
-                        <iframe
-                          src={muxSrc}
-                          className="w-full h-full"
-                          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                          allowFullScreen
-                        />
-                      )}
-                    </div>
-
-
-                  </div>
                 )}
               </>
             )}
