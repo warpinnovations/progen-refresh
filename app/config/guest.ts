@@ -33,7 +33,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PCCI ",
+    id: "PCCI",
     displayName: "PCCI - Mr. Jherduen 'Noi' Dongor",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -69,7 +69,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "FernandezFamily ",
+    id: "FernandezFamily",
     displayName: "Fernandez Family",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -94,11 +94,6 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "taylorswift",
-    displayName: "Taylor Swift",
-    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
-  },
-  {
     id: "CityRepJayTreñas",
     displayName: "Jay Treñas",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
@@ -114,7 +109,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "VMLove ",
+    id: "VMLove",
     displayName: "Vice Mayor Lady Julie Grace L. Baronda",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -229,7 +224,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "JCI Regatta",
+    id: "JCIRegatta",
     displayName: "JCI Regatta",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
