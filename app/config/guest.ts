@@ -33,7 +33,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PCCI ",
+    id: "PCCIJherduen",
     displayName: "Mr. Jherduen 'Noi' Dongor",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
