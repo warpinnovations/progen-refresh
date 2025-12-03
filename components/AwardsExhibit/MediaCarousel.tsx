@@ -17,10 +17,14 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const imgRef = useRef<HTMLDivElement | null>(null);
 
+  const touchStartX = useRef<number | null>(null);
+  const threshold = 50;
+
   const hasMultiple = media.length > 1;
   const peek = 80;
 
-    useEffect(() => {
+  // preload images
+  useEffect(() => {
     media.forEach((item) => {
       if (item.type === "image") {
         const preload = new window.Image();
@@ -29,26 +33,98 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
     });
   }, [media]);
 
+  // touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - touchStartX.current;
+
+    if (diff > threshold) handlePrev(); // swipe right
+    else if (diff < -threshold) handleNext(); // swipe left
+
+    touchStartX.current = null;
+  };
 
   const handleNext = () => setCurrent((prev) => (prev + 1) % media.length);
   const handlePrev = () =>
     setCurrent((prev) => (prev - 1 + media.length) % media.length);
+
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
   if (media.length === 0) return null;
 
+  // helper
+  const renderItem = (item: MediaItem, position: number) => {
+    const isMain = position === 0;
+    const translateX = position * peek;
+
+    return (
+      <div
+        key={item.src}
+        className="absolute top-0 h-full transition-all duration-500 rounded-xl overflow-hidden shadow-2xl cursor-pointer"
+        style={{
+          width: isMain ? "100%" : "70%",
+          transform: `translateX(${translateX}px) scale(${isMain ? 1 : 0.85})`,
+          zIndex: isMain ? 10 : 5,
+        }}
+        onClick={isMain ? handleOpenModal : undefined}
+      >
+        {item.type === "image" && (
+          <Image
+            src={item.src}
+            alt={item.alt || "Media"}
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        )}
+
+        {item.type === "video" && (
+          <div className="w-full h-full relative">
+            <video
+              src={item.src}
+              className="w-full h-full object-cover pointer-events-none"
+              muted
+              playsInline
+            />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-8 h-8 text-black"
+                  fill="currentColor"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M6 4l6 4-6 4V4z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!isMain && (
+          <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="relative w-full flex justify-center items-center py-8">
-
-      {/* Hidden preloader using Next/Image */}
+      {/* Hidden preload */}
       <div className="hidden">
         {media
-          .filter((item) => item.type === "image")
-          .map((item) => (
+          .filter((i) => i.type === "image")
+          .map((i) => (
             <Image
-              key={item.src}
-              src={item.src}
+              key={i.src}
+              src={i.src}
               alt="preload"
               width={10}
               height={10}
@@ -58,81 +134,31 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
       </div>
 
       {/* Carousel */}
-      <div className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex justify-center items-center overflow-hidden">
+      <div
+        className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex justify-center items-center overflow-hidden"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {media.map((item, index) => {
-          // Position calculation
-          let position: number;
+          let position = index - current;
+
+          // SPECIAL FIX: exactly 2 items
           if (media.length === 2) {
-            position = (index - current + 2) % 2;
-            if (position === 0) position = 0;
-            else if (position === 1) position = -1;
-          } else {
-            position = index - current;
-            if (position < -1) position += media.length;
-            if (position > 1) position -= media.length;
+            if (position === -1) position = 1; // always place second item on the right
+            return renderItem(item, position);
           }
+
+          // default behaviour (3+ items)
+          if (position < -1) position += media.length;
+          if (position > 1) position -= media.length;
 
           if (Math.abs(position) > 1) return null;
 
-          const isMain = position === 0;
-          const translateX = position * peek;
-
-          return (
-            <div
-              key={item.src}
-              className="absolute top-0 h-full transition-all duration-500 rounded-xl overflow-hidden shadow-2xl cursor-pointer"
-              style={{
-                width: isMain ? "100%" : "70%",
-                transform: `translateX(${translateX}px) scale(${isMain ? 1 : 0.85})`,
-                zIndex: isMain ? 10 : 5,
-              }}
-              onClick={isMain ? handleOpenModal : undefined}
-            >
-              {/* IMAGE */}
-              {item.type === "image" && (
-                <Image
-                  src={item.src}
-                  alt={item.alt || "Media"}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              )}
-
-              {/* VIDEO thumbnail */}
-              {item.type === "video" && (
-                <div className="w-full h-full relative">
-                  <video
-                    src={item.src}
-                    className="w-full h-full object-cover pointer-events-none"
-                    muted
-                    playsInline
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-8 h-8 text-black"
-                        fill="currentColor"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M6 4l6 4-6 4V4z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0" />
-                </div>
-              )}
-
-              {!isMain && (
-                <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-              )}
-            </div>
-          );
+          return renderItem(item, position);
         })}
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Arrows */}
       {hasMultiple && (
         <>
           <button
@@ -145,7 +171,12 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
 
@@ -159,7 +190,12 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </>
@@ -190,7 +226,11 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6l12 12M6 18L18 6"
+                  />
                 </svg>
               </button>
 
@@ -223,7 +263,11 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6l12 12M6 18L18 6"
+                  />
                 </svg>
               </button>
 
