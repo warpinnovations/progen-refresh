@@ -14,12 +14,12 @@ const clientsArray: ClientConfig[] = [
 
   {
     id: "JPEP",
-    displayName: "JPEP - Mr. Joshua James Enriquez",
+    displayName: "Mr. Joshua James Enriquez",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
     id: "101Food",
-    displayName: "101 Food - Ms. Jona Mae Antiquiera",
+    displayName: "Ms. Jona Mae Antiquiera",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -34,7 +34,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "PCCI ",
-    displayName: "PCCI - Mr. Jherduen 'Noi' Dongor",
+    displayName: "Mr. Jherduen 'Noi' Dongor",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -48,8 +48,8 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "MetroPacificIloiloWater ",
-    displayName: "MetroPacificIloiloWater ",
+    id: "MetroPacificIloiloWater",
+    displayName: "Metro Pacific Iloilo Water",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -60,16 +60,16 @@ const clientsArray: ClientConfig[] = [
 
   {
     id: "DTI",
-    displayName: "DTI - Regional Director Dinda R. Tamayo",
+    displayName: "Regional Director Dinda R. Tamayo",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
     id: "EON",
-    displayName: "EON - Mr. Felix Tiu",
+    displayName: "Mr. Felix Tiu",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "FernandezFamily ",
+    id: "FernandezFamily",
     displayName: "Fernandez Family",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -80,22 +80,17 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ILOMOCA",
-    displayName: "ILOMOCA - JP Tolentino",
+    displayName: "JP Tolentino",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
     id: "PRFamily",
-    displayName: "PR Family - Bea Tusing-Fanega",
+    displayName: "Bea Tusing-Fanega",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
     id: "CityRepCouncilorMiguelTreñas",
     displayName: "Councilor Miguel Treñas",
-    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
-  },
-  {
-    id: "taylorswift",
-    displayName: "Taylor Swift",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -120,7 +115,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "Megaworld",
-    displayName: "Megaworld - Mr. Ken Jaspe",
+    displayName: "Mr. Ken Jaspe",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -229,7 +224,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "JCI Regatta",
+    id: "JCIRegatta",
     displayName: "JCI Regatta",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -265,7 +260,12 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ETLawOffice",
-    displayName: "ET Law Office - Atty. Reyes III",
+    displayName: "Atty. Reyes III",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "PanesLawOffice",
+    displayName: "Panes Law Office",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   
