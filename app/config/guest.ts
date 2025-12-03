@@ -33,7 +33,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PCCIJherduen",
+    id: "PCCI ",
     displayName: "Mr. Jherduen 'Noi' Dongor",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -69,8 +69,18 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "FernandezFamily",
-    displayName: "Fernandez Family",
+    id: "MrLemuelFernandez",
+    displayName: "Mr. Lemuel Fernandez",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "MrsToniDinahCheerFernandez",
+    displayName: "Mrs. Toni Dinah Cheer Fernandez",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "ArianneFernandez",
+    displayName: "Arianne Fernandez",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -89,12 +99,12 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "CityRepCouncilorMiguelTreñas",
+    id: "CityRepCouncilorMiguelTrenas",
     displayName: "Councilor Miguel Treñas",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "CityRepJayTreñas",
+    id: "CityRepJayTrenas",
     displayName: "Jay Treñas",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -109,7 +119,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "VMLove",
+    id: "VMLove ",
     displayName: "Vice Mayor Lady Julie Grace L. Baronda",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -120,7 +130,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "SM",
-    displayName: "SM",
+    displayName: "SM City Iloilo",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -229,12 +239,12 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PeterOñate",
+    id: "PeterOnate",
     displayName: "Peter Oñate",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "MaJenniferOñate",
+    id: "MaJenniferOnate",
     displayName: "Ma. Jennifer Oñate",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -260,7 +270,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ETLawOffice",
-    displayName: "Atty. Reyes III",
+    displayName: "Atty. Eduardo T. Reyes III",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -268,7 +278,7 @@ const clientsArray: ClientConfig[] = [
     displayName: "Panes Law Office",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
-  
+
 ];
 
 export const CLIENTS_BY_ID: Record<string, ClientConfig> = clientsArray.reduce(
