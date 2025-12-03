@@ -275,7 +275,7 @@ export default function WelcomePage() {
                 </div>
 
                 {/* guest photos gallery */}
-                {showGuestPhotos && data?.files ? (
+                {showGuestPhotos && data?.files && data?.files.length > 0 ? (
                   <div className='w-full max-w-xl mt-6 overflow-hidden'>
                     <div className='w-full mb-5 overflow-hidden bg-black/10 pt-4'>
                       <div className='relative w-full h-[55vh]'>
