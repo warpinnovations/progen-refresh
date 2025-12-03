@@ -11,16 +11,16 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
     }
 
     const auth = new google.auth.OAuth2(
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET
     );
 
     auth.setCredentials({
-      refresh_token: process.env.NEXT_PUBLIC_GOOGLE_REFRESH_TOKEN,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
 
     const drive = google.drive({ version: "v3", auth });
-    const folderId = process.env.NEXT_PUBLIC_GOOGLE_DRIVE_TROOPER_FOLDER_ID;
+    const folderId = process.env.GOOGLE_DRIVE_TROOPER_FOLDER_ID;
 
     const query = `
       name contains '${id}_' 

@@ -12,25 +12,25 @@ export async function GET(req: NextRequest, context: { params: Promise<{ name: s
       return NextResponse.json({ error: "Subfolder name not provided" }, { status: 400 });
     }
 
-    if (!process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || !process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET || !process.env.NEXT_PUBLIC_GOOGLE_REFRESH_TOKEN) {
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_REFRESH_TOKEN) {
       return NextResponse.json({ error: "Server not configured properly" }, { status: 500 });
     }
 
-    if (!process.env.NEXT_PUBLIC_GOOGLE_DRIVE_GUEST_FOLDER_ID) {
+    if (!process.env.GOOGLE_DRIVE_GUEST_FOLDER_ID) {
       return NextResponse.json({ error: "Drive folder ID not set" }, { status: 500 });
     }
 
     const oauth2 = new google.auth.OAuth2(
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET
     );
 
-    oauth2.setCredentials({ refresh_token: process.env.NEXT_PUBLIC_GOOGLE_REFRESH_TOKEN });
+    oauth2.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
 
     const drive = google.drive({ version: "v3", auth: oauth2 });
 
     const folderSearch = await drive.files.list({
-      q: `'${process.env.NEXT_PUBLIC_GOOGLE_DRIVE_GUEST_FOLDER_ID}' in parents and name = '${folderName}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+      q: `'${process.env.GOOGLE_DRIVE_GUEST_FOLDER_ID}' in parents and name = '${folderName}' and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
       fields: "files(id, name)",
       supportsAllDrives: true,
       includeItemsFromAllDrives: true,
