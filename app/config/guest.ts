@@ -39,7 +39,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ImperialAppliancePlazaMsMaSarahJaleco ",
-    displayName: "Ms. Ma. Sarah Jaleco ",
+    displayName: "Ms. Ma. Sarah Jaleco",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -48,7 +48,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PCCI ",
+    id: "PCCI",
     displayName: "Mr. Jherduen 'Noi' Dongor",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -166,11 +166,6 @@ const clientsArray: ClientConfig[] = [
   {
     id: "SMMrRJEspinosa",
     displayName: "Mr. RJ Espinosa",
-    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
-  },
-  {
-    id: "PCCI",
-    displayName: "PCCI",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -331,11 +326,6 @@ const clientsArray: ClientConfig[] = [
   {
     id: "MrChesterTiu",
     displayName: "Mr. Chester Tiu",
-    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
-  },
-  {
-    id: "MsMaSarahJaleco",
-    displayName: "Ms. Ma. Sarah Jaleco",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
