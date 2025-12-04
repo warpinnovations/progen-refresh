@@ -320,12 +320,12 @@ export default function WelcomePage() {
                           >
                             Our night begins now that you&apos;re with us,
                           </p>
-                          <h2
-                            className="text-3xl font-bold text-yellow-400"
-                            style={{ fontFamily: "'Cinzel', serif" }}
+                          <p
+                            className="text-2xl font-bold text-yellow-400 tracking-wider"
+                            style={{ fontFamily: "'Prata', serif" }}
                           >
                             {guest?.displayName}
-                          </h2>
+                          </p>
                           <p
                             className="text-gray-400 text-sm uppercase tracking-widest mb-2 mt-8"
                             style={{ fontFamily: "'Playfair Display', serif" }}
