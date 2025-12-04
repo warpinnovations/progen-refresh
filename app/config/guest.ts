@@ -292,6 +292,11 @@ const clientsArray: ClientConfig[] = [
     id: "MsMaSarahJaleco",
     displayName: "MsMaSarahJaleco",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "FMCLaw",
+    displayName: "FMC Law",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   }
 
 ];
