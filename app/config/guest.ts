@@ -24,7 +24,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "MorePower",
-    displayName: "More Power",
+    displayName: "MORE Power",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -80,7 +80,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ArianneFernandez",
-    displayName: "Arianne Fernandez",
+    displayName: "Mrs. Arianne Fernandez",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -90,12 +90,12 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "ILOMOCA",
-    displayName: "JP Tolentino",
+    displayName: "Mrs. JP Tolentino",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
     id: "PRFamily",
-    displayName: "Bea Tusing-Fanega",
+    displayName: "Mrs. Bea Tusing-Fanega",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -105,7 +105,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "CityRepJayTrenas",
-    displayName: "Jay Treñas",
+    displayName: "Mr. Jay Treñas",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -150,7 +150,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "BeaTusing",
-    displayName: "Bea Tusing",
+    displayName: "Mrs. Bea Tusing-Fanega",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -175,7 +175,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "BabakNiaraki",
-    displayName: "Babak Niaraki",
+    displayName: "Mr. Babak Niaraki",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -205,7 +205,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "NatalieLim",
-    displayName: "Natalie Lim",
+    displayName: "Ms. Natalie Lim",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -278,6 +278,21 @@ const clientsArray: ClientConfig[] = [
     displayName: "Panes Law Office",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
+  {
+    id: "MayorFrancisAmboy",
+    displayName: "Mayor Francis 'Ansing' Amboy",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "MrChesterTiu",
+    displayName: "Mr. Chester Tiu",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "MsMaSarahJaleco",
+    displayName: "MsMaSarahJaleco",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  }
 
 ];
 
