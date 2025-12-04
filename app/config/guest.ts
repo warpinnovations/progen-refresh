@@ -23,13 +23,28 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "MorePower",
-    displayName: "MORE Power",
+    id: "MorePowerEngrJMZaporteza",
+    displayName: "Engr. Joe-Mel (JM) Zaporteza",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "ImperialAppliancePlaza",
-    displayName: "Imperial Appliance Plaza",
+    id: "MorePowerMrRaphaelDorilag",
+    displayName: "Mr. Raphael Dorilag",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "ImperialAppliancePlazaMsErikaTiu",
+    displayName: "Ms. Erika Tiu",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "ImperialAppliancePlazaMsMaSarahJaleco ",
+    displayName: "Ms. Ma. Sarah Jaleco ",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "ImperialAppliancePlazaMrChesterTiu",
+    displayName: "Mr. Chester Tiu",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -38,8 +53,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "DamiresHillsFarmResort",
-    displayName: "Damires Hills & Farm Resort",
+    id: "DamiresHillsFarmResortMrMarlonNavarro",
+    displayName: "Mr. Marlon Navarro",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "DamiresHillsFarmResortChristineIcabandi",
+    displayName: "Christine Icabandi",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -48,8 +68,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "MetroPacificIloiloWater",
-    displayName: "Metro Pacific Iloilo Water",
+    id: "MetroPacificIloiloWaterAttyJCBangoy",
+    displayName: "Atty. JC Bangoy",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "MetroPacificIloiloWaterMrsBeaBadiangoMelliza",
+    displayName: "Mrs. Bea Badiango-Melliza",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -84,8 +109,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "DG",
-    displayName: "Daily Guardian",
+    id: "DGFrancisAllanAngelo",
+    displayName: "Francis Allan Angelo",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "DGAriane Angelo",
+    displayName: "Ariane Angelo",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -129,8 +159,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "SM",
-    displayName: "SM City Iloilo",
+    id: "SMMrTroyCamarista",
+    displayName: "Mr. Troy Camarista",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "SMMrRJEspinosa",
+    displayName: "Mr. RJ Espinosa",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -204,7 +239,7 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "NatalieLim",
+    id: "MarriotNatalieLim",
     displayName: "Ms. Natalie Lim",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
@@ -234,8 +269,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "JCIRegatta",
-    displayName: "JCI Regatta",
+    id: "JCIRegattaJoeyInfante",
+    displayName: "Joey Infante",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "JCIRegattaAgustinEstoqe",
+    displayName: "Agustin Estoqe",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -274,8 +314,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "PanesLawOffice",
-    displayName: "Panes Law Office",
+    id: "PanesLawOfficeAttyAnfredPanes",
+    displayName: "Atty. Anfred Panes",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "PanesLawOfficeAttyDonWadeComoro",
+    displayName: "Atty. Don Wade Comoro",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -294,8 +339,13 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "FMCLaw",
-    displayName: "FMC Law",
+    id: "FMCLawAttyJennelLamatao",
+    displayName: "Atty. Jennel Lamatao",
+    muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
+  },
+  {
+    id: "FMCLawChazelleGubatanga",
+    displayName: "Chazelle Gubatanga",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   }
 
