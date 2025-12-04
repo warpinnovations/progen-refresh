@@ -26,23 +26,20 @@ export default function AwardPage() {
       </div>
     );
 
-  // Build media array: photos
   const media: MediaItem[] = [
     ...award.media.photos.map((p) => ({ type: "image" as const, src: p })),
   ];
 
-  // Parent container variants to stagger children slowly
   const containerVariants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.3, delayChildren: 0.2 }, // slower stagger
+      transition: { staggerChildren: 0.3, delayChildren: 0.2 },
     },
   };
 
-  // Common child animation
   const childVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }, // slower, smoother
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
   return (
@@ -76,39 +73,24 @@ export default function AwardPage() {
         animate="visible"
         variants={containerVariants}
       >
-        {/* TITLE + CATEGORY */}
+        {/* MAIN IMAGE ONLY */}
         <motion.div
           variants={childVariants}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 translate-x-4"
+          className="flex justify-center mt-20 px-4"
         >
-          <div className="flex flex-row items-center justify-center gap-6 sm:gap-8">
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 shrink-0">
-              <div className="absolute inset-0 rounded-full bg-[#c8a45d]/30 blur-3xl pointer-events-none" />
-              <div className="absolute inset-0 bg-linear-to-t from-[#c8a45d]/20 to-transparent rounded-full blur-xl pointer-events-none" />
-
-              <div className="relative w-full h-full">
-                <Image
-                  src={award.media.mainImage}
-                  alt={award.title}
-                  fill
-                  className="object-contain select-none pointer-events-none"
-                  unoptimized
-                  draggable={false}
-                />
-              </div>
-            </div>
-
-            <div className="flex-1">
-              <h1 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mb-2 leading-tight tracking-wide">
-                {award.title}
-              </h1>
-              <p className="font-body text-[#c8a45d] italic text-sm sm:text-base md:text-lg lg:text-xl font-light tracking-wide">
-                {award.category}
-              </p>
-            </div>
+           <div className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] max-w-[600px] aspect-[360/380] flex justify-center items-center rounded-2xl overflow-hidden shadow-xl">
+            <Image
+              src={award.media.mainImage}
+              alt="Award Main"
+              fill
+              className="object-cover select-none"
+              unoptimized
+              draggable={false}
+            />
           </div>
         </motion.div>
-
+      
+    
         {/* MEDIA CAROUSEL */}
         <motion.section
           variants={childVariants}
@@ -124,21 +106,20 @@ export default function AwardPage() {
           variants={childVariants}
           className="max-w-4xl mx-auto pb-16 sm:pb-20 md:pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden"
         >
-          {/* Award Description */}
           <div className="mb-10 sm:mb-14 md:mb-16">
             <div className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 border border-white/10 hover:border-white/20 transition-colors duration-300">
-              <p  className="
+              <p className="
                     font-body text-gray-300
                     leading-relaxed sm:leading-loose
                     text-sm sm:text-base md:text-lg
                     text-justify tracking-[0.015em]
+                    whitespace-pre-line
                     ">
                 {award.description}
               </p>
             </div>
           </div>
 
-          {/* Campaign Section */}
           <div>
             <div className="flex items-center mb-4 sm:mb-6">
               <div className="w-1 h-8 sm:h-10 md:h-12 bg-gradient-to-t from-[#c8a45d] to-[#9d7d3a] rounded-full mr-4"></div>
@@ -152,7 +133,7 @@ export default function AwardPage() {
                     leading-relaxed sm:leading-loose
                     text-sm sm:text-base md:text-lg
                     text-justify tracking-[0.015em]
-                    px-4">
+                    px-4 whitespace-pre-line">
               {award.award_body}
             </p>
 
@@ -163,14 +144,21 @@ export default function AwardPage() {
               </h2>
             </div>
 
-            <p className="
+           <div className="
                 font-body text-gray-300
                 leading-relaxed sm:leading-loose
                 text-sm sm:text-base md:text-lg
                 text-justify tracking-[0.015em]
-                px-4">
-              {award.campaign}
-            </p>
+                px-4 space-y-4">
+              {Array.isArray(award.campaign) 
+                ? award.campaign.map((paragraph, index) => (
+                    <p key={index} className="whitespace-pre-line">
+                      {paragraph}
+                    </p>
+                  ))
+                : <p className="whitespace-pre-line">{award.campaign}</p>
+              }
+            </div>
           </div>
         </motion.section>
       </motion.div>

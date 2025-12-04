@@ -8,7 +8,7 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'res.cloudinary.com',
             }
-        ]
+        ] 
     },
     redirects: async () => {
         return [
