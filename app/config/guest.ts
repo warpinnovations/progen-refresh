@@ -290,7 +290,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "MsMaSarahJaleco",
-    displayName: "MsMaSarahJaleco",
+    displayName: "Ms. Ma. Sarah Jaleco",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
