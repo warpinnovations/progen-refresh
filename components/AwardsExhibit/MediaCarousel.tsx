@@ -18,7 +18,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
   const imgRef = useRef<HTMLDivElement | null>(null);
 
   const touchStartX = useRef<number | null>(null);
-  const threshold = 50;
+  const threshold = 70;
 
   const hasMultiple = media.length > 1;
   const peek = 80;
@@ -82,6 +82,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
             fill
             className="object-cover"
             unoptimized
+            style={{objectPosition: "center 65%"}}
           />
         )}
 
@@ -135,7 +136,7 @@ export default function MediaCarousel({ media }: MediaCarouselProps) {
 
       {/* Carousel */}
       <div
-        className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex justify-center items-center overflow-hidden"
+        className="relative w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[70%] h-[250px] sm:h-[350px] md:h-[400px] lg:h-[450px] flex justify-center items-center overflow-hidden"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
