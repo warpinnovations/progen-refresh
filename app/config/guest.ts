@@ -114,8 +114,8 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "DGArianeAngelo",
-    displayName: "Ariane Angelo",
+    id: "DGArianneAngelo",
+    displayName: "Arianne Angelo",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
@@ -269,8 +269,8 @@ const clientsArray: ClientConfig[] = [
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
-    id: "JCIRegattaAgustinEstoqe",
-    displayName: "Agustin Estoqe",
+    id: "JCIRegattaAgustinEstoque",
+    displayName: "Agustin Estoque",
     muxPlaybackId: "Z4BlD006h2SuRkPK00tlhh1vvQlJmGt101kEaBnd9mj5HU",
   },
   {
