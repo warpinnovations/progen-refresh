@@ -6,8 +6,8 @@ import Image from 'next/image';
 import interstellarLogo from '../../../../public/interstellar-logo.png';
 import backgroundImage from '../../../../public/awards-background.png';
 import PRLogo from '../../../../public/PR_logo_Silver.png';
-import { getClientConfig, getMuxPlayerUrl } from "../../../config/guest";
-import { useParams } from "next/navigation";
+import { getClientConfig, getMuxPlayerUrl } from '../../../config/guest';
+import { useParams } from 'next/navigation';
 
 interface FileDriveResponse {
   success: boolean;
@@ -19,6 +19,21 @@ interface FileDriveResponse {
     webViewLink?: string;
     webContentLink?: string;
   }>;
+  error?: string;
+}
+
+export interface DriveImage {
+  id: string;
+  name: string;
+  mimeType: string;
+  webViewLink: string;
+  webContentLink: string;
+}
+
+export interface FetchImagesResponse {
+  success: boolean;
+  folderId: string;
+  images: DriveImage[];
   error?: string;
 }
 
@@ -40,9 +55,10 @@ export default function WelcomePage() {
   const [showGuestPhotos, setShowGuestPhotos] = useState(false);
   const [enableEvent, setEnableEvent] = useState(false);
   const [loading, setLoading] = useState(true);
+  const folderId = '1ePjllf4GJAtWtPLPqTfAwhn2Q5YvQjq_';
 
   const params = useParams();
-  const guestId = Array.isArray(params.id) ? params.id[0] : params.id ?? null;
+  const guestId = Array.isArray(params.id) ? params.id[0] : (params.id ?? null);
   const guest = getClientConfig(guestId);
 
   const muxSrc = guest ? getMuxPlayerUrl(guest) : null;
@@ -83,26 +99,26 @@ export default function WelcomePage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!folderName || !showGuestPhotos) {
-      setLoadingPhotos(false);
-      return;
-    }
+  // useEffect(() => {
+  //   if (!folderName || !showGuestPhotos) {
+  //     setLoadingPhotos(false);
+  //     return;
+  //   }
 
-    const fetchGuestPhotos = async () => {
-      try {
-        const response = await fetch(`/api/guest/fetch-photos/${folderName}`);
-        const data: FileDriveResponse = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error('Error fetching guest photos:', error);
-      } finally {
-        setLoadingPhotos(false);
-      }
-    };
+  //   const fetchGuestPhotos = async () => {
+  //     try {
+  //       const response = await fetch(`/api/guest/fetch-photos/${folderName}`);
+  //       const data: FileDriveResponse = await response.json();
+  //       setData(data);
+  //     } catch (error) {
+  //       console.error('Error fetching guest photos:', error);
+  //     } finally {
+  //       setLoadingPhotos(false);
+  //     }
+  //   };
 
-    fetchGuestPhotos();
-  }, [folderName, showGuestPhotos]);
+  //   fetchGuestPhotos();
+  // }, [folderName, showGuestPhotos]);
 
   useEffect(() => {
     try {
@@ -122,6 +138,43 @@ export default function WelcomePage() {
       console.error('Error fetching admin toggles:', error);
     }
   }, []);
+
+  useEffect(() => {
+    if (!folderName || !showGuestPhotos) {
+      setLoadingPhotos(false);
+      return;
+    }
+
+    const fetchPhotos = async () => {
+      try {
+        const res1 = await fetch(`/api/guest/fetch-photos/${folderName}`);
+        const mainData: FileDriveResponse = await res1.json();
+        setData(mainData);
+
+        if (!folderId) {
+          console.warn('No folderId returned from main photos');
+          return;
+        }
+
+        const res2 = await fetch(`/api/guest/trooper-photos/${folderId}`);
+        const trooperData: FetchImagesResponse = await res2.json();
+
+        if (trooperData.success && trooperData.images) {
+          setData((prev) => ({
+            ...prev,
+            success: prev?.success ?? true,
+            files: [...(prev?.files || []), ...trooperData.images]
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching photos:', error);
+      } finally {
+        setLoadingPhotos(false);
+      }
+    };
+
+    fetchPhotos();
+  }, [folderName, showGuestPhotos]);
 
   if (loading || (showGuestPhotos && loadingPhotos)) {
     return (
@@ -294,8 +347,9 @@ export default function WelcomePage() {
                         <button
                           key={idx}
                           onClick={() => setCurrentIndex(idx)}
-                          className={`shrink-0 border-2 ${currentIndex === idx ? 'border-yellow-400' : 'border-transparent'
-                            }`}
+                          className={`shrink-0 border-2 ${
+                            currentIndex === idx ? 'border-yellow-400' : 'border-transparent'
+                          }`}
                         >
                           <Image
                             src={`https://lh3.googleusercontent.com/d/${file.id}`}
@@ -309,46 +363,45 @@ export default function WelcomePage() {
                     </div>
                   </div>
                 ) : (
-                      <div
-                        className="h-[75vh] w-full flex flex-col items-center justify-center lg:text-xl animate-fadeIn font-medium"
-                        style={{ animationDelay: '0.7s' }}
+                  <div
+                    className='h-[75vh] w-full flex flex-col items-center justify-center lg:text-xl animate-fadeIn font-medium'
+                    style={{ animationDelay: '0.7s' }}
+                  >
+                    <div className='text-center mb-5 max-w-2xl'>
+                      <p
+                        className='text-gray-400 text-sm uppercase tracking-widest mb-5'
+                        style={{ fontFamily: "'Playfair Display', serif" }}
                       >
-                        <div className="text-center mb-5 max-w-2xl">
-                          <p
-                            className="text-gray-400 text-sm uppercase tracking-widest mb-5"
-                            style={{ fontFamily: "'Playfair Display', serif" }}
-                          >
-                            Our night begins now that you&apos;re with us,
-                          </p>
-                          <p
-                            className="text-2xl font-bold text-yellow-400 tracking-wider"
-                            style={{ fontFamily: "'Prata', serif" }}
-                          >
-                            {guest?.displayName}
-                          </p>
-                          <p
-                            className="text-gray-400 text-sm uppercase tracking-widest mb-2 mt-8"
-                            style={{ fontFamily: "'Playfair Display', serif" }}
-                          >
-                            Thank you for joining us!
-                          </p>
-                        </div>
+                        Our night begins now that you&apos;re with us,
+                      </p>
+                      <p
+                        className='text-2xl font-bold text-yellow-400 tracking-wider'
+                        style={{ fontFamily: "'Prata', serif" }}
+                      >
+                        {guest?.displayName}
+                      </p>
+                      <p
+                        className='text-gray-400 text-sm uppercase tracking-widest mb-2 mt-8'
+                        style={{ fontFamily: "'Playfair Display', serif" }}
+                      >
+                        Thank you for joining us!
+                      </p>
+                    </div>
 
-                        {/* Video wrapper is full-width with its OWN max width */}
-                        <div className="w-full flex justify-center px-4">
-                          <div className="rounded-2xl overflow-hidden shadow-2xl aspect-video w-full max-w-3xl mx-auto">
-                            {muxSrc && (
-                              <iframe
-                                src={muxSrc}
-                                className="w-full h-full"
-                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                                allowFullScreen
-                              />
-                            )}
-                          </div>
-                        </div>
+                    {/* Video wrapper is full-width with its OWN max width */}
+                    <div className='w-full flex justify-center px-4'>
+                      <div className='rounded-2xl overflow-hidden shadow-2xl aspect-video w-full max-w-3xl mx-auto'>
+                        {muxSrc && (
+                          <iframe
+                            src={muxSrc}
+                            className='w-full h-full'
+                            allow='accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;'
+                            allowFullScreen
+                          />
+                        )}
                       </div>
-
+                    </div>
+                  </div>
                 )}
               </>
             )}
