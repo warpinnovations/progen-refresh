@@ -68,7 +68,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
     <button
       onClick={onChange}
       className={`relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-300 ${
-        checked ? 'bg-green-500' : 'bg-gray-400'
+        checked ? 'bg-green-600' : 'bg-gray-400'
       }`}
     >
       <span
