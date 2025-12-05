@@ -49,7 +49,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "PCCI",
-    displayName: "Mr. Jherduen 'Noi' Dongor",
+    displayName: "Mr. Jherduen Dongor",
     muxPlaybackId: "uXCkWqEuLOkkitsuOlsUM5WENSNhJ00xYZQEZlsix00A4",
   },
   {
@@ -320,7 +320,7 @@ const clientsArray: ClientConfig[] = [
   },
   {
     id: "MayorFrancisAmboy",
-    displayName: "Mayor Francis 'Ansing' Amboy",
+    displayName: "Mayor Francis Amboy",
     muxPlaybackId: "uXCkWqEuLOkkitsuOlsUM5WENSNhJ00xYZQEZlsix00A4",
   },
   {
