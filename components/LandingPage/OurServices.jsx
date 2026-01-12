@@ -19,7 +19,6 @@ const services = [
     { name: 'Media', icon: '◇', description: 'Powerful storytelling' },
     { name: 'Social Media', icon: '◈', description: 'Engaging communities' },
     { name: 'Software Solutions', icon: '◆', description: 'Tech innovation' },
-    { name: 'Wedding Studio', icon: '✦', description: 'Capturing forever' },
 ];
 
 // --- CIRCULAR TEXT COMPONENT ---

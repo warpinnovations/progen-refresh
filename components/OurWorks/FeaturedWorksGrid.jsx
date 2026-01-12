@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, useMotionValue, useTransform, animate, useSpring } from 'framer-motion';
 import { worksData as allWorksData } from '@/app/contants';
 import StarsCanvas from '@/components/Global/StarCanvas';
-import FuturisticDivider from '@/components/Global/FuturisticLine'; // ADD THIS IMPORT
+import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 // --- THEME-ALIGNED FONT IMPORTS ---
 import localFont from 'next/font/local';
@@ -14,27 +14,135 @@ import { Oxanium } from 'next/font/google';
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
 
-// --- ORBITAL CARD COMPONENT WITH OPTIMIZED SPOTLIGHT ---
+// --- MOBILE CARD COMPONENT ---
+const MobileCard = ({ work, index }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="w-full max-w-md mx-auto"
+        >
+            <Link href={`/works/subpage?index=${work.originalIndex}`} className="block">
+                <motion.div
+                    className="group/card w-full h-[280px] sm:h-[320px] rounded-2xl overflow-hidden relative bg-slate-900"
+                    style={{
+                        border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(255, 255, 255, 0.1)',
+                        boxShadow: isHovered
+                            ? '0px 20px 40px -10px rgba(150, 137, 95, 0.4), 0 0 40px rgba(150, 137, 95, 0.2)'
+                            : '0px 10px 20px -5px rgba(0, 0, 0, 0.5)',
+                    }}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                >
+                    {/* Background Image */}
+                    <img
+                        src={work.img}
+                        alt={work.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-all duration-300 ease-out"
+                        style={{
+                            opacity: isHovered ? 0.6 : 0.25,
+                            transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+                        }}
+                    />
+
+                    {/* Gradient Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none"></div>
+
+                    {/* Golden glow overlay */}
+                    {isHovered && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10 pointer-events-none" />
+                    )}
+
+                    {/* Content Container */}
+                    <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+                        {/* Top Content */}
+                        <div
+                            className="relative z-10 transition-transform duration-200 ease-out flex-shrink-0"
+                            style={{ transform: isHovered ? 'translateY(-4px)' : 'translateY(0)' }}
+                        >
+                            <p
+                                className={`text-xs uppercase tracking-widest transition-all duration-200 ${OxaniumFont.className}`}
+                                style={{
+                                    color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
+                                    textShadow: isHovered ? '0 0 12px rgba(150, 137, 95, 0.6)' : 'none',
+                                }}
+                            >
+                                Project 0{work.originalIndex + 1}
+                            </p>
+                            <h3
+                                className={`font-bold uppercase text-white mt-2 leading-tight ${MoonlanderFont.className}`}
+                                style={{
+                                    fontSize: work.title.length > 25 ? '1.5rem' : work.title.length > 18 ? '1.75rem' : '1.875rem',
+                                    lineHeight: work.title.length > 18 ? '1.2' : '1.25',
+                                }}
+                            >
+                                {work.title}
+                            </h3>
+                        </div>
+
+                        {/* Bottom CTA */}
+                        <div
+                            className="relative z-10 transition-transform duration-200 ease-out flex-shrink-0"
+                            style={{ transform: isHovered ? 'translateY(-4px)' : 'translateY(0)' }}
+                        >
+                            <div
+                                className="h-[2px] bg-gradient-to-r from-[#96895F] to-transparent mb-3 transition-all duration-300 ease-out"
+                                style={{
+                                    width: isHovered ? '100%' : '35%',
+                                    opacity: isHovered ? 1 : 0.5,
+                                }}
+                            />
+
+                            <div className="flex items-center gap-x-2 text-sm text-slate-300 transition-all duration-200 ease-out opacity-70">
+                                <span className="font-semibold">View Project</span>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    className="w-5 h-5"
+                                >
+                                    <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Corner accents */}
+                    {isHovered && (
+                        <>
+                            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#96895F]/30 to-transparent rounded-2xl pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[#96895F]/20 to-transparent rounded-2xl pointer-events-none" />
+                        </>
+                    )}
+                </motion.div>
+            </Link>
+        </motion.div>
+    );
+};
+
+// --- ORBITAL CARD COMPONENT (DESKTOP) ---
 const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffset, radius, onHover, isHovered, isAnotherCardHovered }) => {
     const angle = (index / totalCards) * 360;
     const currentAngle = useTransform(animationProgress, (latest) => angle + latest);
 
-    // Positional transforms
     const x = useTransform(currentAngle, (a) => radius * Math.cos(a * (Math.PI / 180)));
     const z = useTransform(currentAngle, (a) => radius * Math.sin(a * (Math.PI / 180)));
     const rotateY = useTransform(x, [-radius, 0, radius], [45, 0, -45], { clamp: false });
 
-    // Base values derived from position
     const baseScale = useTransform(z, [-radius, 0, radius], [0.75, 1, 0.75]);
     const baseOpacity = useTransform(z, [-radius, 0, radius], [0.5, 0.8, 1]);
     const baseZIndex = useTransform(z, [-radius, radius], [1, totalCards + 1]);
 
-    // Optimized hover state - only override when hovered, otherwise use base transforms
     const scale = useSpring(baseScale, { stiffness: 200, damping: 20 });
     const opacity = useSpring(baseOpacity, { stiffness: 200, damping: 20 });
     const zIndex = useSpring(baseZIndex, { stiffness: 300, damping: 25 });
 
-    // Update spring targets when hover state changes
     React.useEffect(() => {
         if (isHovered) {
             scale.set(1.15);
@@ -98,11 +206,9 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
                     {/* Gradient Overlays */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none"></div>
 
-                    {/* Golden glow overlay - only render on hover */}
+                    {/* Golden glow overlay */}
                     {isHovered && (
-                        <div
-                            className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10 pointer-events-none"
-                        />
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10 pointer-events-none" />
                     )}
 
                     {/* Content Container */}
@@ -165,15 +271,11 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
                         </div>
                     </div>
 
-                    {/* Corner accents - only on hover */}
+                    {/* Corner accents */}
                     {isHovered && (
                         <>
-                            <div
-                                className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#96895F]/30 to-transparent rounded-2xl pointer-events-none"
-                            />
-                            <div
-                                className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[#96895F]/20 to-transparent rounded-2xl pointer-events-none"
-                            />
+                            <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#96895F]/30 to-transparent rounded-2xl pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[#96895F]/20 to-transparent rounded-2xl pointer-events-none" />
                         </>
                     )}
                 </motion.div>
@@ -182,10 +284,21 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
     );
 };
 
-
 // --- MAIN COMPONENT ---
 const FeaturedWorksGrid = () => {
     const [hoveredCard, setHoveredCard] = React.useState(null);
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    // Detect mobile viewport
+    React.useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const indexedWorks = allWorksData.map((work, index) => ({ ...work, originalIndex: index }));
     const topRowWorks = indexedWorks.slice(0, 3);
@@ -195,11 +308,12 @@ const FeaturedWorksGrid = () => {
     const rotationProgressBottom = useMotionValue(0);
 
     React.useEffect(() => {
+        if (isMobile) return; // Don't run orbital animation on mobile
+
         let animationTop;
         let animationBottom;
 
         if (!hoveredCard) {
-            // Start animations when not hovering
             animationTop = animate(rotationProgressTop, rotationProgressTop.get() + 360, {
                 duration: 80,
                 repeat: Infinity,
@@ -215,70 +329,82 @@ const FeaturedWorksGrid = () => {
         }
 
         return () => {
-            // Clean up animations
             if (animationTop) animationTop.stop();
             if (animationBottom) animationBottom.stop();
         };
-    }, [hoveredCard, rotationProgressTop, rotationProgressBottom]);
+    }, [hoveredCard, rotationProgressTop, rotationProgressBottom, isMobile]);
 
     return (
         <motion.section
-            className='w-full flex flex-col justify-center py-36 md:py-48 relative overflow-hidden'
+            className='w-full flex flex-col justify-center py-16 sm:py-24 md:py-36 lg:py-48 relative overflow-hidden'
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1 }}
         >
-            {/* Background - Your Original StarsCanvas */}
+            {/* Background */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
                 <StarsCanvas />
                 <div className="absolute inset-0 bg-black/70"></div>
             </div>
 
             {/* Header */}
-            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-20">
-                <h2 className={`font-black text-3xl md:text-5xl ${MoonlanderFont.className}`}>
+            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-12 md:mb-20">
+                <h2 className={`font-black text-2xl sm:text-3xl md:text-5xl ${MoonlanderFont.className}`}>
                     <span className="text-[#f5f5f5]">Our </span>
                     <span className="text-prOrange">Featured Works</span>
                 </h2>
 
-                {/* REPLACE THE ENTIRE DECORATION SECTION WITH THIS: */}
                 <FuturisticDivider color="#96895f" />
 
-                <p className={`text-lg md:text-xl text-white/70 mt-4 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
-                    An interactive showcase of our creative and technical projects in orbit.
+                <p className={`text-base sm:text-lg md:text-xl text-white/70 mt-4 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
+                    An interactive showcase of our creative and technical projects{!isMobile && ' in orbit'}.
                 </p>
             </div>
 
-            {/* Orbital Cards */}
-            <div className="relative z-20 w-full h-[70vh] min-h-[700px] flex items-center justify-center">
-                <div className="relative w-full h-full" style={{ perspective: '1800px' }}>
-                    {topRowWorks.map((work, i) => (
-                        <OrbitalCard
-                            key={`top-${work.originalIndex}`}
-                            work={work} index={i} totalCards={topRowWorks.length}
-                            animationProgress={rotationProgressTop}
-                            verticalOffset={-120}
-                            radius={420}
-                            onHover={(isHovering) => setHoveredCard(isHovering ? `top-${work.originalIndex}` : null)}
-                            isHovered={hoveredCard === `top-${work.originalIndex}`}
-                            isAnotherCardHovered={hoveredCard !== null && hoveredCard !== `top-${work.originalIndex}`}
-                        />
-                    ))}
-                    {bottomRowWorks.map((work, i) => (
-                        <OrbitalCard
-                            key={`bottom-${work.originalIndex}`}
-                            work={work} index={i} totalCards={bottomRowWorks.length}
-                            animationProgress={rotationProgressBottom}
-                            verticalOffset={120}
-                            radius={420}
-                            onHover={(isHovering) => setHoveredCard(isHovering ? `bottom-${work.originalIndex}` : null)}
-                            isHovered={hoveredCard === `bottom-${work.originalIndex}`}
-                            isAnotherCardHovered={hoveredCard !== null && hoveredCard !== `bottom-${work.originalIndex}`}
-                        />
+            {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
+            {isMobile ? (
+                // Mobile: Vertical scrolling grid
+                <div className="relative z-20 w-full px-4 space-y-6 sm:space-y-8">
+                    {indexedWorks.map((work, index) => (
+                        <MobileCard key={work.originalIndex} work={work} index={index} />
                     ))}
                 </div>
-            </div>
+            ) : (
+                // Desktop: Orbital animation
+                <div className="relative z-20 w-full h-[70vh] min-h-[700px] flex items-center justify-center">
+                    <div className="relative w-full h-full" style={{ perspective: '1800px' }}>
+                        {topRowWorks.map((work, i) => (
+                            <OrbitalCard
+                                key={`top-${work.originalIndex}`}
+                                work={work}
+                                index={i}
+                                totalCards={topRowWorks.length}
+                                animationProgress={rotationProgressTop}
+                                verticalOffset={-120}
+                                radius={420}
+                                onHover={(isHovering) => setHoveredCard(isHovering ? `top-${work.originalIndex}` : null)}
+                                isHovered={hoveredCard === `top-${work.originalIndex}`}
+                                isAnotherCardHovered={hoveredCard !== null && hoveredCard !== `top-${work.originalIndex}`}
+                            />
+                        ))}
+                        {bottomRowWorks.map((work, i) => (
+                            <OrbitalCard
+                                key={`bottom-${work.originalIndex}`}
+                                work={work}
+                                index={i}
+                                totalCards={bottomRowWorks.length}
+                                animationProgress={rotationProgressBottom}
+                                verticalOffset={120}
+                                radius={420}
+                                onHover={(isHovering) => setHoveredCard(isHovering ? `bottom-${work.originalIndex}` : null)}
+                                isHovered={hoveredCard === `bottom-${work.originalIndex}`}
+                                isAnotherCardHovered={hoveredCard !== null && hoveredCard !== `bottom-${work.originalIndex}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </motion.section>
     );
 };

@@ -70,7 +70,7 @@ const BlackHoleCanvas = () => {
         function Emitter(x, y) {
             this.position = { x: x, y: y };
             this.radius = 30;
-            this.count = 800; // Reduced from 3000 for better performance
+            this.count = 800;
             this.particles = [];
 
             for (var i = 0; i < this.count; i++) {
@@ -132,7 +132,155 @@ const BlackHoleCanvas = () => {
 };
 
 
-// --- Original OrbitalCard Component with Enhanced Hover Effects ---
+// --- Mobile Certificate Card Component ---
+const MobileCertCard = ({ cert, index }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="w-full max-w-sm mx-auto"
+        >
+            <div
+                className={`relative flex flex-col items-center justify-start text-center w-full h-[340px] sm:h-[360px] p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${OxaniumFont.className}`}
+                style={{
+                    border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
+                    boxShadow: isHovered
+                        ? '0px 30px 60px -15px rgba(150, 137, 95, 0.5), 0 0 80px rgba(150, 137, 95, 0.3)'
+                        : '0px 15px 35px -10px rgba(0, 0, 0, 0.6)',
+                    transition: 'border 0.3s ease, box-shadow 0.3s ease',
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onTouchStart={() => setIsHovered(true)}
+                onTouchEnd={() => setIsHovered(false)}
+            >
+                {/* Animated gradient background on hover */}
+                {isHovered && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#96895F]/15 via-transparent to-[#96895F]/10 pointer-events-none" />
+                )}
+
+                {/* Shimmer effect */}
+                {isHovered && (
+                    <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
+                )}
+
+                {/* Inner glow border */}
+                <div
+                    className="absolute inset-[1px] rounded-3xl pointer-events-none transition-all duration-300"
+                    style={{
+                        border: isHovered ? '1px solid rgba(150, 137, 95, 0.3)' : '1px solid rgba(150, 137, 95, 0.1)',
+                    }}
+                />
+
+                {/* Corner accents */}
+                {isHovered && (
+                    <>
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-[#96895F]/25 to-transparent rounded-3xl pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-[#96895F]/20 to-transparent rounded-3xl pointer-events-none" />
+                    </>
+                )}
+
+                {/* Floating particles */}
+                {isHovered && (
+                    <>
+                        <div
+                            className="absolute w-1.5 h-1.5 rounded-full bg-[#96895F]/60 animate-[float_2s_ease-in-out_infinite]"
+                            style={{ top: '20%', right: '15%' }}
+                        />
+                        <div
+                            className="absolute w-1 h-1 rounded-full bg-[#96895F]/40 animate-[float_2.5s_ease-in-out_infinite_0.5s]"
+                            style={{ top: '30%', left: '10%' }}
+                        />
+                    </>
+                )}
+
+                {/* Content */}
+                <div className="flex justify-center items-center space-x-4 mb-6 h-24 relative z-10">
+                    {cert.emblems.map((src, j) => (
+                        <img
+                            key={`emblem-mobile-${index}-${j}`}
+                            src={src}
+                            alt={cert.alt || cert.titles[0]}
+                            className="max-h-full w-auto transition-all duration-300"
+                            style={{
+                                filter: isHovered ? 'grayscale(0) brightness(1.1)' : 'grayscale(1) brightness(0.8)',
+                            }}
+                        />
+                    ))}
+                </div>
+
+                <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10">
+                    {cert.linkPhrase && (
+                        <p
+                            className="text-base md:text-lg uppercase tracking-wider font-semibold mb-1 drop-shadow-lg"
+                            style={{
+                                color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
+                                textShadow: isHovered ? '0 0 15px rgba(150, 137, 95, 0.7)' : 'none',
+                                transition: 'all 0.3s ease',
+                            }}
+                        >
+                            {cert.linkPhrase}
+                        </p>
+                    )}
+
+                    {cert.titles && cert.titles[0] && cert.titles.map((line, k) => (
+                        <p
+                            key={`title-mobile-${index}-${k}`}
+                            className={`font-bold uppercase text-[#EAE2B7] text-lg md:text-xl leading-tight drop-shadow-lg ${cert.linkPhrase ? 'mt-1' : ''}`}
+                            style={{
+                                textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
+                                transition: 'text-shadow 0.3s ease',
+                            }}
+                        >
+                            {line}
+                        </p>
+                    ))}
+
+                    {(!cert.titles || !cert.titles[0]) && cert.alt && (
+                        <p
+                            className="font-bold uppercase text-[#EAE2B7] text-lg md:text-xl leading-tight drop-shadow-lg"
+                            style={{
+                                textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
+                                transition: 'text-shadow 0.3s ease',
+                            }}
+                        >
+                            {cert.alt}
+                        </p>
+                    )}
+
+                    {/* Animated divider line */}
+                    <div
+                        className="h-0.5 bg-gradient-to-r from-[#96895F] to-transparent mt-4 transition-all duration-300 ease-out"
+                        style={{
+                            width: isHovered ? '80%' : '40%',
+                            opacity: isHovered ? 1 : 0.5,
+                        }}
+                    />
+
+                    {/* Verified badge */}
+                    <div
+                        className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#96895F]/90 font-semibold mt-2"
+                        style={{
+                            opacity: 0.7,
+                        }}
+                    >
+                        <span>Verified Credential</span>
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+
+// --- Desktop Orbital Card Component ---
 const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart, onHoverEnd }) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -187,7 +335,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     <div className="absolute inset-0 bg-gradient-to-br from-[#96895F]/15 via-transparent to-[#96895F]/10 pointer-events-none" />
                 )}
 
-                {/* Shimmer effect - Only render on hover */}
+                {/* Shimmer effect */}
                 {isHovered && (
                     <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_1.5s_ease-in-out] pointer-events-none" />
                 )}
@@ -208,7 +356,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                     </>
                 )}
 
-                {/* Floating particles on hover - Simplified CSS animation */}
+                {/* Floating particles */}
                 {isHovered && (
                     <>
                         <div
@@ -320,10 +468,22 @@ function Certifications() {
 
     const rotationProgress = useMotionValue(0);
     const [isPaused, setIsPaused] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const sectionRef = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
-    // Intersection observer to pause animation when not visible
+    // Detect mobile viewport
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Intersection observer
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -343,7 +503,10 @@ function Certifications() {
         };
     }, []);
 
+    // Animation control
     useEffect(() => {
+        if (isMobile) return; // Don't run orbital animation on mobile
+
         let controls;
         if (!isPaused && isVisible) {
             controls = animate(rotationProgress, rotationProgress.get() + 360, {
@@ -356,12 +519,12 @@ function Certifications() {
         return () => {
             if (controls) controls.stop();
         };
-    }, [rotationProgress, isPaused, isVisible]);
+    }, [rotationProgress, isPaused, isVisible, isMobile]);
 
     return (
         <motion.section
             ref={sectionRef}
-            className='w-full flex flex-col justify-center py-36 md:py-48 relative overflow-hidden'
+            className='w-full flex flex-col justify-center py-16 sm:py-24 md:py-36 lg:py-48 relative overflow-hidden'
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -395,38 +558,48 @@ function Certifications() {
             <div className="absolute inset-0 z-10 pointer-events-none bg-black/30"></div>
 
             {/* Header */}
-            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-24">
-                <h2 className={`font-black text-3xl md:text-5xl ${MoonlanderFont.className}`}>
+            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-12 md:mb-24">
+                <h2 className={`font-black text-2xl sm:text-3xl md:text-5xl ${MoonlanderFont.className}`}>
                     <span className="text-[#f5f5f5]">Our </span>
                     <span className="text-prOrange">Credentials</span>
-                    <span className="text-[#f5f5f5]"> in Orbit</span>
+                    {!isMobile && <span className="text-[#f5f5f5]"> in Orbit</span>}
                 </h2>
-                <FuturisticDivider color="#96895F" className="mt-8" />
-                <p className={`text-lg md:text-xl text-white/70 mt-6 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
+                <FuturisticDivider color="#96895F" className="mt-6 md:mt-8" />
+                <p className={`text-base sm:text-lg md:text-xl text-white/70 mt-4 md:mt-6 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
                     An interactive showcase of our proven expertise across the digital universe.
                 </p>
             </div>
 
-            {/* Orbital Cards */}
-            <div className="relative z-20 w-full h-[75vh] min-h-[700px] flex items-center justify-center">
-                <div className="absolute z-0 w-full h-full flex items-center justify-center pointer-events-none">
-                    <BlackHoleCanvas />
-                </div>
-
-                <div className="relative w-full h-full" style={{ perspective: '1200px' }}>
+            {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
+            {isMobile ? (
+                // Mobile: Vertical scrolling grid
+                <div className="relative z-20 w-full px-4 space-y-6 sm:space-y-8">
                     {certificates.map((cert, i) => (
-                        <OrbitalCard
-                            key={`cert-${i}`}
-                            cert={cert}
-                            index={i}
-                            totalCards={certificates.length}
-                            animationProgress={rotationProgress}
-                            onHoverStart={() => setIsPaused(true)}
-                            onHoverEnd={() => setIsPaused(false)}
-                        />
+                        <MobileCertCard key={`cert-mobile-${i}`} cert={cert} index={i} />
                     ))}
                 </div>
-            </div>
+            ) : (
+                // Desktop: Orbital animation with black hole
+                <div className="relative z-20 w-full h-[75vh] min-h-[700px] flex items-center justify-center">
+                    <div className="absolute z-0 w-full h-full flex items-center justify-center pointer-events-none">
+                        <BlackHoleCanvas />
+                    </div>
+
+                    <div className="relative w-full h-full" style={{ perspective: '1200px' }}>
+                        {certificates.map((cert, i) => (
+                            <OrbitalCard
+                                key={`cert-${i}`}
+                                cert={cert}
+                                index={i}
+                                totalCards={certificates.length}
+                                animationProgress={rotationProgress}
+                                onHoverStart={() => setIsPaused(true)}
+                                onHoverEnd={() => setIsPaused(false)}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
 
             {/* CSS Keyframe animations */}
             <style jsx>{`
