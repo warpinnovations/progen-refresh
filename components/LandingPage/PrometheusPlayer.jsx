@@ -11,19 +11,22 @@ const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
 // --- Data for the feature cards ---
 const features = [
   {
-    supertitle: "WORK",
-    videoUrl: "/VideoAssets/Pond.gif",
+    supertitle: "INNOVATE",
+    videoUrl: "/ReelsAssets/LeftContainer.mp4",
     isVertical: true,
+    description: "Transform bold ideas into groundbreaking solutions with cutting-edge technology and creative excellence."
   },
   {
-    supertitle: "WITH",
-    videoId: "1brGtnb6pnhMCr28Os2VjngRk2N-1q0HX",
+    supertitle: "COLLABORATE",
+    videoUrl: "/ReelsAssets/PR Reel 2025.mp4",
     isVertical: false,
+    description: "Partner with us to create exceptional experiences that drive growth and exceed expectations."
   },
   {
-    supertitle: "WITH US",
-    videoUrl: "/VideoAssets/Lake.gif",
+    supertitle: "ELEVATE",
+    videoUrl: "/ReelsAssets/RightContainer.mp4",
     isVertical: true,
+    description: "Amplify your brand's impact through strategic innovation and flawless execution that sets you apart."
   },
 ];
 
@@ -110,7 +113,7 @@ const cardVariants = {
   },
 };
 
-// Individual Card Component - Enhanced
+// Individual Card Component - Enhanced with MP4 video support
 const FeatureCard = ({ feature, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(0);
@@ -164,68 +167,27 @@ const FeatureCard = ({ feature, index }) => {
 
         <div className="absolute inset-0 rounded-3xl overflow-hidden border-2 border-[#96895F]/30 bg-gradient-to-br from-slate-900/95 to-slate-800/90 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/70 group-hover:shadow-[#96895F]/40 transition-all duration-500">
           {/* Video/Image Container */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden" style={{ pointerEvents: feature.videoId ? 'auto' : 'none' }}>
-            {feature.videoId ? (
-              <div className="relative w-full h-full" style={{ pointerEvents: 'auto' }}>
-                {/* Custom video player overlay */}
-                <div className="absolute inset-0 z-10 pointer-events-none">
-                  <div className="absolute inset-0 border-2 border-[#96895F]/20 rounded-3xl" />
-                  
-                  {/* Corner decorations */}
-                  <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-[#96895F]/60 rounded-tl-lg" />
-                  <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-[#96895F]/60 rounded-tr-lg" />
-                  <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-[#96895F]/60 rounded-bl-lg" />
-                  <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-[#96895F]/60 rounded-br-lg" />
-                  
-                  {/* Status indicator */}
-                  <motion.div 
-                    className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#96895F]/30"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <motion.div 
-                      className="w-2 h-2 rounded-full bg-[#96895F]"
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <span className={`text-[#96895F] text-xs font-semibold uppercase tracking-wider ${OxaniumFont.className}`}>
-                      Live
-                    </span>
-                  </motion.div>
-                </div>
-
-                <iframe
-                  src={`https://drive.google.com/file/d/${feature.videoId}/preview`}
-                  width="100%"
-                  height="100%"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="absolute inset-0 h-full w-full"
-                  allowFullScreen
-                  style={{ border: 'none', pointerEvents: 'auto' }}
-                />
-              </div>
-            ) : (
-              <>
-                <motion.img
-                  src={feature.videoUrl}
-                  alt={feature.supertitle}
-                  className="w-full h-full object-cover"
-                  style={{ scale: isHovered ? 1.08 : 1 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10"
-                  animate={{ opacity: isHovered ? 1 : 0 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </>
-            )}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden">
+            {/* MP4 Video Player */}
+            <video
+              src={feature.videoUrl}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              style={{ transform: isHovered ? 'scale(1.08)' : 'scale(1)', transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10"
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.5 }}
+            />
           </div>
 
           {/* Shimmer effect on hover */}
-          {isHovered && !feature.videoId && (
+          {isHovered && (
             <motion.div
               className="absolute inset-0 pointer-events-none"
               animate={{
@@ -240,74 +202,72 @@ const FeatureCard = ({ feature, index }) => {
           {/* Enhanced inner border */}
           <div className="absolute inset-[1px] rounded-3xl border border-[#96895F]/20 group-hover:border-[#96895F]/50 transition-all duration-500 pointer-events-none" />
 
-          {/* Content overlay for non-video cards */}
-          {!feature.videoId && (
-            <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
-              <motion.div
-                className="space-y-4"
-                animate={{ y: isHovered ? -8 : 0 }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="relative inline-block">
-                  <motion.p
-                    className={`text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-[#96895F] mb-3 ${MoonlanderFont.className}`}
-                    animate={{
-                      textShadow: isHovered ? '0 0 20px rgba(150, 137, 95, 0.8)' : '0 0 8px rgba(150, 137, 95, 0.4)'
-                    }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    {feature.supertitle}
-                  </motion.p>
-                  <motion.div
-                    className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/60 to-transparent"
-                    initial={{ width: 0, opacity: 0 }}
-                    animate={{ width: isHovered ? '100%' : '50%', opacity: 1 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20, height: 0 }}
+          {/* Content overlay for all cards */}
+          <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
+            <motion.div
+              className="space-y-4"
+              animate={{ y: isHovered ? -8 : 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="relative inline-block">
+                <motion.p
+                  className={`text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-[#96895F] mb-3 ${MoonlanderFont.className}`}
                   animate={{
-                    opacity: isHovered ? 1 : 0,
-                    y: isHovered ? 0 : 20,
-                    height: isHovered ? 'auto' : 0
+                    textShadow: isHovered ? '0 0 20px rgba(150, 137, 95, 0.8)' : '0 0 8px rgba(150, 137, 95, 0.4)'
                   }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="overflow-hidden"
+                  transition={{ duration: 0.4 }}
                 >
-                  <p className={`text-[#EAE2B7]/90 text-sm md:text-base leading-relaxed max-w-md ${OxaniumFont.className}`}>
-                    Discover how we can collaborate to bring your vision to life with creativity and precision.
-                  </p>
-                </motion.div>
-
+                  {feature.supertitle}
+                </motion.p>
                 <motion.div
-                  className={`flex items-center gap-3 text-[#96895F] ${OxaniumFont.className}`}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  <span className="text-xs md:text-sm font-semibold tracking-wider uppercase">
-                    Explore More
-                  </span>
-                  <motion.svg
-                    className="w-5 h-5"
-                    animate={isHovered ? { x: [0, 6, 0] } : {}}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </motion.svg>
-                </motion.div>
+                  className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/60 to-transparent"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: isHovered ? '100%' : '50%', opacity: 1 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                />
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20, height: 0 }}
+                animate={{
+                  opacity: isHovered ? 1 : 0,
+                  y: isHovered ? 0 : 20,
+                  height: isHovered ? 'auto' : 0
+                }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden"
+              >
+                <p className={`text-[#EAE2B7]/90 text-sm md:text-base leading-relaxed max-w-md ${OxaniumFont.className}`}>
+                  {feature.description}
+                </p>
               </motion.div>
-            </div>
-          )}
+
+              <motion.div
+                className={`flex items-center gap-3 text-[#96895F] ${OxaniumFont.className}`}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              >
+                <span className="text-xs md:text-sm font-semibold tracking-wider uppercase">
+                  Explore More
+                </span>
+                <motion.svg
+                  className="w-5 h-5"
+                  animate={isHovered ? { x: [0, 6, 0] } : {}}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </motion.svg>
+              </motion.div>
+            </motion.div>
+          </div>
 
           {/* Corner glow effects */}
-          {isHovered && !feature.videoId && (
+          {isHovered && (
             <>
               <motion.div
                 className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#96895F]/40 to-transparent rounded-3xl pointer-events-none"

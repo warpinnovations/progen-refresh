@@ -4,13 +4,17 @@ import { useState, useEffect } from "react";
 import PageTransition from "@/components/Global/PageTransition";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import StarsCanvas from "@/components/Global/StarCanvas";
-import { Oxanium } from "next/font/google";
+import { Oxanium, Rajdhani } from "next/font/google";
 import { motion } from "framer-motion";
 import localFont from "next/font/local";
 import Link from "next/link";
 
 const OxaniumFont = Oxanium({
   weight: "400",
+  subsets: ["latin"],
+});
+const RajdhaniFont = Rajdhani({
+  weight: "600",
   subsets: ["latin"],
 });
 const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
@@ -156,17 +160,21 @@ const HeroSection = () => {
               <span className="text-prOrange">{textArray[activeText]?.substring(3)}</span>
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* Subtitle - Updated with Rajdhani */}
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeInOut" }}
-              className={`hidden md:flex md:text-2xl ${OxaniumFont.className} font-semibold text-white text-center w-auto md:w-3/4`}
+              className={`hidden md:flex md:text-2xl lg:text-3xl ${RajdhaniFont.className} font-semibold text-white text-center w-auto md:w-3/4`}
+              style={{
+                letterSpacing: '0.04em',
+                lineHeight: '1.5',
+              }}
             >
               Prometheus is Western Visayas&apos;s leading full&nbsp;service marketing agency and public relations firm.
             </motion.h2>
 
-            {/* Get Started Button */}
+            {/* Get Started Button - Updated with Rajdhani */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -174,7 +182,7 @@ const HeroSection = () => {
             >
               <Link href="/contact">
                 <motion.button
-                  className={`group relative px-8 py-3.5 md:px-12 md:py-4 ${OxaniumFont.className} font-bold text-sm md:text-base uppercase tracking-[0.15em] overflow-hidden rounded-lg bg-transparent border border-[#96895f]/70 text-white shadow-[0_0_20px_rgba(150,137,95,0.15)] hover:shadow-[0_0_35px_rgba(150,137,95,0.35)] transition-all duration-300 ease-out backdrop-blur-sm`}
+                  className={`group relative px-8 py-3.5 md:px-12 md:py-4 ${RajdhaniFont.className} font-bold text-sm md:text-base uppercase tracking-[0.12em] overflow-hidden rounded-lg bg-transparent border border-[#96895f]/70 text-white shadow-[0_0_20px_rgba(150,137,95,0.15)] hover:shadow-[0_0_35px_rgba(150,137,95,0.35)] transition-all duration-300 ease-out backdrop-blur-sm`}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -247,9 +255,12 @@ const HeroSection = () => {
                       />
                     </div>
 
-                    {/* Label - ORIGINAL DESIGN */}
+                    {/* Label - Updated with Rajdhani */}
                     <div className="relative mt-4 px-2 w-full">
-                      <p className={`text-xs md:text-sm lg:text-base ${OxaniumFont.className} font-bold text-white tracking-wider uppercase transition-all duration-300 ease-out group-hover:text-[#96895f] leading-tight break-words`}>
+                      <p className={`text-xs md:text-sm lg:text-base ${RajdhaniFont.className} font-bold text-white uppercase transition-all duration-300 ease-out group-hover:text-[#96895f] leading-tight break-words`}
+                         style={{
+                           letterSpacing: '0.08em'
+                         }}>
                         {logo.alt}
                       </p>
                       {/* Underline accent */}

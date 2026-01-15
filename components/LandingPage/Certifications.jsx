@@ -3,10 +3,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import StarsCanvas from '@/components/Global/StarCanvas';
-import { Oxanium } from 'next/font/google';
+import { Oxanium, Rajdhani } from 'next/font/google';
 import localFont from 'next/font/local';
 import FuturisticDivider from "../Global/FuturisticLine";
 const OxaniumFont = Oxanium({ weight: '700', subsets: ['latin'] });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
 
@@ -19,6 +20,7 @@ const BlackHoleCanvas = () => {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         let animationFrameId;
+        let isCleanedUp = false;
 
         const requestAnimFrame = (
             window.requestAnimationFrame ||
@@ -50,7 +52,7 @@ const BlackHoleCanvas = () => {
             };
 
             this.draw = function () {
-                if (!ctx) return;
+                if (!ctx || isCleanedUp) return;
                 ctx.fillStyle = "rgba(255,255,255," + this.opacity + ")";
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
@@ -80,7 +82,7 @@ const BlackHoleCanvas = () => {
 
         Emitter.prototype = {
             draw: function () {
-                if (!ctx) return;
+                if (!ctx || isCleanedUp) return;
                 ctx.fillStyle = "rgba(0,0,0,1)";
                 ctx.beginPath();
                 ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
@@ -97,6 +99,7 @@ const BlackHoleCanvas = () => {
 
         let emitter;
         const loop = () => {
+            if (isCleanedUp) return;
             if (ctx && canvas) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 if (emitter) {
@@ -107,7 +110,7 @@ const BlackHoleCanvas = () => {
         }
 
         const handleResize = () => {
-            if (canvas) {
+            if (canvas && !isCleanedUp) {
                 canvas.width = window.innerWidth;
                 canvas.height = Math.min(window.innerHeight, 700);
                 emitter = new Emitter(canvas.width / 2, canvas.height / 2);
@@ -115,15 +118,18 @@ const BlackHoleCanvas = () => {
         };
 
         handleResize();
-        if (!animationFrameId) {
+        if (!animationFrameId && !isCleanedUp) {
             loop();
         }
 
         window.addEventListener('resize', handleResize);
 
         return () => {
+            isCleanedUp = true;
             window.removeEventListener('resize', handleResize);
-            cancelAnimFrame(animationFrameId);
+            if (animationFrameId) {
+                cancelAnimFrame(animationFrameId);
+            }
         };
 
     }, []);
@@ -145,7 +151,7 @@ const MobileCertCard = ({ cert, index }) => {
             className="w-full max-w-sm mx-auto"
         >
             <div
-                className={`relative flex flex-col items-center justify-start text-center w-full h-[340px] sm:h-[360px] p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${OxaniumFont.className}`}
+                className={`relative flex flex-col items-center justify-start text-center w-full h-[340px] sm:h-[360px] p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${RajdhaniFont.className}`}
                 style={{
                     border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
                     boxShadow: isHovered
@@ -216,11 +222,12 @@ const MobileCertCard = ({ cert, index }) => {
                 <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10">
                     {cert.linkPhrase && (
                         <p
-                            className="text-base md:text-lg uppercase tracking-wider font-semibold mb-1 drop-shadow-lg"
+                            className="text-base md:text-lg uppercase font-semibold mb-1 drop-shadow-lg"
                             style={{
                                 color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
                                 textShadow: isHovered ? '0 0 15px rgba(150, 137, 95, 0.7)' : 'none',
                                 transition: 'all 0.3s ease',
+                                letterSpacing: '0.08em',
                             }}
                         >
                             {cert.linkPhrase}
@@ -234,6 +241,7 @@ const MobileCertCard = ({ cert, index }) => {
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
+                                letterSpacing: '0.06em',
                             }}
                         >
                             {line}
@@ -246,6 +254,7 @@ const MobileCertCard = ({ cert, index }) => {
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
+                                letterSpacing: '0.06em',
                             }}
                         >
                             {cert.alt}
@@ -263,9 +272,10 @@ const MobileCertCard = ({ cert, index }) => {
 
                     {/* Verified badge */}
                     <div
-                        className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#96895F]/90 font-semibold mt-2"
+                        className="flex items-center gap-2 text-xs uppercase text-[#96895F]/90 font-semibold mt-2"
                         style={{
                             opacity: 0.7,
+                            letterSpacing: '0.08em',
                         }}
                     >
                         <span>Verified Credential</span>
@@ -321,7 +331,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
             onMouseLeave={handleHoverEnd}
         >
             <div
-                className={`group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl transform-gpu overflow-hidden ${OxaniumFont.className}`}
+                className={`group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl transform-gpu overflow-hidden ${RajdhaniFont.className}`}
                 style={{
                     border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
                     boxShadow: isHovered
@@ -388,11 +398,12 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                 <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10">
                     {cert.linkPhrase && (
                         <p
-                            className="text-base md:text-lg uppercase tracking-wider font-semibold mb-1 drop-shadow-lg"
+                            className="text-base md:text-lg uppercase font-semibold mb-1 drop-shadow-lg"
                             style={{
                                 color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
                                 textShadow: isHovered ? '0 0 15px rgba(150, 137, 95, 0.7)' : 'none',
                                 transition: 'all 0.3s ease',
+                                letterSpacing: '0.08em',
                             }}
                         >
                             {cert.linkPhrase}
@@ -406,6 +417,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
+                                letterSpacing: '0.06em',
                             }}
                         >
                             {line}
@@ -418,6 +430,7 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
+                                letterSpacing: '0.06em',
                             }}
                         >
                             {cert.alt}
@@ -435,10 +448,11 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
 
                     {/* Hover reveal badge */}
                     <div
-                        className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#96895F]/90 font-semibold mt-2 transition-all duration-300"
+                        className="flex items-center gap-2 text-xs uppercase text-[#96895F]/90 font-semibold mt-2 transition-all duration-300"
                         style={{
                             opacity: isHovered ? 1 : 0,
                             transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
+                            letterSpacing: '0.08em',
                         }}
                     >
                         <span>Verified Credential</span>
@@ -565,7 +579,12 @@ function Certifications() {
                     {!isMobile && <span className="text-[#f5f5f5]"> in Orbit</span>}
                 </h2>
                 <FuturisticDivider color="#96895F" className="mt-6 md:mt-8" />
-                <p className={`text-base sm:text-lg md:text-xl text-white/70 mt-4 md:mt-6 max-w-2xl mx-auto ${MoonlanderFont.className}`}>
+                <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto ${RajdhaniFont.className}`}
+                   style={{ 
+                       letterSpacing: '0.06em',
+                       lineHeight: '1.5',
+                       fontWeight: '500'
+                   }}>
                     An interactive showcase of our proven expertise across the digital universe.
                 </p>
             </div>

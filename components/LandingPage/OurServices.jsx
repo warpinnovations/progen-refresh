@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import localFont from 'next/font/local';
 import StarsCanvas from '@/components/Global/StarCanvas';
@@ -9,16 +9,129 @@ import FuturisticDivider from '@/components/Global/FuturisticLine';
 // --- FONT DEFINITIONS ---
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 
-// --- DATA ---
-const services = [
-    { name: 'Branding', icon: '✦', description: 'Crafting unique identities' },
-    { name: 'Strategy', icon: '◈', description: 'Data-driven solutions' },
-    { name: 'Digital Marketing', icon: '◆', description: 'Amplifying your reach' },
-    { name: 'Creative', icon: '✧', description: 'Unleashing imagination' },
-    { name: 'Event Management', icon: '◉', description: 'Memorable experiences' },
-    { name: 'Media', icon: '◇', description: 'Powerful storytelling' },
-    { name: 'Social Media', icon: '◈', description: 'Engaging communities' },
-    { name: 'Software Solutions', icon: '◆', description: 'Tech innovation' },
+// --- SERVICES DATA WITH DETAILED BREAKDOWNS ---
+const servicesData = [
+    {
+        id: 'strategy',
+        name: 'Strategy Services',
+        icon: '◈',
+        color: '#96895F',
+        services: [
+            'Situational Analysis',
+            'Consumer Research and Analysis',
+            'Data Interpretation & Insighting',
+            'Strategy Development',
+            'Digital Consultation',
+            'Promotion Mechanics Formulation',
+            'Marketing Workshops',
+            'Content Planning'
+        ]
+    },
+    {
+        id: 'creative',
+        name: 'Creative Services',
+        icon: '✧',
+        color: '#96895F',
+        services: [
+            'Website Design',
+            'Print Design',
+            'Installation Design',
+            'Graphic Design',
+            'Artistic Renders',
+            'Illustration',
+            'Scriptwriting',
+            'Ad Copywriting',
+            'Social Copywriting',
+            'Sound Design'
+        ]
+    },
+    {
+        id: 'branding',
+        name: 'Branding Services',
+        icon: '✦',
+        color: '#96895F',
+        services: [
+            'Big Idea Formulation',
+            'Mock-up and Design',
+            'Target Market Identification',
+            'Communications Planning',
+            'Social Card Design'
+        ]
+    },
+    {
+        id: 'digital-marketing',
+        name: 'Digital Marketing Services',
+        icon: '◉',
+        color: '#96895F',
+        services: [
+            'Search Engine Optimization',
+            'Strategy Development',
+            'Direct E-mail Marketing',
+            'Content Tagging'
+        ]
+    },
+    {
+        id: 'media',
+        name: 'Media Services',
+        icon: '◇',
+        color: '#96895F',
+        services: [
+            'Media Planning and Strategy',
+            'Media Buying and Deployment',
+            'Media Monitoring and Optimization',
+            'Media Reporting'
+        ]
+    },
+    {
+        id: 'social-media',
+        name: 'Social Media Services',
+        icon: '◆',
+        color: '#96895F',
+        services: [
+            'Social Media Scanning',
+            'Social Media Strategy',
+            'Social Media Design',
+            'Digital Brand Analysis',
+            'Social Media Planning and Conversation Curation',
+            'Influencer Marketing',
+            'Campaign Management'
+        ]
+    },
+    {
+        id: 'event-management',
+        name: 'Event Management Services',
+        icon: '◈',
+        color: '#96895F',
+        services: [
+            'Broadcast Management',
+            'On-site Event Management',
+            'Event Marketing and Promotion',
+            'Event Planning and Strategy',
+            'Brand Activations',
+            'Exhibition and Booth Design',
+            'Supplier Networking'
+        ]
+    },
+    {
+        id: 'software',
+        name: 'Software Solutions',
+        icon: '✦',
+        color: '#96895F',
+        services: [
+            'Custom Website Development',
+            'Website Design and Re-design',
+            'Software Solutions',
+            'CMS Website Development',
+            'Front End Custom Design',
+            'Website Copywriting',
+            'Digital Strategy',
+            'Content Creation',
+            'Conversion Optimization',
+            'Search Engine Optimization',
+            'AR/VR/MR Development',
+            'App Development'
+        ]
+    }
 ];
 
 // --- CIRCULAR TEXT COMPONENT ---
@@ -56,8 +169,115 @@ const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'text-prOr
     );
 };
 
+// --- SERVICE DETAIL MODAL ---
+const ServiceDetailModal = ({ service, onClose }) => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+            onClick={onClose}
+        >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+            {/* Modal Content */}
+            <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Modal Card */}
+                <div className="relative bg-black/90 border-2 border-[#96895F]/30 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+                    {/* Animated border glow */}
+                    <motion.div
+                        className="absolute inset-0 rounded-2xl pointer-events-none"
+                        style={{
+                            background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.2), transparent)',
+                            backgroundSize: '200% 200%',
+                        }}
+                        animate={{
+                            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                    />
+
+                    {/* Close Button */}
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-[#96895F]/10 border border-[#96895F]/30 hover:bg-[#96895F]/20 transition-all duration-300 group z-10"
+                    >
+                        <svg
+                            className="w-5 h-5 text-[#96895F] group-hover:rotate-90 transition-transform duration-300"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Header */}
+                    <div className="mb-6 pr-12">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96895F]/30 to-[#96895F]/10 border border-[#96895F]/40 flex items-center justify-center">
+                                <span className="text-2xl text-[#96895F]">{service.icon}</span>
+                            </div>
+                            <h3 className={`${MoonlanderFont.className} text-2xl md:text-3xl font-black text-white uppercase`}>
+                                {service.name}
+                            </h3>
+                        </div>
+                        <div className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/50 to-transparent" />
+                    </div>
+
+                    {/* Services List */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {service.services.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className="group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300"
+                            >
+                                <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-[#96895F] group-hover:scale-125 transition-transform duration-300" />
+                                <span className="text-sm md:text-base text-white/80 group-hover:text-white transition-colors duration-300">
+                                    {item}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Footer ornament */}
+                    <div className="mt-6 flex justify-center">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
+                            <div className="w-16 h-[1px] bg-gradient-to-r from-[#96895F]/40 to-transparent" />
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/60" />
+                            <div className="w-16 h-[1px] bg-gradient-to-l from-[#96895F]/40 to-transparent" />
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+};
+
 // --- SERVICE CARD COMPONENT ---
-const ServiceCard = ({ service, index }) => {
+const ServiceCard = ({ service, index, onClick }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -65,108 +285,160 @@ const ServiceCard = ({ service, index }) => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
-            className="relative group h-full"
+            onClick={onClick}
+            className="relative group h-full cursor-pointer"
         >
-            {/* Card Container - Fixed height and compact padding */}
+            {/* Card Container */}
             <motion.div
-                className="relative h-full p-5 md:p-6 rounded-xl border border-[#96895F]/20 bg-black/40 backdrop-blur-sm overflow-hidden flex flex-col"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+                className="relative h-full p-6 md:p-7 rounded-2xl border-2 bg-black/50 backdrop-blur-sm overflow-hidden flex flex-col"
+                style={{
+                    borderColor: isHovered ? `${service.color}80` : `${service.color}20`,
+                }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
                 {/* Animated border glow */}
                 <motion.div
-                    className="absolute inset-0 rounded-xl"
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
                     style={{
-                        background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.3), transparent)',
+                        background: `linear-gradient(135deg, transparent, ${service.color}30, transparent)`,
                         backgroundSize: '200% 200%',
                     }}
                     animate={isHovered ? {
-                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                        backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
                     } : {}}
                     transition={{ duration: 2, repeat: Infinity }}
                 />
 
-                {/* Inner border */}
-                <div className="absolute inset-[1px] rounded-xl bg-black/60 backdrop-blur-sm" />
+                {/* Inner glow effect */}
+                <div className="absolute inset-[2px] rounded-2xl bg-black/60 backdrop-blur-sm" />
 
-                {/* Content - Flex column to distribute space */}
-                <div className="relative z-10 flex items-center gap-3 md:gap-4 flex-1">
-                    {/* Icon - Smaller and more compact */}
-                    <motion.div
-                        className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-[#96895F]/20 to-[#96895F]/5 border border-[#96895F]/30 flex items-center justify-center"
-                        animate={isHovered ? {
-                            rotate: [0, 5, -5, 0],
-                            scale: [1, 1.1, 1],
-                        } : {}}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <span className="text-xl md:text-2xl text-[#96895F]">{service.icon}</span>
-                    </motion.div>
-
-                    {/* Text Content - Compact spacing */}
-                    <div className="flex-1 min-w-0">
-                        <h3 className={`${MoonlanderFont.className} text-lg md:text-xl font-bold text-white mb-1.5 group-hover:text-[#96895F] transition-colors duration-300 leading-tight`}>
-                            {service.name}
-                        </h3>
-
-                        {/* Animated underline - Thinner */}
+                {/* Content */}
+                <div className="relative z-10 flex items-center justify-between gap-4 flex-1">
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                        {/* Icon */}
                         <motion.div
-                            className="h-[1.5px] bg-gradient-to-r from-[#96895F] to-transparent mb-1.5"
-                            initial={{ width: '0%' }}
-                            animate={{ width: isHovered ? '100%' : '25%' }}
-                            transition={{ duration: 0.4 }}
-                        />
-
-                        <motion.p
-                            className="text-xs md:text-sm text-white/60 leading-snug"
-                            animate={{ opacity: isHovered ? 1 : 0.6 }}
-                            transition={{ duration: 0.3 }}
+                            className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br border-2 flex items-center justify-center"
+                            style={{
+                                borderColor: isHovered ? `${service.color}60` : `${service.color}30`,
+                                background: isHovered
+                                    ? `linear-gradient(135deg, ${service.color}20, ${service.color}10)`
+                                    : `linear-gradient(135deg, ${service.color}15, ${service.color}05)`,
+                            }}
+                            animate={isHovered ? {
+                                rotate: [0, 5, -5, 0],
+                                scale: [1, 1.05, 1],
+                            } : {}}
+                            transition={{ duration: 0.6 }}
                         >
-                            {service.description}
-                        </motion.p>
+                            <span className="text-2xl md:text-3xl" style={{ color: service.color }}>
+                                {service.icon}
+                            </span>
+                        </motion.div>
+
+                        {/* Text Content */}
+                        <div className="flex-1 min-w-0">
+                            <h3
+                                className={`${MoonlanderFont.className} text-xl md:text-2xl font-black text-white uppercase leading-tight transition-all duration-300`}
+                                style={{
+                                    color: isHovered ? service.color : '#ffffff',
+                                    textShadow: isHovered ? `0 0 20px ${service.color}40` : 'none',
+                                }}
+                            >
+                                {service.name}
+                            </h3>
+
+                            {/* Animated underline */}
+                            <motion.div
+                                className="h-[2px] mt-2 rounded-full"
+                                style={{
+                                    background: `linear-gradient(90deg, ${service.color}, transparent)`,
+                                }}
+                                initial={{ width: '30%' }}
+                                animate={{ width: isHovered ? '100%' : '30%' }}
+                                transition={{ duration: 0.4 }}
+                            />
+
+                            {/* Service count */}
+                            <motion.p
+                                className="text-xs md:text-sm mt-2 text-white/50"
+                                animate={{ opacity: isHovered ? 1 : 0.5 }}
+                            >
+                                {service.services.length} services available
+                            </motion.p>
+                        </div>
                     </div>
 
-                    {/* Arrow indicator - Smaller */}
+                    {/* Arrow indicator */}
                     <motion.div
-                        className="flex-shrink-0 w-7 h-7 rounded-full border border-[#96895F]/30 flex items-center justify-center"
-                        animate={isHovered ? {
-                            x: [0, 4, 0],
-                            borderColor: 'rgba(150, 137, 95, 0.6)',
-                        } : {
-                            borderColor: 'rgba(150, 137, 95, 0.3)',
+                        className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center"
+                        style={{
+                            borderColor: isHovered ? `${service.color}60` : `${service.color}20`,
+                            background: isHovered ? `${service.color}15` : 'transparent',
                         }}
-                        transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
+                        animate={isHovered ? {
+                            x: [0, 5, 0],
+                        } : {}}
+                        transition={{ duration: 1, repeat: isHovered ? Infinity : 0 }}
                     >
                         <svg
-                            className="w-3.5 h-3.5 text-[#96895F]"
+                            className="w-5 h-5 md:w-6 md:h-6"
+                            style={{ color: service.color }}
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                             strokeWidth={2}
                         >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </motion.div>
                 </div>
 
-                {/* Hover particles - Smaller */}
+                {/* Decorative corner accents */}
                 {isHovered && (
                     <>
                         <motion.div
-                            className="absolute top-3 right-3 w-1 h-1 rounded-full bg-[#96895F]/60"
+                            className="absolute top-0 right-0 w-20 h-20 rounded-2xl pointer-events-none"
+                            style={{
+                                background: `radial-gradient(circle at top right, ${service.color}15, transparent)`,
+                            }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        />
+                        <motion.div
+                            className="absolute bottom-0 left-0 w-16 h-16 rounded-2xl pointer-events-none"
+                            style={{
+                                background: `radial-gradient(circle at bottom left, ${service.color}10, transparent)`,
+                            }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    </>
+                )}
+
+                {/* Floating particles */}
+                {isHovered && (
+                    <>
+                        <motion.div
+                            className="absolute w-1.5 h-1.5 rounded-full"
+                            style={{ background: service.color, top: '15%', right: '10%', opacity: 0.6 }}
                             animate={{
-                                y: [0, -15, 0],
+                                y: [0, -20, 0],
                                 opacity: [0.6, 1, 0.6],
                             }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
                         <motion.div
-                            className="absolute bottom-3 left-3 w-1 h-1 rounded-full bg-[#96895F]/40"
+                            className="absolute w-1 h-1 rounded-full"
+                            style={{ background: service.color, bottom: '20%', left: '15%', opacity: 0.4 }}
                             animate={{
-                                y: [0, 15, 0],
+                                y: [0, 20, 0],
                                 opacity: [0.4, 0.8, 0.4],
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
@@ -181,7 +453,7 @@ const ServiceCard = ({ service, index }) => {
 // --- MAIN COMPONENT ---
 function OurServices() {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
-
+    const [selectedService, setSelectedService] = useState(null);
     const [radii, setRadii] = useState({ primary: 450, secondary: 550 });
     const [animationKey, setAnimationKey] = useState(0);
 
@@ -254,7 +526,7 @@ function OurServices() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <CircularText
                         key={animationKey + '_primary'}
-                        text=" / HOW CAN WE ASSIST YOU / HOW CAN WE ASSIST YOU / HOW CAN WE ASSIST YOU"
+                        text=" / HERE'S WHAT WE OFFER / HERE'S WHAT WE OFFER / HERE'S WHAT WE OFFER"
                         radiusX={radii.primary}
                         radiusY={Math.round(radii.primary * 0.65)}
                         duration={20}
@@ -264,20 +536,20 @@ function OurServices() {
             </div>
 
             {/* --- MAIN CONTENT --- */}
-            <div className="relative z-30 w-full max-w-6xl mx-auto px-4">
+            <div className="relative z-30 w-full max-w-7xl mx-auto px-4">
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <div className="flex flex-col items-center gap-2">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                            className={`${MoonlanderFont.className} font-black text-4xl md:text-6xl`}
-                        >
-                            <span className="text-[#f5f5f5]">OUR </span>
-                            <span className="text-[#96895F]">SERVICES</span>
-                        </motion.h1>
-                    </div>
+                <div className="text-center mb-16 md:mb-20">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                        className="mb-2"
+                    >
+                        <h2 className={`${MoonlanderFont.className} font-black text-2xl sm:text-3xl md:text-5xl`}>
+                            <span className="text-[#f5f5f5]">HERE&apos;S WHAT</span>
+                            <span className="text-prOrange">WE OFFER</span>
+                        </h2>
+                    </motion.div>
 
                     {/* Futuristic Divider */}
                     <motion.div
@@ -287,15 +559,39 @@ function OurServices() {
                     >
                         <FuturisticDivider color="#96895F" />
                     </motion.div>
+
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        className={`${MoonlanderFont.className} text-base sm:text-lg md:text-xl text-white/70 mt-4 max-w-3xl mx-auto`}
+                    >
+                        Click on any service to explore our comprehensive offerings
+                    </motion.p>
                 </div>
 
-                {/* Services Grid - Tighter gaps */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 auto-rows-fr">
-                    {services.map((service, index) => (
-                        <ServiceCard key={index} service={service} index={index} />
+                {/* Services Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                    {servicesData.map((service, index) => (
+                        <ServiceCard
+                            key={service.id}
+                            service={service}
+                            index={index}
+                            onClick={() => setSelectedService(service)}
+                        />
                     ))}
                 </div>
             </div>
+
+            {/* Service Detail Modal */}
+            <AnimatePresence>
+                {selectedService && (
+                    <ServiceDetailModal
+                        service={selectedService}
+                        onClose={() => setSelectedService(null)}
+                    />
+                )}
+            </AnimatePresence>
         </section>
     );
 }
