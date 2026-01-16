@@ -3,6 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import localFont from 'next/font/local';
+import { Rajdhani } from 'next/font/google';
+
+const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 const prKhaki = '#96895F';
 
@@ -131,7 +136,7 @@ const AnniversaryContact = () => {
                 <div className="relative z-40 w-full h-full flex items-center justify-center text-center p-4">
                     <div className="max-w-[280px] sm:max-w-[320px] md:max-w-[360px] px-4">
                         <motion.h2
-                            className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-tight"
+                            className={`${MoonlanderFont.className} text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-tight`}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -154,11 +159,12 @@ const AnniversaryContact = () => {
                         />
 
                         <motion.p
-                            className="text-xs sm:text-sm text-white/70 leading-relaxed mx-auto mb-6 font-semibold"
+                            className={`${RajdhaniFont.className} text-xs sm:text-sm text-white/70 leading-relaxed mx-auto mb-6 font-semibold`}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.3 }}
+                            style={{ letterSpacing: '0.04em' }}
                         >
                             Let&apos;s engineer your brand&apos;s success across the digital universe.
                         </motion.p>
@@ -178,10 +184,11 @@ const AnniversaryContact = () => {
                             >
                                 <Link
                                     href='/contact'
-                                    className="relative inline-flex items-center justify-center w-full rounded-lg px-6 py-3 text-base font-bold text-black transition-all duration-300 overflow-hidden"
+                                    className={`${RajdhaniFont.className} relative inline-flex items-center justify-center w-full rounded-lg px-6 py-3 text-base font-bold text-black transition-all duration-300 overflow-hidden`}
                                     style={{
                                         backgroundColor: prKhaki,
-                                        boxShadow: `0 0 25px -5px ${prKhaki}70`
+                                        boxShadow: `0 0 25px -5px ${prKhaki}70`,
+                                        letterSpacing: '0.06em'
                                     }}
                                 >
                                     {/* Shine effect on hover */}
@@ -205,11 +212,12 @@ const AnniversaryContact = () => {
                             >
                                 <Link
                                     href='/works'
-                                    className="relative inline-flex items-center justify-center w-full rounded-lg border-2 px-6 py-3 text-base font-bold transition-all duration-300 overflow-hidden"
+                                    className={`${RajdhaniFont.className} relative inline-flex items-center justify-center w-full rounded-lg border-2 px-6 py-3 text-base font-bold transition-all duration-300 overflow-hidden`}
                                     style={{
                                         borderColor: prKhaki,
                                         color: prKhaki,
-                                        backgroundColor: 'transparent'
+                                        backgroundColor: 'transparent',
+                                        letterSpacing: '0.06em'
                                     }}
                                 >
                                     {/* Fill effect on hover */}

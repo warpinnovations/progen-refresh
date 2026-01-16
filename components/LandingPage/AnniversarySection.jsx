@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion, useInView, useMotionValue, useTransform, animate } from 'framer-motion';
 import localFont from 'next/font/local';
+import { Rajdhani } from 'next/font/google';
 import { useEffect, useRef, useState } from 'react';
 
 import AnniversaryContact from './AnniversaryContact';
@@ -10,6 +11,7 @@ import StarsCanvas from '@/components/Global/StarCanvas';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 const stats = [
     { value: 1, label: 'Mission', icon: '◆', description: 'Unified vision' },
@@ -173,20 +175,22 @@ const StatCard = ({ stat, index }) => {
                         />
                     </motion.div>
 
-                    {/* Label - Enhanced typography */}
-                    <p className={`${MoonlanderFont.className} text-sm md:text-base font-bold uppercase tracking-wider text-white/90 text-center mb-1 group-hover:text-white transition-colors duration-300`}>
+                    {/* Label - Enhanced typography with Rajdhani */}
+                    <p className={`${RajdhaniFont.className} text-sm md:text-base font-bold uppercase text-white/90 text-center mb-1 group-hover:text-white transition-colors duration-300`}
+                       style={{ letterSpacing: '0.08em' }}>
                         {stat.label}
                     </p>
 
-                    {/* Description - New addition */}
+                    {/* Description - Updated with Rajdhani */}
                     <motion.p
-                        className="text-xs text-white/50 text-center group-hover:text-white/70 transition-colors duration-300"
+                        className={`${RajdhaniFont.className} text-xs text-white/50 text-center group-hover:text-white/70 transition-colors duration-300`}
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ 
                             opacity: isHovered ? 1 : 0, 
                             height: isHovered ? 'auto' : 0 
                         }}
                         transition={{ duration: 0.3 }}
+                        style={{ letterSpacing: '0.06em' }}
                     >
                         {stat.description}
                     </motion.p>
@@ -325,13 +329,18 @@ const AnniversarySection = () => {
                                 <FuturisticDivider color="#96895F" />
                             </motion.div>
 
-                            {/* Subtitle */}
+                            {/* Subtitle - Updated with Rajdhani */}
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: 0.5 }}
-                                className={`${MoonlanderFont.className} text-base sm:text-lg md:text-xl text-white/70 mt-6 max-w-xl mx-auto lg:mx-0`}
+                                className={`${RajdhaniFont.className} text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto lg:mx-0`}
+                                style={{ 
+                                    letterSpacing: '0.06em',
+                                    lineHeight: '1.5',
+                                    fontWeight: '500'
+                                }}
                             >
                                 A journey of innovation, creativity, and excellence across the islands
                             </motion.p>

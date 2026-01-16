@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import localFont from 'next/font/local';
+import { Rajdhani } from 'next/font/google';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 // --- FONT DEFINITIONS ---
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 // --- SERVICES DATA WITH DETAILED BREAKDOWNS ---
 const servicesData = [
@@ -250,10 +252,11 @@ const ServiceDetailModal = ({ service, onClose }) => {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.05 }}
-                                className="group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300"
+                                className={`group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300 ${RajdhaniFont.className}`}
                             >
                                 <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-[#96895F] group-hover:scale-125 transition-transform duration-300" />
-                                <span className="text-sm md:text-base text-white/80 group-hover:text-white transition-colors duration-300">
+                                <span className="text-sm md:text-base text-white/80 group-hover:text-white transition-colors duration-300"
+                                      style={{ letterSpacing: '0.04em' }}>
                                     {item}
                                 </span>
                             </motion.div>
@@ -365,8 +368,9 @@ const ServiceCard = ({ service, index, onClick }) => {
 
                             {/* Service count */}
                             <motion.p
-                                className="text-xs md:text-sm mt-2 text-white/50"
+                                className={`text-xs md:text-sm mt-2 text-white/50 ${RajdhaniFont.className}`}
                                 animate={{ opacity: isHovered ? 1 : 0.5 }}
+                                style={{ letterSpacing: '0.04em' }}
                             >
                                 {service.services.length} services available
                             </motion.p>
@@ -546,7 +550,7 @@ function OurServices() {
                         className="mb-2"
                     >
                         <h2 className={`${MoonlanderFont.className} font-black text-2xl sm:text-3xl md:text-5xl`}>
-                            <span className="text-[#f5f5f5]">HERE&apos;S WHAT</span>
+                            <span className="text-[#f5f5f5]">HERE&apos;S WHAT </span>
                             <span className="text-prOrange">WE OFFER</span>
                         </h2>
                     </motion.div>
@@ -564,21 +568,39 @@ function OurServices() {
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
-                        className={`${MoonlanderFont.className} text-base sm:text-lg md:text-xl text-white/70 mt-4 max-w-3xl mx-auto`}
+                        className={`${RajdhaniFont.className} text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto`}
+                        style={{ 
+                            letterSpacing: '0.06em',
+                            lineHeight: '1.5',
+                            fontWeight: '500'
+                        }}
                     >
                         Click on any service to explore our comprehensive offerings
                     </motion.p>
                 </div>
 
-                {/* Services Grid */}
+                {/* Services Grid - First 6 cards in 3 columns */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                    {servicesData.map((service, index) => (
+                    {servicesData.slice(0, 6).map((service, index) => (
                         <ServiceCard
                             key={service.id}
                             service={service}
                             index={index}
                             onClick={() => setSelectedService(service)}
                         />
+                    ))}
+                </div>
+                
+                {/* Last 2 cards centered as a group */}
+                <div className="flex flex-wrap justify-center gap-5 md:gap-6 mt-5 md:mt-6">
+                    {servicesData.slice(6).map((service, index) => (
+                        <div key={service.id} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-md lg:max-w-none">
+                            <ServiceCard
+                                service={service}
+                                index={index + 6}
+                                onClick={() => setSelectedService(service)}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

@@ -3,28 +3,28 @@
 import React, { useState } from "react";
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import localFont from 'next/font/local';
-import { Oxanium } from 'next/font/google';
+import { Rajdhani } from 'next/font/google';
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
-const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 // --- Data for the feature cards ---
 const features = [
   {
     supertitle: "INNOVATE",
-    videoUrl: "/ReelsAssets/LeftContainer.mp4",
+    youtubeId: "fX7OCwRET1c", // Video 1 - Left
     isVertical: true,
     description: "Transform bold ideas into groundbreaking solutions with cutting-edge technology and creative excellence."
   },
   {
     supertitle: "COLLABORATE",
-    videoUrl: "/ReelsAssets/PR Reel 2025.mp4",
+    youtubeId: "KIqfen6WYNY", // PR Reel 2025 - Center
     isVertical: false,
     description: "Partner with us to create exceptional experiences that drive growth and exceed expectations."
   },
   {
     supertitle: "ELEVATE",
-    videoUrl: "/ReelsAssets/RightContainer.mp4",
+    youtubeId: "SRrM1GniTFM", // Video 2 - Right
     isVertical: true,
     description: "Amplify your brand's impact through strategic innovation and flawless execution that sets you apart."
   },
@@ -113,7 +113,7 @@ const cardVariants = {
   },
 };
 
-// Individual Card Component - Enhanced with MP4 video support
+// Individual Card Component - Enhanced with YouTube embed support
 const FeatureCard = ({ feature, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const mouseX = useMotionValue(0);
@@ -166,21 +166,39 @@ const FeatureCard = ({ feature, index }) => {
         />
 
         <div className="absolute inset-0 rounded-3xl overflow-hidden border-2 border-[#96895F]/30 bg-gradient-to-br from-slate-900/95 to-slate-800/90 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/70 group-hover:shadow-[#96895F]/40 transition-all duration-500">
-          {/* Video/Image Container */}
+          {/* Video Embed Container */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden">
-            {/* MP4 Video Player */}
-            <video
-              src={feature.videoUrl}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-              style={{ transform: isHovered ? 'scale(1.08)' : 'scale(1)', transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)' }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500" />
+            {/* Using YouTube embed with better controls and loading state */}
+            <div className="relative w-full h-full bg-black">
+              {/* Loading placeholder */}
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
+                <div className="text-[#96895F] text-sm font-semibold animate-pulse">Loading...</div>
+              </div>
+              
+              {/* YouTube iframe with enhanced parameters */}
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${feature.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${feature.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&color=white&start=0`}
+                className="absolute"
+                style={{
+                  width: feature.isVertical ? 'auto' : '100%',
+                  height: feature.isVertical ? '100%' : 'auto',
+                  minWidth: feature.isVertical ? '56.25%' : '100%',
+                  minHeight: feature.isVertical ? '100%' : '56.25%',
+                  left: '50%',
+                  top: '50%',
+                  transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1.08})`,
+                  transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                  border: 'none',
+                  pointerEvents: 'none',
+                }}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500 pointer-events-none" />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10"
+              className="absolute inset-0 bg-gradient-to-br from-[#96895F]/20 via-transparent to-[#96895F]/10 pointer-events-none"
               animate={{ opacity: isHovered ? 1 : 0 }}
               transition={{ duration: 0.5 }}
             />
@@ -237,18 +255,20 @@ const FeatureCard = ({ feature, index }) => {
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="overflow-hidden"
               >
-                <p className={`text-[#EAE2B7]/90 text-sm md:text-base leading-relaxed max-w-md ${OxaniumFont.className}`}>
+                <p className={`text-[#EAE2B7]/90 text-sm md:text-base leading-relaxed max-w-md ${RajdhaniFont.className}`}
+                   style={{ letterSpacing: '0.04em' }}>
                   {feature.description}
                 </p>
               </motion.div>
 
               <motion.div
-                className={`flex items-center gap-3 text-[#96895F] ${OxaniumFont.className}`}
+                className={`flex items-center gap-3 text-[#96895F] ${RajdhaniFont.className}`}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <span className="text-xs md:text-sm font-semibold tracking-wider uppercase">
+                <span className="text-xs md:text-sm font-semibold tracking-wider uppercase"
+                      style={{ letterSpacing: '0.08em' }}>
                   Explore More
                 </span>
                 <motion.svg
@@ -475,10 +495,11 @@ const PrometheusFeatures = () => {
                 </div>
 
                 <motion.p
-                  className={`text-center text-[#96895F]/80 text-xs md:text-sm tracking-[0.3em] mt-2 font-bold uppercase ${OxaniumFont.className}`}
+                  className={`text-center text-[#96895F]/80 text-xs md:text-sm tracking-[0.3em] mt-2 font-bold uppercase ${RajdhaniFont.className}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
+                  style={{ letterSpacing: '0.08em' }}
                 >
                   Be Limitless
                 </motion.p>

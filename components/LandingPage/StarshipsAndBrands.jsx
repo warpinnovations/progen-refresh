@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Delaunay } from "d3-delaunay";
 import StarsCanvas from "../Global/StarCanvas";
 import localFont from 'next/font/local';
+import { Rajdhani } from 'next/font/google';
 import FuturisticDivider from "../Global/FuturisticLine";
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
+const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 // --- Configuration ---
 const TOTAL_BRANDS = 16;
@@ -271,7 +273,12 @@ const BrandsConstellationSection = () => {
 
           <FuturisticDivider color="#EAE2B7" />
 
-          <p className={`${MoonlanderFont.className} text-base sm:text-lg md:text-xl text-white/70 mt-4 max-w-2xl mx-auto px-4`}>
+          <p className={`${RajdhaniFont.className} text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto px-4`}
+             style={{ 
+               letterSpacing: '0.06em',
+               lineHeight: '1.5',
+               fontWeight: '500'
+             }}>
             Collaborating with 16+ premium brands to create extraordinary experiences
           </p>
         </motion.div>
@@ -474,13 +481,14 @@ const BrandsConstellationSection = () => {
                         className={`absolute ${isMobile ? 'top-full mt-2' : 'top-full mt-3'} whitespace-nowrap pointer-events-none`}
                       >
                         <div
-                          className={`${MoonlanderFont.className} px-3 py-1.5 rounded-full bg-black/90 border backdrop-blur-sm ${
+                          className={`${RajdhaniFont.className} px-3 py-1.5 rounded-full bg-black/90 border backdrop-blur-sm ${
                             isMobile ? 'text-xs' : 'text-sm'
                           }`}
                           style={{
                             borderColor: highlightColor,
                             boxShadow: `0 0 15px ${highlightColor}40, 0 4px 15px rgba(0,0,0,0.5)`,
                             color: highlightColor,
+                            letterSpacing: '0.06em',
                           }}
                         >
                           {brand.name}
@@ -500,7 +508,7 @@ const BrandsConstellationSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className={`${MoonlanderFont.className} mt-12 md:mt-16 flex flex-wrap justify-center gap-8 md:gap-12 text-center`}
+          className={`${RajdhaniFont.className} mt-12 md:mt-16 flex flex-wrap justify-center gap-8 md:gap-12 text-center`}
         >
           <div className="flex flex-col items-center">
             <motion.div
@@ -512,7 +520,9 @@ const BrandsConstellationSection = () => {
             >
               16+
             </motion.div>
-            <div className="text-sm md:text-base text-[#A89773]">Brand Partners</div>
+            <div className="text-sm md:text-base text-[#A89773]" style={{ letterSpacing: '0.06em' }}>
+              Brand Partners
+            </div>
           </div>
           <div className="flex flex-col items-center">
             <motion.div
@@ -524,7 +534,9 @@ const BrandsConstellationSection = () => {
             >
               100+
             </motion.div>
-            <div className="text-sm md:text-base text-[#A89773]">Projects Delivered</div>
+            <div className="text-sm md:text-base text-[#A89773]" style={{ letterSpacing: '0.06em' }}>
+              Projects Delivered
+            </div>
           </div>
           <div className="flex flex-col items-center">
             <motion.div
@@ -536,7 +548,9 @@ const BrandsConstellationSection = () => {
             >
               5+
             </motion.div>
-            <div className="text-sm md:text-base text-[#A89773]">Years Experience</div>
+            <div className="text-sm md:text-base text-[#A89773]" style={{ letterSpacing: '0.06em' }}>
+              Years Experience
+            </div>
           </div>
         </motion.div>
       </div>
