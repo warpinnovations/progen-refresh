@@ -11,9 +11,7 @@ const config: Config = {
       fontFamily: {
         ox: ['Oxanium', 'Arial', 'sans-serif'],
         moonlander: ['MBF Moonlander', 'Arial', 'sans-serif'],
-        // Add more font families as needed
       },
-
       colors: {
         customOrange: '#67574C',
         customGray: '#232323',
@@ -27,11 +25,27 @@ const config: Config = {
       },
       animation: {
         marquee: 'marquee 60s linear infinite',
+        glint: 'glint 1s ease-in-out',
+        'spiral-in': 'spiral-in 0.8s ease-out forwards',
+        'kinetic-scroll': 'kinetic-scroll 80s linear infinite',
+        "meteor-effect": "meteor 5s linear infinite",
       },
       keyframes: {
-        marquee: {
+        marquee: { /* ... */ },
+        glint: { /* ... */ },
+        'spiral-in': { /* ... */ },
+        'kinetic-scroll': {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        // --- THIS IS THE CORRECTED KEYFRAME ---
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: '1' },
+          "70%": { opacity: '1' },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: '0',
+          },
         },
       },
     },

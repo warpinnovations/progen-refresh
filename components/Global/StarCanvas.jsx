@@ -1,114 +1,96 @@
-
-import { useState, useRef, Suspense, useEffect } from "react";
-import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
-import { Points, PointMaterial, Preload, Sphere } from "@react-three/drei";
+"use client";
+import { useState, useRef, Suspense, useEffect, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
-import { MathUtils, Vector3, TextureLoader } from "three";
-import * as THREE from "three"
-import texturePlanet from "../../public/LandingPageAssets/texture.webp"
-import { OrbitControls } from "@react-three/drei";
 import dynamic from "next/dynamic";
-// import {useDeviceDetect} from "../../app/hooks/useDeviceDetect"
+import React from "react";
 
+const useDeviceNoSSR = dynamic(
+  () => import("../../app/hooks/useDeviceDetect"),
+  { ssr: false }
+);
 
+const Stars = React.memo(({ isVisible }) => {
+  const ref = useRef();
+  const { isMobile } = useDeviceNoSSR();
 
-const useDeviceNoSSR = dynamic(() => import("../../app/hooks/useDeviceDetect"), {ssr: false})
+  // Memoize sphere positions so they are not recalculated on every render
+  const sphere = useMemo(
+    () => random.inSphere(new Float32Array(isMobile ? 500 : 800), { radius: 1.2 }),
+    [isMobile]
+  );
 
-const RotatingPlanet = () => {
-  const texture = useLoader(THREE.TextureLoader, texturePlanet);
-  const sphereRef = useRef();
-
-  useFrame(() => {
-    sphereRef.current.rotation.y += 0.001; // Rotate the planet
+  useFrame((state, delta) => {
+    if (ref.current && isVisible) {
+      const cappedDelta = Math.min(delta, 0.1);
+      ref.current.rotation.x -= cappedDelta / 10;
+      ref.current.rotation.y -= cappedDelta / 15;
+    }
   });
 
   return (
-    <mesh ref={sphereRef} scale={[0.5, 0.5, 0.5]}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial color={"gray"} map={texture} />
-    </mesh>
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled>
+        <PointMaterial
+          transparent
+          color="#f272c8"
+          size={0.003}
+          sizeAttenuation={true}
+          depthWrite={false}
+        />
+      </Points>
+    </group>
   );
-};
+});
 
-const Stars = (props) => {
-    const ref = useRef();
-    // Reference to the OrbitControls instance
+Stars.displayName = "Stars";
 
-    const { mouse } = useThree();
-    // Initial rotation angles
-    const initialRotation = new Vector3(0, 0, Math.PI / 4);
-    const [rotation, setRotation] = useState(initialRotation);
-  
-    const [sphere] = useState(() => random.inSphere(new Float32Array(1500), { radius: 1.2 }));
-  
-    const targetStarsRotation = new Vector3(0, 0, 0); // Initial rotation
-    const dampingFactor = 0.05; // Adjust this value for smoother or slower movement
-    const maxRotation = Math.PI / 4; // Adjust this value to set the maximum rotation
-  
-    useFrame((state, delta) => {
-      // Calculate new stars rotation based on mouse movement
-      targetStarsRotation.x = MathUtils.clamp((mouse.y - 0.5) * 2, -maxRotation, maxRotation);
-      targetStarsRotation.y = MathUtils.clamp((mouse.x - 0.5) * 2, -maxRotation, maxRotation);
-  
-      // Damping effect for smoother movement
-      rotation.x = MathUtils.lerp(rotation.x, targetStarsRotation.x, dampingFactor);
-      rotation.y = MathUtils.lerp(rotation.y, targetStarsRotation.y, dampingFactor);
-  
-      rotation.x += 0.001
-      rotation.y += 0.001
+const StarsCanvas = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const containerRef = useRef(null);
 
-      ref.current.rotation.y += 0.0005; 
-      ref.current.rotation.x += 0.0005; 
-
-      //ref.current.rotation.set(rotation.x, rotation.y, rotation.z); // Apply rotation
-    });
-  
-
-    return (
-      <group ref={ref}>
-        <Points positions={sphere} stride={3} frustumCulled {...props}>
-          <PointMaterial
-            transparent
-            color="#f272c8"
-            size={0.003}
-            sizeAttenuation={true}
-            depthWrite={false}
-          />
-        </Points>
-      </group>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Only render when at least 20% of the component is visible
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '100px' // Start rendering slightly before it comes into view
+      }
     );
-  };
-  
-const StarsCanvas = ( {hidden} ) => {
-  const controlsRef = useRef();
-  const { isMobile } = useDeviceNoSSR()
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 1] }}>
-        <Suspense fallback={null}>
-          <ambientLight />
-          {
-            !hidden ?? <RotatingPlanet />
-          }
-         
-          <Stars />
-          {!isMobile && ( // Conditionally render OrbitControls based on the device type
-            <OrbitControls
-              enablePan={true}
-              enableZoom={false}
-              enableRotate={true}
-              mouseButtons={{
-                LEFT: 0, // Disable rotation
-                MIDDLE: 2, // Enable zoom
-                RIGHT: 0, // Disable panning
-              }}
-            />
-          )}
-        </Suspense>
-
-        <Preload all />
-      </Canvas>
+    <div ref={containerRef} className="w-full h-full absolute inset-0 z-[-1]">
+      {isVisible && (
+        <Canvas
+          camera={{ position: [0, 0, 1] }}
+          dpr={[1, 1.5]}
+          gl={{
+            antialias: false,
+            powerPreference: "high-performance"
+          }}
+          performance={{ min: 0.5 }} // Allow frame rate to drop if needed
+        >
+          <Suspense fallback={null}>
+            <Stars isVisible={isVisible} />
+          </Suspense>
+          <Preload all />
+        </Canvas>
+      )}
     </div>
   );
 };
