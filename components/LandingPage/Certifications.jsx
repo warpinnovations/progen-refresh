@@ -144,14 +144,14 @@ const MobileCertCard = ({ cert, index }) => {
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="w-full max-w-sm mx-auto"
+            transition={{ duration: 0.5, delay: index * 0.05 }}
+            className="flex-shrink-0 w-[280px] sm:w-[300px]"
         >
             <div
-                className={`relative flex flex-col items-center justify-start text-center w-full h-[340px] sm:h-[360px] p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${RajdhaniFont.className}`}
+                className={`relative flex flex-col items-center justify-start text-center w-full h-[320px] sm:h-[340px] p-6 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${RajdhaniFont.className}`}
                 style={{
                     border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
                     boxShadow: isHovered
@@ -159,8 +159,6 @@ const MobileCertCard = ({ cert, index }) => {
                         : '0px 15px 35px -10px rgba(0, 0, 0, 0.6)',
                     transition: 'border 0.3s ease, box-shadow 0.3s ease',
                 }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
                 onTouchStart={() => setIsHovered(true)}
                 onTouchEnd={() => setIsHovered(false)}
             >
@@ -205,7 +203,7 @@ const MobileCertCard = ({ cert, index }) => {
                 )}
 
                 {/* Content */}
-                <div className="flex justify-center items-center space-x-4 mb-6 h-24 relative z-10">
+                <div className="flex justify-center items-center space-x-4 mb-6 h-20 relative z-10">
                     {cert.emblems.map((src, j) => (
                         <img
                             key={`emblem-mobile-${index}-${j}`}
@@ -219,10 +217,10 @@ const MobileCertCard = ({ cert, index }) => {
                     ))}
                 </div>
 
-                <div className="flex flex-col justify-center items-center min-h-[4.5rem] space-y-2 relative z-10">
+                <div className="flex flex-col justify-center items-center min-h-[4rem] space-y-2 relative z-10">
                     {cert.linkPhrase && (
                         <p
-                            className="text-base md:text-lg uppercase font-semibold mb-1 drop-shadow-lg"
+                            className="text-sm md:text-base uppercase font-semibold mb-1 drop-shadow-lg"
                             style={{
                                 color: isHovered ? '#96895F' : 'rgba(150, 137, 95, 0.8)',
                                 textShadow: isHovered ? '0 0 15px rgba(150, 137, 95, 0.7)' : 'none',
@@ -237,7 +235,7 @@ const MobileCertCard = ({ cert, index }) => {
                     {cert.titles && cert.titles[0] && cert.titles.map((line, k) => (
                         <p
                             key={`title-mobile-${index}-${k}`}
-                            className={`font-bold uppercase text-[#EAE2B7] text-lg md:text-xl leading-tight drop-shadow-lg ${cert.linkPhrase ? 'mt-1' : ''}`}
+                            className={`font-bold uppercase text-[#EAE2B7] text-base md:text-lg leading-tight drop-shadow-lg ${cert.linkPhrase ? 'mt-1' : ''}`}
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
@@ -250,7 +248,7 @@ const MobileCertCard = ({ cert, index }) => {
 
                     {(!cert.titles || !cert.titles[0]) && cert.alt && (
                         <p
-                            className="font-bold uppercase text-[#EAE2B7] text-lg md:text-xl leading-tight drop-shadow-lg"
+                            className="font-bold uppercase text-[#EAE2B7] text-base md:text-lg leading-tight drop-shadow-lg"
                             style={{
                                 textShadow: isHovered ? '0 0 20px rgba(234, 226, 183, 0.4)' : 'none',
                                 transition: 'text-shadow 0.3s ease',
@@ -278,7 +276,7 @@ const MobileCertCard = ({ cert, index }) => {
                             letterSpacing: '0.08em',
                         }}
                     >
-                        <span>Verified Credential</span>
+                        <span>Verified</span>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
@@ -589,13 +587,35 @@ function Certifications() {
                 </p>
             </div>
 
-            {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
+            {/* Conditional Rendering: Mobile Horizontal Scroll or Desktop Orbital */}
             {isMobile ? (
-                // Mobile: Vertical scrolling grid
-                <div className="relative z-20 w-full px-4 space-y-6 sm:space-y-8">
-                    {certificates.map((cert, i) => (
-                        <MobileCertCard key={`cert-mobile-${i}`} cert={cert} index={i} />
-                    ))}
+                // Mobile: Horizontal scrolling carousel with 2-3 cards visible
+                <div className="relative z-20 w-full overflow-hidden">
+                    {/* Gradient fade edges */}
+                    <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+                    <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
+                    
+                    <div className="overflow-x-auto overflow-y-hidden scrollbar-hide px-4 pb-4">
+                        <div className="flex gap-4 sm:gap-6" style={{ width: 'max-content' }}>
+                            {certificates.map((cert, i) => (
+                                <MobileCertCard key={`cert-mobile-${i}`} cert={cert} index={i} />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Scroll indicator */}
+                    <div className="relative z-20 flex justify-center mt-6 gap-2">
+                        <motion.div
+                            className="flex items-center gap-2 text-[#96895F]/70 text-xs uppercase tracking-wider"
+                            animate={{ x: [0, 8, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <span className={RajdhaniFont.className}>Swipe to explore</span>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </motion.div>
+                    </div>
                 </div>
             ) : (
                 // Desktop: Orbital animation with black hole
@@ -629,6 +649,13 @@ function Certifications() {
                 @keyframes float {
                     0%, 100% { transform: translateY(0); opacity: 0.6; }
                     50% { transform: translateY(-15px); opacity: 1; }
+                }
+                .scrollbar-hide {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+                .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
                 }
             `}</style>
         </motion.section>

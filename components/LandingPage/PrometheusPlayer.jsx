@@ -147,7 +147,7 @@ const FeatureCard = ({ feature, index }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className={`group relative ${feature.isVertical ? 'aspect-[3/4]' : 'md:col-span-2 aspect-[16/9]'}`}
+      className={`group relative aspect-[3/4] ${!feature.isVertical && 'md:col-span-2 md:aspect-[16/9]'}`}
       style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
       <motion.div
@@ -311,7 +311,7 @@ const PrometheusFeatures = () => {
   return (
     <div className="w-full relative overflow-hidden bg-black">
       {/* Enhanced White Banner Section */}
-      <div className="relative w-full h-64 md:h-80 overflow-hidden bg-gradient-to-b from-white via-white to-[#F5F5F5]">
+      <div className="relative w-full min-h-[16rem] md:h-80 overflow-hidden bg-gradient-to-b from-white via-white to-[#F5F5F5]">
         {/* Animated background elements */}
         <AnimatedGridPattern />
         <FloatingParticles />
@@ -337,7 +337,7 @@ const PrometheusFeatures = () => {
         />
 
         {/* Top Wave Transition */}
-        <svg className="absolute top-0 w-full h-24" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <svg className="absolute top-0 w-full h-20 md:h-24" viewBox="0 0 1440 100" preserveAspectRatio="none">
           <defs>
             <filter id="glow-top">
               <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -377,12 +377,12 @@ const PrometheusFeatures = () => {
           />
         </svg>
 
-        {/* Main Content - Enhanced UI Elements */}
-        <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16 z-10">
-          <div className="w-full max-w-7xl flex items-center justify-between">
-            {/* Left Badge - Enhanced */}
+        {/* Main Content - Fixed for Mobile */}
+        <div className="absolute inset-0 flex items-center justify-center px-4 md:px-8 lg:px-16 z-10 py-8">
+          <div className="w-full max-w-7xl flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-6 lg:gap-0">
+            {/* Left Badge - Hidden on mobile */}
             <motion.div
-              className="hidden lg:block"
+              className="hidden lg:block flex-shrink-0"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -436,9 +436,9 @@ const PrometheusFeatures = () => {
               </div>
             </motion.div>
 
-            {/* Center - Enhanced Main Logo */}
+            {/* Center - Main Logo - Now flex-shrink-0 to prevent squashing */}
             <motion.div
-              className="relative"
+              className="relative flex-shrink-0"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -450,12 +450,12 @@ const PrometheusFeatures = () => {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              <div className="relative bg-white/95 backdrop-blur-sm border-2 border-[#96895F]/50 rounded-3xl px-10 py-6 md:px-14 md:py-8 shadow-2xl">
+              <div className="relative bg-white/95 backdrop-blur-sm border-2 border-[#96895F]/50 rounded-3xl px-8 py-5 md:px-14 md:py-8 shadow-2xl">
                 {/* Corner decorations */}
-                <div className="absolute top-1.5 left-1.5 w-5 h-5 border-t-2 border-l-2 border-[#96895F] rounded-tl-xl" />
-                <div className="absolute top-1.5 right-1.5 w-5 h-5 border-t-2 border-r-2 border-[#96895F] rounded-tr-xl" />
-                <div className="absolute bottom-1.5 left-1.5 w-5 h-5 border-b-2 border-l-2 border-[#96895F] rounded-bl-xl" />
-                <div className="absolute bottom-1.5 right-1.5 w-5 h-5 border-b-2 border-r-2 border-[#96895F] rounded-br-xl" />
+                <div className="absolute top-1.5 left-1.5 w-4 h-4 md:w-5 md:h-5 border-t-2 border-l-2 border-[#96895F] rounded-tl-xl" />
+                <div className="absolute top-1.5 right-1.5 w-4 h-4 md:w-5 md:h-5 border-t-2 border-r-2 border-[#96895F] rounded-tr-xl" />
+                <div className="absolute bottom-1.5 left-1.5 w-4 h-4 md:w-5 md:h-5 border-b-2 border-l-2 border-[#96895F] rounded-bl-xl" />
+                <div className="absolute bottom-1.5 right-1.5 w-4 h-4 md:w-5 md:h-5 border-b-2 border-r-2 border-[#96895F] rounded-br-xl" />
 
                 {/* Pulsing corner dots */}
                 {[0, 0.5, 1, 1.5].map((delay, i) => (
@@ -472,22 +472,30 @@ const PrometheusFeatures = () => {
                   />
                 ))}
 
-                <div className="relative flex items-center gap-4">
-                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
-                    <svg className="w-6 h-6 md:w-8 md:h-8 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
+                <div className="relative flex items-center gap-3 md:gap-4">
+                  <motion.div 
+                    animate={{ rotate: 360 }} 
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="flex-shrink-0"
+                  >
+                    <svg className="w-5 h-5 md:w-8 md:h-8 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
                       <path d="M2,12L12,17L22,12" />
                     </svg>
                   </motion.div>
 
-                  <h3 className={`text-3xl md:text-5xl font-black uppercase tracking-wider ${MoonlanderFont.className}`}>
+                  <h3 className={`text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-wider ${MoonlanderFont.className} whitespace-nowrap`}>
                     <span className="bg-gradient-to-r from-[#96895F] via-[#B8A76F] to-[#96895F] bg-clip-text text-transparent">
                       PROMETHEUS
                     </span>
                   </h3>
 
-                  <motion.div animate={{ rotate: -360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
-                    <svg className="w-6 h-6 md:w-8 md:h-8 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
+                  <motion.div 
+                    animate={{ rotate: -360 }} 
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="flex-shrink-0"
+                  >
+                    <svg className="w-5 h-5 md:w-8 md:h-8 text-[#96895F]" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12,2L2,7L12,12L22,7M12,22L2,17L12,12L22,17" opacity="0.5" />
                       <path d="M2,12L12,17L22,12" />
                     </svg>
@@ -495,7 +503,7 @@ const PrometheusFeatures = () => {
                 </div>
 
                 <motion.p
-                  className={`text-center text-[#96895F]/80 text-xs md:text-sm tracking-[0.3em] mt-2 font-bold uppercase ${RajdhaniFont.className}`}
+                  className={`text-center text-[#96895F]/80 text-[10px] md:text-sm tracking-[0.3em] mt-2 font-bold uppercase ${RajdhaniFont.className}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -506,9 +514,9 @@ const PrometheusFeatures = () => {
               </div>
             </motion.div>
 
-            {/* Right Badge - Enhanced */}
+            {/* Right Badge - Hidden on mobile */}
             <motion.div
-              className="hidden lg:block"
+              className="hidden lg:block flex-shrink-0"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -565,7 +573,7 @@ const PrometheusFeatures = () => {
         </div>
 
         {/* Bottom Wave Transition */}
-        <svg className="absolute bottom-0 w-full h-24" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <svg className="absolute bottom-0 w-full h-20 md:h-24" viewBox="0 0 1440 100" preserveAspectRatio="none">
           <defs>
             <filter id="glow-bottom">
               <feGaussianBlur stdDeviation="3" result="coloredBlur" />

@@ -449,9 +449,9 @@ const FeaturedWorksGrid = () => {
 
             {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
             {isMobile ? (
-                // Mobile: Vertical scrolling grid
+                // Mobile: Vertical scrolling grid - Only show first 3 projects
                 <div className="relative z-20 w-full px-4 space-y-6 sm:space-y-8">
-                    {indexedWorks.map((work, index) => (
+                    {indexedWorks.slice(0, 3).map((work, index) => (
                         <MobileCard key={work.originalIndex} work={work} index={index} />
                     ))}
                 </div>
