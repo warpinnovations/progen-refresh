@@ -24,21 +24,16 @@ const baseColor = "#A89773";
 // --- Brand Data ---
 const BRAND_LOGOS = [
   { name: "Adidas", image: "/brandLogos/Adidas.png" },
-  { name: "Azalan", image: "/brandLogos/Azalan.png" },
-  { name: "Coffee Brewtherhood", image: "/brandLogos/Coffee Brewthorhood.png" },
-  { name: "Courtyard", image: "/brandLogos/Courtyard.png" },
   { name: "Daily Guardian", image: "/brandLogos/Daily Guardian.png" },
   { name: "Dinagyang Festival", image: "/brandLogos/Dinagyang Festival.png" },
-  { name: "DOST", image: "/brandLogos/DOST.png" },
-  { name: "DSWD", image: "/brandLogos/DSWD.png" },
-  { name: "Ford", image: "/brandLogos/Ford.png" },
-  { name: "Haier", image: "/brandLogos/Haier.png" },
   { name: "Home Credit", image: "/brandLogos/Home Credit.png" },
-  { name: "Honda", image: "/brandLogos/Honda.png" },
   { name: "IBC", image: "/brandLogos/IBC.png" },
   { name: "Imperial", image: "/brandLogos/Imperial.png" },
-  { name: "Metro Pacific Iloilo Water", image: "/brandLogos/Metro Pacific Iloilo Water.png" },
-  { name: "Monde Nissin", image: "/brandLogos/Monde Nissin.png" },
+  { name: "101 Foods", image: "/brandLogos/101 Food.png" },
+  { name: "Bread Basket", image: "/brandLogos/Bread Basket.png" },
+  { name: "More Power", image: "/brandLogos/MOREPOWER.png" },
+  { name: "Asia Pacific", image: "/brandLogos/APMC.png" },
+  { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
 ];
 
 // --- Component ---
