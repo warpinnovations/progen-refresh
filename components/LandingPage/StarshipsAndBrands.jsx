@@ -31,8 +31,13 @@ const BRAND_LOGOS = [
   { name: "Imperial", image: "/brandLogos/Imperial.png" },
   { name: "101 Foods", image: "/brandLogos/101 Food.png" },
   { name: "Bread Basket", image: "/brandLogos/Bread Basket.png" },
-  { name: "More Power", image: "/brandLogos/MOREPOWER.png" },
+  { name: "More Power", image: "/brandLogos/MorePower (White).png" },
   { name: "Asia Pacific", image: "/brandLogos/APMC.png" },
+  { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
+  { name: "Damires", image: "/brandLogos/Damires Hills.png" },
+  { name: "Nike", image: "/brandLogos/Nike iloilo.png" },
+  { name: "Goozam", image: "/brandLogos/Goozam.png" },
+  { name: "PCCI", image: "/brandLogos/PCCI-iloilo.png" },
   { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
 ];
 
