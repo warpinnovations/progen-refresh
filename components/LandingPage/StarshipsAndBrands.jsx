@@ -37,7 +37,7 @@ const BRAND_LOGOS = [
   { name: "Damires", image: "/brandLogos/Damires.png" },
   { name: "Nike", image: "/brandLogos/Nike.png" },
   { name: "Goozam", image: "/brandLogos/Goozam.png" },
-  { name: "PCCI", image: "/brandLogos/PCCI-iloilo.png" },
+  { name: "PCCI", image: "/brandLogos/PCCI.png" },
   { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
 ];
 
