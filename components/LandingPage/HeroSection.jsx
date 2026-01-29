@@ -143,8 +143,11 @@ const HeroSection = () => {
           <LazyLoadImage
             alt="background image"
             src="/LandingPageAssets/astro-bg.webp"
-            className="object-cover w-full h-full"
+            className="w-full h-full object-contain"
           />
+          {/* Gradient overlay to blend image edges with black background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
         </div>
 
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -174,7 +177,7 @@ const HeroSection = () => {
               className={`hidden md:flex md:text-2xl lg:text-3xl ${RajdhaniFont.className} font-semibold text-white text-center w-auto md:w-3/4`}
               style={{ letterSpacing: '0.04em', lineHeight: '1.5' }}
             >
-              Prometheus is Western Visayas&apos;s leading full&nbsp;service marketing agency and public relations firm.
+              We are the Premier, Award-Winning, Full Service Marketing Agency and Public Relations Firm in Western Visayas.
             </motion.h2>
 
             {/* CTA Button */}
@@ -865,14 +868,14 @@ const HeroSection = () => {
                     ))}
                   </div>
 
-                  {/* Enhanced CTA */}
+                  {/* Enhanced CTA - ACTIVE */}
                   <motion.div 
                     className="text-center mt-16"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.2, duration: 0.6 }}
                   >
-                    <Link href="/portfolio">
+                    <a href="works">
                       <motion.button 
                         className={`group ${RajdhaniFont.className} text-white/80 hover:text-[#96895f] text-sm md:text-base uppercase tracking-[0.2em] font-bold transition-all duration-300 flex items-center gap-3 mx-auto px-8 py-4 rounded-xl border-2 border-[#96895f]/30 hover:border-[#96895f] hover:bg-[#96895f]/5 relative overflow-hidden`}
                         whileHover={{ 
@@ -899,7 +902,7 @@ const HeroSection = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </motion.button>
-                    </Link>
+                    </a>
                   </motion.div>
                 </div>
               </div>
