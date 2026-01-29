@@ -7,7 +7,6 @@ import { worksData as allWorksData } from '@/app/contants';
 import StarsCanvas from '@/components/Global/StarCanvas';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
-// --- THEME-ALIGNED FONT IMPORTS ---
 import localFont from 'next/font/local';
 import { Oxanium, Rajdhani } from 'next/font/google';
 
