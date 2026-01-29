@@ -38,7 +38,7 @@ const BRAND_LOGOS = [
   { name: "Nike", image: "/brandLogos/Nike.png" },
   { name: "Goozam", image: "/brandLogos/Goozam.png" },
   { name: "PCCI", image: "/brandLogos/PCCI.png" },
-  { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
+  { name: "Dinagyang Festivala", image: "/brandLogos/Dinagyang.png" },
 ];
 
 // --- Component ---
