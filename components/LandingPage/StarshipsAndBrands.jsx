@@ -34,7 +34,7 @@ const BRAND_LOGOS = [
   { name: "More Power", image: "/brandLogos/MorePower(white).png" },
   { name: "Asia Pacific", image: "/brandLogos/APMC.png" },
   { name: "Japan Foundation", image: "/brandLogos/Japan Foundation.png" },
-  { name: "Damires", image: "/brandLogos/DamiresHills.png" },
+  { name: "Damires", image: "/brandLogos/Damires Hills.PNG" },
   { name: "Nike", image: "/brandLogos/Nike.png" },
   { name: "Goozam", image: "/brandLogos/Goozam.png" },
   { name: "PCCI", image: "/brandLogos/PCCI.png" },
