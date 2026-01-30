@@ -12,7 +12,6 @@ const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
 // --- Configuration ---
 const TOTAL_BRANDS = 16;
-const TOTAL_BRANDS_MOBILE = 14;
 const MIN_DISTANCE = 20;
 const MAX_CONNECTIONS_PER_NODE = 2;
 
@@ -49,7 +48,7 @@ const BrandsConstellationSection = () => {
   // Detect mobile
   React.useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -57,19 +56,17 @@ const BrandsConstellationSection = () => {
   }, []);
 
   const { brands, connections } = useMemo(() => {
-    const totalBrands = isMobile ? TOTAL_BRANDS_MOBILE : TOTAL_BRANDS;
-    
-    // Use all brand logos, cycling if needed
-    const brandsData = Array.from({ length: totalBrands }, (_, i) => ({
+    // Use all brand logos
+    const brandsData = Array.from({ length: TOTAL_BRANDS }, (_, i) => ({
       name: BRAND_LOGOS[i % BRAND_LOGOS.length].name,
       image: BRAND_LOGOS[i % BRAND_LOGOS.length].image,
     }));
 
     const brandPoints = [];
     let attempts = 0;
-    const maxAttempts = totalBrands * 200;
+    const maxAttempts = TOTAL_BRANDS * 200;
 
-    for (let i = 0; i < totalBrands; i++) {
+    for (let i = 0; i < TOTAL_BRANDS; i++) {
       let newPoint;
       let isOverlapping;
       do {
@@ -134,7 +131,7 @@ const BrandsConstellationSection = () => {
     ).sort((a, b) => a.dist - b.dist);
 
     const finalConnections = [];
-    const connectionCount = new Array(totalBrands).fill(0);
+    const connectionCount = new Array(TOTAL_BRANDS).fill(0);
     for (const edge of uniqueSortedEdges) {
       if (
         connectionCount[edge.u] < MAX_CONNECTIONS_PER_NODE &&
@@ -146,16 +143,14 @@ const BrandsConstellationSection = () => {
       }
     }
     return { brands: brandPoints, connections: finalConnections };
-  }, [isMobile]);
-
-  const hoveredBrand = brands.find(b => b.id === hoveredBrandId);
+  }, []);
 
   // Animation variants
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: isMobile ? 0.05 : 0.06,
+        staggerChildren: 0.06,
       },
     },
   };
@@ -188,7 +183,7 @@ const BrandsConstellationSection = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black py-16 sm:py-20 md:py-28 px-4">
+    <div className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black py-12 sm:py-16 md:py-20 lg:py-28 px-4">
       {/* Radial Gradient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.12)_0%,rgba(168,151,115,0.06)_40%,transparent_70%)]" />
@@ -196,59 +191,61 @@ const BrandsConstellationSection = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(212,175,55,0.08)_0%,transparent_50%)]" />
       </div>
 
-      {/* Animated Orbit Rings */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-        <svg
-          width={isMobile ? "95%" : "88%"}
-          height={isMobile ? "95%" : "88%"}
-          viewBox="0 0 100 100"
-          className="block"
-          style={{
-            maxWidth: isMobile ? '650px' : '950px',
-            maxHeight: isMobile ? '650px' : '950px',
-          }}
-        >
-          {/* Outer orbit ring */}
-          <motion.circle
-            cx="50" cy="50" r="46"
-            fill="none"
-            stroke={highlightColor}
-            strokeWidth={isMobile ? "0.4" : "0.5"}
-            opacity="0.15"
-            strokeDasharray="3 3"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "50% 50%" }}
-          />
-          {/* Middle orbit ring */}
-          <motion.circle
-            cx="50" cy="50" r="38"
-            fill="none"
-            stroke={accentColor}
-            strokeWidth={isMobile ? "0.35" : "0.45"}
-            opacity="0.12"
-            strokeDasharray="2 4"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: -360 }}
-            transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "50% 50%" }}
-          />
-          {/* Inner orbit ring */}
-          <motion.circle
-            cx="50" cy="50" r="30"
-            fill="none"
-            stroke={baseColor}
-            strokeWidth={isMobile ? "0.3" : "0.4"}
-            opacity="0.1"
-            strokeDasharray="1.5 2.5"
-            initial={{ rotate: 0 }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            style={{ transformOrigin: "50% 50%" }}
-          />
-        </svg>
-      </div>
+      {/* Animated Orbit Rings - Desktop only */}
+      {!isMobile && (
+        <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
+          <svg
+            width="88%"
+            height="88%"
+            viewBox="0 0 100 100"
+            className="block"
+            style={{
+              maxWidth: '950px',
+              maxHeight: '950px',
+            }}
+          >
+            {/* Outer orbit ring */}
+            <motion.circle
+              cx="50" cy="50" r="46"
+              fill="none"
+              stroke={highlightColor}
+              strokeWidth="0.5"
+              opacity="0.15"
+              strokeDasharray="3 3"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+              style={{ transformOrigin: "50% 50%" }}
+            />
+            {/* Middle orbit ring */}
+            <motion.circle
+              cx="50" cy="50" r="38"
+              fill="none"
+              stroke={accentColor}
+              strokeWidth="0.45"
+              opacity="0.12"
+              strokeDasharray="2 4"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: -360 }}
+              transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+              style={{ transformOrigin: "50% 50%" }}
+            />
+            {/* Inner orbit ring */}
+            <motion.circle
+              cx="50" cy="50" r="30"
+              fill="none"
+              stroke={baseColor}
+              strokeWidth="0.4"
+              opacity="0.1"
+              strokeDasharray="1.5 2.5"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: 360 }}
+              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+              style={{ transformOrigin: "50% 50%" }}
+            />
+          </svg>
+        </div>
+      )}
 
       {/* Star Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -264,7 +261,7 @@ const BrandsConstellationSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, delay: 0.2 }}
-          className="text-center mb-12 md:mb-20"
+          className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20"
         >
           <h2 className={`${MoonlanderFont.className} font-black text-2xl sm:text-3xl md:text-5xl`}>
             <span className="text-[#f5f5f5]">Trusted by </span>
@@ -273,7 +270,7 @@ const BrandsConstellationSection = () => {
 
           <FuturisticDivider color="#EAE2B7" />
 
-          <p className={`${RajdhaniFont.className} text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto px-4`}
+          <p className={`${RajdhaniFont.className} text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/85 mt-4 sm:mt-6 max-w-4xl mx-auto px-4`}
              style={{ 
                letterSpacing: '0.06em',
                lineHeight: '1.5',
@@ -283,224 +280,486 @@ const BrandsConstellationSection = () => {
           </p>
         </motion.div>
 
-        {/* Constellation Visualization */}
-        <motion.div
-          className="relative w-full h-[65vh] sm:h-[70vh] md:h-[75vh]"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-        >
-          {/* Enhanced Connection Lines with Gradient */}
-          <svg
-            className="absolute top-0 left-0 w-full h-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
+        {/* Constellation Visualization - Desktop Only / Carousel - Mobile */}
+        {!isMobile ? (
+          <motion.div
+            className="relative w-full h-[75vh]"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
           >
-            <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={highlightColor} stopOpacity="0.3" />
-                <stop offset="50%" stopColor={accentColor} stopOpacity="0.5" />
-                <stop offset="100%" stopColor={highlightColor} stopOpacity="0.3" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <g>
-              {connections.map(({ u: startId, v: endId }, i) => {
-                const startBrand = brands.find((b) => b.id === startId);
-                const endBrand = brands.find((b) => b.id === endId);
-                if (!startBrand || !endBrand) return null;
-                const isHighlighted =
-                  hoveredBrandId !== null &&
-                  (startId === hoveredBrandId || endId === hoveredBrandId);
-                const pathD = `M ${startBrand.pos.x} ${startBrand.pos.y} L ${endBrand.pos.x} ${endBrand.pos.y}`;
-                return (
-                  <motion.path
-                    key={`line-${i}`}
-                    d={pathD}
-                    fill="transparent"
-                    strokeWidth={isHighlighted ? (isMobile ? 0.35 : 0.4) : (isMobile ? 0.15 : 0.18)}
-                    variants={lineVariants}
-                    custom={i}
-                    stroke={isHighlighted ? "url(#lineGradient)" : `${baseColor}40`}
-                    className="transition-all duration-300"
-                    filter={isHighlighted ? "url(#glow)" : undefined}
-                    style={
-                      isHighlighted
-                        ? {
-                            filter: `drop-shadow(0 0 6px ${highlightColor}90)`,
-                          }
-                        : {}
-                    }
-                  />
-                );
-              })}
-            </g>
-          </svg>
+            {/* Connection Lines */}
+            <svg
+              className="absolute top-0 left-0 w-full h-full"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={highlightColor} stopOpacity="0.3" />
+                  <stop offset="50%" stopColor={accentColor} stopOpacity="0.5" />
+                  <stop offset="100%" stopColor={highlightColor} stopOpacity="0.3" />
+                </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <g>
+                {connections.map(({ u: startId, v: endId }, i) => {
+                  const startBrand = brands.find((b) => b.id === startId);
+                  const endBrand = brands.find((b) => b.id === endId);
+                  if (!startBrand || !endBrand) return null;
+                  const isHighlighted =
+                    hoveredBrandId !== null &&
+                    (startId === hoveredBrandId || endId === hoveredBrandId);
+                  const pathD = `M ${startBrand.pos.x} ${startBrand.pos.y} L ${endBrand.pos.x} ${endBrand.pos.y}`;
+                  return (
+                    <motion.path
+                      key={`line-${i}`}
+                      d={pathD}
+                      fill="transparent"
+                      strokeWidth={isHighlighted ? 0.4 : 0.18}
+                      variants={lineVariants}
+                      custom={i}
+                      stroke={isHighlighted ? "url(#lineGradient)" : `${baseColor}40`}
+                      className="transition-all duration-300"
+                      filter={isHighlighted ? "url(#glow)" : undefined}
+                      style={
+                        isHighlighted
+                          ? {
+                              filter: `drop-shadow(0 0 6px ${highlightColor}90)`,
+                            }
+                          : {}
+                      }
+                    />
+                  );
+                })}
+              </g>
+            </svg>
 
-          {/* Enhanced Glowing Node Dots */}
-          {brands.map((brand) => {
-            const isHovered = hoveredBrandId === brand.id;
-            return (
+            {/* Glowing Node Dots */}
+            {brands.map((brand) => {
+              const isHovered = hoveredBrandId === brand.id;
+              return (
+                <motion.div
+                  key={`star-dot-${brand.id}`}
+                  className="absolute z-10 pointer-events-none"
+                  style={{
+                    top: `${brand.pos.y}%`,
+                    left: `${brand.pos.x}%`,
+                    transform: 'translate(-50%, -50%)',
+                  }}
+                  animate={{
+                    scale: isHovered ? [1, 1.3, 1] : 1,
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: isHovered ? Infinity : 0,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <div
+                    className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-gradient-to-br from-[#EAE2B7] to-[#D4AF37]"
+                    style={{
+                      boxShadow: isHovered
+                        ? `0 0 28px 12px ${highlightColor}DD, 0 0 50px 20px ${accentColor}80`
+                        : `0 0 22px 9px ${highlightColor}AA, 0 0 3px 1px #fff9`,
+                      opacity: isHovered ? 1 : 0.8,
+                      transition: 'all 0.3s ease',
+                    }}
+                  />
+                </motion.div>
+              );
+            })}
+
+            {/* Brand Orbs */}
+            {brands.map((brand) => {
+              const isHovered = hoveredBrandId === brand.id;
+              return (
+                <motion.div
+                  key={brand.id}
+                  variants={itemVariants}
+                  className="absolute group transform -translate-x-1/2 -translate-y-1/2 z-20"
+                  style={{ top: `${brand.pos.y}%`, left: `${brand.pos.x}%` }}
+                  onMouseEnter={() => setHoveredBrandId(brand.id)}
+                  onMouseLeave={() => setHoveredBrandId(null)}
+                >
+                  <motion.div
+                    className="relative cursor-pointer flex flex-col items-center justify-center w-28 h-28 md:w-36 md:h-36"
+                    whileHover={{ scale: 1.08, rotate: 5 }}
+                    whileTap={{ scale: 0.94 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                  >
+                    {/* Outer glow ring */}
+                    <motion.div
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: `radial-gradient(circle, ${highlightColor}20 0%, transparent 70%)`,
+                        opacity: isHovered ? 1 : 0,
+                      }}
+                      animate={{
+                        scale: isHovered ? [1, 1.4, 1] : 1,
+                        opacity: isHovered ? [0.5, 0.8, 0.5] : 0,
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: isHovered ? Infinity : 0,
+                        ease: "easeInOut",
+                      }}
+                    />
+
+                    {/* Main orb container */}
+                    <div
+                      className="relative w-full h-full rounded-full bg-gradient-to-br from-black/70 via-black/50 to-black/70 transition-all duration-300 flex items-center justify-center overflow-hidden"
+                      style={{
+                        border: isHovered
+                          ? `2px solid ${highlightColor}`
+                          : `1.5px solid ${baseColor}40`,
+                        boxShadow: isHovered
+                          ? `0 0 50px 15px ${highlightColor}40, 
+                             0 0 80px 30px ${accentColor}20,
+                             inset 0 0 30px 8px ${highlightColor}10`
+                          : `0 0 35px 8px rgba(0,0,0,0.8),
+                             inset 0 0 20px 5px rgba(234,226,183,0.05)`,
+                      }}
+                    >
+                      {/* Inner gradient overlay */}
+                      <div
+                        className="absolute inset-0 rounded-full opacity-30"
+                        style={{
+                          background: `radial-gradient(circle at 30% 30%, ${highlightColor}15, transparent 60%)`,
+                        }}
+                      />
+
+                      {/* Logo Image */}
+                      <img
+                        src={brand.image}
+                        alt={brand.name}
+                        className="relative z-10 w-full h-full object-contain transition-all duration-300 p-4 md:p-5"
+                        style={{
+                          filter: isHovered
+                            ? 'brightness(1.15) contrast(1.1) drop-shadow(0 0 8px rgba(234,226,183,0.4))'
+                            : 'brightness(0.95) contrast(1.05)',
+                        }}
+                      />
+
+                      {/* Shimmer effect on hover */}
+                      {isHovered && (
+                        <motion.div
+                          className="absolute inset-0 rounded-full"
+                          style={{
+                            background: `linear-gradient(120deg, transparent 0%, ${highlightColor}30 50%, transparent 100%)`,
+                          }}
+                          initial={{ x: '-100%', opacity: 0 }}
+                          animate={{ x: '100%', opacity: [0, 1, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        />
+                      )}
+                    </div>
+
+                    {/* Brand name tooltip */}
+                    <AnimatePresence>
+                      {isHovered && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full mt-3 whitespace-nowrap pointer-events-none"
+                        >
+                          <div
+                            className={`${RajdhaniFont.className} px-3 py-1.5 rounded-full bg-black/90 border backdrop-blur-sm text-sm`}
+                            style={{
+                              borderColor: highlightColor,
+                              boxShadow: `0 0 15px ${highlightColor}40, 0 4px 15px rgba(0,0,0,0.5)`,
+                              color: highlightColor,
+                              letterSpacing: '0.06em',
+                            }}
+                          >
+                            {brand.name}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        ) : (
+          /* Mobile Carousel - Enhanced */
+          <div className="relative w-full py-12">
+            {/* Decorative elements */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] pointer-events-none">
               <motion.div
-                key={`star-dot-${brand.id}`}
-                className="absolute z-10 pointer-events-none"
+                className="absolute inset-0"
                 style={{
-                  top: `${brand.pos.y}%`,
-                  left: `${brand.pos.x}%`,
-                  transform: 'translate(-50%, -50%)',
+                  background: `radial-gradient(ellipse at center, ${accentColor}15 0%, transparent 60%)`,
                 }}
                 animate={{
-                  scale: isHovered ? [1, 1.3, 1] : 1,
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.5, 0.3],
                 }}
                 transition={{
-                  duration: 2,
-                  repeat: isHovered ? Infinity : 0,
+                  duration: 4,
+                  repeat: Infinity,
                   ease: "easeInOut",
                 }}
-              >
-                <div
-                  className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4 md:w-5 md:h-5'} rounded-full bg-gradient-to-br from-[#EAE2B7] to-[#D4AF37]`}
-                  style={{
-                    boxShadow: isHovered
-                      ? `0 0 ${isMobile ? '20px 8px' : '28px 12px'} ${highlightColor}DD, 0 0 ${isMobile ? '40px 16px' : '50px 20px'} ${accentColor}80`
-                      : `0 0 ${isMobile ? '16px 6px' : '22px 9px'} ${highlightColor}AA, 0 0 3px 1px #fff9`,
-                    opacity: isHovered ? 1 : 0.8,
-                    transition: 'all 0.3s ease',
-                  }}
-                />
-              </motion.div>
-            );
-          })}
+              />
+            </div>
 
-          {/* Enhanced Brand Orbs */}
-          {brands.map((brand) => {
-            const isHovered = hoveredBrandId === brand.id;
-            return (
+            {/* Top decorative line */}
+            <motion.div
+              className="absolute top-0 left-0 right-0 h-[1px] mx-auto"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${highlightColor}60, ${accentColor}80, ${highlightColor}60, transparent)`,
+                maxWidth: '80%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+              }}
+              animate={{
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+
+            {/* Bottom decorative line */}
+            <motion.div
+              className="absolute bottom-0 left-0 right-0 h-[1px] mx-auto"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${accentColor}80, ${highlightColor}60, ${accentColor}80, transparent)`,
+                maxWidth: '80%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+              }}
+              animate={{
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
+            />
+
+            <div className="relative overflow-hidden">
               <motion.div
-                key={brand.id}
-                variants={itemVariants}
-                className="absolute group transform -translate-x-1/2 -translate-y-1/2 z-20"
-                style={{ top: `${brand.pos.y}%`, left: `${brand.pos.x}%` }}
-                onMouseEnter={() => setHoveredBrandId(brand.id)}
-                onMouseLeave={() => setHoveredBrandId(null)}
-                onTouchStart={() => setHoveredBrandId(brand.id)}
-                onTouchEnd={() => setTimeout(() => setHoveredBrandId(null), 1000)}
+                className="flex gap-5"
+                animate={{
+                  x: [0, -(110 + 20) * BRAND_LOGOS.length], // 110px width + 20px gap
+                }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: BRAND_LOGOS.length * 3.5,
+                    ease: "linear",
+                  },
+                }}
+                style={{ width: 'fit-content' }}
               >
-                <motion.div
-                  className={`relative cursor-pointer flex flex-col items-center justify-center ${
-                    isMobile ? 'w-20 h-20 sm:w-24 sm:h-24' : 'w-28 h-28 md:w-36 md:h-36'
-                  }`}
-                  whileHover={{ scale: 1.08, rotate: 5 }}
-                  whileTap={{ scale: 0.94 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                >
-                  {/* Outer glow ring */}
+                {/* Render logos 3 times for seamless loop */}
+                {[...BRAND_LOGOS, ...BRAND_LOGOS, ...BRAND_LOGOS].map((brand, index) => (
                   <motion.div
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      background: `radial-gradient(circle, ${highlightColor}20 0%, transparent 70%)`,
-                      opacity: isHovered ? 1 : 0,
-                    }}
-                    animate={{
-                      scale: isHovered ? [1, 1.4, 1] : 1,
-                      opacity: isHovered ? [0.5, 0.8, 0.5] : 0,
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: isHovered ? Infinity : 0,
-                      ease: "easeInOut",
-                    }}
-                  />
-
-                  {/* Main orb container with gradient border */}
-                  <div
-                    className="relative w-full h-full rounded-full bg-gradient-to-br from-black/70 via-black/50 to-black/70 transition-all duration-300 flex items-center justify-center overflow-hidden"
-                    style={{
-                      border: isHovered
-                        ? `2px solid ${highlightColor}`
-                        : `1.5px solid ${baseColor}40`,
-                      boxShadow: isHovered
-                        ? `0 0 ${isMobile ? '35px 10px' : '50px 15px'} ${highlightColor}40, 
-                           0 0 ${isMobile ? '60px 20px' : '80px 30px'} ${accentColor}20,
-                           inset 0 0 ${isMobile ? '20px 5px' : '30px 8px'} ${highlightColor}10`
-                        : `0 0 ${isMobile ? '25px 6px' : '35px 8px'} rgba(0,0,0,0.8),
-                           inset 0 0 ${isMobile ? '15px 3px' : '20px 5px'} rgba(234,226,183,0.05)`,
-                    }}
+                    key={`carousel-${index}`}
+                    className="flex-shrink-0 w-[110px] h-[110px] rounded-2xl relative overflow-hidden group"
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    {/* Inner gradient overlay */}
+                    {/* Animated border glow */}
+                    <motion.div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        background: `linear-gradient(135deg, ${highlightColor}40, ${accentColor}40, ${highlightColor}40)`,
+                        backgroundSize: '200% 200%',
+                      }}
+                      animate={{
+                        backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
+
+                    {/* Main card container */}
                     <div
-                      className="absolute inset-0 rounded-full opacity-30"
+                      className="absolute inset-[2px] rounded-2xl bg-gradient-to-br from-black/90 via-black/70 to-black/90 flex items-center justify-center p-5 backdrop-blur-sm"
                       style={{
-                        background: `radial-gradient(circle at 30% 30%, ${highlightColor}15, transparent 60%)`,
+                        boxShadow: `
+                          0 0 30px 8px rgba(0,0,0,0.9),
+                          inset 0 0 20px 4px rgba(234,226,183,0.08)
+                        `,
                       }}
-                    />
-
-                    {/* Logo Image with enhanced styling */}
-                    <img
-                      src={brand.image}
-                      alt={brand.name}
-                      className={`relative z-10 w-full h-full object-contain transition-all duration-300 ${
-                        isMobile ? 'p-3.5' : 'p-4 md:p-5'
-                      }`}
-                      style={{
-                        filter: isHovered
-                          ? 'brightness(1.15) contrast(1.1) drop-shadow(0 0 8px rgba(234,226,183,0.4))'
-                          : 'brightness(0.95) contrast(1.05)',
-                      }}
-                    />
-
-                    {/* Shimmer effect on hover */}
-                    {isHovered && (
-                      <motion.div
-                        className="absolute inset-0 rounded-full"
+                    >
+                      {/* Inner gradient overlay */}
+                      <div
+                        className="absolute inset-0 rounded-2xl opacity-30"
                         style={{
-                          background: `linear-gradient(120deg, transparent 0%, ${highlightColor}30 50%, transparent 100%)`,
+                          background: `radial-gradient(circle at 30% 30%, ${highlightColor}20, transparent 70%)`,
                         }}
-                        initial={{ x: '-100%', opacity: 0 }}
-                        animate={{ x: '100%', opacity: [0, 1, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
                       />
-                    )}
-                  </div>
 
-                  {/* Brand name tooltip - only show on hover */}
-                  <AnimatePresence>
-                    {isHovered && (
+                      {/* Animated corner accents */}
                       <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className={`absolute ${isMobile ? 'top-full mt-2' : 'top-full mt-3'} whitespace-nowrap pointer-events-none`}
-                      >
-                        <div
-                          className={`${RajdhaniFont.className} px-3 py-1.5 rounded-full bg-black/90 border backdrop-blur-sm ${
-                            isMobile ? 'text-xs' : 'text-sm'
-                          }`}
-                          style={{
-                            borderColor: highlightColor,
-                            boxShadow: `0 0 15px ${highlightColor}40, 0 4px 15px rgba(0,0,0,0.5)`,
-                            color: highlightColor,
-                            letterSpacing: '0.06em',
-                          }}
-                        >
-                          {brand.name}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+                        className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 rounded-tl-lg"
+                        style={{ borderColor: accentColor }}
+                        animate={{
+                          opacity: [0.4, 1, 0.4],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.1,
+                        }}
+                      />
+                      <motion.div
+                        className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 rounded-br-lg"
+                        style={{ borderColor: accentColor }}
+                        animate={{
+                          opacity: [0.4, 1, 0.4],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.1 + 1,
+                        }}
+                      />
+
+                      {/* Logo */}
+                      <img
+                        src={brand.image}
+                        alt={brand.name}
+                        className="relative z-10 w-full h-full object-contain"
+                        style={{
+                          filter: 'brightness(1) contrast(1.1) drop-shadow(0 0 6px rgba(234,226,183,0.3))',
+                        }}
+                      />
+
+                      {/* Shimmer effect */}
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                          background: `linear-gradient(120deg, transparent 0%, ${highlightColor}15 50%, transparent 100%)`,
+                        }}
+                        animate={{
+                          x: ['-100%', '200%'],
+                        }}
+                        transition={{
+                          duration: 2.5,
+                          repeat: Infinity,
+                          ease: "linear",
+                          delay: index * 0.15,
+                        }}
+                      />
+
+                      {/* Glow pulse */}
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                          boxShadow: `0 0 20px 4px ${highlightColor}20`,
+                        }}
+                        animate={{
+                          opacity: [0, 0.6, 0],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          delay: index * 0.2,
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
-            );
-          })}
-        </motion.div>
+
+              {/* Enhanced gradient fade edges with glow */}
+              <div
+                className="absolute left-0 top-0 bottom-0 w-20 pointer-events-none z-10"
+                style={{
+                  background: `linear-gradient(to right, black 0%, rgba(0,0,0,0.8) 40%, transparent 100%)`,
+                }}
+              />
+              <div
+                className="absolute right-0 top-0 bottom-0 w-20 pointer-events-none z-10"
+                style={{
+                  background: `linear-gradient(to left, black 0%, rgba(0,0,0,0.8) 40%, transparent 100%)`,
+                }}
+              />
+
+              {/* Side glow accents */}
+              <motion.div
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-r-full"
+                style={{
+                  background: `linear-gradient(to bottom, transparent, ${accentColor}60, transparent)`,
+                  boxShadow: `0 0 20px 8px ${accentColor}30`,
+                }}
+                animate={{
+                  opacity: [0.3, 0.8, 0.3],
+                  height: ['60px', '96px', '60px'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-l-full"
+                style={{
+                  background: `linear-gradient(to bottom, transparent, ${highlightColor}60, transparent)`,
+                  boxShadow: `0 0 20px 8px ${highlightColor}30`,
+                }}
+                animate={{
+                  opacity: [0.3, 0.8, 0.3],
+                  height: ['60px', '96px', '60px'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1.5,
+                }}
+              />
+            </div>
+
+            {/* Floating particles */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={`particle-${i}`}
+                className="absolute w-1 h-1 rounded-full"
+                style={{
+                  background: i % 2 === 0 ? highlightColor : accentColor,
+                  left: `${15 + i * 15}%`,
+                  top: '50%',
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0, 0.6, 0],
+                  scale: [0, 1.5, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Stats Section */}
         <motion.div
