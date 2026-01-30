@@ -296,7 +296,7 @@ const ServiceCard = ({ service, index, onClick }) => {
         >
             {/* Card Container */}
             <motion.div
-                className="relative h-full p-6 md:p-7 rounded-2xl border-2 bg-black/50 backdrop-blur-sm overflow-hidden flex flex-col"
+                className="relative h-full p-5 sm:p-6 md:p-7 rounded-2xl border-2 bg-black/50 backdrop-blur-sm overflow-hidden flex flex-col"
                 style={{
                     borderColor: isHovered ? `${service.color}80` : `${service.color}20`,
                 }}
@@ -321,11 +321,11 @@ const ServiceCard = ({ service, index, onClick }) => {
                 <div className="absolute inset-[2px] rounded-2xl bg-black/60 backdrop-blur-sm" />
 
                 {/* Content */}
-                <div className="relative z-10 flex items-center justify-between gap-4 flex-1">
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                <div className="relative z-10 flex items-center justify-between gap-3 md:gap-4 flex-1">
+                    <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
                         {/* Icon */}
                         <motion.div
-                            className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br border-2 flex items-center justify-center"
+                            className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br border-2 flex items-center justify-center"
                             style={{
                                 borderColor: isHovered ? `${service.color}60` : `${service.color}30`,
                                 background: isHovered
@@ -338,7 +338,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                             } : {}}
                             transition={{ duration: 0.6 }}
                         >
-                            <span className="text-2xl md:text-3xl" style={{ color: service.color }}>
+                            <span className="text-xl sm:text-2xl md:text-3xl" style={{ color: service.color }}>
                                 {service.icon}
                             </span>
                         </motion.div>
@@ -346,7 +346,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                         {/* Text Content */}
                         <div className="flex-1 min-w-0">
                             <h3
-                                className={`${MoonlanderFont.className} text-xl md:text-2xl font-black text-white uppercase leading-tight transition-all duration-300`}
+                                className={`${MoonlanderFont.className} text-lg sm:text-xl md:text-2xl font-black text-white uppercase leading-tight transition-all duration-300`}
                                 style={{
                                     color: isHovered ? service.color : '#ffffff',
                                     textShadow: isHovered ? `0 0 20px ${service.color}40` : 'none',
@@ -368,7 +368,7 @@ const ServiceCard = ({ service, index, onClick }) => {
 
                             {/* Service count */}
                             <motion.p
-                                className={`text-xs md:text-sm mt-2 text-white/50 ${RajdhaniFont.className}`}
+                                className={`text-xs sm:text-sm mt-2 text-white/50 ${RajdhaniFont.className}`}
                                 animate={{ opacity: isHovered ? 1 : 0.5 }}
                                 style={{ letterSpacing: '0.04em' }}
                             >
@@ -379,7 +379,7 @@ const ServiceCard = ({ service, index, onClick }) => {
 
                     {/* Arrow indicator */}
                     <motion.div
-                        className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center"
+                        className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 flex items-center justify-center"
                         style={{
                             borderColor: isHovered ? `${service.color}60` : `${service.color}20`,
                             background: isHovered ? `${service.color}15` : 'transparent',
@@ -390,7 +390,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                         transition={{ duration: 1, repeat: isHovered ? Infinity : 0 }}
                     >
                         <svg
-                            className="w-5 h-5 md:w-6 md:h-6"
+                            className="w-5 h-5 sm:w-6 sm:h-6"
                             style={{ color: service.color }}
                             fill="none"
                             viewBox="0 0 24 24"
@@ -406,7 +406,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                 {isHovered && (
                     <>
                         <motion.div
-                            className="absolute top-0 right-0 w-20 h-20 rounded-2xl pointer-events-none"
+                            className="absolute top-0 right-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl pointer-events-none"
                             style={{
                                 background: `radial-gradient(circle at top right, ${service.color}15, transparent)`,
                             }}
@@ -415,7 +415,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                             transition={{ duration: 0.3 }}
                         />
                         <motion.div
-                            className="absolute bottom-0 left-0 w-16 h-16 rounded-2xl pointer-events-none"
+                            className="absolute bottom-0 left-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl pointer-events-none"
                             style={{
                                 background: `radial-gradient(circle at bottom left, ${service.color}10, transparent)`,
                             }}
@@ -492,7 +492,7 @@ function OurServices() {
     return (
         <section
             ref={ref}
-            className='w-full flex justify-center items-center py-20 md:py-32 relative overflow-hidden'
+            className='w-full flex justify-center items-center py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden'
         >
             {/* --- BACKGROUND ELEMENTS --- */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
@@ -542,7 +542,7 @@ function OurServices() {
             {/* --- MAIN CONTENT --- */}
             <div className="relative z-30 w-full max-w-7xl mx-auto px-4">
                 {/* Header */}
-                <div className="text-center mb-16 md:mb-20">
+                <div className="text-center mb-12 md:mb-16 lg:mb-20">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -568,7 +568,7 @@ function OurServices() {
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
-                        className={`${RajdhaniFont.className} text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto`}
+                        className={`${RajdhaniFont.className} text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/85 mt-4 md:mt-6 max-w-4xl mx-auto`}
                         style={{ 
                             letterSpacing: '0.06em',
                             lineHeight: '1.5',
@@ -579,28 +579,15 @@ function OurServices() {
                     </motion.p>
                 </div>
 
-                {/* Services Grid - First 6 cards in 3 columns */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                    {servicesData.slice(0, 6).map((service, index) => (
+                {/* Services Grid - Mobile: Single column stack, Desktop: 3 columns */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                    {servicesData.map((service, index) => (
                         <ServiceCard
                             key={service.id}
                             service={service}
                             index={index}
                             onClick={() => setSelectedService(service)}
                         />
-                    ))}
-                </div>
-                
-                {/* Last 2 cards centered as a group */}
-                <div className="flex flex-wrap justify-center gap-5 md:gap-6 mt-5 md:mt-6">
-                    {servicesData.slice(6).map((service, index) => (
-                        <div key={service.id} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-md lg:max-w-none">
-                            <ServiceCard
-                                service={service}
-                                index={index + 6}
-                                onClick={() => setSelectedService(service)}
-                            />
-                        </div>
                     ))}
                 </div>
             </div>

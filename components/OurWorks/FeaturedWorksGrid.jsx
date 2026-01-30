@@ -35,11 +35,11 @@ const MobileCard = ({ work, index }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="w-full max-w-md mx-auto"
+            className="w-full"
         >
             <Link href="/works" className="block">
                 <motion.div
-                    className="group/card w-full h-[320px] sm:h-[360px] rounded-2xl overflow-hidden relative bg-slate-900 cursor-pointer"
+                    className="group/card w-full h-[180px] sm:h-[220px] rounded-xl overflow-hidden relative bg-slate-900 cursor-pointer"
                     style={{
                         border: isHovered ? '2px solid rgba(150, 137, 95, 0.8)' : '1px solid rgba(255, 255, 255, 0.1)',
                         boxShadow: isHovered
@@ -75,14 +75,14 @@ const MobileCard = ({ work, index }) => {
                     )}
 
                     {/* Content Container */}
-                    <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+                    <div className="absolute inset-0 p-3 sm:p-4 flex flex-col justify-between pointer-events-none">
                         {/* Top Content - Project Titles */}
                         <div
                             className="relative z-10 transition-all duration-300 ease-out flex-shrink-0"
-                            style={{ transform: isHovered ? 'translateY(-6px)' : 'translateY(0)' }}
+                            style={{ transform: isHovered ? 'translateY(-4px)' : 'translateY(0)' }}
                         >
                             <p
-                                className={`text-xs uppercase font-semibold transition-all duration-300 ${OxaniumFont.className}`}
+                                className={`text-[10px] sm:text-xs uppercase font-semibold transition-all duration-300 ${OxaniumFont.className}`}
                                 style={{
                                     color: isHovered ? '#D4AF37' : 'rgba(150, 137, 95, 0.7)',
                                     textShadow: isHovered ? '0 0 10px rgba(212, 175, 55, 0.5)' : 'none',
@@ -92,12 +92,12 @@ const MobileCard = ({ work, index }) => {
                                 Project {String(work.originalIndex + 1).padStart(2, '0')}
                             </p>
                             <h3
-                                className={`font-bold uppercase text-white mt-2.5 leading-tight ${RajdhaniFont.className}`}
+                                className={`font-bold uppercase text-white mt-1 sm:mt-1.5 leading-tight ${RajdhaniFont.className}`}
                                 style={{
-                                    fontSize: work.title.length > 25 ? '1.25rem' : work.title.length > 18 ? '1.5rem' : '1.75rem',
+                                    fontSize: work.title.length > 25 ? '0.75rem' : work.title.length > 18 ? '0.875rem' : '1rem',
                                     lineHeight: '1.2',
                                     textShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
-                                    letterSpacing: '0.08em',
+                                    letterSpacing: '0.06em',
                                 }}
                             >
                                 {work.title}
@@ -108,12 +108,12 @@ const MobileCard = ({ work, index }) => {
                         <div
                             className="relative z-10 transition-all duration-300 ease-out flex-shrink-0"
                             style={{ 
-                                transform: isHovered ? 'translateY(-6px)' : 'translateY(0)',
+                                transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
                                 opacity: isHovered ? 1 : 0.7,
                             }}
                         >
                             <div
-                                className="h-[2px] bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent mb-3 transition-all duration-400 ease-out"
+                                className="h-[1.5px] bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent mb-2 transition-all duration-400 ease-out"
                                 style={{
                                     width: isHovered ? '100%' : '35%',
                                     opacity: isHovered ? 1 : 0.5,
@@ -122,18 +122,18 @@ const MobileCard = ({ work, index }) => {
                             />
 
                             <div 
-                                className={`flex items-center gap-x-2 text-sm transition-all duration-300 ease-out ${OxaniumFont.className}`}
+                                className={`flex items-center gap-x-1.5 text-[10px] sm:text-xs transition-all duration-300 ease-out ${OxaniumFont.className}`}
                                 style={{
                                     color: isHovered ? '#D4AF37' : 'rgba(150, 137, 95, 0.8)',
                                 }}
                             >
-                                <span className="font-bold tracking-wide">Explore Project</span>
+                                <span className="font-bold tracking-wide">Explore</span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    className="w-5 h-5 transition-transform duration-300"
-                                    style={{ transform: isHovered ? 'translateX(4px)' : 'translateX(0)' }}
+                                    className="w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-300"
+                                    style={{ transform: isHovered ? 'translateX(3px)' : 'translateX(0)' }}
                                 >
                                     <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clipRule="evenodd" />
                                 </svg>
@@ -144,8 +144,8 @@ const MobileCard = ({ work, index }) => {
                     {/* Corner accents - Enhanced */}
                     {isHovered && (
                         <>
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#D4AF37]/25 to-transparent rounded-2xl pointer-events-none" />
-                            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-2xl pointer-events-none" />
+                            <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-[#D4AF37]/25 to-transparent rounded-xl pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 w-12 h-12 bg-gradient-to-tr from-[#D4AF37]/20 to-transparent rounded-xl pointer-events-none" />
                         </>
                     )}
                 </motion.div>
@@ -448,11 +448,13 @@ const FeaturedWorksGrid = () => {
 
             {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
             {isMobile ? (
-                // Mobile: Vertical scrolling grid - Only show first 3 projects
-                <div className="relative z-20 w-full px-4 space-y-6 sm:space-y-8">
-                    {indexedWorks.slice(0, 3).map((work, index) => (
-                        <MobileCard key={work.originalIndex} work={work} index={index} />
-                    ))}
+                // Mobile: 2x2 Grid - Show first 4 projects
+                <div className="relative z-20 w-full px-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
+                        {indexedWorks.slice(0, 4).map((work, index) => (
+                            <MobileCard key={work.originalIndex} work={work} index={index} />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 // Desktop: Orbital animation with larger magnified cards

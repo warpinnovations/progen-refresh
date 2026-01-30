@@ -174,7 +174,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className={`hidden md:flex md:text-2xl lg:text-3xl ${RajdhaniFont.className} font-semibold text-white text-center w-auto md:w-3/4`}
+              className={`flex text-lg md:text-2xl lg:text-3xl ${RajdhaniFont.className} font-semibold text-white text-center w-full md:w-3/4 px-4 md:px-0`}
               style={{ letterSpacing: '0.04em', lineHeight: '1.5' }}
             >
               We are the Premier, Award-Winning, Full Service Marketing Agency and Public Relations Firm in Western Visayas.
@@ -430,7 +430,7 @@ const HeroSection = () => {
                         if (isActive) {
                           positionClasses = 'translate-x-0 translate-y-0';
                           zIndex = 30;
-                          scale = 1.15;
+                          scale = window.innerWidth < 768 ? 0.95 : 1.15;
                           opacity = 1;
                           blur = 'blur(0px)';
                           rotateY = 0;
@@ -460,7 +460,7 @@ const HeroSection = () => {
                         return (
                           <motion.div
                             key={award.filename}
-                            className="absolute w-full max-w-sm md:max-w-md"
+                            className="absolute w-full max-w-xs md:max-w-md"
                             style={{
                               zIndex,
                               transformStyle: 'preserve-3d'
@@ -492,12 +492,12 @@ const HeroSection = () => {
                             >
                               {/* Enhanced Hexagonal Card Container */}
                               <div className="relative">
-                                <div className="relative mx-auto" style={{ width: '100%', maxWidth: '400px' }}>
+                                <div className="relative mx-auto w-full max-w-[220px] md:max-w-[400px]">
                                   
                                   {/* Main Card with Enhanced Effects */}
                                   <div
                                     className={`
-                                      relative p-8 md:p-10 rounded-3xl
+                                      relative p-4 md:p-10 rounded-2xl md:rounded-3xl
                                       backdrop-blur-2xl border-2
                                       transition-all duration-700
                                       ${isActive 
@@ -576,7 +576,7 @@ const HeroSection = () => {
                                     )}
 
                                     {/* Award Logo with Enhanced Orbital Ring */}
-                                    <div className="relative flex items-center justify-center mb-8">
+                                    <div className="relative flex items-center justify-center mb-6 md:mb-8">
                                       
                                       {/* Multi-layered Orbital Ring Effect */}
                                       {isActive && (
@@ -587,7 +587,7 @@ const HeroSection = () => {
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                                           >
-                                            <div className="w-52 h-52 md:w-60 md:h-60 rounded-full border-2 border-[#96895f]/20">
+                                            <div className="w-26 h-26 md:w-60 md:h-60 rounded-full border-2 border-[#96895f]/20">
                                               <motion.div 
                                                 className="absolute top-0 left-1/2 w-3 h-3 bg-[#96895f] rounded-full -translate-x-1/2 -translate-y-1/2"
                                                 animate={{
@@ -608,7 +608,7 @@ const HeroSection = () => {
                                             animate={{ rotate: -360 }}
                                             transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
                                           >
-                                            <div className="w-44 h-44 md:w-52 md:h-52 rounded-full border border-[#96895f]/30">
+                                            <div className="w-22 h-22 md:w-52 md:h-52 rounded-full border border-[#96895f]/30">
                                               <motion.div 
                                                 className="absolute bottom-0 left-1/2 w-2 h-2 bg-[#96895f]/80 rounded-full -translate-x-1/2 translate-y-1/2"
                                                 animate={{
@@ -632,14 +632,14 @@ const HeroSection = () => {
                                             }}
                                             transition={{ duration: 3, repeat: Infinity }}
                                           >
-                                            <div className="w-48 h-48 md:w-56 md:h-56 rounded-full border border-[#96895f]/40 shadow-[0_0_30px_rgba(150,137,95,0.4)]" />
+                                            <div className="w-24 h-24 md:w-56 md:h-56 rounded-full border border-[#96895f]/40 shadow-[0_0_30px_rgba(150,137,95,0.4)]" />
                                           </motion.div>
                                         </>
                                       )}
                                       
                                       {/* Logo with Enhanced Animation */}
                                       <motion.div 
-                                        className="relative w-40 h-40 md:w-48 md:h-48 flex items-center justify-center"
+                                        className="relative w-20 h-20 md:w-48 md:h-48 flex items-center justify-center"
                                         animate={isActive ? {
                                           scale: [1, 1.05, 1],
                                           rotateY: [0, 5, 0, -5, 0]
@@ -668,11 +668,11 @@ const HeroSection = () => {
                                     </div>
 
                                     {/* Award Details with Enhanced Typography */}
-                                    <div className="space-y-4 text-center">
+                                    <div className="space-y-3 md:space-y-4 text-center">
                                       
                                       {/* Award Title */}
                                       <motion.h4 
-                                        className={`${RajdhaniFont.className} text-white text-2xl md:text-3xl font-bold uppercase tracking-wider`}
+                                        className={`${RajdhaniFont.className} text-white text-lg md:text-3xl font-bold uppercase tracking-wider`}
                                         animate={isActive ? {
                                           opacity: [1, 0.9, 1],
                                         } : { opacity: 0.7 }}
@@ -685,7 +685,7 @@ const HeroSection = () => {
                                       <div className="flex justify-center">
                                         <motion.div 
                                           className={`
-                                            inline-flex items-center gap-3 px-6 py-3 rounded-full border-2
+                                            inline-flex items-center gap-2 px-4 py-2 md:gap-3 md:px-6 md:py-3 rounded-full border-2
                                             transition-all duration-500
                                             ${isActive 
                                               ? 'bg-[#96895f]/20 border-[#96895f] shadow-[0_0_25px_rgba(150,137,95,0.4),inset_0_0_20px_rgba(150,137,95,0.1)]' 
@@ -721,7 +721,7 @@ const HeroSection = () => {
                                               />
                                             )}
                                           </div>
-                                          <span className={`${RajdhaniFont.className} text-[#96895f] text-sm md:text-base font-bold uppercase tracking-wider`}>
+                                          <span className={`${RajdhaniFont.className} text-[#96895f] text-xs md:text-base font-bold uppercase tracking-wider`}>
                                             {award.achievement}
                                           </span>
                                         </motion.div>
@@ -732,7 +732,7 @@ const HeroSection = () => {
                                         className="space-y-2 overflow-hidden"
                                         initial={{ maxHeight: 0, opacity: 0 }}
                                         animate={{
-                                          maxHeight: isActive ? 300 : 0,
+                                          maxHeight: isActive ? 200 : 0,
                                           opacity: isActive ? 1 : 0
                                         }}
                                         transition={{ 
@@ -741,7 +741,7 @@ const HeroSection = () => {
                                         }}
                                       >
                                         <motion.p 
-                                          className={`${OxaniumFont.className} text-white/90 text-base font-semibold`}
+                                          className={`${OxaniumFont.className} text-white/90 text-sm md:text-base font-semibold`}
                                           initial={{ y: 20, opacity: 0 }}
                                           animate={isActive ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                                           transition={{ delay: 0.2 }}
@@ -750,7 +750,7 @@ const HeroSection = () => {
                                         </motion.p>
                                         
                                         <motion.p 
-                                          className={`${RajdhaniFont.className} text-[#96895f] text-sm uppercase tracking-widest font-bold`}
+                                          className={`${RajdhaniFont.className} text-[#96895f] text-xs md:text-sm uppercase tracking-widest font-bold`}
                                           initial={{ y: 20, opacity: 0 }}
                                           animate={isActive ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                                           transition={{ delay: 0.3 }}
@@ -760,12 +760,12 @@ const HeroSection = () => {
                                         
                                         {/* Description with Border */}
                                         <motion.div 
-                                          className="pt-4 mt-4 border-t border-[#96895f]/30"
+                                          className="pt-3 mt-3 md:pt-4 md:mt-4 border-t border-[#96895f]/30"
                                           initial={{ y: 20, opacity: 0 }}
                                           animate={isActive ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                                           transition={{ delay: 0.4 }}
                                         >
-                                          <p className={`${OxaniumFont.className} text-white/70 text-sm leading-relaxed`}>
+                                          <p className={`${OxaniumFont.className} text-white/70 text-xs md:text-sm leading-relaxed`}>
                                             {award.description}
                                           </p>
                                         </motion.div>
@@ -875,7 +875,7 @@ const HeroSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.2, duration: 0.6 }}
                   >
-                    <a href="works">
+                    <a href="#work">
                       <motion.button 
                         className={`group ${RajdhaniFont.className} text-white/80 hover:text-[#96895f] text-sm md:text-base uppercase tracking-[0.2em] font-bold transition-all duration-300 flex items-center gap-3 mx-auto px-8 py-4 rounded-xl border-2 border-[#96895f]/30 hover:border-[#96895f] hover:bg-[#96895f]/5 relative overflow-hidden`}
                         whileHover={{ 

@@ -147,7 +147,13 @@ const FeatureCard = ({ feature, index }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className={`group relative aspect-[3/4] ${!feature.isVertical && 'md:col-span-2 md:aspect-[16/9]'}`}
+      className={`group relative ${
+        // Mobile: all cards are horizontal aspect ratio
+        // Desktop: vertical cards stay 3/4, horizontal card is 2 cols wide
+        !feature.isVertical 
+          ? 'aspect-[16/9] md:col-span-2 md:aspect-[16/9]' 
+          : 'aspect-[16/9] md:aspect-[3/4]'
+      }`}
       style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
     >
       <motion.div
@@ -157,7 +163,7 @@ const FeatureCard = ({ feature, index }) => {
       >
         {/* Enhanced glow effect */}
         <motion.div
-          className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-[#96895F]/50 via-[#96895F]/30 to-transparent blur-2xl"
+          className="absolute -inset-2 rounded-2xl md:rounded-3xl bg-gradient-to-br from-[#96895F]/50 via-[#96895F]/30 to-transparent blur-2xl"
           animate={{ 
             opacity: isHovered ? 1 : 0,
             scale: isHovered ? 1.02 : 0.98,
@@ -165,9 +171,9 @@ const FeatureCard = ({ feature, index }) => {
           transition={{ duration: 0.5 }}
         />
 
-        <div className="absolute inset-0 rounded-3xl overflow-hidden border-2 border-[#96895F]/30 bg-gradient-to-br from-slate-900/95 to-slate-800/90 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/70 group-hover:shadow-[#96895F]/40 transition-all duration-500">
+        <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-[#96895F]/30 bg-gradient-to-br from-slate-900/95 to-slate-800/90 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/70 group-hover:shadow-[#96895F]/40 transition-all duration-500">
           {/* Video Embed Container */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden">
+          <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden">
             {/* Using YouTube embed with better controls and loading state */}
             <div className="relative w-full h-full bg-black">
               {/* Loading placeholder */}
@@ -180,10 +186,12 @@ const FeatureCard = ({ feature, index }) => {
                 src={`https://www.youtube-nocookie.com/embed/${feature.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${feature.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&color=white&start=0`}
                 className="absolute"
                 style={{
-                  width: feature.isVertical ? 'auto' : '100%',
-                  height: feature.isVertical ? '100%' : 'auto',
-                  minWidth: feature.isVertical ? '56.25%' : '100%',
-                  minHeight: feature.isVertical ? '100%' : '56.25%',
+                  // On mobile, always use horizontal scaling
+                  // On desktop, use original logic
+                  width: window.innerWidth < 768 ? '100%' : (feature.isVertical ? 'auto' : '100%'),
+                  height: window.innerWidth < 768 ? 'auto' : (feature.isVertical ? '100%' : 'auto'),
+                  minWidth: window.innerWidth < 768 ? '100%' : (feature.isVertical ? '56.25%' : '100%'),
+                  minHeight: window.innerWidth < 768 ? '56.25%' : (feature.isVertical ? '100%' : '56.25%'),
                   left: '50%',
                   top: '50%',
                   transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1.08})`,
@@ -218,18 +226,18 @@ const FeatureCard = ({ feature, index }) => {
           )}
 
           {/* Enhanced inner border */}
-          <div className="absolute inset-[1px] rounded-3xl border border-[#96895F]/20 group-hover:border-[#96895F]/50 transition-all duration-500 pointer-events-none" />
+          <div className="absolute inset-[1px] rounded-2xl md:rounded-3xl border border-[#96895F]/20 group-hover:border-[#96895F]/50 transition-all duration-500 pointer-events-none" />
 
           {/* Content overlay for all cards */}
-          <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end z-10 pointer-events-none">
+          <div className="absolute inset-0 p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col justify-end z-10 pointer-events-none">
             <motion.div
-              className="space-y-4"
+              className="space-y-2 sm:space-y-3 md:space-y-4"
               animate={{ y: isHovered ? -8 : 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="relative inline-block">
                 <motion.p
-                  className={`text-lg md:text-xl font-bold tracking-[0.3em] uppercase text-[#96895F] mb-3 ${MoonlanderFont.className}`}
+                  className={`text-base sm:text-lg md:text-xl font-bold tracking-[0.25em] md:tracking-[0.3em] uppercase text-[#96895F] mb-2 md:mb-3 ${MoonlanderFont.className}`}
                   animate={{
                     textShadow: isHovered ? '0 0 20px rgba(150, 137, 95, 0.8)' : '0 0 8px rgba(150, 137, 95, 0.4)'
                   }}
@@ -238,7 +246,7 @@ const FeatureCard = ({ feature, index }) => {
                   {feature.supertitle}
                 </motion.p>
                 <motion.div
-                  className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/60 to-transparent"
+                  className="h-[1.5px] md:h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/60 to-transparent"
                   initial={{ width: 0, opacity: 0 }}
                   animate={{ width: isHovered ? '100%' : '50%', opacity: 1 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -255,24 +263,24 @@ const FeatureCard = ({ feature, index }) => {
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="overflow-hidden"
               >
-                <p className={`text-[#EAE2B7]/90 text-sm md:text-base leading-relaxed max-w-md ${RajdhaniFont.className}`}
+                <p className={`text-[#EAE2B7]/90 text-xs sm:text-sm md:text-base leading-relaxed max-w-md ${RajdhaniFont.className}`}
                    style={{ letterSpacing: '0.04em' }}>
                   {feature.description}
                 </p>
               </motion.div>
 
               <motion.div
-                className={`flex items-center gap-3 text-[#96895F] ${RajdhaniFont.className}`}
+                className={`flex items-center gap-2 md:gap-3 text-[#96895F] ${RajdhaniFont.className}`}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -10 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
               >
-                <span className="text-xs md:text-sm font-semibold tracking-wider uppercase"
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold tracking-wider uppercase"
                       style={{ letterSpacing: '0.08em' }}>
                   Explore More
                 </span>
                 <motion.svg
-                  className="w-5 h-5"
+                  className="w-4 h-4 md:w-5 md:h-5"
                   animate={isHovered ? { x: [0, 6, 0] } : {}}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   fill="none"
@@ -290,12 +298,12 @@ const FeatureCard = ({ feature, index }) => {
           {isHovered && (
             <>
               <motion.div
-                className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#96895F]/40 to-transparent rounded-3xl pointer-events-none"
+                className="absolute top-0 right-0 w-20 h-20 md:w-32 md:h-32 bg-gradient-to-bl from-[#96895F]/40 to-transparent rounded-2xl md:rounded-3xl pointer-events-none"
                 animate={{ opacity: [0.4, 0.7, 0.4] }}
                 transition={{ duration: 2, repeat: Infinity }}
               />
               <motion.div
-                className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-[#96895F]/30 to-transparent rounded-3xl pointer-events-none"
+                className="absolute bottom-0 left-0 w-16 h-16 md:w-24 md:h-24 bg-gradient-to-tr from-[#96895F]/30 to-transparent rounded-2xl md:rounded-3xl pointer-events-none"
                 animate={{ opacity: [0.3, 0.5, 0.3] }}
                 transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
               />
@@ -615,7 +623,7 @@ const PrometheusFeatures = () => {
       </div>
 
       {/* Main Content Section */}
-      <div className="relative flex items-center justify-center py-20 md:py-36 bg-black">
+      <div className="relative flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-36 bg-black">
         <motion.div
           className="relative z-20 w-full max-w-7xl px-4"
           variants={sectionVariants}
@@ -623,7 +631,7 @@ const PrometheusFeatures = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8" style={{ perspective: '1500px' }}>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8" style={{ perspective: '1500px' }}>
             {features.map((feature, index) => (
               <FeatureCard key={index} feature={feature} index={index} />
             ))}
