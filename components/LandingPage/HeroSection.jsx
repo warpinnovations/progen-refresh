@@ -139,12 +139,14 @@ const HeroSection = () => {
   return (
     <PageTransition>
       <div className="relative min-h-screen flex flex-col">
-        <div className="absolute inset-0 z-0">
-          <LazyLoadImage
-            alt="background image"
-            src="/LandingPageAssets/astro-bg.webp"
-            className="w-full h-full object-contain"
-          />
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="w-full h-full transform -translate-y-24 md:-translate-y-32 lg:-translate-y-100">
+            <LazyLoadImage
+              alt="background image"
+              src="/LandingPageAssets/astro-bg.webp"
+              className="w-full h-full object-contain"
+            />
+          </div>
           {/* Gradient overlay to blend image edges with black background */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
