@@ -148,7 +148,7 @@ const HeroSection = () => {
             />
           </div>
           {/* Gradient overlay to blend image edges with black background */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black from-5% via-black/60 via-40% to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
         </div>
 
