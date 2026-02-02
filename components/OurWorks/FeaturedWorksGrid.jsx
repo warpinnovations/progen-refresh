@@ -182,8 +182,8 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
                 videoRef.current.play().catch(() => {});
             }
         } else {
-            scale.set(baseScale);
-            zIndex.set(baseZIndex);
+            scale.set(baseScale.get());
+            zIndex.set(baseZIndex.get());
         }
     }, [isHovered, baseScale, baseZIndex, scale, zIndex]);
 
@@ -196,7 +196,7 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
                 videoRef.current.pause();
             }
         } else {
-            opacity.set(baseOpacity);
+            opacity.set(baseOpacity.get());
             // Resume video playback
             if (videoRef.current) {
                 videoRef.current.play().catch(() => {
