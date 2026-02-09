@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import localFont from 'next/font/local';
 import { Rajdhani } from 'next/font/google';
-import StarsCanvas from '@/components/Global/StarCanvas';
+import Link from 'next/link';
+import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 // --- FONT DEFINITIONS ---
@@ -136,37 +137,27 @@ const servicesData = [
     }
 ];
 
-// --- CIRCULAR TEXT COMPONENT ---
-const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'text-prOrange/70', direction = 1 }) => {
-    const characters = text.split('');
-    const centerX = radiusX;
-    const centerY = radiusY;
+// --- CIRCULAR TEXT COMPONENT (lightweight SVG) ---
+const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'rgba(150,137,95,0.5)', direction = 1 }) => {
+    const pathId = `circlePath-${radiusX}-${direction}`;
+    const w = radiusX * 2;
+    const h = radiusY * 2;
     return (
-        <div className="relative" style={{ width: radiusX * 2, height: radiusY * 2 }}>
-            <motion.div
-                className="absolute w-full h-full"
-                animate={{ rotate: 360 * direction }}
-                transition={{ repeat: Infinity, repeatType: "loop", ease: "linear", duration: duration }}
-            >
-                {characters.map((char, index) => {
-                    const angle = (index / characters.length) * 2 * Math.PI;
-                    const x = centerX + radiusX * Math.cos(angle) - 0.5 * 16;
-                    const y = centerY + radiusY * Math.sin(angle) - 0.5 * 24;
-                    return (
-                        <motion.span
-                            key={index}
-                            className={`absolute ${MoonlanderFont.className} text-lg md:text-xl ${textColor}`}
-                            style={{
-                                left: x,
-                                top: y,
-                                transform: 'translate(-50%, -50%)',
-                            }}
-                        >
-                            {char}
-                        </motion.span>
-                    );
-                })}
-            </motion.div>
+        <div className="relative" style={{ width: w, height: h }}>
+            <svg width={w} height={h} className="absolute inset-0" style={{ animation: `spin-text ${duration}s linear infinite ${direction < 0 ? 'reverse' : ''}` }}>
+                <defs>
+                    <path id={pathId} d={`M ${radiusX},${radiusY} m -${radiusX},0 a ${radiusX},${radiusY} 0 1,1 ${w},0 a ${radiusX},${radiusY} 0 1,1 -${w},0`} fill="none" />
+                </defs>
+                <text fill={textColor} className={`${MoonlanderFont.className}`} style={{ fontSize: '18px' }}>
+                    <textPath href={`#${pathId}`}>{text}</textPath>
+                </text>
+            </svg>
+            <style jsx>{`
+                @keyframes spin-text {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            `}</style>
         </div>
     );
 };
@@ -261,6 +252,35 @@ const ServiceDetailModal = ({ service, onClose }) => {
                                 </span>
                             </motion.div>
                         ))}
+                    </div>
+
+                    {/* Contact Us CTA */}
+                    <div className="mt-8 flex justify-center">
+                        <Link href="/contact">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.97 }}
+                                className={`${RajdhaniFont.className} relative px-8 py-3 rounded-full border-2 border-[#96895F]/60 bg-[#96895F]/10 hover:bg-[#96895F]/25 text-[#96895F] hover:text-white text-base md:text-lg font-semibold uppercase tracking-widest transition-all duration-300 group overflow-hidden`}
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Contact Us
+                                    <svg
+                                        className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </span>
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-r from-[#96895F]/0 via-[#96895F]/20 to-[#96895F]/0"
+                                    animate={{ x: ['-100%', '100%'] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                                />
+                            </motion.button>
+                        </Link>
                     </div>
 
                     {/* Footer ornament */}
@@ -496,19 +516,9 @@ function OurServices() {
         >
             {/* --- BACKGROUND ELEMENTS --- */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-                <StarsCanvas />
+                <CSSStars />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.85) 100%)" }} />
-                <motion.div
-                    className="absolute inset-0 z-0"
-                    animate={{
-                        background: [
-                            "radial-gradient(ellipse at 50% 50%, rgba(150, 137, 95, 0.08) 0%, rgba(150, 137, 95, 0) 70%)",
-                            "radial-gradient(ellipse at 50% 50%, rgba(150, 137, 95, 0.12) 0%, rgba(150, 137, 95, 0) 70%)",
-                            "radial-gradient(ellipse at 50% 50%, rgba(150, 137, 95, 0.08) 0%, rgba(150, 137, 95, 0) 70%)",
-                        ]
-                    }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                />
+                <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(150, 137, 95, 0.08) 0%, rgba(150, 137, 95, 0) 70%)" }} />
             </div>
             <div className="absolute inset-0 z-10 pointer-events-none bg-black/30"></div>
 

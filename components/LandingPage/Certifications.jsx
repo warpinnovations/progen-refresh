@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import StarsCanvas from '@/components/Global/StarCanvas';
+import CSSStars from '@/components/Global/CSSStars';
 import { Oxanium, Rajdhani } from 'next/font/google';
 import localFont from 'next/font/local';
 import FuturisticDivider from "../Global/FuturisticLine";
@@ -72,7 +72,7 @@ const BlackHoleCanvas = () => {
         function Emitter(x, y) {
             this.position = { x: x, y: y };
             this.radius = 30;
-            this.count = 800;
+            this.count = 200;
             this.particles = [];
 
             for (var i = 0; i < this.count; i++) {
@@ -151,12 +151,12 @@ const MobileCertCard = ({ cert, index }) => {
             className="flex-shrink-0 w-[280px] sm:w-[300px]"
         >
             <div
-                className={`relative flex flex-col items-center justify-start text-center w-full h-[320px] sm:h-[340px] p-6 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden ${RajdhaniFont.className}`}
+                className={`relative flex flex-col items-center justify-start text-center w-full h-[320px] sm:h-[340px] p-6 bg-transparent backdrop-blur-sm rounded-3xl overflow-hidden ${RajdhaniFont.className}`}
                 style={{
-                    border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
+                    border: isHovered ? '2px solid rgba(150, 137, 95, 1)' : '1px solid rgba(150, 137, 95, 0.5)',
                     boxShadow: isHovered
-                        ? '0px 30px 60px -15px rgba(150, 137, 95, 0.5), 0 0 80px rgba(150, 137, 95, 0.3)'
-                        : '0px 15px 35px -10px rgba(0, 0, 0, 0.6)',
+                        ? '0px 20px 40px -10px rgba(150, 137, 95, 0.4), 0 0 60px rgba(150, 137, 95, 0.2)'
+                        : '0 0 20px rgba(150, 137, 95, 0.1)',
                     transition: 'border 0.3s ease, box-shadow 0.3s ease',
                 }}
                 onTouchStart={() => setIsHovered(true)}
@@ -329,12 +329,12 @@ const OrbitalCard = ({ cert, index, totalCards, animationProgress, onHoverStart,
             onMouseLeave={handleHoverEnd}
         >
             <div
-                className={`group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-gradient-to-br from-slate-900/90 to-slate-800/70 backdrop-blur-lg rounded-3xl shadow-2xl transform-gpu overflow-hidden ${RajdhaniFont.className}`}
+                className={`group/card relative flex flex-col items-center justify-start text-center w-72 h-80 p-8 bg-transparent backdrop-blur-sm rounded-3xl transform-gpu overflow-hidden ${RajdhaniFont.className}`}
                 style={{
-                    border: isHovered ? '1px solid rgba(150, 137, 95, 0.7)' : '1px solid rgba(150, 137, 95, 0.2)',
+                    border: isHovered ? '2px solid rgba(150, 137, 95, 1)' : '1px solid rgba(150, 137, 95, 0.5)',
                     boxShadow: isHovered
-                        ? '0px 30px 60px -15px rgba(150, 137, 95, 0.5), 0 0 80px rgba(150, 137, 95, 0.3), inset 0 0 40px rgba(150, 137, 95, 0.05)'
-                        : '0px 15px 35px -10px rgba(0, 0, 0, 0.6)',
+                        ? '0px 20px 40px -10px rgba(150, 137, 95, 0.4), 0 0 60px rgba(150, 137, 95, 0.2)'
+                        : '0 0 20px rgba(150, 137, 95, 0.1)',
                     transition: 'border 0.3s ease, box-shadow 0.3s ease',
                 }}
             >
@@ -544,28 +544,14 @@ function Certifications() {
         >
             {/* Background */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-                <StarsCanvas />
+                <CSSStars />
                 <div className="absolute inset-0 pointer-events-none" style={{
                     background: "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.85) 100%)"
                 }} />
 
-                {/* Subtle animated gradient orbs */}
-                <motion.div
-                    className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#96895F]/10 rounded-full blur-[100px]"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.1, 0.15, 0.1],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-                />
-                <motion.div
-                    className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#96895F]/8 rounded-full blur-[100px]"
-                    animate={{
-                        scale: [1.2, 1, 1.2],
-                        opacity: [0.15, 0.1, 0.15],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
-                />
+                {/* Static gradient orbs */}
+                <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#96895F]/10 rounded-full blur-[100px] opacity-10" />
+                <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#96895F]/8 rounded-full blur-[100px] opacity-10" />
             </div>
             <div className="absolute inset-0 z-10 pointer-events-none bg-black/30"></div>
 

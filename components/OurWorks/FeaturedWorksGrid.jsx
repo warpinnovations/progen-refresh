@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion, useMotionValue, useTransform, animate, useSpring } from 'framer-motion';
 import { worksData as allWorksData } from '@/app/contants';
-import StarsCanvas from '@/components/Global/StarCanvas';
+import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 import localFont from 'next/font/local';
@@ -418,7 +418,7 @@ const FeaturedWorksGrid = () => {
         >
             {/* Background */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-                <StarsCanvas />
+                <CSSStars />
                 <div className="absolute inset-0 bg-black/70"></div>
             </div>
 

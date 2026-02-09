@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Delaunay } from "d3-delaunay";
-import StarsCanvas from "../Global/StarCanvas";
+import CSSStars from "../Global/CSSStars";
 import localFont from 'next/font/local';
 import { Rajdhani } from 'next/font/google';
 import FuturisticDivider from "../Global/FuturisticLine";
@@ -249,7 +249,7 @@ const BrandsConstellationSection = () => {
 
       {/* Star Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <StarsCanvas />
+        <CSSStars />
       </div>
       <div className="absolute inset-0 z-1 bg-black/30"></div>
 
@@ -514,41 +514,22 @@ const BrandsConstellationSection = () => {
             </div>
 
             {/* Top decorative line */}
-            <motion.div
-              className="absolute top-0 left-0 right-0 h-[1px] mx-auto"
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 h-[1px] opacity-50"
               style={{
                 background: `linear-gradient(90deg, transparent, ${highlightColor}60, ${accentColor}80, ${highlightColor}60, transparent)`,
                 maxWidth: '80%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-              }}
-              animate={{
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
+                width: '80%',
               }}
             />
 
             {/* Bottom decorative line */}
-            <motion.div
-              className="absolute bottom-0 left-0 right-0 h-[1px] mx-auto"
+            <div
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1px] opacity-50"
               style={{
                 background: `linear-gradient(90deg, transparent, ${accentColor}80, ${highlightColor}60, ${accentColor}80, transparent)`,
                 maxWidth: '80%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-              }}
-              animate={{
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.5,
+                width: '80%',
               }}
             />
 
@@ -568,120 +549,41 @@ const BrandsConstellationSection = () => {
                 }}
                 style={{ width: 'fit-content' }}
               >
-                {/* Render logos 3 times for seamless loop */}
-                {[...BRAND_LOGOS, ...BRAND_LOGOS, ...BRAND_LOGOS].map((brand, index) => (
-                  <motion.div
+                {/* Render logos 2 times for seamless loop */}
+                {[...BRAND_LOGOS, ...BRAND_LOGOS].map((brand, index) => (
+                  <div
                     key={`carousel-${index}`}
-                    className="flex-shrink-0 w-[110px] h-[110px] rounded-2xl relative overflow-hidden group"
-                    whileInView={{ opacity: 1, y: 0 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.4 }}
+                    className="flex-shrink-0 w-[110px] h-[110px] rounded-2xl relative overflow-hidden"
                   >
-                    {/* Animated border glow */}
-                    <motion.div
+                    {/* Border */}
+                    <div
                       className="absolute inset-0 rounded-2xl"
                       style={{
                         background: `linear-gradient(135deg, ${highlightColor}40, ${accentColor}40, ${highlightColor}40)`,
-                        backgroundSize: '200% 200%',
-                      }}
-                      animate={{
-                        backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "linear",
                       }}
                     />
 
                     {/* Main card container */}
                     <div
-                      className="absolute inset-[2px] rounded-2xl bg-gradient-to-br from-black/90 via-black/70 to-black/90 flex items-center justify-center p-5 backdrop-blur-sm"
+                      className="absolute inset-[2px] rounded-2xl bg-gradient-to-br from-black/90 via-black/70 to-black/90 flex items-center justify-center p-5"
                       style={{
-                        boxShadow: `
-                          0 0 30px 8px rgba(0,0,0,0.9),
-                          inset 0 0 20px 4px rgba(234,226,183,0.08)
-                        `,
+                        boxShadow: `0 0 30px 8px rgba(0,0,0,0.9), inset 0 0 20px 4px rgba(234,226,183,0.08)`,
                       }}
                     >
-                      {/* Inner gradient overlay */}
-                      <div
-                        className="absolute inset-0 rounded-2xl opacity-30"
-                        style={{
-                          background: `radial-gradient(circle at 30% 30%, ${highlightColor}20, transparent 70%)`,
-                        }}
-                      />
-
-                      {/* Animated corner accents */}
-                      <motion.div
-                        className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 rounded-tl-lg"
-                        style={{ borderColor: accentColor }}
-                        animate={{
-                          opacity: [0.4, 1, 0.4],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.1,
-                        }}
-                      />
-                      <motion.div
-                        className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 rounded-br-lg"
-                        style={{ borderColor: accentColor }}
-                        animate={{
-                          opacity: [0.4, 1, 0.4],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.1 + 1,
-                        }}
-                      />
+                      {/* Corner accents - static */}
+                      <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 rounded-tl-lg opacity-60" style={{ borderColor: accentColor }} />
+                      <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 rounded-br-lg opacity-60" style={{ borderColor: accentColor }} />
 
                       {/* Logo */}
                       <img
                         src={brand.image}
                         alt={brand.name}
                         className="relative z-10 w-full h-full object-contain"
-                        style={{
-                          filter: 'brightness(1) contrast(1.1) drop-shadow(0 0 6px rgba(234,226,183,0.3))',
-                        }}
-                      />
-
-                      {/* Shimmer effect */}
-                      <motion.div
-                        className="absolute inset-0 rounded-2xl"
-                        style={{
-                          background: `linear-gradient(120deg, transparent 0%, ${highlightColor}15 50%, transparent 100%)`,
-                        }}
-                        animate={{
-                          x: ['-100%', '200%'],
-                        }}
-                        transition={{
-                          duration: 2.5,
-                          repeat: Infinity,
-                          ease: "linear",
-                          delay: index * 0.15,
-                        }}
-                      />
-
-                      {/* Glow pulse */}
-                      <motion.div
-                        className="absolute inset-0 rounded-2xl"
-                        style={{
-                          boxShadow: `0 0 20px 4px ${highlightColor}20`,
-                        }}
-                        animate={{
-                          opacity: [0, 0.6, 0],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          delay: index * 0.2,
-                        }}
+                        style={{ filter: 'brightness(1) contrast(1.1)' }}
+                        loading="lazy"
                       />
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </motion.div>
 
@@ -699,65 +601,17 @@ const BrandsConstellationSection = () => {
                 }}
               />
 
-              {/* Side glow accents */}
-              <motion.div
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-r-full"
-                style={{
-                  background: `linear-gradient(to bottom, transparent, ${accentColor}60, transparent)`,
-                  boxShadow: `0 0 20px 8px ${accentColor}30`,
-                }}
-                animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                  height: ['60px', '96px', '60px'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+              {/* Side glow accents - static */}
+              <div
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-r-full opacity-50"
+                style={{ background: `linear-gradient(to bottom, transparent, ${accentColor}60, transparent)` }}
               />
-              <motion.div
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-l-full"
-                style={{
-                  background: `linear-gradient(to bottom, transparent, ${highlightColor}60, transparent)`,
-                  boxShadow: `0 0 20px 8px ${highlightColor}30`,
-                }}
-                animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                  height: ['60px', '96px', '60px'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5,
-                }}
+              <div
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-24 rounded-l-full opacity-50"
+                style={{ background: `linear-gradient(to bottom, transparent, ${highlightColor}60, transparent)` }}
               />
             </div>
 
-            {/* Floating particles */}
-            {[...Array(6)].map((_, i) => (
-              <motion.div
-                key={`particle-${i}`}
-                className="absolute w-1 h-1 rounded-full"
-                style={{
-                  background: i % 2 === 0 ? highlightColor : accentColor,
-                  left: `${15 + i * 15}%`,
-                  top: '50%',
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  opacity: [0, 0.6, 0],
-                  scale: [0, 1.5, 0],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  delay: i * 0.5,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
           </div>
         )}
 

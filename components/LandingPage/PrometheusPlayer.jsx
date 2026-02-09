@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import localFont from 'next/font/local';
 import { Rajdhani } from 'next/font/google';
@@ -56,7 +56,7 @@ const AnimatedGridPattern = () => {
 
 // --- Floating Particles ---
 const FloatingParticles = () => {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+  const particles = Array.from({ length: 6 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
@@ -116,8 +116,30 @@ const cardVariants = {
 // Individual Card Component - Enhanced with YouTube embed support
 const FeatureCard = ({ feature, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const cardRef = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Only load iframe when card is in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [3, -3]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-3, 3]);
@@ -143,6 +165,7 @@ const FeatureCard = ({ feature, index }) => {
 
   return (
     <motion.div
+      ref={cardRef}
       variants={cardVariants}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -174,35 +197,33 @@ const FeatureCard = ({ feature, index }) => {
         <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden border-2 border-[#96895F]/30 bg-gradient-to-br from-slate-900/95 to-slate-800/90 backdrop-blur-md shadow-2xl shadow-black/60 group-hover:border-[#96895F]/70 group-hover:shadow-[#96895F]/40 transition-all duration-500">
           {/* Video Embed Container */}
           <div className="absolute inset-0 rounded-2xl md:rounded-3xl overflow-hidden">
-            {/* Using YouTube embed with better controls and loading state */}
             <div className="relative w-full h-full bg-black">
-              {/* Loading placeholder */}
+              {/* Placeholder shown until iframe loads */}
               <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
                 <div className="text-[#96895F] text-sm font-semibold animate-pulse">Loading...</div>
               </div>
-              
-              {/* YouTube iframe with enhanced parameters */}
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/${feature.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${feature.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&color=white&start=0`}
-                className="absolute"
-                style={{
-                  // On mobile, always use horizontal scaling
-                  // On desktop, use original logic
-                  width: window.innerWidth < 768 ? '100%' : (feature.isVertical ? 'auto' : '100%'),
-                  height: window.innerWidth < 768 ? 'auto' : (feature.isVertical ? '100%' : 'auto'),
-                  minWidth: window.innerWidth < 768 ? '100%' : (feature.isVertical ? '56.25%' : '100%'),
-                  minHeight: window.innerWidth < 768 ? '56.25%' : (feature.isVertical ? '100%' : '56.25%'),
-                  left: '50%',
-                  top: '50%',
-                  transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1.08})`,
-                  transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
-                  border: 'none',
-                  pointerEvents: 'none',
-                }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-              />
+
+              {/* YouTube iframe - only rendered when in viewport */}
+              {isVisible && (
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${feature.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${feature.youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&color=white&start=0`}
+                  className="absolute"
+                  style={{
+                    width: isMobile ? '100%' : (feature.isVertical ? 'auto' : '100%'),
+                    height: isMobile ? 'auto' : (feature.isVertical ? '100%' : 'auto'),
+                    minWidth: isMobile ? '100%' : (feature.isVertical ? '56.25%' : '100%'),
+                    minHeight: isMobile ? '56.25%' : (feature.isVertical ? '100%' : '56.25%'),
+                    left: '50%',
+                    top: '50%',
+                    transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1.08})`,
+                    transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+                    border: 'none',
+                    pointerEvents: 'none',
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  loading="lazy"
+                />
+              )}
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 group-hover:from-black/90 group-hover:via-black/60 transition-all duration-500 pointer-events-none" />
             <motion.div

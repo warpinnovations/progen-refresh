@@ -7,7 +7,7 @@ import { Rajdhani } from 'next/font/google';
 import { useEffect, useRef, useState } from 'react';
 
 import AnniversaryContact from './AnniversaryContact';
-import StarsCanvas from '@/components/Global/StarCanvas';
+import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '../Global/FuturisticLine';
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
@@ -233,7 +233,7 @@ const AnniversarySection = () => {
         <section className="relative bg-black text-white py-24 sm:py-32 md:py-40 overflow-hidden">
             {/* Enhanced Background Elements */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-                <StarsCanvas />
+                <CSSStars />
                 
                 {/* Radial gradient overlays */}
                 <div className="absolute inset-0" style={{ 
@@ -246,27 +246,9 @@ const AnniversarySection = () => {
                     background: "radial-gradient(circle at 20% 80%, rgba(150, 137, 95, 0.06) 0%, transparent 50%)" 
                 }} />
 
-                {/* Animated orbs */}
-                <motion.div
-                    className="absolute top-1/4 left-1/4 w-[700px] h-[700px] bg-[#96895F]/10 rounded-full blur-[120px]"
-                    animate={{
-                        scale: [1, 1.3, 1],
-                        opacity: [0.08, 0.15, 0.08],
-                        x: [0, 50, 0],
-                        y: [0, -30, 0],
-                    }}
-                    transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                    className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#B8A76F]/8 rounded-full blur-[100px]"
-                    animate={{
-                        scale: [1.2, 1, 1.2],
-                        opacity: [0.06, 0.12, 0.06],
-                        x: [0, -40, 0],
-                        y: [0, 40, 0],
-                    }}
-                    transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-                />
+                {/* Static orbs */}
+                <div className="absolute top-1/4 left-1/4 w-[700px] h-[700px] bg-[#96895F]/10 rounded-full blur-[120px] opacity-10" />
+                <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#B8A76F]/8 rounded-full blur-[100px] opacity-10" />
 
                 {/* Grid pattern overlay */}
                 <div 
