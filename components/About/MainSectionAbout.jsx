@@ -40,32 +40,31 @@ const MainSectionAbout = () => {
         />
 
         {/* Floating gold particles */}
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={`particle-${i}`}
-              className="absolute rounded-full bg-[#D4AF37]"
-              style={{
-                width: `${Math.random() * 3 + 1}px`,
-                height: `${Math.random() * 3 + 1}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.4 + 0.1,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                x: [0, Math.random() * 20 - 10, 0],
-                opacity: [0.1, 0.4, 0.1],
-              }}
-              transition={{
-                duration: 6 + Math.random() * 8,
-                repeat: Infinity,
-                delay: Math.random() * 4,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
+        {[
+          { w: 2, h: 2, l: 10, t: 20, o: 0.2, dur: 7, del: 0, dx: 5 },
+          { w: 1, h: 1, l: 25, t: 55, o: 0.3, dur: 9, del: 1, dx: -8 },
+          { w: 3, h: 3, l: 40, t: 30, o: 0.15, dur: 11, del: 2, dx: 10 },
+          { w: 2, h: 2, l: 60, t: 70, o: 0.25, dur: 8, del: 0.5, dx: -5 },
+          { w: 1, h: 1, l: 75, t: 15, o: 0.2, dur: 13, del: 3, dx: 7 },
+          { w: 2, h: 2, l: 85, t: 45, o: 0.3, dur: 6, del: 1.5, dx: -10 },
+          { w: 3, h: 3, l: 15, t: 80, o: 0.15, dur: 10, del: 2.5, dx: 8 },
+          { w: 1, h: 1, l: 50, t: 10, o: 0.2, dur: 12, del: 0.8, dx: -6 },
+          { w: 2, h: 2, l: 90, t: 60, o: 0.25, dur: 7, del: 3.5, dx: 9 },
+          { w: 1, h: 1, l: 35, t: 90, o: 0.3, dur: 9, del: 1.2, dx: -7 },
+          { w: 2, h: 2, l: 65, t: 40, o: 0.2, dur: 11, del: 2.2, dx: 6 },
+          { w: 3, h: 3, l: 5, t: 50, o: 0.15, dur: 8, del: 0.3, dx: -9 },
+          { w: 1, h: 1, l: 80, t: 25, o: 0.25, dur: 13, del: 4, dx: 10 },
+          { w: 2, h: 2, l: 45, t: 65, o: 0.2, dur: 6, del: 1.8, dx: -5 },
+          { w: 1, h: 1, l: 20, t: 35, o: 0.3, dur: 10, del: 2.8, dx: 7 },
+        ].map((p, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute rounded-full bg-[#D4AF37] pointer-events-none"
+            style={{ width: p.w, height: p.h, left: `${p.l}%`, top: `${p.t}%`, opacity: p.o }}
+            animate={{ y: [0, -30, 0], x: [0, p.dx, 0], opacity: [0.1, 0.4, 0.1] }}
+            transition={{ duration: p.dur, repeat: Infinity, delay: p.del, ease: "easeInOut" }}
+          />
+        ))}
 
         {/* Hero Content */}
         <div className="relative z-10 w-full max-w-6xl mx-auto px-4 text-center">

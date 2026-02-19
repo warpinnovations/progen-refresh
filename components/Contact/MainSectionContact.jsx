@@ -4,6 +4,7 @@ import React from "react";
 import ContactForm from "./ContactForm";
 import Footer from "../Global/Footer";
 import ThreeColumnFooter from "../Global/LargeBreakpointFooter";
+import NavbarGroup from "@/components/Global/NavbarGroup";
 import CSSStars from "@/components/Global/CSSStars";
 import FuturisticDivider from "@/components/Global/FuturisticLine";
 import { motion } from "framer-motion";
@@ -17,6 +18,8 @@ const RajdhaniFont = Rajdhani({ weight: "700", subsets: ["latin"] });
 const MainSectionContact = () => {
   return (
     <main className="bg-black min-h-screen overflow-x-hidden">
+      <NavbarGroup />
+
       {/* ========== HERO SECTION ========== */}
       <section className="relative flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-40 pb-8 sm:pb-12 md:pb-16 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
