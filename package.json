@@ -17,6 +17,7 @@
     "@react-three/drei": "^9.105.5",
     "@react-three/fiber": "^8.16.3",
     "@tailwindcss/postcss": "^4.1.17",
+    "d3-delaunay": "^6.0.4",
     "dompurify": "^3.1.6",
     "framer-motion": "^11.1.7",
     "googleapis": "^166.0.0",

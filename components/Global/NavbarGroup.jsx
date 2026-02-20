@@ -17,7 +17,7 @@ function NavbarGroup() {
 
   return (
     <div
-      className={` fixed top-0 left-0 z-20 h-24 transition-opacity duration-500 ${
+      className={` fixed top-0 left-0 z-[100] h-24 transition-opacity duration-500 ${
         showNavbar ? "opacity-100" : "opacity-0"
       }`}
     >

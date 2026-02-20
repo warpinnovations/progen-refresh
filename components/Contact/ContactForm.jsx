@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -7,12 +6,31 @@ import { ToastContainer, toast } from "react-toastify";
 import sendEmail from "../Contact/emailAPI";
 import "react-toastify/ReactToastify.css";
 import DOMPurify from "dompurify";
+import CSSStars from "@/components/Global/CSSStars";
+import localFont from "next/font/local";
+import { Rajdhani, Oxanium } from "next/font/google";
+
+const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
+const RajdhaniFont = Rajdhani({ weight: "600", subsets: ["latin"] });
+const OxaniumFont = Oxanium({ weight: "600", subsets: ["latin"] });
 
 const escapeHTML = (str) => {
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
 };
+
+const services = [
+  "Strategy",
+  "Creative",
+  "Branding",
+  "Digital Marketing",
+  "Media",
+  "Social Media",
+  "Event Management",
+  "Software Solutions",
+  "Wedding Studio",
+];
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -23,35 +41,26 @@ const ContactForm = () => {
     message: "",
     services: [],
   });
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const handleServiceToggle = (service) => {
-    setFormData((prevData) => {
-      const updatedServices = prevData.services.includes(service)
-        ? prevData.services.filter((item) => item !== service)
-        : [...prevData.services, service];
-
-      return {
-        ...prevData,
-        services: updatedServices,
-      };
-    });
+    setFormData((prev) => ({
+      ...prev,
+      services: prev.services.includes(service)
+        ? prev.services.filter((s) => s !== service)
+        : [...prev.services, service],
+    }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.services.length === 0) {
       toast.error("Please select at least one service.");
-      return; 
+      return;
     }
 
     const sanitizedData = {
@@ -72,8 +81,6 @@ const ContactForm = () => {
       services: [],
     });
 
-    console.log("this is form Data", sanitizedData);
-
     sendEmail({
       from_email: "marketing@prometheus.ph",
       from_name: "Prometheus",
@@ -82,15 +89,10 @@ const ContactForm = () => {
       number: sanitizedData.number,
       message: `
         First Name: ${sanitizedData.firstName} \n
-
         Last Name: ${sanitizedData.lastName} \n
-
         Number: ${sanitizedData.number} \n
-
-        Email: ${sanitizedData.email} \n 
-
+        Email: ${sanitizedData.email} \n
         Services Selected: ${sanitizedData.services.join(", ")} \n
-
         Message: ${sanitizedData.message}
       `,
     });
@@ -98,204 +100,255 @@ const ContactForm = () => {
     toast.success("Email has been sent!");
   };
 
-  // const onRecaptchaChange = (value) => {
-  //   console.log("reCAPTCHA value:", value);
-  //   setIsCaptchaVerified(true);
-  // };
+  const inputClasses = `${RajdhaniFont.className} w-full p-3 rounded-xl bg-white/[0.04] border border-[#96895F]/20 text-white/90 text-sm sm:text-base placeholder-white/25 focus:outline-none focus:border-[#D4AF37]/60 focus:ring-1 focus:ring-[#D4AF37]/30 transition-all duration-300`;
+  const labelClasses = `${OxaniumFont.className} block text-[11px] sm:text-xs text-[#96895F] uppercase tracking-[0.15em] font-bold mb-2`;
 
   return (
-    <div>
-      <div className="relative">
+    <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <CSSStars />
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 50%, rgba(150, 137, 95, 0.04) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative z-10">
         <ToastContainer />
       </div>
 
-      <div className="relative flex flex-col justify-center items-center text-center mx-5 mb-36 mt-12">
-        <div className="hidden md:block md:w-4/5 mb-2">
-          <img className="ml-5 h-6" src="/ContactAssets/vector.png" alt="" />
-        </div>
-        <div className="w-full md:w-4/5 border-2 border-white rounded-xl mx-20 p-4 bg-[#1B1A1A] flex flex-col justify-center items-center text-center opacity-75">
-          <h1 className="text-4xl text-white font-ox font-black mt-3">
-            This is your ticket to greater heights.
-          </h1>
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative rounded-2xl border-2 overflow-hidden backdrop-blur-sm"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(15,15,15,0.9), rgba(20,18,14,0.85))",
+            borderColor: "rgba(150, 137, 95, 0.15)",
+            boxShadow:
+              "0 20px 60px -15px rgba(0, 0, 0, 0.6), inset 0 0 80px rgba(150, 137, 95, 0.03)",
+          }}
+        >
+          {/* Inner dark layer */}
+          <div className="absolute inset-[2px] rounded-2xl bg-black/30 pointer-events-none" />
 
-          <div className="flex flex-row font-md text-md lg:text-lg xl:text-xl space-x-4 text-gray-500 px-10 mt-3">
-            Kick your brand into hyperdrive with the best minds and tools at your disposal. We&apos;re aiming for greatness.
-          </div>
-          <div className="w-4/5 border-b-2 h-2 flex-grow mt-5 px-10 border-customOrange hidden sm:flex"></div>
-          <div className="md:flex flex-row w-full md:space-x-10 m-10">
-            <div className="hidden md:flex-1 md:flex justify-center items-center">
+          <div className="relative z-10 flex flex-col md:flex-row">
+            {/* Left side - Logo + Info */}
+            <div className="hidden md:flex flex-col items-center justify-center flex-1 p-8 lg:p-12">
               <motion.img
-                className="w-96"
+                className="w-64 lg:w-80 opacity-70"
                 src="/AboutAssets/circle_logo.webp"
-                initial={{ rotate: 0 }}
                 animate={{ rotate: 360 }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               />
+              <div className="mt-8 text-center">
+                <h3
+                  className={`${MoonlanderFont.className} text-xl lg:text-2xl font-black text-white uppercase mb-3`}
+                  style={{ textShadow: "0 0 20px rgba(150, 137, 95, 0.15)" }}
+                >
+                  Your Ticket to
+                  <br />
+                  <span className="text-prOrange">Greater Heights</span>
+                </h3>
+                <p
+                  className={`${RajdhaniFont.className} text-white/50 text-sm lg:text-base max-w-xs mx-auto`}
+                  style={{ letterSpacing: "0.04em", lineHeight: "1.6" }}
+                >
+                  We&apos;re aiming for greatness. Let&apos;s build something
+                  extraordinary together.
+                </p>
+              </div>
             </div>
 
-            <div className="w-full flex-1 flex flex-col text-left space-y-5 text-white font-ox font-black">
-              <form
-                onSubmit={handleSubmit}
-                className="space-y-4 w-full p-10 text-[#C8C0B5] text-left"
-              >
-                <div className="flex flex-col md:flex-col">
-                  <div className="flex-1 flex flex-col md:flex-col justify-center w-full space-y-5 font-ox">
-                    <div className="w-full">
-                      <label
-                        htmlFor="firstName"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        name="firstName"
-                        placeholder="Peter"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        className="mt-1 p-2 block w-full bg-[#3A3737] rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
-                    <div className="w-full">
-                      <label
-                        htmlFor="lastName"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        placeholder="Weyland"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
+            {/* Vertical divider */}
+            <div className="hidden md:block w-[1px] my-8 bg-gradient-to-b from-transparent via-[#96895F]/20 to-transparent" />
 
-                    <div className="mb-4">
-                      <label
-                        htmlFor="number"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        Contact Number
-                      </label>
-                      <input
-                        type="text"
-                        id="number"
-                        placeholder="Enter your contact number"
-                        name="number"
-                        value={formData.number}
-                        onChange={handleChange}
-                        pattern="[0-9]{11}"
-                        title="Please enter a 11-digit phone number e.g. (09123456789)"
-                        className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
+            {/* Right side - Form */}
+            <div className="flex-1 p-6 sm:p-8 md:p-10 lg:p-12">
+              <div className="mb-6">
+                <div
+                  className={`${OxaniumFont.className} text-[#96895f] uppercase tracking-[0.2em] text-[10px] sm:text-xs font-bold mb-2 flex items-center gap-2`}
+                >
+                  <motion.div
+                    className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
+                    animate={{
+                      boxShadow: [
+                        "0 0 6px rgba(212, 175, 55, 0.6)",
+                        "0 0 12px rgba(212, 175, 55, 1)",
+                        "0 0 6px rgba(212, 175, 55, 0.6)",
+                      ],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <span>Send Us A Message</span>
+                </div>
+                <div className="h-[2px] w-16 bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent" />
+              </div>
 
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium font-ox"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="peterweyland@gmail.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-2">
-                    <label
-                      htmlFor="services"
-                      className="block text-sm font-medium font-ox"
-                    >
-                      Select Services:
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Name row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="firstName" className={labelClasses}>
+                      First Name
                     </label>
-                    <div className="flex flex-col">
-                      {[
-                        "Strategy",
-                        "Creative",
-                        "Branding",
-                        "Digital Marketing",
-                        "Media",
-                        "Social Media",
-                        "Event Management",
-                        "Software Solutions",
-                        "Wedding Studio",
-                      ].map((service) => (
-                        <div key={service} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            id={service}
-                            name="services"
-                            value={service}
-                            checked={formData.services.includes(service)}
-                            onChange={() => handleServiceToggle(service)}
-                            className="mr-2"
-                          />
-                          <label htmlFor={service}>{service}</label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex-1 mt-2">
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium font-ox"
-                    >
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      placeholder="Tell us your story or ask us anything!"
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="Peter"
+                      value={formData.firstName}
                       onChange={handleChange}
-                      className="mt-1 p-2 block w-full rounded-md bg-[#3A3737] border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200"
-                      rows="6"
+                      className={inputClasses}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className={labelClasses}>
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Weyland"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={inputClasses}
                       required
                     />
                   </div>
                 </div>
 
-                {/* <ReCAPTCHA
-                  sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                  onChange={onRecaptchaChange}
-                /> */}
-                <div className="flex justify-center md:justify-end">
-                  <button
-                    type="submit"
-                    className="py-3 px-6 bg-[#3A3737] hover:bg-gray-700 font-black rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                {/* Contact row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="number" className={labelClasses}>
+                      Contact Number
+                    </label>
+                    <input
+                      type="text"
+                      id="number"
+                      name="number"
+                      placeholder="09123456789"
+                      value={formData.number}
+                      onChange={handleChange}
+                      pattern="[0-9]{11}"
+                      title="Please enter a 11-digit phone number e.g. (09123456789)"
+                      className={inputClasses}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className={labelClasses}>
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="peterweyland@gmail.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={inputClasses}
+                      required
+                    />
+                  </div>
+                </div>
 
-                    // disabled={!isCaptchaVerified}
+                {/* Services */}
+                <div>
+                  <label className={labelClasses}>Select Services</label>
+                  <div className="flex flex-wrap gap-2">
+                    {services.map((service) => {
+                      const isSelected = formData.services.includes(service);
+                      return (
+                        <button
+                          key={service}
+                          type="button"
+                          onClick={() => handleServiceToggle(service)}
+                          className={`${RajdhaniFont.className} px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 border`}
+                          style={{
+                            background: isSelected
+                              ? "linear-gradient(135deg, rgba(150, 137, 95, 0.2), rgba(212, 175, 55, 0.1))"
+                              : "rgba(255,255,255,0.03)",
+                            borderColor: isSelected
+                              ? "rgba(212, 175, 55, 0.6)"
+                              : "rgba(150, 137, 95, 0.15)",
+                            color: isSelected ? "#D4AF37" : "rgba(255,255,255,0.5)",
+                            boxShadow: isSelected
+                              ? "0 0 15px rgba(212, 175, 55, 0.15)"
+                              : "none",
+                          }}
+                        >
+                          {service}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label htmlFor="message" className={labelClasses}>
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    placeholder="Tell us your story or ask us anything!"
+                    onChange={handleChange}
+                    className={inputClasses}
+                    rows="5"
+                    style={{ resize: "none" }}
+                    required
+                  />
+                </div>
+
+                {/* Submit */}
+                <div className="flex justify-end pt-2">
+                  <motion.button
+                    type="submit"
+                    className={`${OxaniumFont.className} px-8 py-3 rounded-xl text-sm uppercase tracking-[0.15em] font-bold transition-all duration-300`}
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(150, 137, 95, 0.2), rgba(212, 175, 55, 0.15))",
+                      border: "1.5px solid rgba(212, 175, 55, 0.5)",
+                      color: "#D4AF37",
+                      boxShadow: "0 0 20px rgba(212, 175, 55, 0.1)",
+                    }}
+                    whileHover={{
+                      boxShadow: "0 0 30px rgba(212, 175, 55, 0.25)",
+                      scale: 1.02,
+                    }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    SEND MESSAGE
-                  </button>
+                    Send Message
+                  </motion.button>
                 </div>
               </form>
             </div>
           </div>
-        </div>
+
+          {/* Corner accents */}
+          <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none">
+            <div className="absolute top-3 right-3 w-8 h-8 border-t border-r border-[#96895F]/25 rounded-tr-lg" />
+          </div>
+          <div className="absolute bottom-0 left-0 w-16 h-16 pointer-events-none">
+            <div className="absolute bottom-3 left-3 w-8 h-8 border-b border-l border-[#96895F]/25 rounded-bl-lg" />
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
