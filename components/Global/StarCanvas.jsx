@@ -9,7 +9,7 @@ import texturePlanet from "../../public/LandingPageAssets/texture.webp"
 import { OrbitControls } from "@react-three/drei";
 import dynamic from "next/dynamic";
 // import {useDeviceDetect} from "../../app/hooks/useDeviceDetect"
-
+ 
 
 
 const useDeviceNoSSR = dynamic(() => import("../../app/hooks/useDeviceDetect"), {ssr: false})
