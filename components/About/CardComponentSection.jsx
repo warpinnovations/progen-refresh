@@ -14,13 +14,13 @@ const companyInfo = [
     title: "Company Overview",
     icon: "◈",
     content:
-      "Prometheus is the premier full-service public relations firm and marketing agency in Western Visayas, specializing in creating and amplifying powerful stories that build and grow brands. Our team is dedicated to helping clients optimize their communications, create high-impact customer experiences, and reach wider audiences.",
+      "Prometheus is the premier, full-service public relations firm and marketing agency in Western Visayas, amplifying powerful stories to build brands and create high-impact customer experiences.",
   },
   {
     title: "History",
     icon: "✧",
     content:
-      "Prometheus is founded on the comprehensive science of marketing, drawing from multiple disciplines and converging into a singular, focused goal: to effectively promote and elevate your brand. Through our multidisciplinary approach, we leverage diverse marketing strategies and insights to craft compelling narratives that resonate with your audience, driving meaningful connections and sustainable brand growth.",
+      "Prometheus started out as a small creative team operating from a bedroom, funded by loans and promises. In the years since, Prometheus has made its mark in leveraging marketing science and multidisciplinary strategies. We take pride in our mastery of crafting compelling narratives to effectively promote and elevate brands.",
   },
 ];
 

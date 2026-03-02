@@ -11,7 +11,7 @@ import localFont from "next/font/local";
 import { Rajdhani, Oxanium } from "next/font/google";
 
 const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
-const RajdhaniFont = Rajdhani({ weight: "600", subsets: ["latin"] });
+const RajdhaniFont = Rajdhani({ weight: "700", subsets: ["latin"] });
 const OxaniumFont = Oxanium({ weight: "600", subsets: ["latin"] });
 
 const escapeHTML = (str) => {
@@ -32,7 +32,19 @@ const services = [
   "Wedding Studio",
 ];
 
+const internAreas = [
+  "Public Relations",
+  "Creative Design",
+  "Social Media",
+  "Digital Marketing",
+  "Events",
+  "Software Dev",
+  "Copywriting",
+  "Photography / Video",
+];
+
 const ContactForm = () => {
+  const [mode, setMode] = useState("contact"); // "contact" | "intern"
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -41,6 +53,11 @@ const ContactForm = () => {
     message: "",
     services: [],
   });
+
+  const handleModeSwitch = (newMode) => {
+    setMode(newMode);
+    setFormData({ firstName: "", lastName: "", email: "", number: "", message: "", services: [] });
+  };
 
   const handleServiceToggle = (service) => {
     setFormData((prev) => ({
@@ -59,7 +76,7 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.services.length === 0) {
-      toast.error("Please select at least one service.");
+      toast.error(mode === "intern" ? "Please select at least one area of interest." : "Please select at least one service.");
       return;
     }
 
@@ -81,23 +98,34 @@ const ContactForm = () => {
       services: [],
     });
 
+    const isIntern = mode === "intern";
     sendEmail({
       from_email: "marketing@prometheus.ph",
       from_name: "Prometheus",
       to_name: sanitizedData.firstName + " " + sanitizedData.lastName,
       user_email: sanitizedData.email,
       number: sanitizedData.number,
-      message: `
+      message: isIntern
+        ? `
+        ⭐ INTERNSHIP APPLICATION ⭐ \n
+        First Name: ${sanitizedData.firstName} \n
+        Last Name: ${sanitizedData.lastName} \n
+        Number: ${sanitizedData.number} \n
+        Email: ${sanitizedData.email} \n
+        Area(s) of Interest: ${sanitizedData.services.join(", ")} \n
+        Message / About Me: ${sanitizedData.message}
+        `
+        : `
         First Name: ${sanitizedData.firstName} \n
         Last Name: ${sanitizedData.lastName} \n
         Number: ${sanitizedData.number} \n
         Email: ${sanitizedData.email} \n
         Services Selected: ${sanitizedData.services.join(", ")} \n
         Message: ${sanitizedData.message}
-      `,
+        `,
     });
 
-    toast.success("Email has been sent!");
+    toast.success(mode === "intern" ? "Application submitted! We'll be in touch." : "Email has been sent!");
   };
 
   const inputClasses = `${RajdhaniFont.className} w-full p-3 rounded-xl bg-white/[0.04] border border-[#96895F]/20 text-white/90 text-sm sm:text-base placeholder-white/25 focus:outline-none focus:border-[#D4AF37]/60 focus:ring-1 focus:ring-[#D4AF37]/30 transition-all duration-300`;
@@ -154,16 +182,19 @@ const ContactForm = () => {
                   className={`${MoonlanderFont.className} text-xl lg:text-2xl font-black text-white uppercase mb-3`}
                   style={{ textShadow: "0 0 20px rgba(150, 137, 95, 0.15)" }}
                 >
-                  Your Ticket to
-                  <br />
-                  <span className="text-prOrange">Greater Heights</span>
+                  {mode === "intern" ? (
+                    <>Launch Your<br /><span className="text-prOrange">Career Here</span></>
+                  ) : (
+                    <>Your Ticket to<br /><span className="text-prOrange">Greater Heights</span></>
+                  )}
                 </h3>
                 <p
                   className={`${RajdhaniFont.className} text-white/50 text-sm lg:text-base max-w-xs mx-auto`}
                   style={{ letterSpacing: "0.04em", lineHeight: "1.6" }}
                 >
-                  We&apos;re aiming for greatness. Let&apos;s build something
-                  extraordinary together.
+                  {mode === "intern"
+                    ? "Join the crew. Grow fast. Work on real campaigns with the best in Western Visayas."
+                    : "We're aiming for greatness. Let's build something extraordinary together."}
                 </p>
               </div>
             </div>
@@ -173,7 +204,30 @@ const ContactForm = () => {
 
             {/* Right side - Form */}
             <div className="flex-1 p-6 sm:p-8 md:p-10 lg:p-12">
+              {/* Mode tab switcher */}
               <div className="mb-6">
+                <div className="flex gap-1 p-1 rounded-xl mb-5 w-fit" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(150,137,95,0.15)" }}>
+                  {[
+                    { id: "contact", label: "Inquire" },
+                    { id: "intern", label: "Apply as Intern" },
+                  ].map(({ id, label }) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => handleModeSwitch(id)}
+                      className={`${OxaniumFont.className} relative px-4 py-2 rounded-lg text-[10px] uppercase tracking-[0.15em] font-bold transition-all duration-300`}
+                      style={{
+                        color: mode === id ? "#D4AF37" : "rgba(150,137,95,0.5)",
+                        background: mode === id ? "linear-gradient(135deg, rgba(150,137,95,0.18), rgba(212,175,55,0.1))" : "transparent",
+                        border: mode === id ? "1px solid rgba(212,175,55,0.35)" : "1px solid transparent",
+                        boxShadow: mode === id ? "0 0 16px rgba(212,175,55,0.12)" : "none",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
                 <div
                   className={`${OxaniumFont.className} text-[#96895f] uppercase tracking-[0.2em] text-[10px] sm:text-xs font-bold mb-2 flex items-center gap-2`}
                 >
@@ -188,7 +242,7 @@ const ContactForm = () => {
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span>Send Us A Message</span>
+                  <span>{mode === "intern" ? "Internship Application" : "Send Us A Message"}</span>
                 </div>
                 <div className="h-[2px] w-16 bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent" />
               </div>
@@ -264,17 +318,19 @@ const ContactForm = () => {
                   </div>
                 </div>
 
-                {/* Services */}
+                {/* Services / Intern Areas */}
                 <div>
-                  <label className={labelClasses}>Select Services</label>
+                  <label className={labelClasses}>
+                    {mode === "intern" ? "Area(s) of Interest" : "Select Services"}
+                  </label>
                   <div className="flex flex-wrap gap-2">
-                    {services.map((service) => {
-                      const isSelected = formData.services.includes(service);
+                    {(mode === "intern" ? internAreas : services).map((item) => {
+                      const isSelected = formData.services.includes(item);
                       return (
                         <button
-                          key={service}
+                          key={item}
                           type="button"
-                          onClick={() => handleServiceToggle(service)}
+                          onClick={() => handleServiceToggle(item)}
                           className={`${RajdhaniFont.className} px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 border`}
                           style={{
                             background: isSelected
@@ -289,7 +345,7 @@ const ContactForm = () => {
                               : "none",
                           }}
                         >
-                          {service}
+                          {item}
                         </button>
                       );
                     })}
@@ -299,13 +355,13 @@ const ContactForm = () => {
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className={labelClasses}>
-                    Message
+                    {mode === "intern" ? "About You" : "Message"}
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
-                    placeholder="Tell us your story or ask us anything!"
+                    placeholder={mode === "intern" ? "Tell us about yourself, your skills, and why you want to join Prometheus!" : "Tell us your story or ask us anything!"}
                     onChange={handleChange}
                     className={inputClasses}
                     rows="5"
@@ -332,7 +388,7 @@ const ContactForm = () => {
                     }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Send Message
+                    {mode === "intern" ? "Submit Application" : "Send Message"}
                   </motion.button>
                 </div>
               </form>

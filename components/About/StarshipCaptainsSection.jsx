@@ -13,16 +13,28 @@ const OxaniumFont = Oxanium({ weight: "600", subsets: ["latin"] });
 
 const storyTellers = [
   {
-    name: "Gino Fanega",
+    name: "Atty. Lcid Fernandez",
+    img: "/LandingPageAssets/storytellers/lcid_formal.webp",
+    imgColored: "/LandingPageAssets/storytellers/lcid_wacky.webp",
+    role: "Chief Executive Officer",
+  },
+  {
+    name: "Lawrence Clark Fernandez",
+    img: "/LandingPageAssets/storytellers/lawrence_Formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/lawrence_Formal.jpg",
+    role: "Chief Administrative Officer",
+  },
+  {
+    name: "Francis Gino Fanega",
     img: "/LandingPageAssets/storytellers/gino_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/gino_wacky.webp",
     role: "Executive Creative Director",
   },
   {
-    name: "Lcid Fernandez",
-    img: "/LandingPageAssets/storytellers/lcid_formal.webp",
-    imgColored: "/LandingPageAssets/storytellers/lcid_wacky.webp",
-    role: "Chief Executive Officer",
+    name: "Kevin Ryan Atutubo",
+    img: "/LandingPageAssets/storytellers/kevin_formal.webp",
+    imgColored: "/LandingPageAssets/storytellers/kevin_wacky.webp",
+    role: "Chief Technology Officer",
   },
   {
     name: "Blessed Bea Plondaya",
@@ -31,13 +43,13 @@ const storyTellers = [
     role: "Chief Operations Officer",
   },
   {
-    name: "Kevin Atutubo",
-    img: "/LandingPageAssets/storytellers/kevin_formal.webp",
-    imgColored: "/LandingPageAssets/storytellers/kevin_wacky.webp",
-    role: "WARP - Chief Technical Officer",
+    name: "Jayvee Bayaban",
+    img: "/LandingPageAssets/storytellers/jayvee_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/jayvee_formal.jpg",
+    role: "Finance and Compliance Officer",
   },
   {
-    name: "Alyanna Comprendio",
+    name: "Alyanna Marie Compredio",
     img: "/LandingPageAssets/storytellers/aly_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/aly_wacky.webp",
     role: "Accounts Manager",
@@ -46,7 +58,13 @@ const storyTellers = [
     name: "Esther Marie Sazon",
     img: "/LandingPageAssets/storytellers/esther_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/esther_wacky.webp",
-    role: "Copy Manager",
+    role: "Junior Associate Creative Director",
+  },
+  {
+    name: "Eddyl Rafael Tolentino",
+    img: "/LandingPageAssets/storytellers/dyl_formal.png",
+    imgColored: "/LandingPageAssets/storytellers/dyl_formal.png",
+    role: "Senior Content Producer",
   },
 ];
 
@@ -267,7 +285,7 @@ const StarshipCaptainsSection = () => {
 
       {/* Team Grid */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
           {storyTellers.map((person, index) => (
             <CaptainCard
               key={index}

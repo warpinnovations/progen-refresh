@@ -2,6 +2,7 @@
 
 import React from "react";
 import CardComponentSection from "@/components/About/CardComponentSection";
+import AllAwardsSection from "@/components/About/AllAwardsSection";
 import StarShipsSection from "@/components/About/StarShipSection";
 import StarshipCaptainsSection from "@/components/About/StarshipCaptainsSection";
 import Footer from "@/components/Global/Footer";
@@ -150,6 +151,9 @@ const MainSectionAbout = () => {
 
       {/* ========== COMPANY INFO SECTION ========== */}
       <CardComponentSection />
+
+      {/* ========== ALL AWARDS SECTION ========== */}
+      <AllAwardsSection />
 
       {/* ========== STARSHIPS SECTION (Last) ========== */}
       <StarShipsSection />

@@ -160,12 +160,12 @@ const AnniversaryContact = () => {
                         />
 
                         <motion.p
-                            className={`${RajdhaniFont.className} text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-white/70 leading-relaxed mx-auto mb-2 sm:mb-3 md:mb-4 lg:mb-6 font-semibold`}
+                            className={`${RajdhaniFont.className} text-[8px] sm:text-[10px] md:text-xs lg:text-sm text-[#EAE2B7]/85 leading-relaxed mx-auto mb-2 sm:mb-3 md:mb-4 lg:mb-6`}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.3 }}
-                            style={{ letterSpacing: '0.02em' }}
+                            style={{ letterSpacing: '0.06em' }}
                         >
                             Let&apos;s engineer your brand&apos;s success across the digital universe.
                         </motion.p>

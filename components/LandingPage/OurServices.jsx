@@ -20,14 +20,14 @@ const servicesData = [
         icon: '◈',
         color: '#96895F',
         services: [
-            'Situational Analysis',
+            'Situation Analysis',
             'Consumer Research and Analysis',
-            'Data Interpretation & Insighting',
+            'Insighting',
             'Strategy Development',
             'Digital Consultation',
             'Promotion Mechanics Formulation',
-            'Marketing Workshops',
-            'Content Planning'
+            'Digital Marketing 101 Workshop',
+            'Social Listening',
         ]
     },
     {
@@ -37,15 +37,17 @@ const servicesData = [
         color: '#96895F',
         services: [
             'Website Design',
-            'Print Design',
-            'Installation Design',
+            'Banner Ad Design',
             'Graphic Design',
-            'Artistic Renders',
-            'Illustration',
+            'Video Shoot',
+            'Video Editing',
+            'Video Animation',
+            'Video Storyboarding',
             'Scriptwriting',
+            'Photography',
+            'Content Planning',
             'Ad Copywriting',
             'Social Copywriting',
-            'Sound Design'
         ]
     },
     {
@@ -57,8 +59,9 @@ const servicesData = [
             'Big Idea Formulation',
             'Mock-up and Design',
             'Target Market Identification',
+            'Strategy Development',
             'Communications Planning',
-            'Social Card Design'
+            'Social Card Design',
         ]
     },
     {
@@ -69,8 +72,8 @@ const servicesData = [
         services: [
             'Search Engine Optimization',
             'Strategy Development',
-            'Direct E-mail Marketing',
-            'Content Tagging'
+            'E-mail Direct Marketing',
+            'Content Tagging',
         ]
     },
     {
@@ -82,7 +85,7 @@ const servicesData = [
             'Media Planning and Strategy',
             'Media Buying and Deployment',
             'Media Monitoring and Optimization',
-            'Media Reporting'
+            'Media Reporting',
         ]
     },
     {
@@ -91,28 +94,26 @@ const servicesData = [
         icon: '◆',
         color: '#96895F',
         services: [
-            'Social Media Scanning',
+            'KPI Monitoring & Social Media Scanning',
             'Social Media Strategy',
-            'Social Media Design',
             'Digital Brand Analysis',
             'Social Media Planning and Conversation Curation',
-            'Influencer Marketing',
-            'Campaign Management'
+            'Influencer / KOL Marketing',
+            'Campaign Management',
         ]
     },
     {
         id: 'event-management',
-        name: 'Event Management Services',
+        name: 'Event Management',
         icon: '◈',
         color: '#96895F',
         services: [
-            'Broadcast Management',
-            'On-site Event Management',
-            'Event Marketing and Promotion',
-            'Event Planning and Strategy',
-            'Brand Activations',
-            'Exhibition and Booth Design',
-            'Supplier Networking'
+            'Event Planning and Concept Development',
+            'On-ground Activation Management',
+            'End-to-end Program and Broadcast Management',
+            'On-site Setup, Staging, and Coordination',
+            'Guest, Audience, and Registration Management',
+            'Supplier and Talent Management',
         ]
     },
     {
@@ -123,18 +124,15 @@ const servicesData = [
         services: [
             'Custom Website Development',
             'Website Design and Re-design',
-            'Software Solutions',
             'CMS Website Development',
             'Front End Custom Design',
             'Website Copywriting',
-            'Digital Strategy',
-            'Content Creation',
             'Conversion Optimization',
             'Search Engine Optimization',
             'AR/VR/MR Development',
-            'App Development'
+            'App Development',
         ]
-    }
+    },
 ];
 
 // --- CIRCULAR TEXT COMPONENT (lightweight SVG) ---
@@ -589,15 +587,19 @@ function OurServices() {
                     </motion.p>
                 </div>
 
-                {/* Services Grid - Mobile: Single column stack, Desktop: 3 columns */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                {/* Services Grid — flex-wrap so last row centers */}
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
                     {servicesData.map((service, index) => (
-                        <ServiceCard
+                        <div
                             key={service.id}
-                            service={service}
-                            index={index}
-                            onClick={() => setSelectedService(service)}
-                        />
+                            className="w-full lg:w-[calc(33.333%-14px)] xl:w-[calc(33.333%-16px)]"
+                        >
+                            <ServiceCard
+                                service={service}
+                                index={index}
+                                onClick={() => setSelectedService(service)}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>

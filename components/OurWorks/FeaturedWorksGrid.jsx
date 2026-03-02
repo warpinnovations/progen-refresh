@@ -410,7 +410,7 @@ const FeaturedWorksGrid = () => {
 
     return (
         <motion.section
-            className='w-full flex flex-col justify-center py-16 sm:py-24 md:py-36 lg:py-48 relative overflow-hidden'
+            className='w-full flex flex-col justify-center py-16 sm:py-20 md:py-24 relative overflow-hidden'
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -423,35 +423,21 @@ const FeaturedWorksGrid = () => {
             </div>
 
             {/* Header */}
-            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-12 md:mb-20">
+            <div className="relative z-20 w-full max-w-6xl mx-auto px-4 text-center mb-10 md:mb-14">
                 <h2 className={`font-black text-2xl sm:text-3xl md:text-5xl ${MoonlanderFont.className}`}>
                     <span className="text-[#f5f5f5]">Our </span>
                     <span className="text-prOrange">Featured Works</span>
                 </h2>
 
                 <FuturisticDivider color="#96895f" />
-
-                {/* Bigger, polished description text */}
-                <p className={`text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/85 mt-6 max-w-4xl mx-auto ${RajdhaniFont.className}`}
-                   style={{ 
-                       letterSpacing: '0.06em',
-                       lineHeight: '1.5',
-                       fontWeight: '500'
-                   }}>
-                    {isMobile ? (
-                        <>An interactive showcase of our creative and technical projects.</>
-                    ) : (
-                        <>An interactive showcase of our creative and technical projects in orbit.</>
-                    )}
-                </p>
             </div>
 
             {/* Conditional Rendering: Mobile Grid or Desktop Orbital */}
             {isMobile ? (
-                // Mobile: 2x2 Grid - Show first 4 projects
+                // Mobile: 2x3 Grid - Show all 6 projects
                 <div className="relative z-20 w-full px-4">
                     <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
-                        {indexedWorks.slice(0, 4).map((work, index) => (
+                        {indexedWorks.slice(0, 6).map((work, index) => (
                             <MobileCard key={work.originalIndex} work={work} index={index} />
                         ))}
                     </div>

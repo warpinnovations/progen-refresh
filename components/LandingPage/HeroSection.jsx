@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import PageTransition from "@/components/Global/PageTransition";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import StarsCanvas from "@/components/Global/StarCanvas";
 import { Oxanium, Rajdhani } from "next/font/google";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import localFont from "next/font/local";
 import Link from "next/link";
 
@@ -61,47 +61,185 @@ const Meteors = ({ number = 20 }) => {
   );
 };
 
+// Award Modal Component
+const AwardModal = ({ win, onClose }) => {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  const recognitionStyle =
+    win.recognition === "Gold" || win.recognition === "Winner"
+      ? { bg: "bg-[#96895f]/20", text: "text-[#D4AF37]", border: "border-[#96895f]/50", shadow: "shadow-[0_0_10px_rgba(212,175,55,0.3)]" }
+      : win.recognition === "Silver"
+      ? { bg: "bg-white/8", text: "text-white/70", border: "border-white/25", shadow: "" }
+      : { bg: "bg-white/4", text: "text-white/45", border: "border-white/12", shadow: "" };
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={onClose}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+      {/* Modal card */}
+      <motion.div
+        className="relative z-10 w-full max-w-md rounded-2xl overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(15,15,15,0.97), rgba(22,20,14,0.95))",
+          border: "1px solid rgba(150,137,95,0.25)",
+          boxShadow: "0 30px 80px -10px rgba(0,0,0,0.8), inset 0 0 60px rgba(150,137,95,0.03)",
+        }}
+        initial={{ opacity: 0, scale: 0.92, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.92, y: 20 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center gap-3 px-5 pt-5 pb-4 border-b border-[#96895f]/15">
+          {win.logo && (
+            <img src={`/LandingPageAssets/awards/${win.logo}`} alt={win.awardBody} className="h-8 w-8 object-contain opacity-80" />
+          )}
+          <div className="flex-1 min-w-0">
+            <p className={`${OxaniumFont.className} text-[#96895f] text-[9px] uppercase tracking-[0.2em] font-bold`}>
+              {win.awardBody}
+            </p>
+            <p className={`${RajdhaniFont.className} text-white/85 text-sm font-bold leading-snug`}>
+              {win.category}
+            </p>
+          </div>
+          <div className={`${RajdhaniFont.className} shrink-0 text-[10px] font-black uppercase tracking-wide px-2.5 py-1 rounded-lg border ${recognitionStyle.bg} ${recognitionStyle.text} ${recognitionStyle.border} ${recognitionStyle.shadow}`}>
+            {win.recognition}
+          </div>
+        </div>
+
+        {/* About the Award */}
+        <div className="px-5 py-4">
+          <p className={`${OxaniumFont.className} text-[#96895f] text-[9px] uppercase tracking-[0.2em] font-bold mb-2 flex items-center gap-2`}>
+            <span className="w-3 h-[1px] bg-[#96895f]/50" />
+            About the Award
+          </p>
+          <p className={`${RajdhaniFont.className} text-white/65 text-sm leading-relaxed`} style={{ letterSpacing: "0.03em" }}>
+            {win.aboutAward}
+          </p>
+        </div>
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center bg-white/5 border border-white/10 text-white/40 hover:text-white/80 hover:bg-white/10 transition-all duration-200"
+          aria-label="Close"
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M1 1l8 8M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        {/* Corner accent */}
+        <div className="absolute top-0 right-0 w-12 h-12 pointer-events-none">
+          <div className="absolute top-2 right-2 w-6 h-6 border-t border-r border-[#96895f]/25 rounded-tr-lg" />
+        </div>
+        <div className="absolute bottom-0 left-0 w-12 h-12 pointer-events-none">
+          <div className="absolute bottom-2 left-2 w-6 h-6 border-b border-l border-[#96895f]/25 rounded-bl-lg" />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 const HeroSection = () => {
   const [activeText, setActiveText] = useState(0);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [selectedWin, setSelectedWin] = useState(null);
+  const hoverTimerRef = useRef(null);
   
   const heroText = "BE LIMITLESS";
   const glitchCharacterOptions = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>?/";
 
   const awards = [
-    { 
-      filename: "MEA Logo.png", 
+    {
+      filename: "MEA Logo.png",
       alt: "Marketing Awards",
       achievement: "15+ Wins",
       year: "2020-2024",
       category: "Digital Excellence",
-      description: "Recognized for breakthrough digital campaigns across multiple categories"
+      description: "Recognized for breakthrough digital campaigns across multiple categories",
+      awardBody: "Marketing Excellence Awards",
+      subtitle: "by Marketing-Interactive · Asia-Pacific",
+      wins: [
+        { year: "2024", category: "Excellence in Anniversary Marketing", recognition: "Gold", aboutAward: "The Marketing Excellence Awards (MEA) is a highly-regarded program that honors outstanding brand-building initiatives and effective marketing campaigns. It honors campaigns that utilize a corporate anniversary to create positive market resonance and expand competitive standing." },
+        { year: "2024", category: "Excellence in Urban Guerrilla Marketing", recognition: "Silver", aboutAward: "This Marketing Excellence Award recognizes the most creative, bold, and high-impact non-traditional marketing campaigns. This category celebrates campaigns that leverage a business's anniversary to generate positive public attention and significantly boost market growth." },
+        { year: "2023", category: "Marketing Leader of the Year", recognition: "Finalist", aboutAward: "The Marketing Leader of the Year award is given to a brand-side marketing leader for achieving significant impact and showing outstanding leadership. The award recognizes excellence across core areas of marketing competency, including creative strategy, forward-thinking execution, and effective team motivation." },
+      ],
     },
-    { 
-      filename: "Anvil Awards Logo.png", 
+    {
+      filename: "Anvil Awards Logo.png",
       alt: "Anvil Awards",
-      achievement: "Gold Winner",
-      year: "2023-2024",
+      achievement: "Silver Winner",
+      year: "2025",
       category: "PR Excellence",
-      description: "Awarded for strategic communication and measurable impact"
+      description: "Awarded for strategic communication and measurable impact",
+      awardBody: "60th Anvil Awards",
+      subtitle: "by PRSP · Only Provincial Agency Honored",
+      wins: [
+        { year: "2025", category: "Best PR-Led Integrated Campaign", recognition: "Silver", aboutAward: "The Anvil Awards represents the highest national honor for excellence in strategic communications and public relations in the Philippines. This particular category recognizes the best comprehensive campaign that was driven by a strong PR-led strategy. Prometheus was recognized for demonstrating outstanding unified execution." },
+        { year: "2025", category: "PR Tools: Special Events", recognition: "Silver", aboutAward: "This Anvil Award category specifically recognizes the most effective and creative event activation through the use of innovative platforms and interactive elements that capture audience engagement in order to achieve campaign goals. The citation is given to PR tools, such as special events, that successfully elevate public engagement, enhance visibility, and strengthen stakeholder relationships." },
+        { year: "2025", body: "PR Awards Singapore", category: "Best Experiential PR Campaign", recognition: "Finalist", aboutAward: "The PR Awards is a highly respected regional recognition program held in Singapore that celebrates excellence in public relations. It specifically recognizes outstanding PR campaigns that have demonstrated innovative strategy and impressive results across the Asia-Pacific, South Asia, and Oceania regions. Prometheus secured a finalist spot in this competition." },
+      ],
     },
-    { 
-      filename: "Asia CEO Awards.PNG", 
+    {
+      filename: "Asia CEO Awards.PNG",
       alt: "Asia CEO Awards",
       achievement: "Regional Champion",
-      year: "2024",
+      year: "2024–2025",
       category: "Leadership & Innovation",
-      description: "Southeast Asia's premier recognition for visionary business leadership"
+      description: "Southeast Asia's premier recognition for visionary business leadership",
+      awardBody: "Asia CEO Awards",
+      subtitle: "Largest Business Awards in Southeast Asia",
+      wins: [
+        { year: "2025", category: "Young Leader of the Year", recognition: "Winner", aboutAward: "This recognition is one of the most prestigious honors from one of Southeast Asia's largest business award-giving bodies. It celebrates leaders who are creating significant national impact through innovation and dedicated community empowerment initiatives." },
+        { year: "2025", category: "SME Company of the Year", recognition: "Winner", aboutAward: "The SME Company of the Year celebrates organizations that demonstrate exceptional growth trajectory and maintain high operational excellence. The award also places a strong emphasis on the company's positive social impact within its operating region. It signifies a small-to-medium enterprise that is a leader in its field." },
+        { year: "2024", category: "Young Leader of the Year", recognition: "Winner", aboutAward: "This award acknowledges individuals who are actively shaping the future landscape of Philippine business and driving significant change. Atty. Lcid Crescent Fernandez was honored for his exemplary and boundary-pushing leadership in the regional business community." },
+        { year: "2024", category: "SME Company of the Year", recognition: "Winner", aboutAward: "The Asia CEO Awards recognizes small and medium enterprises (SMEs) that exhibit remarkable growth, competitiveness, and commitment to social impact. Prometheus was honored for its impressive and rapid transformation from a local startup into a multi-division agency." },
+      ],
     },
   ];
 
-  // Auto-cycle
+  // Auto-cycle — pauses while any card is hovered
   useEffect(() => {
+    if (hoveredIndex !== null) return;
     const timer = setInterval(() => {
       setHighlightedIndex((prev) => (prev + 1) % awards.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [awards.length]);
+  }, [awards.length, hoveredIndex]);
+
+  // Hover handlers — small delay prevents panel flickering when cursor moves card→panel
+  const handleCardMouseEnter = (index) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    setHoveredIndex(index);
+  };
+  const handleCardMouseLeave = () => {
+    hoverTimerRef.current = setTimeout(() => setHoveredIndex(null), 180);
+  };
+  const handlePanelMouseEnter = () => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+  };
+  const handlePanelMouseLeave = () => {
+    hoverTimerRef.current = setTimeout(() => setHoveredIndex(null), 180);
+  };
 
   // Glitch Text Effect logic
   const textArray = useMemo(() => {
@@ -179,7 +317,7 @@ const HeroSection = () => {
               className={`flex text-lg md:text-2xl lg:text-3xl ${RajdhaniFont.className} font-semibold text-white text-center w-full md:w-3/4 px-4 md:px-0`}
               style={{ letterSpacing: '0.04em', lineHeight: '1.5' }}
             >
-              We are the Premier, Award-Winning, Full Service Marketing Agency and Public Relations Firm in Western Visayas.
+               Prometheus is the premier, full-service public relations firm and marketing agency in Western Visayas, amplifying powerful stories to build brands and create high-impact customer experiences.
             </motion.h2>
 
             {/* CTA Button */}
@@ -210,105 +348,42 @@ const HeroSection = () => {
                 ======================================== */}
             <div className="relative w-full pt-16 md:pt-24 pb-8">
               
-              {/* ENHANCED Animated Background */}
+              {/* Section Background */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {/* More Meteors */}
-                <Meteors number={15} />
-                
-                {/* Enhanced Rotating Spotlight Beams */}
-                <div className="absolute inset-0 opacity-25">
-                  {[...Array(6)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute top-1/2 left-1/2 origin-top"
-                      style={{
-                        width: '3px',
-                        height: '100%',
-                        background: `linear-gradient(to bottom, 
-                          rgba(150,137,95,${0.7 - i * 0.08}), 
-                          rgba(150,137,95,${0.4 - i * 0.05}) 50%,
-                          transparent)`,
-                        transform: `rotate(${i * 60}deg)`,
-                        animation: `rotate-beam ${12 + i * 2.5}s linear infinite`,
-                        animationDelay: `${i * 1.2}s`,
-                        filter: 'blur(1.5px)'
-                      }}
-                    />
-                  ))}
-                </div>
+                {/* Subtle meteors — same component used in hero */}
+                <Meteors number={6} />
 
-                {/* Pulsing Radial Waves */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {[...Array(4)].map((_, i) => (
-                    <div
-                      key={`wave-${i}`}
-                      className="absolute rounded-full border-2 border-[#96895f]"
-                      style={{
-                        width: '200px',
-                        height: '200px',
-                        opacity: 0,
-                        animation: `radial-pulse ${3.5 + i * 0.8}s ease-out infinite`,
-                        animationDelay: `${i * 0.9}s`
-                      }}
-                    />
-                  ))}
-                </div>
+                {/* Ambient radial glow — shifts subtly with active card */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center transition-all duration-1000"
+                  style={{
+                    background: `radial-gradient(ellipse 700px 500px at center,
+                      rgba(150,137,95,0.10) 0%,
+                      transparent 65%)`,
+                    transform: `translateX(${(highlightedIndex - 1) * 40}px)`,
+                  }}
+                />
 
-                {/* Orbiting Energy Rings */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {[...Array(3)].map((_, i) => (
-                    <div
-                      key={`orbit-${i}`}
-                      className="absolute rounded-full border border-[#96895f]/20"
-                      style={{
-                        width: `${400 + i * 150}px`,
-                        height: `${400 + i * 150}px`,
-                        animation: `orbit-ring ${20 + i * 10}s linear infinite`,
-                        animationDelay: `${i * 3}s`,
-                        transformStyle: 'preserve-3d',
-                        transform: `rotateX(${60 + i * 10}deg)`
-                      }}
-                    >
-                      {/* Energy Dot on Ring */}
-                      <div 
-                        className="absolute top-0 left-1/2 w-2 h-2 bg-[#96895f] rounded-full -translate-x-1/2"
-                        style={{
-                          boxShadow: '0 0 15px rgba(150,137,95,0.8), 0 0 30px rgba(150,137,95,0.4)',
-                          animation: 'pulse-dot 2s ease-in-out infinite'
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                {/* Floating Energy Particles */}
-                {[...Array(30)].map((_, i) => (
-                  <div
-                    key={`particle-${i}`}
-                    className="absolute rounded-full bg-[#96895f]"
+                {/* Two soft pulsing rings — echo the Certifications section style */}
+                {[0, 1].map(i => (
+                  <motion.div
+                    key={`award-ring-${i}`}
+                    className="absolute top-1/2 left-1/2 rounded-full pointer-events-none"
                     style={{
-                      width: `${Math.random() * 3 + 1}px`,
-                      height: `${Math.random() * 3 + 1}px`,
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      opacity: Math.random() * 0.6 + 0.2,
-                      animation: `float-particle ${6 + Math.random() * 12}s ease-in-out infinite`,
-                      animationDelay: `${Math.random() * 5}s`,
-                      filter: 'blur(0.5px)'
+                      width: `${320 + i * 180}px`,
+                      height: `${320 + i * 180}px`,
+                      marginLeft: `-${160 + i * 90}px`,
+                      marginTop: `-${160 + i * 90}px`,
+                      border: `1px solid rgba(150,137,95,${0.12 - i * 0.04})`,
                     }}
+                    animate={{ scale: [1, 1.06, 1], opacity: [0.5, 0.15, 0.5] }}
+                    transition={{ duration: 4 + i * 1.5, delay: i * 1.2, repeat: Infinity, ease: 'easeInOut' }}
                   />
                 ))}
 
-                {/* Spotlight Focus Glow - Dynamic */}
-                <div 
-                  className="absolute inset-0 flex items-center justify-center transition-all duration-1000"
-                  style={{
-                    background: `radial-gradient(ellipse 800px 600px at center, 
-                      rgba(150,137,95,0.12) 0%, 
-                      transparent 60%)`,
-                    transform: `scale(${1 + highlightedIndex * 0.05})`,
-                    opacity: 0.8
-                  }}
+                {/* Subtle top/bottom vignette */}
+                <div className="absolute inset-0"
+                  style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.3) 100%)" }}
                 />
               </div>
 
@@ -421,90 +496,108 @@ const HeroSection = () => {
                         const isCenter = index === 1;
                         const isRight = index === 2;
                         
-                        // Enhanced positioning logic
-                        let positionClasses = '';
+                        // Positioning — numeric offsets fed directly into framer-motion
+                        const isMd = typeof window !== 'undefined' && window.innerWidth >= 768;
+                        const sideX = isMd ? 380 : 200;
+                        const farY = isMd ? 208 : 160;
+
+                        let xOffset = 0;
+                        let yOffset = 0;
                         let zIndex = 10;
                         let scale = 0.7;
                         let opacity = 0.3;
                         let blur = 'blur(3px)';
                         let rotateY = 0;
-                        
+
                         if (isActive) {
-                          positionClasses = 'translate-x-0 translate-y-0';
                           zIndex = 30;
-                          scale = window.innerWidth < 768 ? 0.95 : 1.15;
+                          scale = isMd ? 1.12 : 0.95;
                           opacity = 1;
                           blur = 'blur(0px)';
-                          rotateY = 0;
+                          // Shift left when this card is hovered to make room for the detail panel
+                          xOffset = hoveredIndex === index ? (isMd ? -175 : -110) : 0;
                         } else if ((highlightedIndex === 0 && isRight) || (highlightedIndex === 2 && isLeft) || (highlightedIndex === 1 && (isLeft || isRight))) {
-                          // Adjacent cards - More dramatic positioning
-                          if ((highlightedIndex === 0 && isCenter) || (highlightedIndex === 2 && isCenter) || (highlightedIndex === 1 && isLeft)) {
-                            positionClasses = 'md:-translate-x-72 lg:-translate-x-96 translate-y-0';
-                            rotateY = 25;
-                          } else {
-                            positionClasses = 'md:translate-x-72 lg:translate-x-96 translate-y-0';
-                            rotateY = -25;
-                          }
+                          // Adjacent card — visible but not interactive
+                          const goLeft = (highlightedIndex === 0 && isCenter) || (highlightedIndex === 2 && isCenter) || (highlightedIndex === 1 && isLeft);
+                          xOffset = goLeft ? -sideX : sideX;
+                          rotateY = goLeft ? 20 : -20;
                           zIndex = 20;
-                          scale = 0.8;
-                          opacity = 0.5;
-                          blur = 'blur(1.5px)';
+                          scale = 0.82;
+                          opacity = 0.55;
+                          blur = 'blur(0px)';
                         } else {
-                          // Far card - Push back more
-                          positionClasses = 'translate-y-40 md:translate-y-52';
+                          // Far card — pushed below, completely passive
+                          yOffset = farY;
                           zIndex = 10;
-                          scale = 0.65;
-                          opacity = 0.2;
-                          blur = 'blur(4px)';
-                          rotateY = 0;
+                          scale = 0.6;
+                          opacity = 0.12;
+                          blur = 'blur(6px)';
                         }
                         
                         return (
                           <motion.div
                             key={award.filename}
-                            className="absolute w-full max-w-xs md:max-w-md"
-                            style={{
-                              zIndex,
-                              transformStyle: 'preserve-3d'
-                            }}
+                            className={`absolute w-full max-w-xs md:max-w-md ${isActive ? 'cursor-pointer' : 'pointer-events-none'}`}
+                            style={{ zIndex, transformStyle: 'preserve-3d' }}
                             initial={{ opacity: 0, scale: 0.3, y: 200, rotateX: 90 }}
-                            animate={{ 
+                            animate={{
                               opacity,
                               scale,
-                              y: 0,
+                              x: xOffset,
+                              y: yOffset,
                               rotateY,
                               rotateX: 0,
                               filter: blur,
                             }}
-                            transition={{ 
-                              delay: 0.8 + (index * 0.15),
-                              duration: 1.2,
-                              type: "spring",
-                              stiffness: 60,
-                              damping: 15
+                            transition={{
+                              // Default — governs the entrance animation (opacity, scale, y, rotateY…)
+                              default: {
+                                delay: 0.8 + (index * 0.15),
+                                duration: 1.2,
+                                type: "spring",
+                                stiffness: 60,
+                                damping: 15,
+                              },
+                              // x — no delay, responsive spring so hover shift feels immediate
+                              x: {
+                                type: "spring",
+                                stiffness: 380,
+                                damping: 38,
+                                mass: 0.7,
+                              },
                             }}
+                            onMouseEnter={isActive ? () => handleCardMouseEnter(index) : undefined}
+                            onMouseLeave={isActive ? handleCardMouseLeave : undefined}
                           >
-                            <div 
-                              className="transition-all duration-1000 ease-out"
-                              style={{ transform: positionClasses.includes('translate') ? positionClasses.split(' ').map(c => {
-                                if (c.includes('translate-x')) return `translateX(${c.includes('-') ? '-' : ''}${c.match(/\d+/)[0] * 4}px)`;
-                                if (c.includes('translate-y')) return `translateY(${c.match(/\d+/)[0] * 4}px)`;
-                                return '';
-                              }).join(' ') : undefined }}
-                            >
+                            <div className="transition-all duration-700 ease-out">
                               {/* Enhanced Hexagonal Card Container */}
                               <div className="relative">
                                 <div className="relative mx-auto w-full max-w-[220px] md:max-w-[400px]">
-                                  
+
+                                  {/* Outer halo pulse — active only */}
+                                  {isActive && (
+                                    <motion.div
+                                      className="absolute -inset-3 md:-inset-5 rounded-[2rem] md:rounded-[2.5rem] pointer-events-none"
+                                      animate={{
+                                        boxShadow: [
+                                          '0 0 60px rgba(150,137,95,0.25)',
+                                          '0 0 120px rgba(150,137,95,0.5)',
+                                          '0 0 60px rgba(150,137,95,0.25)',
+                                        ]
+                                      }}
+                                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                                    />
+                                  )}
+
                                   {/* Main Card with Enhanced Effects */}
                                   <div
                                     className={`
                                       relative p-4 md:p-10 rounded-2xl md:rounded-3xl
                                       backdrop-blur-2xl border-2
                                       transition-all duration-700
-                                      ${isActive 
-                                        ? 'bg-gradient-to-br from-black/85 via-black/75 to-black/65 border-[#96895f] shadow-[0_0_100px_rgba(150,137,95,0.5),0_0_50px_rgba(150,137,95,0.3),inset_0_0_50px_rgba(150,137,95,0.1)]' 
-                                        : 'bg-black/40 border-[#96895f]/15 shadow-[0_0_15px_rgba(0,0,0,0.3)]'
+                                      ${isActive
+                                        ? 'bg-gradient-to-br from-black/90 via-black/80 to-black/70 border-[#96895f] shadow-[0_0_160px_rgba(150,137,95,0.7),0_0_80px_rgba(150,137,95,0.45),0_0_40px_rgba(150,137,95,0.25),inset_0_0_60px_rgba(150,137,95,0.12)]'
+                                        : 'bg-black/40 border-[#96895f]/20 shadow-[0_0_20px_rgba(0,0,0,0.4)]'
                                       }
                                     `}
                                   >
@@ -640,8 +733,8 @@ const HeroSection = () => {
                                       )}
                                       
                                       {/* Logo with Enhanced Animation */}
-                                      <motion.div 
-                                        className="relative w-20 h-20 md:w-48 md:h-48 flex items-center justify-center"
+                                      <motion.div
+                                        className="relative w-20 h-20 md:w-44 md:h-44 flex items-center justify-center"
                                         animate={isActive ? {
                                           scale: [1, 1.05, 1],
                                           rotateY: [0, 5, 0, -5, 0]
@@ -796,6 +889,151 @@ const HeroSection = () => {
                           </motion.div>
                         );
                       })}
+
+                      {/* ── Detail Panel ── */}
+                      <AnimatePresence mode="wait">
+                        {hoveredIndex !== null && (
+                          <motion.div
+                            key={`detail-panel-${hoveredIndex}`}
+                            className="absolute hidden md:block w-full max-w-[320px]"
+                            style={{
+                              left: 'calc(50% + 52px)',
+                              top: '50%',
+                              transform: 'translateY(-50%)',
+                              zIndex: 40,
+                            }}
+                            initial={{ opacity: 0, x: 80, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: 80, scale: 0.9 }}
+                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            onMouseEnter={handlePanelMouseEnter}
+                            onMouseLeave={handlePanelMouseLeave}
+                          >
+                            {/* Outer ambient glow */}
+                            <div className="absolute -inset-4 rounded-[2rem] pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(150,137,95,0.18) 0%, transparent 70%)', filter: 'blur(20px)' }} />
+
+                            <div className="relative rounded-3xl overflow-hidden backdrop-blur-3xl border border-[#96895f]/70 bg-gradient-to-br from-black/95 via-[#96895f]/4 to-black/92 shadow-[0_0_120px_rgba(150,137,95,0.45),0_0_60px_rgba(150,137,95,0.2),inset_0_0_80px_rgba(150,137,95,0.06)]">
+
+                              {/* Animated border shimmer */}
+                              <motion.div
+                                className="absolute inset-0 rounded-3xl pointer-events-none"
+                                style={{ border: '1px solid rgba(150,137,95,0.5)' }}
+                                animate={{ opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 2.5, repeat: Infinity }}
+                              />
+
+                              {/* Top-left corner fill */}
+                              <div className="absolute top-0 left-0 w-24 h-24 pointer-events-none overflow-hidden rounded-tl-3xl">
+                                <div style={{ background: 'linear-gradient(135deg, rgba(150,137,95,0.12) 0%, transparent 55%)' }} className="absolute inset-0" />
+                                <div className="absolute top-3.5 left-3.5 w-7 h-7 border-t-2 border-l-2 border-[#96895f]" />
+                              </div>
+                              {/* Bottom-right corner fill */}
+                              <div className="absolute bottom-0 right-0 w-24 h-24 pointer-events-none overflow-hidden rounded-br-3xl">
+                                <div style={{ background: 'linear-gradient(315deg, rgba(150,137,95,0.12) 0%, transparent 55%)' }} className="absolute inset-0" />
+                                <div className="absolute bottom-3.5 right-3.5 w-7 h-7 border-b-2 border-r-2 border-[#96895f]" />
+                              </div>
+
+                              {/* Scan line */}
+                              <motion.div
+                                className="absolute inset-0 pointer-events-none overflow-hidden"
+                                animate={{ opacity: [0, 0.25, 0] }}
+                                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                              >
+                                <motion.div
+                                  className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#96895f] to-transparent"
+                                  animate={{ y: [-4, 600] }}
+                                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                                  style={{ filter: 'blur(1.5px)' }}
+                                />
+                              </motion.div>
+
+                              <div className="relative p-5">
+
+                                {/* Header row */}
+                                <div className="flex items-start justify-between gap-3 mb-4">
+                                  <div>
+                                    <p className={`${RajdhaniFont.className} text-[#96895f]/60 text-[10px] uppercase tracking-[0.22em] font-bold mb-1`}>
+                                      {awards[hoveredIndex].subtitle}
+                                    </p>
+                                    <h4 className={`${RajdhaniFont.className} text-white text-base font-black uppercase tracking-wide leading-tight`}>
+                                      {awards[hoveredIndex].awardBody}
+                                    </h4>
+                                  </div>
+
+                                  {/* Win-count badge */}
+                                  <motion.div
+                                    className="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-xl border-2 border-[#96895f] bg-[#96895f]/10"
+                                    animate={{
+                                      boxShadow: [
+                                        '0 0 14px rgba(150,137,95,0.3)',
+                                        '0 0 30px rgba(150,137,95,0.55)',
+                                        '0 0 14px rgba(150,137,95,0.3)',
+                                      ]
+                                    }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                  >
+                                    <span className={`${MoonlanderFont.className} text-[#96895f] text-xl font-black leading-none`}>
+                                      {awards[hoveredIndex].wins.length}
+                                    </span>
+                                    <span className={`${RajdhaniFont.className} text-[#96895f]/65 text-[8px] uppercase tracking-widest`}>wins</span>
+                                  </motion.div>
+                                </div>
+
+                                {/* Animated separator */}
+                                <motion.div
+                                  className="w-full h-px mb-4"
+                                  style={{ background: 'linear-gradient(to right, rgba(150,137,95,0.9), rgba(150,137,95,0.3), transparent)' }}
+                                  animate={{ opacity: [0.6, 1, 0.6] }}
+                                  transition={{ duration: 2, repeat: Infinity }}
+                                />
+
+                                {/* Wins list */}
+                                <div className="space-y-2">
+                                  {awards[hoveredIndex].wins.map((win, i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="relative flex items-center gap-2.5 p-2.5 rounded-xl border border-[#96895f]/15 bg-white/[0.03] cursor-pointer hover:border-[#96895f]/40 hover:bg-white/[0.06] transition-colors duration-200"
+                                      initial={{ opacity: 0, x: 25 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: 0.1 + i * 0.08, duration: 0.32, ease: 'easeOut' }}
+                                      onClick={() => setSelectedWin({ ...win, awardBody: awards[hoveredIndex].awardBody, logo: awards[hoveredIndex].filename })}
+                                    >
+                                      {/* Year block */}
+                                      <div className="shrink-0 flex flex-col items-center justify-center w-11 h-11 rounded-lg bg-[#96895f]/12 border border-[#96895f]/35">
+                                        <span className={`${RajdhaniFont.className} text-[#96895f]/55 text-[9px] font-bold leading-none`}>20</span>
+                                        <span className={`${MoonlanderFont.className} text-[#96895f] text-base font-black leading-none`}>{win.year.slice(2)}</span>
+                                      </div>
+
+                                      {/* Text */}
+                                      <div className="flex-1 min-w-0">
+                                        {win.body && (
+                                          <p className={`${RajdhaniFont.className} text-[#96895f]/60 text-[9px] uppercase tracking-widest leading-none mb-0.5`}>
+                                            {win.body}
+                                          </p>
+                                        )}
+                                        <p className={`${RajdhaniFont.className} text-white/90 text-xs font-bold leading-snug tracking-wide`}>
+                                          {win.category}
+                                        </p>
+                                      </div>
+
+                                      {/* Recognition badge */}
+                                      <div className={`${RajdhaniFont.className} shrink-0 text-[10px] font-black uppercase tracking-wide px-2 py-1 rounded-lg border ${
+                                        win.recognition === 'Gold' || win.recognition === 'Winner'
+                                          ? 'bg-[#96895f]/20 text-[#96895f] border-[#96895f]/50 shadow-[0_0_10px_rgba(150,137,95,0.3)]'
+                                          : win.recognition === 'Silver'
+                                          ? 'bg-white/6 text-white/65 border-white/22'
+                                          : 'bg-white/3 text-white/40 border-white/10'
+                                      }`}>
+                                        {win.recognition}
+                                      </div>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   </div>
 
@@ -870,42 +1108,6 @@ const HeroSection = () => {
                     ))}
                   </div>
 
-                  {/* Enhanced CTA - ACTIVE */}
-                  <motion.div 
-                    className="text-center mt-16"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2, duration: 0.6 }}
-                  >
-                    <a href="#work">
-                      <motion.button 
-                        className={`group ${RajdhaniFont.className} text-white/80 hover:text-[#96895f] text-sm md:text-base uppercase tracking-[0.2em] font-bold transition-all duration-300 flex items-center gap-3 mx-auto px-8 py-4 rounded-xl border-2 border-[#96895f]/30 hover:border-[#96895f] hover:bg-[#96895f]/5 relative overflow-hidden`}
-                        whileHover={{ 
-                          scale: 1.05,
-                          boxShadow: '0 0 40px rgba(150,137,95,0.3)'
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        {/* Button Glow Effect */}
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#96895f]/10 to-transparent"
-                          animate={{
-                            x: ['-100%', '200%']
-                          }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "linear"
-                          }}
-                        />
-                        
-                        <span className="relative z-10">View Our Award-Winning Work</span>
-                        <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                      </motion.button>
-                    </a>
-                  </motion.div>
                 </div>
               </div>
 
@@ -953,6 +1155,12 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      {/* Award Modal */}
+      <AnimatePresence>
+        {selectedWin && (
+          <AwardModal win={selectedWin} onClose={() => setSelectedWin(null)} />
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 };
