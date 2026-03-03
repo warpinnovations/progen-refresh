@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useMotionValue, useTransform, animate, useSpring } from 'framer-motion';
-import { worksData as allWorksData } from '@/app/contants';
+import { worksData } from '@/app/contants';
 import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
@@ -14,20 +15,9 @@ const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
 const RajdhaniFont = Rajdhani({ weight: '700', subsets: ['latin'] });
 
-const videoSources = [
-    '/ReelsAssets/Bootcamp 3 seconds.mp4',      // Project 01
-    '/ReelsAssets/Damires 3 seconds.mp4',     // Project 02
-    '/ReelsAssets/Home Credit 3 seconder.mp4',      // Project 03
-    '/ReelsAssets/IAP 3 seconds.mp4',      // Project 04
-    '/ReelsAssets/More Power 3 seconds.mp4',     // Project 05
-    '/ReelsAssets/Nike 3 Seconds.mp4',      // Project 06
-];
-
-
 // --- MOBILE CARD COMPONENT ---
 const MobileCard = ({ work, index }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const videoRef = React.useRef(null);
 
     return (
         <motion.div
@@ -37,7 +27,7 @@ const MobileCard = ({ work, index }) => {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="w-full"
         >
-            <Link href="/works" className="block">
+            <Link href={`/works/subpage?index=${work.originalIndex}`} className="block">
                 <motion.div
                     className="group/card w-full h-[180px] sm:h-[220px] rounded-xl overflow-hidden relative bg-slate-900 cursor-pointer"
                     style={{
@@ -51,15 +41,12 @@ const MobileCard = ({ work, index }) => {
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
                 >
-                    {/* Background Video */}
-                    <video
-                        ref={videoRef}
-                        src={videoSources[work.originalIndex] || work.img}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-out"
+                    {/* Background: Key visual image */}
+                    <Image
+                        src={work.img}
+                        alt={work.title}
+                        fill
+                        className="object-cover transition-all duration-500 ease-out"
                         style={{
                             opacity: isHovered ? 0.9 : 0.75,
                             transform: isHovered ? 'scale(1.1)' : 'scale(1.05)',
@@ -156,8 +143,6 @@ const MobileCard = ({ work, index }) => {
 
 // --- ORBITAL CARD COMPONENT (DESKTOP) ---
 const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffset, radius, onHover, isHovered, isAnotherCardHovered }) => {
-    const videoRef = React.useRef(null);
-    
     const angle = (index / totalCards) * 360;
     const currentAngle = useTransform(animationProgress, (latest) => angle + latest);
 
@@ -177,10 +162,6 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
         if (isHovered) {
             scale.set(1.2);
             zIndex.set(999);
-            // Ensure video is playing when hovered
-            if (videoRef.current) {
-                videoRef.current.play().catch(() => {});
-            }
         } else {
             scale.set(baseScale.get());
             zIndex.set(baseZIndex.get());
@@ -189,20 +170,9 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
 
     React.useEffect(() => {
         if (isAnotherCardHovered && !isHovered) {
-            // Only dim non-hovered cards
             opacity.set(0.25);
-            // Pause video when another card is hovered
-            if (videoRef.current) {
-                videoRef.current.pause();
-            }
         } else {
             opacity.set(baseOpacity.get());
-            // Resume video playback
-            if (videoRef.current) {
-                videoRef.current.play().catch(() => {
-                    // Ignore play errors (can happen if user hasn't interacted yet)
-                });
-            }
         }
     }, [isAnotherCardHovered, isHovered, baseOpacity, opacity]);
 
@@ -226,7 +196,7 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
             onMouseEnter={() => onHover(true)}
             onMouseLeave={() => onHover(false)}
         >
-            <Link href="/works" className="block w-[490px] h-[280px] cursor-pointer">
+            <Link href={`/works/subpage?index=${work.originalIndex}`} className="block w-[490px] h-[280px] cursor-pointer">
                 <motion.div
                     className="group/card w-full h-full rounded-2xl overflow-hidden relative bg-slate-900 transform-gpu"
                     style={{
@@ -239,15 +209,12 @@ const OrbitalCard = ({ work, index, totalCards, animationProgress, verticalOffse
                     }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
                 >
-                    {/* Background Video - Much More Visible */}
-                    <video
-                        ref={videoRef}
-                        src={videoSources[work.originalIndex] || work.img}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover transition-all duration-300 ease-out"
+                    {/* Background: Key visual image */}
+                    <Image
+                        src={work.img}
+                        alt={work.title}
+                        fill
+                        className="object-cover transition-all duration-300 ease-out"
                         style={{
                             opacity: isHovered ? 0.9 : 0.75,
                             transform: isHovered ? 'scale(1.12)' : 'scale(1.06)',
@@ -374,7 +341,7 @@ const FeaturedWorksGrid = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    const indexedWorks = allWorksData.map((work, index) => ({ ...work, originalIndex: index }));
+    const indexedWorks = worksData.slice(0, 6).map((work, index) => ({ ...work, originalIndex: index }));
     const topRowWorks = indexedWorks.slice(0, 3);
     const bottomRowWorks = indexedWorks.slice(3, 6);
 

@@ -25,7 +25,7 @@ const videoSources = [
 ];
 
 // --- 3D TILT WORK CARD ---
-const WorkCard = ({ work, detail, index, isFeatured = false }) => {
+const WorkCard = ({ work, detail, index, dataIndex, isFeatured = false }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
   const cardRef = useRef(null);
@@ -35,7 +35,8 @@ const WorkCard = ({ work, detail, index, isFeatured = false }) => {
   const rotateX = useTransform(mouseY, [0, 1], [8, -8]);
   const rotateY = useTransform(mouseX, [0, 1], [-8, 8]);
 
-  const hasVideo = index < videoSources.length;
+  const subpageIndex = dataIndex ?? index;
+  const hasVideo = subpageIndex < videoSources.length;
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -63,7 +64,7 @@ const WorkCard = ({ work, detail, index, isFeatured = false }) => {
       className={isFeatured ? "sm:col-span-2 sm:row-span-2" : ""}
       style={{ perspective: "1200px" }}
     >
-      <Link href={`/works/subpage?index=${index}`} className="block h-full">
+      <Link href={`/works/subpage?index=${subpageIndex}`} className="block h-full">
         <motion.div
           ref={cardRef}
           className="group relative w-full h-full rounded-2xl overflow-hidden bg-slate-900 cursor-pointer"
@@ -457,12 +458,13 @@ const MainSectionWork = () => {
         {/* Grid - Bento style: first card is featured (2x2 on desktop) */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4 sm:gap-5 md:gap-6">
-            {worksData.map((work, index) => (
+            {worksData.slice(6).map((work, index) => (
               <WorkCard
                 key={index}
                 work={work}
-                detail={workData[index]}
+                detail={workData[index + 6]}
                 index={index}
+                dataIndex={index + 6}
                 isFeatured={index === 0}
               />
             ))}
