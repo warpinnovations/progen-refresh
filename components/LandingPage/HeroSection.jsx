@@ -432,20 +432,19 @@ const HeroSection = () => {
                 >
                   <h3 className={`${MoonlanderFont.className} text-6xl md:text-8xl lg:text-9xl font-black mb-4 relative`}>
                     <span className="text-white relative inline-block">
-                      30
+                      10
                       {/* Glowing Number Effect */}
                       <span 
                         className="absolute inset-0 text-white blur-xl opacity-50"
                         style={{ animation: 'glow-pulse 3s ease-in-out infinite' }}
                       >
-                        30
+                        10
                       </span>
                     </span>
                     <span 
                       className="text-[#96895f] relative inline-block"
                       style={{ animation: 'scale-pulse 2s ease-in-out infinite' }}
                     >
-                      +
                       <span 
                         className="absolute inset-0 text-[#96895f] blur-lg opacity-60"
                       >

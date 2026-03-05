@@ -44,8 +44,8 @@ const storyTellers = [
   },
   {
     name: "Jayvee Bayaban",
-    img: "/LandingPageAssets/storytellers/jayvee_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/jayvee_formal.jpg",
+    img: "/LandingPageAssets/storytellers/JB.png",
+    imgColored: "/LandingPageAssets/storytellers/JB_Onhighlight.png",
     role: "Finance and Compliance Officer",
   },
   {
@@ -62,8 +62,8 @@ const storyTellers = [
   },
   {
     name: "Eddyl Rafael Tolentino",
-    img: "/LandingPageAssets/storytellers/dyl_formal.png",
-    imgColored: "/LandingPageAssets/storytellers/dyl_formal.png",
+    img: "/LandingPageAssets/storytellers/Dyl.png",
+    imgColored: "/LandingPageAssets/storytellers/Dyl_Onhighlight.png",
     role: "Senior Content Producer",
   },
 ];

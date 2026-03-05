@@ -66,7 +66,7 @@ const BRAND_LOGOS = [
   { name: "VSG Group",                 image: "/addedbrands/VSG Logo_Stacked.png" },
 ];
 
-const BrandLogo = ({ brand, index }) => {
+const BrandLogo = ({ brand, index, isMajor }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -80,7 +80,7 @@ const BrandLogo = ({ brand, index }) => {
         viewport={{ once: true, amount: 0.05 }}
         transition={{ duration: 0.35, delay: (index % 10) * 0.025 }}
         whileTap={{ scale: 0.93 }}
-        className="w-full h-full flex items-center justify-center p-4 sm:p-5 rounded-lg cursor-pointer transition-all duration-300"
+        className={`w-full h-full flex items-center justify-center rounded-lg cursor-pointer transition-all duration-300 ${isMajor ? 'p-2 sm:p-3' : 'p-4 sm:p-5'}`}
         style={{
           border: showPopup ? `1.5px solid ${accentColor}80` : '1.5px solid rgba(255,255,255,0.06)',
           boxShadow: showPopup ? `0 0 20px 3px ${accentColor}25` : 'none',
@@ -160,14 +160,14 @@ const BrandsSection = () => {
           <FuturisticDivider color="#EAE2B7" />
         </motion.div>
 
-        {/* Brand Grid — flex-wrap so last row centers */}
+        {/* Brand Grid — unified, flex-wrap so last row centers */}
         <div className="w-full flex flex-wrap justify-center gap-2 sm:gap-2.5">
           {BRAND_LOGOS.map((brand, index) => (
             <div
               key={`${brand.name}-${index}`}
               className="aspect-square relative overflow-visible flex-none w-[calc(25%-6px)] sm:w-[calc(20%-7px)] md:w-[calc(16.667%-7px)] lg:w-[calc(12.5%-7px)] xl:w-[calc(10%-9px)]"
             >
-              <BrandLogo brand={brand} index={index} />
+              <BrandLogo brand={brand} index={index} isMajor={index < 20} />
             </div>
           ))}
         </div>

@@ -165,8 +165,8 @@ export const workData = [
     title: 'Home Credit | iPhone 17 Launch',
     img: 'https://lh3.googleusercontent.com/d/1Ms9N1fcrg0Xqm4gU_28LPvfHZgJelAAQ',
     videoLink: '',
-    description: '',
-    body: '',
+    description: "Turning Apple's most anticipated launch into a nationwide experiential phenomenon driven by gamification, hospitality, and agile on-ground execution.",
+    body: 'Prometheus transformed Home Credit\'s iPhone 17 launches across Luzon, Visayas, and Mindanao into high-engagement brand activations. Our strategy utilized immersive "Glam Booths" and mirror photo booths to strengthen brand affinity and organic social reach. Premium hospitality, including branded coffee and ice cream, ensured high audience retention during late-night events. To drive conversion, we introduced the gamified Buzzwire Challenge, which incentivized immediate loan applications by offering successful players a total loan waiver. Demonstrating operational agility, Prometheus finalized complex setups within sixty-minute windows, establishing a scalable retail growth model through innovative regional storytelling.',
     services: [
       'Event Management Services',
       'Event Activation',
@@ -177,24 +177,39 @@ export const workData = [
   // 7. Isuzu
   {
     title: 'Isuzu',
-    headline: '', // Add 5–10 word headline
-    subheadline: '', // Add 15–25 word subheadline
+    headline: 'Driving Isuzu Iloilo Toward Dominant Regional Market Leadership',
+    subheadline: "Prometheus utilized tech-forward strategy and witty creative executions to modernize brand perception and accelerate lead generation throughout Isuzu Iloilo's 2026 marketing campaign.",
     img: '/newOurWorkAssets/Isuzu.jpg',
-    videoLink: '', // Paste Google Drive embed URL: https://drive.google.com/file/d/FILE_ID/preview
-    description: '',
-    body: '', // Add 2 paragraphs, ~150 words total
-    services: []
+    videoLink: '',
+    description: "Prometheus utilized tech-forward strategy and witty creative executions to modernize brand perception and accelerate lead generation throughout Isuzu Iloilo's 2026 marketing campaign.",
+    body: "Prometheus collaborated with Isuzu Iloilo to orchestrate a sophisticated 2026 marketing campaign aimed at securing its position as the region's premier automotive dealer. Our strategic framework shifted the brand's narrative toward a younger, more influential demographic while maintaining the professional prestige associated with the Ayala Group. By implementing a comprehensive content plan that included detailed situational analysis and social media strategy, Prometheus enhanced the brand's online presence across major platforms. We successfully tailored messaging for diverse product lines, highlighting the rugged utility of the D-Max for versatile family use and the unwavering operational reliability of commercial trucks for established business owners.\n\nThe execution phase focused on high-engagement multimedia, featuring witty social media reels and lifestyle photography that resonated deeply with the target audience. Prometheus facilitated community-driven initiatives, such as the \"Drive Me Home\" program and the highly anticipated \"Truckfest,\" which strengthened local partnerships and generated a high volume of quality leads. By showcasing real-life success stories from prominent local clients, we reinforced Isuzu's core values of reliability and dedicated partnership. This campaign significantly boosted brand reach and inquiry rates through automated response systems and strategic digital boosting, effectively elevating Isuzu Iloilo's market identity.",
+    services: [
+      'Ongoing Engagement',
+      'Bankers Night 2026',
+      'Dinagyang Art Installation + 2 reels',
+      'Isuzu Iloilo x LGU Lambunao Turnover of 20 Traviz Units',
+      'Isuzu Top Deals for Gears (Bank Display)',
+      'Isuzu Iloilo Service and Parts Caravan',
+      'Drive Me Home',
+      'Isuzu Community Run',
+      'Traviz Fest 2025'
+    ]
   },
   // 8. NIKE Iloilo Opening
   {
     title: 'NIKE Iloilo Opening',
-    headline: '', // Add 5–10 word headline
-    subheadline: '', // Add 15–25 word subheadline
+    headline: 'Championing the Nike Rise Iloilo Grand Store Debut',
+    subheadline: "Prometheus redefined regional retail through elite media management and strategic PR seeding, establishing Nike Rise as Iloilo's premier athletic performance destination.",
     img: '/newOurWorkAssets/Nike.PNG',
-    videoLink: '', // Paste Google Drive embed URL: https://drive.google.com/file/d/FILE_ID/preview
-    description: '',
-    body: '', // Add 2 paragraphs, ~150 words total
-    services: []
+    videoLink: '',
+    description: "Prometheus redefined regional retail through elite media management and strategic PR seeding, establishing Nike Rise as Iloilo's premier athletic performance destination.",
+    body: "Prometheus orchestrated the high-profile launch of the Nike Rise store in SM City Iloilo, marking a significant milestone for regional athletic retail. Our team managed a specialized 360° marketing strategy that centered on a comprehensive PR campaign to announce the store's arrival to the local community. By coordinating with top-tier regional and national publications, such as the Daily Guardian and various automotive blogs, Prometheus ensured extensive coverage that highlighted the store's world-class retail environment. This strategic PR seeding successfully positioned the location as a central hub for athletes and fitness enthusiasts throughout Western Visayas.\n\nThe campaign's impact was further amplified through a meticulously curated influencer program that engaged prominent local personalities and sports enthusiasts. Prometheus facilitated authentic brand storytelling by managing a media launch event and store tours that encouraged guests to share their experiences in real-time. This approach translated into a significant surge of foot traffic and sustained online engagement that surpassed initial awareness goals. Our team's agile execution and deep expertise in the regional market allowed Nike Rise to achieve a record-breaking debut and solidify its presence as an innovative leader in the Iloilo retail landscape.",
+    services: [
+      'Media Services',
+      'Influencer Campaign',
+      'PR Seeding',
+      'Event Management Services'
+    ]
   },
   // 9. KServico | Home Credit 2 Wheeler Partnership
   {
@@ -213,12 +228,12 @@ export const workData = [
   // 10. Japan Foundation Manila
   {
     title: 'Japan Foundation Manila',
-    headline: '', // Add 5–10 word headline
-    subheadline: '', // Add 15–25 word subheadline
+    headline: 'Record Reach for Japanese Film Festival 2024',
+    subheadline: 'Prometheus integrated high-impact media seeding and influencer activation to achieve an estimated reach of 3.4 million for the Japan Foundation Manila.',
     img: '/newOurWorkAssets/Japan.PNG',
-    videoLink: '', // Paste Google Drive embed URL: https://drive.google.com/file/d/FILE_ID/preview
-    description: '',
-    body: '', // Add 2 paragraphs, ~150 words total
+    videoLink: '',
+    description: 'Prometheus integrated high-impact media seeding and influencer activation to achieve an estimated reach of 3.4 million for the Japan Foundation Manila.',
+    body: "Prometheus's comprehensive media strategy for the 2024 Japanese Film Festival (JFF) in Iloilo achieved an exceptional 90% PR success rate through precise media management. Our team secured 41 unique media placements across prominent regional publications, including the Daily Guardian, Panay News, and Iloilo Metropolitan Times, which resulted in a massive estimated online reach of 3,467,495. By generating an estimated ad value of PHP474,213, Prometheus successfully optimized the visibility of the festival's regional leg and demonstrated our expertise in high-value brand positioning.\n\nSimultaneously, Prometheus enhanced the opening ceremony's digital presence by activating 12 specialized influencers who generated over 110 social media posts. This innovative influencer program reached an additional 51,900 users and secured over 4,700 engagements across TikTok, Instagram, and Facebook platforms. High-performing KOLs, such as Sheila's Kitchen and Pinoy Travel Freak, created authentic, narrative-driven content that captured the festival's vibrant atmosphere at SM City Iloilo. This 360-degree approach demonstrated our ability to synchronize traditional and digital channels, providing future clients with robust social proof of our regional marketing leadership and innovative execution.",
     services: [
       'Event Management Services',
       'Media Services (Influencer Campaign)'
@@ -227,30 +242,47 @@ export const workData = [
   // 11. Damires Hills Farm and Spa Resort
   {
     title: 'Damires Hills Farm and Spa Resort',
-    headline: '', // Add 5–10 word headline
-    subheadline: '', // Add 15–25 word subheadline
+    headline: 'Revitalizing Regional Heritage With the Hamili 2025 Campaign',
+    subheadline: 'Prometheus successfully conducted a high-impact marketing framework at Damires Hills, blending culture and digital innovation to celebrate Ilonggo craftsmanship and creativity.',
     img: '/newOurWorkAssets/Damires.jpg',
-    videoLink: '', // Paste Google Drive embed URL: https://drive.google.com/file/d/FILE_ID/preview
-    description: '',
-    body: '', // Add 2 paragraphs, ~150 words total
-    services: []
+    videoLink: '',
+    description: 'Prometheus successfully conducted a high-impact marketing framework at Damires Hills, blending culture and digital innovation to celebrate Ilonggo craftsmanship and creativity.',
+    body: 'Prometheus masterminded the Hamili 2025 campaign at Damires Hills Tierra Verde Leisure Farm to highlight the richness of Ilonggo heritage and artistry. By implementing a visionary marketing strategy, our team transformed this cultural celebration into a high-visibility event that resonated deeply throughout the region. We managed every aspect of the project, from initial strategy to final execution, ensuring that the term "hamili" (meaning precious) was reflected in every detail of the experience. This campaign served as a premier example of our commitment to regional empowerment, providing local artisans and creators with a professional platform to showcase their exceptional talents to a massive audience.\n\nThe campaign\'s success was defined by a sophisticated mix of traditional media management and modern influencer partnerships. Prometheus secured a perfect PR success rate, resulting in forty-one unique media placements across top-tier regional publications. This managed outreach generated an estimated online reach of over 4.3 million users, effectively amplifying the stories of Iloilo\'s heritage across the digital landscape. By coordinating with twenty diverse content creators, we sparked authentic engagement that produced nearly 600,000 PHP in advertising value. This project stands as powerful social proof of our ability to deliver measurable growth and tech-infused creativity for our partners.',
+    services: [
+      'Event Management Services',
+      'Media Services',
+      'Influencer Campaign',
+      'PR Seeding'
+    ]
   },
   // 12. Owndays
   {
     title: 'Owndays',
+    headline: 'Engineering Widespread Visibility for the OWNDAYS Iloilo Expansion',
+    subheadline: 'Prometheus successfully managed a multi-channel PR campaign to launch the second OWNDAYS store in Iloilo, securing high-impact media placements and significant regional reach.',
     img: '/WorkAssets/workModals/owndays.png', // Update with key visual
     videoLink: 'https://youtu.be/SN21Kj6LuJM',
-    description: 'Precision strategy and data-backed execution mean results. Great results.',
-    body: '',
-    services: []
+    description: 'Prometheus successfully managed a multi-channel PR campaign to launch the second OWNDAYS store in Iloilo, securing high-impact media placements and significant regional reach.',
+    body: "Prometheus executed a strategic media campaign to launch the second OWNDAYS store at SM City Iloilo, reinforcing the brand's position as a leader in the optical industry. Our team facilitated a comprehensive PR strategy that secured 40 unique media placements across diverse regional platforms, including prominent news outlets like the Daily Guardian and Panay News. This managed outreach resulted in a total estimated online reach of over 3.4 million, demonstrating our ability to generate massive visibility for international retail partners within the Western Visayas market. By delivering an estimated ad value of over 470,000 PHP, Prometheus provided high-value brand exposure that translated into immediate community awareness.\n\nThe campaign's impact was anchored in professional media coordination and a clear, innovative narrative that highlighted the store's \"simple, quick, and valuable\" service model. Prometheus ensured that the launch was featured in top-tier automotive and lifestyle sections, successfully reaching a broad audience of tech-savvy consumers and local professionals. This effort solidified the brand's presence as a visionary leader in Iloilo's retail landscape while providing future partners with strong social proof of our marketing leadership. Our agile execution and deep regional insights allowed OWNDAYS to achieve a record-breaking expansion, effectively doubling its footprint in the region through strategic storytelling and elite media management.",
+    services: [
+      'Media Services',
+      'PR Seeding',
+      'Influencer Campaign'
+    ]
   },
   // 13. Birkenstock
   {
     title: 'Birkenstock',
+    headline: 'Giant Leaps for Birkenstock Iloilo Toward Massive Regional Visibility',
+    subheadline: 'Prometheus secured forty strategic media placements and a 100% success rate, generating over 3.4 million in digital reach for the Birkenstock Iloilo grand launch.',
     img: '/WorkAssets/workModals/birkenstock.png', // Update with key visual
     videoLink: 'https://youtu.be/BbJJr-QArRY',
-    description: 'Finding an Ilonggo look for a global name.',
-    body: '',
-    services: []
+    description: 'Prometheus secured forty strategic media placements and a 100% success rate, generating over 3.4 million in digital reach for the Birkenstock Iloilo grand launch.',
+    body: "Prometheus led the multifaceted media management for the Birkenstock store launch at SM City Iloilo, reinforcing the brand's global prestige within the Western Visayas market. Our team implemented a PR seeding framework that secured forty unique media placements across prominent regional publications, including the Daily Guardian and Panay News. This comprehensive approach achieved a flawless 100% PR success rate, effectively positioning Birkenstock as a premier lifestyle destination for Ilonggo consumers. By leveraging deep regional insights and innovative storytelling, Prometheus demonstrated its commitment to regional empowerment through high-value brand positioning.\n\nThe marketing impact was anchored in an exceptional estimated online reach of 3,467,495, significantly elevating the brand's digital footprint across the archipelago. Prometheus delivered a remarkable estimated ad value of 474,213.60 PHP, providing our partners with substantial social proof of our 360-degree marketing leadership. Through this tech-infused creative strategy, we successfully harmonized traditional media prestige with modern digital visibility to drive sustained audience engagement. This campaign solidified our reputation as a trusted partner for regional business transformation and established a new benchmark for retail excellence in Iloilo.",
+    services: [
+      'Media Services',
+      'PR Seeding',
+      'Influencer Campaign'
+    ]
   }
 ];
