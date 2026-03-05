@@ -68,7 +68,7 @@ const storyTellers = [
   },
 ];
 
-// --- CAPTAIN CARD ---
+// --- CAPTAIN CARD --- //
 const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
   const isActive = activeIndex === index;
 
