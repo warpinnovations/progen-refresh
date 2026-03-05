@@ -308,7 +308,7 @@ const MainSectionContact = () => {
               className={`${RajdhaniFont.className} text-base sm:text-lg md:text-xl text-white/70 mt-2 max-w-2xl mx-auto`}
               style={{ letterSpacing: "0.06em", lineHeight: "1.5", fontWeight: "500" }}
             >
-              Join the crew building the region's boldest brands
+              Join the crew building the region&apos;s boldest brands
             </motion.p>
           </div>
 
@@ -327,7 +327,7 @@ const MainSectionContact = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className={`${OxaniumFont.className} text-center text-white/35 text-xs mt-10 tracking-wide`}
           >
-            Don't see a fit? Send your portfolio to{" "}
+            Don&apos;t see a fit? Send your portfolio to{" "}
             <a
               href="mailto:careers@prometheusph.com"
               className="text-[#96895f] hover:text-[#D4AF37] transition-colors duration-300 underline underline-offset-2"
