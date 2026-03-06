@@ -20,8 +20,8 @@ const storyTellers = [
   },
   {
     name: "Lawrence Clark Fernandez",
-    img: "/LandingPageAssets/storytellers/lawrence_Formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/lawrence_Formal.jpg",
+    img: "/LandingPageAssets/storytellers/lawrence_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/lawrence_formal.jpg",
     role: "Chief Administrative Officer",
   },
   {
