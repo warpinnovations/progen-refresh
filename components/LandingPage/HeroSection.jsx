@@ -172,8 +172,8 @@ const HeroSection = () => {
     {
       filename: "MEA Logo.png",
       alt: "Marketing Awards",
-      achievement: "15+ Wins",
-      year: "2020-2024",
+      achievement: "2024–2025",
+      year: "2024–2025",
       category: "Digital Excellence",
       description: "Recognized for breakthrough digital campaigns across multiple categories",
       awardBody: "Marketing Excellence Awards",
@@ -775,51 +775,6 @@ const HeroSection = () => {
                                         {award.alt}
                                       </motion.h4>
 
-                                      {/* Achievement Badge - Enhanced */}
-                                      <div className="flex justify-center">
-                                        <motion.div 
-                                          className={`
-                                            inline-flex items-center gap-2 px-4 py-2 md:gap-3 md:px-6 md:py-3 rounded-full border-2
-                                            transition-all duration-500
-                                            ${isActive 
-                                              ? 'bg-[#96895f]/20 border-[#96895f] shadow-[0_0_25px_rgba(150,137,95,0.4),inset_0_0_20px_rgba(150,137,95,0.1)]' 
-                                              : 'bg-[#96895f]/10 border-[#96895f]/30'
-                                            }
-                                          `}
-                                          animate={isActive ? {
-                                            boxShadow: [
-                                              '0 0 25px rgba(150,137,95,0.4)',
-                                              '0 0 40px rgba(150,137,95,0.6)',
-                                              '0 0 25px rgba(150,137,95,0.4)'
-                                            ]
-                                          } : {}}
-                                          transition={{ duration: 2, repeat: Infinity }}
-                                        >
-                                          <div className="relative">
-                                            <motion.div 
-                                              className="w-2.5 h-2.5 rounded-full bg-[#96895f]"
-                                              animate={isActive ? {
-                                                scale: [1, 1.3, 1],
-                                                opacity: [1, 0.7, 1]
-                                              } : {}}
-                                              transition={{ duration: 1.5, repeat: Infinity }}
-                                            />
-                                            {isActive && (
-                                              <motion.div 
-                                                className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-[#96895f]"
-                                                animate={{
-                                                  scale: [1, 2, 1],
-                                                  opacity: [0.6, 0, 0.6]
-                                                }}
-                                                transition={{ duration: 1.5, repeat: Infinity }}
-                                              />
-                                            )}
-                                          </div>
-                                          <span className={`${RajdhaniFont.className} text-[#96895f] text-xs md:text-base font-bold uppercase tracking-wider`}>
-                                            {award.achievement}
-                                          </span>
-                                        </motion.div>
-                                      </div>
 
                                       {/* Details Section - Enhanced Reveal */}
                                       <motion.div 

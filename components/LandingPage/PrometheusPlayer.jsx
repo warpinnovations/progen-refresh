@@ -298,9 +298,8 @@ const FeatureCard = ({ feature, index }) => {
               >
                 <span className="text-[10px] sm:text-xs md:text-sm font-semibold tracking-wider uppercase"
                       style={{ letterSpacing: '0.08em' }}>
-                  Explore More
                 </span>
-                <motion.svg
+                {/* <motion.svg
                   className="w-4 h-4 md:w-5 md:h-5"
                   animate={isHovered ? { x: [0, 6, 0] } : {}}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -310,7 +309,7 @@ const FeatureCard = ({ feature, index }) => {
                   strokeWidth={2.5}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </motion.svg>
+                </motion.svg> */}
               </motion.div>
             </motion.div>
           </div>
