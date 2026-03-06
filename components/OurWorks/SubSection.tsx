@@ -44,11 +44,9 @@ const SubSectionPage = () => {
 
           {/* Back button */}
           <div className="absolute top-32 left-8 md:left-16 z-10">
-            <Link href="/works">
-              <button className="flex items-center gap-2 text-white/60 hover:text-prOrange transition-colors duration-300 group">
-                <HiOutlineArrowNarrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                <span className="font-ox text-xs tracking-[0.3em] uppercase">Back</span>
-              </button>
+            <Link href="/works" className="flex items-center gap-2 text-white/60 hover:text-prOrange transition-colors duration-300 group">
+              <HiOutlineArrowNarrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+              <span className="font-ox text-xs tracking-[0.3em] uppercase">Back</span>
             </Link>
           </div>
 

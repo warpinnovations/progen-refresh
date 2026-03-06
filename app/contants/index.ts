@@ -117,7 +117,7 @@ export const workData = [
   // 3. Sustainability PH Branding
   {
     title: 'Sustainability PH Branding',
-    img: '/WorkAssets/workModals/sustainabilityph.png', // Update with key visual: KEY VISUAL_SUSTAINABILITYPH BRAND REFRESH.png
+    img: '/newFeaturedAssets/Sustainability-featured-cover.png',
     videoLink: 'https://drive.google.com/file/d/1ne2OF_6KUo9k83drvIHueTp2Q5gTwJ15/preview',
     awards: ['Anvil'],
     description: "A culturally resonant identity refresh that unifies Filipino sustainability leaders under a single, localized narrative.",
@@ -130,7 +130,7 @@ export const workData = [
   // 4. EMCOR | Home Credit
   {
     title: 'EMCOR | Home Credit',
-    img: '/WorkAssets/workModals/emcor-homecredit.png', // Update with key visual: Campaign Image MEA 2025 - Prometheus | Home Credit.png
+    img: '/newFeaturedAssets/Emcore-featured-cover.png',
     videoLink: 'https://drive.google.com/file/d/1CjZSBD8QEAd7NCDKFssNr9mN2_ri4mBL/preview',
     description: "Driving motorcycle financing adoption through high-impact experiential marketing and measurable conversions.",
     body: "For the \"Unlock New Adventures\" campaign, Prometheus spearheaded the launch of Home Credit's motorcycle financing partnership with EMCOR. Leveraging Davao City's Kadayawan Festival, we executed a high-impact experiential marketing event featuring a city-wide motorcade, interactive showrooms, and a press conference.\n\nTo maximize brand visibility, we orchestrated a robust amplification strategy, partnering with top motovloggers, bloggers, and local media. The marketing results were outstanding: the campaign secured 59 pieces of media coverage, generated 14.4 million impressions, and captured a dominant 61.8% Share of Voice.\n\nMost importantly, our strategic approach drove tangible conversions, directly resulting in 147 signed contracts and Php 13.8 million in sales within just three months. This campaign perfectly exemplifies our ability to blend dynamic on-ground activations with targeted PR to deliver exceptional, measurable ROI for our clients.",
@@ -146,7 +146,7 @@ export const workData = [
   // 5. Bugal sang Kwarto Distrito
   {
     title: 'Bugal sang Kwarto Distrito',
-    img: '/WorkAssets/workModals/bugal-kwarto.png', // Update with key visual: Prometheus-Marketing-Excellence-Awards.pptx.png
+    img: '/newFeaturedAssets/BugalsaKwarto-featured-cover.png',
     videoLink: 'https://drive.google.com/file/d/1edAu-6AQ1vyT5232DEuAEANWvL-1JXH6/preview',
     description: "A data-driven multi-channel tourism campaign that tripled district visitor numbers through digital innovation.",
     body: "Through the \"Bugal sang Kwarto Distrito\" tourism campaign, we demonstrated our multi-channel marketing expertise. We launched a comprehensive digital strategy featuring an interactive tourism website, engaging social media reels, and a dedicated online series. By leveraging strategic influencer partnerships and robust social media management, the campaign achieved a staggering 6.3 million total impressions, with Facebook driving 99% of the tour campaign's engagement.\n\nThe initiative generated overwhelmingly positive audience sentiment (evoking local pride and nostalgia) and secured valuable earned media through blog features and news coverage in the Daily Guardian. Most importantly, our data-driven marketing efforts translated to real-world results, helping to triple district tourism numbers in early 2023. Let Prometheus drive this level of impactful, comprehensive growth for your brand's next campaign.",
@@ -163,7 +163,7 @@ export const workData = [
   // 6. Home Credit | iPhone 17 Launch
   {
     title: 'Home Credit | iPhone 17 Launch',
-    img: 'https://lh3.googleusercontent.com/d/1Ms9N1fcrg0Xqm4gU_28LPvfHZgJelAAQ',
+    img: '/newFeaturedAssets/HomeCredit-featured-cover.jpg',
     videoLink: '',
     description: "Turning Apple's most anticipated launch into a nationwide experiential phenomenon driven by gamification, hospitality, and agile on-ground execution.",
     body: 'Prometheus transformed Home Credit\'s iPhone 17 launches across Luzon, Visayas, and Mindanao into high-engagement brand activations. Our strategy utilized immersive "Glam Booths" and mirror photo booths to strengthen brand affinity and organic social reach. Premium hospitality, including branded coffee and ice cream, ensured high audience retention during late-night events. To drive conversion, we introduced the gamified Buzzwire Challenge, which incentivized immediate loan applications by offering successful players a total loan waiver. Demonstrating operational agility, Prometheus finalized complex setups within sixty-minute windows, establishing a scalable retail growth model through innovative regional storytelling.',
