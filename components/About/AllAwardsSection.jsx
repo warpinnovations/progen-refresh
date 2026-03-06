@@ -66,7 +66,7 @@ const AwardDetailModal = ({ item, onClose }) => {
 
       {/* Modal wrapper — relative so close button can anchor to it */}
       <motion.div
-        className="relative z-10 w-full max-w-2xl"
+        className="relative z-10 w-full max-w-4xl"
         initial={{ scale: 0.88, y: 30, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.88, y: 30, opacity: 0 }}
@@ -94,7 +94,7 @@ const AwardDetailModal = ({ item, onClose }) => {
           }}
         >
         {/* Hero image */}
-        <div className="relative h-52 rounded-t-3xl overflow-hidden">
+        <div className="relative h-64 rounded-t-3xl overflow-hidden">
           <img src={item.media.mainImage} alt={item.title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
           {/* Recognition badge over image */}
@@ -109,17 +109,17 @@ const AwardDetailModal = ({ item, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="p-6 md:p-8 space-y-5">
+        <div className="p-7 md:p-10 space-y-6">
           {/* Title block */}
           <div>
-            <p className={`${OxaniumFont.className} text-[#96895f] text-[10px] uppercase tracking-[0.25em] mb-1`}>{body} · {year}</p>
-            <h3 className={`${RajdhaniFont.className} text-white font-bold text-xl md:text-2xl leading-tight`} style={{ letterSpacing: "0.04em" }}>
+            <p className={`${OxaniumFont.className} text-[#96895f] text-xs uppercase tracking-[0.25em] mb-1`}>{body} · {year}</p>
+            <h3 className={`${RajdhaniFont.className} text-white font-bold text-2xl md:text-3xl leading-tight`} style={{ letterSpacing: "0.04em" }}>
               {typeof item.category === "string" && item.category.startsWith("http") ? item.title : item.category}
             </h3>
           </div>
 
           {/* Description */}
-          <p className={`${RajdhaniFont.className} text-white/70 text-sm leading-relaxed`} style={{ letterSpacing: "0.03em" }}>
+          <p className={`${RajdhaniFont.className} text-white/70 text-base sm:text-lg leading-relaxed`} style={{ letterSpacing: "0.03em" }}>
             {item.description}
           </p>
 
@@ -127,8 +127,8 @@ const AwardDetailModal = ({ item, onClose }) => {
 
           {/* About the award body */}
           <div>
-            <p className={`${OxaniumFont.className} text-[#96895f] text-[9px] uppercase tracking-[0.25em] mb-2`}>About the Award</p>
-            <p className={`${RajdhaniFont.className} text-white/60 text-sm leading-relaxed`} style={{ letterSpacing: "0.03em" }}>
+            <p className={`${OxaniumFont.className} text-[#96895f] text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-3`}>About the Award</p>
+            <p className={`${RajdhaniFont.className} text-white/60 text-base sm:text-lg leading-relaxed`} style={{ letterSpacing: "0.03em" }}>
               {item.award_body}
             </p>
           </div>
@@ -136,9 +136,9 @@ const AwardDetailModal = ({ item, onClose }) => {
           {/* Campaign detail */}
           {item.campaign && (
             <div>
-              <p className={`${OxaniumFont.className} text-[#96895f] text-[9px] uppercase tracking-[0.25em] mb-2`}>The Win</p>
+              <p className={`${OxaniumFont.className} text-[#96895f] text-[10px] sm:text-xs uppercase tracking-[0.25em] mb-3`}>The Win</p>
               {campaignLines.map((line, i) => (
-                <p key={i} className={`${RajdhaniFont.className} text-white/60 text-sm leading-relaxed mb-2`} style={{ letterSpacing: "0.03em" }}>
+                <p key={i} className={`${RajdhaniFont.className} text-white/60 text-base sm:text-lg leading-relaxed mb-2`} style={{ letterSpacing: "0.03em" }}>
                   {line}
                 </p>
               ))}
@@ -195,7 +195,7 @@ const AwardCard = ({ item, index }) => {
             <img
               src={item.media.mainImage}
               alt={item.title}
-              className="w-full h-full object-cover transition-transform duration-500"
+              className="w-full h-full object-cover object-top transition-transform duration-500"
               style={{ transform: isHovered ? "scale(1.05)" : "scale(1)" }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />

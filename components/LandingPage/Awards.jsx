@@ -180,8 +180,9 @@ const AwardModal = ({ award, onClose }) => {
 
             {/* Panel */}
             <motion.div
-                className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl z-10"
+                className="relative w-full max-h-[90vh] overflow-y-auto rounded-2xl z-10"
                 style={{
+                    maxWidth: '900px',
                     background: 'linear-gradient(135deg, rgba(12,12,12,0.98), rgba(20,18,12,0.96))',
                     border: `1.5px solid ${rc.color}40`,
                     boxShadow: `0 30px 80px -10px rgba(0,0,0,0.9), 0 0 60px ${rc.glow}`,
@@ -214,24 +215,24 @@ const AwardModal = ({ award, onClose }) => {
                     </svg>
                 </button>
 
-                <div className="p-7 sm:p-9">
+                <div className="p-10 sm:p-14">
                     {/* Header */}
                     <div className="flex items-start gap-5 mb-7">
-                        <div className="flex-shrink-0 w-16 h-16 flex items-center justify-center">
+                        <div className="flex-shrink-0 w-24 h-24 flex items-center justify-center">
                             <Image
                                 src={award.awardimg}
                                 alt={award.body}
-                                width={64}
-                                height={64}
+                                width={96}
+                                height={96}
                                 className="w-full h-full object-contain"
                             />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <div className={`${OxaniumFont.className} text-[10px] uppercase tracking-[0.25em] mb-1`}
+                            <div className={`${OxaniumFont.className} text-xs uppercase tracking-[0.25em] mb-1`}
                                 style={{ color: rc.color }}>
                                 {award.body} · {award.year}
                             </div>
-                            <h2 className={`${MoonlanderFont.className} text-white text-lg sm:text-xl md:text-2xl uppercase leading-tight mb-2`}>
+                            <h2 className={`${MoonlanderFont.className} text-white text-2xl sm:text-3xl md:text-4xl uppercase leading-tight mb-2`}>
                                 {award.title}
                             </h2>
                             <span
@@ -251,12 +252,12 @@ const AwardModal = ({ award, onClose }) => {
                     <div className="h-[1px] mb-6" style={{ background: `linear-gradient(90deg, ${rc.color}40, transparent)` }} />
 
                     {/* About the Award only */}
-                    <div className={`${OxaniumFont.className} text-[9px] sm:text-[10px] uppercase tracking-[0.22em] font-bold mb-3 flex items-center gap-2`}
+                    <div className={`${OxaniumFont.className} text-[10px] sm:text-xs uppercase tracking-[0.22em] font-bold mb-3 flex items-center gap-2`}
                         style={{ color: rc.color }}>
                         <div className="w-1 h-1 rounded-full" style={{ background: rc.color }} />
                         About the Award
                     </div>
-                    <p className={`${RajdhaniFont.className} text-white/70 text-sm sm:text-base leading-relaxed`}
+                    <p className={`${RajdhaniFont.className} text-white/70 text-lg sm:text-xl leading-relaxed`}
                         style={{ letterSpacing: '0.03em' }}>
                         {award.aboutAward}
                     </p>
