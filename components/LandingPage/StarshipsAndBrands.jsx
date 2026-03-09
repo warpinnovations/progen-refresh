@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import CSSStars from "../Global/CSSStars";
 import localFont from 'next/font/local';
 import { Rajdhani } from 'next/font/google';
@@ -8,9 +8,6 @@ import FuturisticDivider from "../Global/FuturisticLine";
 
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
-
-const highlightColor = "#EAE2B7";
-const accentColor = "#D4AF37";
 
 const BRAND_LOGOS = [
   // brandLogos directory
@@ -66,72 +63,24 @@ const BRAND_LOGOS = [
   { name: "VSG Group",                 image: "/addedbrands/VSG Logo_Stacked.png" },
 ];
 
-const BrandLogo = ({ brand, index, isMajor }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
-  const showPopup = isHovered || isActive;
-
-  return (
-    <div className="relative w-full h-full">
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.05 }}
-        transition={{ duration: 0.35, delay: (index % 10) * 0.025 }}
-        whileTap={{ scale: 0.93 }}
-        className={`w-full h-full flex items-center justify-center rounded-lg cursor-pointer transition-all duration-300 ${isMajor ? 'p-2 sm:p-3' : 'p-4 sm:p-5'}`}
-        style={{
-          border: showPopup ? `1.5px solid ${accentColor}80` : '1.5px solid rgba(255,255,255,0.06)',
-          boxShadow: showPopup ? `0 0 20px 3px ${accentColor}25` : 'none',
-          background: showPopup ? `rgba(212, 175, 55, 0.06)` : 'rgba(255,255,255,0.02)',
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => { setIsHovered(false); setIsActive(false); }}
-        onClick={() => setIsActive(prev => !prev)}
-      >
-        <img
-          src={brand.image}
-          alt={brand.name}
-          loading="lazy"
-          className="w-full h-full object-contain transition-all duration-300"
-          style={{
-            filter: showPopup
-              ? `brightness(1.2) contrast(1.05) drop-shadow(0 0 8px ${accentColor}50)`
-              : 'brightness(0.85) contrast(1)',
-            transform: showPopup ? 'scale(1.07)' : 'scale(1)',
-          }}
-        />
-      </motion.div>
-
-      {/* Name popup */}
-      <AnimatePresence>
-        {showPopup && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.82 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.88 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute left-1/2 -translate-x-1/2 bottom-[calc(100%+6px)] z-50 pointer-events-none"
-          >
-            <div
-              className={`${RajdhaniFont.className} px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider whitespace-nowrap`}
-              style={{
-                background: 'rgba(0,0,0,0.92)',
-                border: `1px solid ${accentColor}90`,
-                color: highlightColor,
-                boxShadow: `0 0 14px ${accentColor}35, 0 4px 16px rgba(0,0,0,0.7)`,
-                letterSpacing: '0.09em',
-              }}
-            >
-              {brand.name}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
+const BrandLogo = ({ brand, index, padding }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.05 }}
+    transition={{ duration: 0.35, delay: (index % 10) * 0.025 }}
+    className={`w-full h-full flex items-center justify-center rounded-lg ${padding}`}
+    style={{ background: 'rgba(255,255,255,0.02)' }}
+  >
+    <img
+      src={brand.image}
+      alt={brand.name}
+      loading="lazy"
+      className="w-full h-full object-contain"
+      style={{ filter: 'brightness(0.85) contrast(1)', opacity: 0.85 }}
+    />
+  </motion.div>
+);
 
 const BrandsSection = () => {
   return (
@@ -160,16 +109,26 @@ const BrandsSection = () => {
           <FuturisticDivider color="#EAE2B7" />
         </motion.div>
 
-        {/* Brand Grid — unified, flex-wrap so last row centers */}
+        {/* Brand Grid — 3-tier size hierarchy */}
         <div className="w-full flex flex-wrap justify-center gap-2 sm:gap-2.5">
-          {BRAND_LOGOS.map((brand, index) => (
+          {BRAND_LOGOS.map((brand, index) => {
+            const isLarge = index < 5;
+            const isMedium = index >= 5 && index < 15;
+            const cellSize = isLarge
+              ? 'w-[calc(33%-6px)] sm:w-[calc(20%-7px)] md:w-[calc(18%-7px)] lg:w-[calc(16%-7px)]'
+              : isMedium
+              ? 'w-[calc(25%-6px)] sm:w-[calc(16.667%-7px)] md:w-[calc(14%-7px)] lg:w-[calc(12%-7px)]'
+              : 'w-[calc(20%-6px)] sm:w-[calc(12.5%-7px)] md:w-[calc(10%-7px)] lg:w-[calc(8.5%-7px)]';
+            const padding = isLarge ? 'p-1 sm:p-2' : isMedium ? 'p-2 sm:p-3' : 'p-3 sm:p-4';
+            return (
             <div
               key={`${brand.name}-${index}`}
-              className="aspect-square relative overflow-visible flex-none w-[calc(25%-6px)] sm:w-[calc(20%-7px)] md:w-[calc(16.667%-7px)] lg:w-[calc(12.5%-7px)] xl:w-[calc(10%-9px)]"
+              className={`aspect-square relative overflow-visible flex-none ${cellSize}`}
             >
-              <BrandLogo brand={brand} index={index} isMajor={index < 20} />
+              <BrandLogo brand={brand} index={index} padding={padding} />
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Stats */}
@@ -188,7 +147,7 @@ const BrandsSection = () => {
               transition={{ type: "spring", stiffness: 200, delay: 0.5 }}
               className="text-3xl md:text-4xl font-bold text-prOrange mb-1"
             >
-              {BRAND_LOGOS.length}+
+              60+
             </motion.div>
             <div className="text-sm md:text-base text-[#A89773]" style={{ letterSpacing: '0.06em' }}>
               Brand Partners
