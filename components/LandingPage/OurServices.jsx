@@ -384,14 +384,6 @@ const ServiceCard = ({ service, index, onClick }) => {
                                 transition={{ duration: 0.4 }}
                             />
 
-                            {/* Service count */}
-                            <motion.p
-                                className={`text-xs sm:text-sm mt-2 text-white/50 ${RajdhaniFont.className}`}
-                                animate={{ opacity: isHovered ? 1 : 0.5 }}
-                                style={{ letterSpacing: '0.04em' }}
-                            >
-                                {service.services.length} services available
-                            </motion.p>
                         </div>
                     </div>
 
@@ -558,8 +550,9 @@ function OurServices() {
                         className="mb-2"
                     >
                         <h2 className={`${MoonlanderFont.className} font-black text-2xl sm:text-3xl md:text-5xl`}>
-                            <span className="text-[#f5f5f5]">HERE&apos;S WHAT </span>
-                            <span className="text-prOrange">WE OFFER</span>
+                            <span className="text-[#f5f5f5]">THE PROMETHEUS </span>
+                            <span className="text-prOrange">EXPERIENCE</span>
+                            <span className="text-[#f5f5f5]"> BEGINS HERE</span>
                         </h2>
                     </motion.div>
 

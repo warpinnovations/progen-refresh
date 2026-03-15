@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState } from "react";
@@ -283,17 +284,25 @@ const StarshipCaptainsSection = () => {
         </motion.p>
       </div>
 
-      {/* Team Grid */}
+      {/* Team Grid — row-based so each row fills full width */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
-          {storyTellers.map((person, index) => (
-            <CaptainCard
-              key={index}
-              person={person}
-              index={index}
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
+        <div className="flex flex-col gap-3 sm:gap-4 md:gap-5">
+          {[storyTellers.slice(0, 5), storyTellers.slice(5)].map((row, rowIdx) => (
+            <div key={rowIdx} className="flex w-full gap-3 sm:gap-4 md:gap-5">
+              {row.map((person, i) => {
+                const globalIdx = rowIdx === 0 ? i : 5 + i;
+                return (
+                  <div key={globalIdx} style={{ width: `${100 / row.length}%`, flexShrink: 0 }}>
+                    <CaptainCard
+                      person={person}
+                      index={globalIdx}
+                      activeIndex={activeIndex}
+                      setActiveIndex={setActiveIndex}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           ))}
         </div>
       </div>

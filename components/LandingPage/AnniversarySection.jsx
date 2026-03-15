@@ -6,7 +6,7 @@ import localFont from 'next/font/local';
 import { Rajdhani } from 'next/font/google';
 import { useEffect, useRef, useState } from 'react';
 
-import AnniversaryContact from './AnniversaryContact';
+import PhilippineServiceMap from './PhilippineServiceMap';
 import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '../Global/FuturisticLine';
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
@@ -342,31 +342,10 @@ const AnniversarySection = () => {
                         </div>
                     </motion.div>
 
-                    {/* RIGHT COLUMN: Contact/CTA */}
-                    <motion.div
-                        className="flex justify-center items-center lg:justify-end"
-                        initial={{ opacity: 0, scale: 0.8, x: 50 }}
-                        whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ 
-                            duration: 1, 
-                            ease: [0.22, 1, 0.36, 1],
-                            delay: 0.3 
-                        }}
-                    >
-                        <div className="relative">
-                            {/* Glow effect behind contact component */}
-                            <motion.div
-                                className="absolute inset-0 bg-[#96895F]/20 rounded-full blur-[100px] -z-10"
-                                animate={{
-                                    scale: [1, 1.2, 1],
-                                    opacity: [0.2, 0.3, 0.2],
-                                }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                            />
-                            <AnniversaryContact />
-                        </div>
-                    </motion.div>
+                    {/* RIGHT COLUMN: Philippine Service Map */}
+                    <div className="flex justify-center items-center lg:justify-end">
+                        <PhilippineServiceMap />
+                    </div>
 
                 </div>
             </div>

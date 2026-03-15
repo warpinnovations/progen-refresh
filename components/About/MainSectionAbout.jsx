@@ -106,15 +106,14 @@ const MainSectionAbout = () => {
             }}
             className={`${MoonlanderFont.className} font-black text-4xl sm:text-5xl md:text-6xl lg:text-8xl`}
           >
-            <span className="text-[#f5f5f5]">About </span>
             <span className="text-prOrange relative">
-              Us
+              PROMETHEUS
               <motion.span
                 className="absolute inset-0 text-prOrange blur-lg opacity-40"
                 animate={{ opacity: [0.3, 0.5, 0.3] }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                Us
+                PROMETHEUS
               </motion.span>
             </span>
           </motion.h1>
@@ -140,13 +139,75 @@ const MainSectionAbout = () => {
               fontWeight: "500",
             }}
           >
-            The premier award-winning marketing agency and PR firm in Western
-            Visayas
+            The premier award-winning marketing agency and public relations firm in Western Visayas
           </motion.p>
         </div>
       </section>
 
-      {/* ========== STARSHIP CAPTAINS SECTION (2nd) ========== */}
+      {/* ========== VISION & MISSION BREAK (2nd) ========== */}
+      <section className="relative py-10 sm:py-12 overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
+          <div className="absolute inset-0" style={{
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(150,137,95,0.06) 0%, transparent 70%)"
+          }} />
+        </div>
+
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row gap-0 sm:gap-0">
+
+            {/* Mission */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="flex-1 px-6 sm:px-10 py-8 sm:py-10 text-center sm:text-left"
+            >
+              <p className={`${OxaniumFont.className} text-[10px] uppercase tracking-[0.28em] mb-3`}
+                style={{ color: "rgba(150,137,95,0.65)" }}>
+                Mission
+              </p>
+              <p className={`${RajdhaniFont.className} text-white/80 text-base sm:text-lg md:text-xl`}
+                style={{ letterSpacing: "0.04em", lineHeight: "1.65" }}>
+                To forever chase excellence with curiosity as our guide.
+              </p>
+            </motion.div>
+
+            {/* Vertical divider */}
+            <div className="hidden sm:block w-[1px] self-stretch my-6"
+              style={{ background: "linear-gradient(to bottom, transparent, rgba(150,137,95,0.35), transparent)" }} />
+            {/* Horizontal divider (mobile) */}
+            <div className="block sm:hidden h-[1px] mx-6"
+              style={{ background: "linear-gradient(to right, transparent, rgba(150,137,95,0.35), transparent)" }} />
+
+            {/* Vision */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex-1 px-6 sm:px-10 py-8 sm:py-10 text-center sm:text-left"
+            >
+              <p className={`${OxaniumFont.className} text-[10px] uppercase tracking-[0.28em] mb-3`}
+                style={{ color: "rgba(150,137,95,0.65)" }}>
+                Vision
+              </p>
+              <p className={`${RajdhaniFont.className} text-white/80 text-base sm:text-lg md:text-xl`}
+                style={{ letterSpacing: "0.04em", lineHeight: "1.65" }}>
+                To build powerful connections through creativity and innovation.
+              </p>
+            </motion.div>
+
+          </div>
+
+          {/* Bottom rule */}
+          <div className="h-[1px] mt-2"
+            style={{ background: "linear-gradient(to right, transparent, rgba(150,137,95,0.25), transparent)" }} />
+        </div>
+      </section>
+
+      {/* ========== STARSHIP CAPTAINS SECTION (3rd) ========== */}
       <StarshipCaptainsSection />
 
       {/* ========== COMPANY INFO SECTION ========== */}
@@ -154,9 +215,6 @@ const MainSectionAbout = () => {
 
       {/* ========== ALL AWARDS SECTION ========== */}
       <AllAwardsSection />
-
-      {/* ========== STARSHIPS SECTION (Last) ========== */}
-      <StarShipsSection />
 
       {/* ========== FOOTER ========== */}
       <footer className="relative z-10">

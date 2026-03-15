@@ -23,7 +23,7 @@ export const NavData = [
 
 export const worksData = [
   {
-    title: 'Adidas | Bootcamp',
+    title: 'Bootcamp | Adidas',
     img: '/newFeaturedAssets/Adidas-featured-cover.png'
   },
   {
@@ -78,9 +78,9 @@ export const worksData = [
 ];
 
 export const workData = [
-  // 1. Adidas | Bootcamp
+  // 1. Bootcamp | Adidas
   {
-    title: 'Adidas | Bootcamp',
+    title: 'Bootcamp | Adidas',
     img: '/newFeaturedAssets/Adidas-featured-cover.png',
     videoLink: 'https://drive.google.com/file/d/1AGXstcVk5aj_jpn8ewK8_SFbNhqTAhic/preview',
     awards: ['Anvil'],

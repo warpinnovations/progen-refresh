@@ -55,7 +55,7 @@ const awarditems = [
         year: '2025',
         body: '60th Anvil Awards',
         title: 'Best PR-Led Integrated Campaign',
-        recognition: 'Silver',
+        recognition: 'Anvil',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/anvil-awards.png',
         aboutAward: 'The Anvil Awards represents the highest national honor for excellence in strategic communications and public relations in the Philippines. This particular category recognizes the best comprehensive campaign that was driven by a strong PR-led strategy. Prometheus was recognized for demonstrating outstanding unified execution.',
@@ -68,7 +68,7 @@ const awarditems = [
         year: '2025',
         body: '60th Anvil Awards',
         title: 'PR Tools: Special Events',
-        recognition: 'Silver',
+        recognition: 'Anvil',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/anvil-awards.png',
         aboutAward: 'This Anvil Award category specifically recognizes the most effective and creative event activation through the use of innovative platforms and interactive elements that capture audience engagement in order to achieve campaign goals. The citation is given to PR tools, such as special events, that successfully elevate public engagement, enhance visibility, and strengthen stakeholder relationships. Prometheus was cited for its high-impact event execution.',
@@ -120,7 +120,7 @@ const awarditems = [
         year: '2024',
         body: 'Marketing Excellence Awards',
         title: 'Excellence in Urban Guerrilla Marketing',
-        recognition: 'Silver',
+        recognition: 'MEA',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/MEA Logo.png',
         aboutAward: 'This Marketing Excellence Award recognizes the most creative, bold, and high-impact non-traditional marketing campaigns. This category celebrates campaigns that leverage a business\'s anniversary to generate positive public attention and significantly boost market growth.',
@@ -144,7 +144,8 @@ const awarditems = [
 ];
 
 const recognitionColor = (recognition) => {
-    if (recognition === 'Silver') return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'Anvil')   return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'MEA')     return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
     if (recognition === 'Finalist') return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
     return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
 };

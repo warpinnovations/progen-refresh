@@ -29,7 +29,6 @@ const services = [
   "Social Media",
   "Event Management",
   "Software Solutions",
-  "Wedding Studio",
 ];
 
 const internAreas = [

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import CSSStars from "@/components/Global/CSSStars";
 import localFont from "next/font/local";
 import { Rajdhani } from "next/font/google";
@@ -9,231 +10,152 @@ import { Rajdhani } from "next/font/google";
 const MoonlanderFont = localFont({ src: "../../Fonts/Moonlander.ttf" });
 const RajdhaniFont = Rajdhani({ weight: "600", subsets: ["latin"] });
 
-const companyInfo = [
-  {
-    title: "Company Overview",
-    icon: "◈",
-    content:
-      "Prometheus is the premier, full-service public relations firm and marketing agency in Western Visayas, amplifying powerful stories to build brands and create high-impact customer experiences.",
-  },
-  {
-    title: "History",
-    icon: "✧",
-    content:
-      "Prometheus started out as a small creative team operating from a bedroom, funded by loans and promises. In the years since, Prometheus has made its mark in leveraging marketing science and multidisciplinary strategies. We take pride in our mastery of crafting compelling narratives to effectively promote and elevate brands.",
-  },
-];
-
-const InfoCard = ({ item, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.7,
-        delay: index * 0.15,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="flex-1"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <motion.div
-        className="relative h-full p-6 sm:p-8 md:p-10 rounded-2xl border-2 overflow-hidden backdrop-blur-sm"
-        style={{
-          background: isHovered
-            ? "linear-gradient(135deg, rgba(20,20,20,0.95), rgba(30,28,22,0.9))"
-            : "linear-gradient(135deg, rgba(15,15,15,0.9), rgba(20,20,20,0.85))",
-          borderColor: isHovered
-            ? "rgba(150, 137, 95, 0.5)"
-            : "rgba(150, 137, 95, 0.12)",
-          boxShadow: isHovered
-            ? "0 25px 60px -15px rgba(150, 137, 95, 0.3), inset 0 0 60px rgba(150, 137, 95, 0.03)"
-            : "0 8px 30px -5px rgba(0, 0, 0, 0.5)",
-        }}
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {/* Animated border glow */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(135deg, transparent, rgba(150, 137, 95, 0.15), transparent)",
-            backgroundSize: "200% 200%",
-          }}
-          animate={
-            isHovered
-              ? { backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }
-              : {}
-          }
-          transition={{ duration: 3, repeat: Infinity }}
-        />
-
-        {/* Inner dark layer */}
-        <div className="absolute inset-[2px] rounded-2xl bg-black/40 pointer-events-none" />
-
-        {/* Content */}
-        <div className="relative z-10">
-          {/* Icon + Title */}
-          <div className="flex items-center gap-3 md:gap-4 mb-6">
-            <motion.div
-              className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl border-2 flex items-center justify-center"
-              style={{
-                borderColor: isHovered
-                  ? "rgba(150, 137, 95, 0.5)"
-                  : "rgba(150, 137, 95, 0.2)",
-                background: isHovered
-                  ? "linear-gradient(135deg, rgba(150, 137, 95, 0.15), rgba(150, 137, 95, 0.05))"
-                  : "linear-gradient(135deg, rgba(150, 137, 95, 0.08), rgba(150, 137, 95, 0.02))",
-              }}
-              animate={
-                isHovered
-                  ? { rotate: [0, 5, -5, 0], scale: [1, 1.05, 1] }
-                  : {}
-              }
-              transition={{ duration: 0.6 }}
-            >
-              <span
-                className="text-xl sm:text-2xl"
-                style={{ color: "#96895F" }}
-              >
-                {item.icon}
-              </span>
-            </motion.div>
-
-            <div>
-              <h3
-                className={`${MoonlanderFont.className} text-xl sm:text-2xl md:text-3xl font-black text-white uppercase leading-tight transition-all duration-300`}
-                style={{
-                  color: isHovered ? "#96895F" : "#ffffff",
-                  textShadow: isHovered
-                    ? "0 0 20px rgba(150, 137, 95, 0.3)"
-                    : "none",
-                }}
-              >
-                {item.title}
-              </h3>
-              {/* Animated underline */}
-              <motion.div
-                className="h-[2px] mt-2 rounded-full"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #96895F, transparent)",
-                }}
-                initial={{ width: "30%" }}
-                animate={{ width: isHovered ? "100%" : "30%" }}
-                transition={{ duration: 0.4 }}
-              />
-            </div>
-          </div>
-
-          {/* Body Text */}
-          <p
-            className={`${RajdhaniFont.className} text-white/75 text-sm sm:text-base md:text-lg leading-relaxed`}
-            style={{
-              letterSpacing: "0.03em",
-              lineHeight: "1.7",
-            }}
-          >
-            {item.content}
-          </p>
-        </div>
-
-        {/* Corner accents on hover */}
-        {isHovered && (
-          <>
-            <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none">
-              <div className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-[#96895F]/50 rounded-tr-xl" />
-              <div
-                className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#96895F] rounded-full"
-                style={{
-                  boxShadow: "0 0 8px rgba(150, 137, 95, 0.8)",
-                }}
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 w-16 h-16 pointer-events-none">
-              <div className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-[#96895F]/50 rounded-bl-xl" />
-              <div
-                className="absolute bottom-1.5 left-1.5 w-1.5 h-1.5 bg-[#96895F] rounded-full"
-                style={{
-                  boxShadow: "0 0 8px rgba(150, 137, 95, 0.8)",
-                }}
-              />
-            </div>
-          </>
-        )}
-
-        {/* Bottom glow line */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] bg-gradient-to-r from-transparent via-[#96895F] to-transparent transition-all duration-500 pointer-events-none"
-          style={{
-            width: isHovered ? "70%" : "0%",
-            opacity: isHovered ? 1 : 0,
-            boxShadow: isHovered
-              ? "0 0 15px rgba(150,137,95,0.5)"
-              : "none",
-          }}
-        />
-
-        {/* Floating particles on hover */}
-        {isHovered && (
-          <>
-            <motion.div
-              className="absolute w-1.5 h-1.5 rounded-full pointer-events-none"
-              style={{
-                background: "#96895F",
-                top: "15%",
-                right: "10%",
-                opacity: 0.5,
-              }}
-              animate={{ y: [0, -15, 0], opacity: [0.5, 0.8, 0.5] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-            />
-            <motion.div
-              className="absolute w-1 h-1 rounded-full pointer-events-none"
-              style={{
-                background: "#96895F",
-                bottom: "20%",
-                left: "15%",
-                opacity: 0.3,
-              }}
-              animate={{ y: [0, 15, 0], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-            />
-          </>
-        )}
-      </motion.div>
-    </motion.div>
-  );
-};
-
 const CardComponentSection = () => {
   return (
-    <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
-      {/* Star Background */}
+    <section className="relative py-16 sm:py-20 md:py-28 overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <CSSStars />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 60% 50%, rgba(150,137,95,0.05) 0%, transparent 70%)",
+          }}
+        />
       </div>
 
-      {/* Ambient glow */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 50%, rgba(150, 137, 95, 0.04) 0%, transparent 70%)",
-        }}
-      />
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 xl:gap-24 items-center">
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex flex-col md:flex-row gap-5 md:gap-6">
-          {companyInfo.map((item, index) => (
-            <InfoCard key={item.title} item={item} index={index} />
-          ))}
+          {/* ── LEFT: Text Content ── */}
+          <div className="flex-1 lg:max-w-[46%]">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <h2
+                className={`${MoonlanderFont.className} font-black text-4xl sm:text-5xl md:text-6xl text-white leading-[1.05] mb-6`}
+              >
+                Built on{" "}
+                <span className="text-prOrange relative">
+                  Purpose.
+                  <motion.span
+                    className="absolute inset-0 text-prOrange blur-md opacity-35"
+                    animate={{ opacity: [0.25, 0.45, 0.25] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    Purpose.
+                  </motion.span>
+                </span>
+              </h2>
+
+              <p
+                className={`${RajdhaniFont.className} text-white/75 text-base sm:text-lg md:text-xl mb-10`}
+                style={{ letterSpacing: "0.03em", lineHeight: "1.75" }}
+              >
+                Prometheus is the premier, full-service public relations firm
+                and marketing agency in Western Visayas, amplifying powerful
+                stories to build brands and create high-impact customer
+                experiences.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="border-l-2 pl-5"
+              style={{ borderColor: "rgba(150,137,95,0.45)" }}
+            >
+              <p
+                className={`${RajdhaniFont.className} text-[10px] uppercase tracking-[0.25em] mb-2`}
+                style={{ color: "rgba(150,137,95,0.65)" }}
+              >
+                Our Story
+              </p>
+              <p
+                className={`${RajdhaniFont.className} text-white/60 text-sm sm:text-base`}
+                style={{ letterSpacing: "0.03em", lineHeight: "1.8" }}
+              >
+                Prometheus started out as a small creative team operating from a
+                bedroom, funded by loans and promises. In the years since, we
+                have made our mark leveraging marketing science and
+                multidisciplinary strategies — crafting compelling narratives
+                that effectively promote and elevate brands.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* ── RIGHT: large left + two stacked right ── */}
+          <motion.div
+            className="flex-1 w-full"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="grid grid-cols-3 gap-3 sm:gap-4" style={{ height: "380px" }}>
+
+              {/* Large photo — left, spans full height */}
+              <motion.div
+                className="col-span-2 relative rounded-2xl overflow-hidden"
+                style={{ border: "1px solid rgba(150,137,95,0.20)" }}
+                whileHover={{ scale: 1.015 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  src="/AboutAssets/Gala-1.JPG"
+                  alt="Prometheus gala"
+                  fill
+                  className="object-cover"
+                  style={{ filter: "brightness(0.87) contrast(1.05)" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+              </motion.div>
+
+              {/* Right column — two stacked */}
+              <div className="col-span-1 flex flex-col gap-3 sm:gap-4">
+                <motion.div
+                  className="flex-1 relative rounded-2xl overflow-hidden"
+                  style={{ border: "1px solid rgba(150,137,95,0.20)" }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Image
+                    src="/AboutAssets/Elcid-PR.jpg"
+                    alt="Prometheus PR event"
+                    fill
+                    className="object-cover"
+                    style={{ filter: "brightness(0.87) contrast(1.05)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                </motion.div>
+
+                <motion.div
+                  className="flex-1 relative rounded-2xl overflow-hidden"
+                  style={{ border: "1px solid rgba(150,137,95,0.20)" }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <Image
+                    src="/AboutAssets/PROMINENT MAASIN-42.jpg"
+                    alt="Prometheus event"
+                    fill
+                    className="object-cover"
+                    style={{ filter: "brightness(0.87) contrast(1.05)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                </motion.div>
+              </div>
+
+            </div>
+          </motion.div>
+
         </div>
       </div>
     </section>

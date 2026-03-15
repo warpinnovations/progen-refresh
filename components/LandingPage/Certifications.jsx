@@ -208,7 +208,7 @@ const MobileCertCard = ({ cert, index }) => {
                     )}
                     <div className="flex items-center gap-2 text-xs uppercase font-semibold mt-2"
                         style={{ color: cert.isHighlighted ? 'rgba(212, 175, 55, 0.9)' : 'rgba(150, 137, 95, 0.9)', opacity: 0.8, letterSpacing: '0.08em' }}>
-                        <span>{cert.isHighlighted ? 'Official Partner' : 'Verified'}</span>
+                        <span>{cert.isHighlighted ? 'Official Partner' : 'Certified Excellence'}</span>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
@@ -317,7 +317,7 @@ const OrbitalCard = ({ cert, index, totalCards, radiusX = 390, radiusY = 280 }) 
                         style={{ width: isHovered ? '80%' : '40%', opacity: isHovered ? 1 : 0.4 }} />
                     <div className="flex items-center gap-1.5 text-[10px] uppercase font-semibold mt-1.5 transition-all duration-300"
                         style={{ color: 'rgba(150, 137, 95, 0.9)', opacity: isHovered ? 1 : 0, transform: isHovered ? 'translateY(0)' : 'translateY(8px)', letterSpacing: '0.08em' }}>
-                        <span>Verified Credential</span>
+                        <span>Certified Excellence</span>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
@@ -398,10 +398,6 @@ const FeaturedCenterCard = ({ cert }) => {
 
                 {/* Text */}
                 <div className="relative z-10 space-y-1">
-                    <p className="text-base uppercase font-semibold"
-                        style={{ color: '#D4AF37', letterSpacing: '0.08em', textShadow: '0 0 15px rgba(212,175,55,0.5)' }}>
-                        {cert.linkPhrase}
-                    </p>
                     <p className="font-bold uppercase text-[#EAE2B7] text-xl leading-tight"
                         style={{ letterSpacing: '0.06em', textShadow: '0 0 20px rgba(234,226,183,0.3)' }}>
                         {cert.titles?.[0]}
@@ -425,10 +421,31 @@ const FeaturedCenterCard = ({ cert }) => {
 // --- Main Certifications Component ---
 function Certifications() {
     const certificates = [
-        { emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'], linkPhrase: 'Certified', titles: ['Digital Marketer'] },
-        { emblems: ['./LandingPageAssets/certificates/google-ads.png'], alt: 'Google Ads Certified', titles: [''] },
-        { emblems: ['./LandingPageAssets/certificates/meltwater.png'], linkPhrase: 'Official Partner', titles: ['Meltwater'], description: 'Real-time media monitoring & social intelligence across global channels.', isHighlighted: true },
-        { emblems: ['./LandingPageAssets/certificates/cisco.png'], alt: 'Cisco Certified', titles: [''] },
+        {
+            emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'],
+            linkPhrase: 'Certified',
+            titles: ['Digital Marketer'],
+            description: 'We know how to orchestrate the full customer journey and incorporate business strategy with technical execution.',
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/google-ads.png'],
+            alt: 'Google Ads Certified',
+            titles: [''],
+            description: 'We have a solid command of search intent, transforming digital presence into a precision-engineered engine for aggressive, measurable regional growth.',
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/meltwater.png'],
+            linkPhrase: 'Official Partner',
+            titles: ['Meltwater'],
+            description: 'As the only partner outside Metro Manila, we provide the elite media intelligence required to own the narrative and give regional brands a definitive data advantage.',
+            isHighlighted: true,
+        },
+        {
+            emblems: ['./LandingPageAssets/certificates/cisco.png'],
+            alt: 'Cisco Certified',
+            titles: [''],
+            description: 'We strictly maintain a secure, high-performance digital infrastructure as the backbone of every solution we build.',
+        },
         { emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'], linkPhrase: 'Certified in', titles: ['Search Engine Optimization'] },
         { emblems: ['./LandingPageAssets/certificates/google-analytics-03.png'], alt: 'Google Analytics IQ', titles: [''] },
         { emblems: ['./LandingPageAssets/certificates/cdp.png', './LandingPageAssets/certificates/cdm.png'], linkPhrase: 'Certified in', titles: ['Digital Marketing', 'App Marketing'] },
@@ -496,6 +513,11 @@ function Certifications() {
                     <span className="text-prOrange">Credentials</span>
                 </h2>
                 <FuturisticDivider color="#96895F" className="mt-6 md:mt-8" />
+                <p className={`${RajdhaniFont.className} text-center text-sm md:text-base mt-5 max-w-2xl mx-auto`}
+                    style={{ color: 'rgba(150,137,95,0.8)', letterSpacing: '0.06em', lineHeight: '1.7' }}>
+                    Every certification we hold is proof of our commitment to industry-standard excellence —
+                    the technical and strategic foundation behind every solution we execute.
+                </p>
             </div>
 
             {isMobile ? (
