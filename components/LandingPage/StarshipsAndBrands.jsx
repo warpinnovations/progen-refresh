@@ -83,8 +83,47 @@ const BRAND_ROWS = [
 ];
 
 // Logo height per row index — larger on top, smaller on bottom
-const ROW_HEIGHT = ["80px", "60px", "60px", "44px", "44px", "34px"];
+const ROW_HEIGHT = ["100px", "76px", "76px", "56px", "56px", "44px"];
 
+
+// Flatten all brands into one array for the mobile marquee
+const ALL_BRANDS = BRAND_ROWS.flat();
+const HALF = Math.ceil(ALL_BRANDS.length / 2);
+const MARQUEE_ROW1 = ALL_BRANDS.slice(0, HALF);
+const MARQUEE_ROW2 = ALL_BRANDS.slice(HALF);
+
+const MarqueeRow = ({ brands, direction = "left", speed = 35 }) => {
+  // Duplicate for seamless loop
+  const items = [...brands, ...brands];
+  const anim = direction === "left"
+    ? { x: ["0%", "-50%"] }
+    : { x: ["-50%", "0%"] };
+  return (
+    <div className="w-full overflow-hidden py-2">
+      <motion.div
+        className="flex items-center gap-5"
+        animate={anim}
+        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+        style={{ width: "max-content" }}
+      >
+        {items.map((brand, i) => (
+          <div
+            key={`${brand.name}-${i}`}
+            className="flex items-center justify-center flex-shrink-0 px-4"
+            style={{ height: "56px" }}
+          >
+            <img
+              src={brand.image}
+              alt={brand.name}
+              loading="lazy"
+              style={{ height: "48px", width: "auto", maxWidth: "120px", opacity: 0.85, objectFit: "contain" }}
+            />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 const BrandsSection = () => {
   return (
@@ -113,8 +152,30 @@ const BrandsSection = () => {
           <FuturisticDivider color="#EAE2B7" />
         </motion.div>
 
-        {/* Brand Grid — rows fill full width, logo height shrinks per row */}
-        <div className="w-full flex flex-col gap-2 sm:gap-3">
+        {/* ── MOBILE: auto-scroll marquee (2 rows) ── */}
+        <div className="md:hidden w-full flex flex-col gap-1">
+          {/* Fade edges */}
+          <div className="relative">
+            <div className="absolute left-0 top-0 h-full w-12 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to right, black, transparent)" }} />
+            <div className="absolute right-0 top-0 h-full w-12 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to left, black, transparent)" }} />
+            <MarqueeRow brands={MARQUEE_ROW1} direction="left" speed={40} />
+            <MarqueeRow brands={MARQUEE_ROW2} direction="right" speed={38} />
+          </div>
+
+          {/* "and more…" */}
+          <div className={`${RajdhaniFont.className} w-full flex items-center justify-center gap-3 mt-3`}>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#96895F]/40 to-transparent" />
+            <span className="text-sm tracking-[0.18em] uppercase" style={{ color: 'rgba(150,137,95,0.65)' }}>
+              and many more…
+            </span>
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#96895F]/40 to-transparent" />
+          </div>
+        </div>
+
+        {/* ── DESKTOP: row-based grid (unchanged) ── */}
+        <div className="hidden md:flex w-full flex-col gap-2 sm:gap-3">
           {BRAND_ROWS.map((row, rowIdx) => {
             const logoH = ROW_HEIGHT[rowIdx] || "34px";
             const cellW = `${100 / row.length}%`;
@@ -138,7 +199,7 @@ const BrandsSection = () => {
                       src={brand.image}
                       alt={brand.name}
                       loading="lazy"
-                      style={{ height: logoH, width: 'auto', maxWidth: '90%', opacity: 0.85, filter: 'brightness(0.9) contrast(1)', objectFit: 'contain' }}
+                      style={{ height: logoH, width: 'auto', maxWidth: '90%', opacity: 0.85, objectFit: 'contain' }}
                     />
                   </div>
                 ))}
@@ -155,8 +216,7 @@ const BrandsSection = () => {
             className={`${RajdhaniFont.className} w-full flex items-center justify-center gap-3 mt-2`}
           >
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#96895F]/40 to-transparent" />
-            <span className="text-sm sm:text-base tracking-[0.18em] uppercase"
-              style={{ color: 'rgba(150,137,95,0.65)' }}>
+            <span className="text-sm sm:text-base tracking-[0.18em] uppercase" style={{ color: 'rgba(150,137,95,0.65)' }}>
               and many more…
             </span>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#96895F]/40 to-transparent" />

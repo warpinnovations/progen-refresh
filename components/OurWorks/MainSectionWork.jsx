@@ -483,12 +483,6 @@ const WorksCarousel = ({ works }) => {
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="text-center w-full"
         >
-          <p className={`text-[10px] uppercase tracking-[0.3em] mb-1.5 ${OxaniumFont.className}`}
-            style={{ color: "#96895f" }}>
-            {String(current + 1).padStart(2, "0")}
-            <span className="mx-2 opacity-30">/</span>
-            {String(total).padStart(2, "0")}
-          </p>
           <h3
             className={`text-xl md:text-2xl lg:text-3xl font-bold uppercase text-white leading-tight ${RajdhaniFont.className}`}
             style={{ letterSpacing: "0.08em", textShadow: "0 0 24px rgba(212,175,55,0.15)" }}
@@ -533,11 +527,19 @@ const WorksCarousel = ({ works }) => {
 // --- MAIN COMPONENT ---
 const MainSectionWork = () => {
   const allWorks = worksData.slice(6).map((work, i) => ({ ...work, originalIndex: i + 6 }));
+  const carouselRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      carouselRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <main className="bg-black min-h-screen overflow-x-hidden">
       {/* ========== HERO SECTION ========== */}
-      <section className="relative flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-40 pb-8 sm:pb-12 md:pb-16 overflow-hidden">
+      <section className="relative flex flex-col items-center justify-center pt-28 sm:pt-32 md:pt-40 pb-2 sm:pb-4 md:pb-6 overflow-hidden">
         {/* Star Background */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <CSSStars />
@@ -642,7 +644,7 @@ const MainSectionWork = () => {
       </section>
 
       {/* ========== WORKS CAROUSEL ========== */}
-      <section className="relative py-10 sm:py-16 md:py-24 overflow-hidden">
+      <section ref={carouselRef} className="relative py-6 sm:py-10 md:py-14 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <CSSStars />
           <div className="absolute inset-0 bg-black/55" />

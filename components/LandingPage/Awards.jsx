@@ -81,7 +81,7 @@ const awarditems = [
         year: '2024',
         body: 'Asia CEO Awards',
         title: 'Young Leader of the Year',
-        recognition: 'Circle of Excellence',
+        recognition: 'Asia CEO',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/Asia CEO Awards.PNG',
         aboutAward: 'This award acknowledges individuals who are actively shaping the future landscape of Philippine business and driving significant change. Atty. Lcid Crescent Fernandez was honored for his exemplary and boundary-pushing leadership in the regional business community.',
@@ -94,7 +94,7 @@ const awarditems = [
         year: '2024',
         body: 'Asia CEO Awards',
         title: 'SME Company of the Year',
-        recognition: 'Circle of Excellence',
+        recognition: 'Asia CEO',
         planetimg: '/LandingPageAssets/planets/planet2.png',
         awardimg: '/LandingPageAssets/awards/Asia CEO Awards.PNG',
         aboutAward: 'The Asia CEO Awards recognizes small and medium enterprises (SMEs) that exhibit remarkable growth, competitiveness, and commitment to social impact. Prometheus was honored for its impressive and rapid transformation from a local startup into a multi-division agency.',
@@ -107,7 +107,7 @@ const awarditems = [
         year: '2024',
         body: 'Marketing Excellence Awards',
         title: 'Excellence in Anniversary Marketing',
-        recognition: 'Award',
+        recognition: 'MEA',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/MEA Logo.png',
         aboutAward: 'The Marketing Excellence Awards (MEA) is a highly-regarded program that honors outstanding brand-building initiatives and effective marketing campaigns. It honors campaigns that utilize a corporate anniversary to create positive market resonance and expand competitive standing.',
@@ -144,8 +144,9 @@ const awarditems = [
 ];
 
 const recognitionColor = (recognition) => {
-    if (recognition === 'Anvil')   return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
-    if (recognition === 'MEA')     return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'Anvil')    return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'MEA')      return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'Asia CEO') return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
     if (recognition === 'Finalist') return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
     return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
 };

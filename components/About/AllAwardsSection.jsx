@@ -19,9 +19,9 @@ const RECOGNITION = {
   bzlfqmrha: { label: "Finalist", color: "rgba(255,255,255,0.65)", bg: "rgba(255,255,255,0.06)", border: "rgba(255,255,255,0.2)" },
   xtrcnvjsm: { label: "Anvil", color: "#C8C8C8", bg: "rgba(200,200,200,0.1)", border: "rgba(200,200,200,0.3)" },
   lkmhqztpr: { label: "Anvil", color: "#C8C8C8", bg: "rgba(200,200,200,0.1)", border: "rgba(200,200,200,0.3)" },
-  sdnqjhlwf: { label: "Circle of Excellence", color: "#D4AF37", bg: "rgba(212,175,55,0.12)", border: "rgba(212,175,55,0.4)" },
-  gftrxcmkp: { label: "Winner", color: "#D4AF37", bg: "rgba(212,175,55,0.12)", border: "rgba(212,175,55,0.4)" },
-  vjhlswqmn: { label: "Gold", color: "#D4AF37", bg: "rgba(212,175,55,0.15)", border: "rgba(212,175,55,0.5)" },
+  sdnqjhlwf: { label: "Asia CEO", color: "#D4AF37", bg: "rgba(212,175,55,0.12)", border: "rgba(212,175,55,0.4)" },
+  gftrxcmkp: { label: "Asia CEO", color: "#D4AF37", bg: "rgba(212,175,55,0.12)", border: "rgba(212,175,55,0.4)" },
+  vjhlswqmn: { label: "MEA", color: "#C8C8C8", bg: "rgba(200,200,200,0.1)", border: "rgba(200,200,200,0.3)" },
   cpzkmrhtl: { label: "MEA", color: "#C8C8C8", bg: "rgba(200,200,200,0.1)", border: "rgba(200,200,200,0.3)" },
   fzqmrklpw: { label: "Finalist", color: "rgba(255,255,255,0.65)", bg: "rgba(255,255,255,0.06)", border: "rgba(255,255,255,0.2)" },
 };

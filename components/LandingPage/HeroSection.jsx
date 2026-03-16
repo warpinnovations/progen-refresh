@@ -172,8 +172,8 @@ const HeroSection = () => {
     {
       filename: "MEA Logo.png",
       alt: "Marketing Awards",
-      achievement: "2024–2025",
-      year: "2024–2025",
+      achievement: "MEA",
+      year: "2023–2024",
       category: "Digital Excellence",
       description: "Recognized for breakthrough digital campaigns across multiple categories",
       awardBody: "Marketing Excellence Awards",
@@ -187,7 +187,7 @@ const HeroSection = () => {
     {
       filename: "Anvil Awards Logo.png",
       alt: "Anvil Awards",
-      achievement: "Silver Winner",
+      achievement: "Anvil",
       year: "2025",
       category: "PR Excellence",
       description: "Awarded for strategic communication and measurable impact",
@@ -202,7 +202,7 @@ const HeroSection = () => {
     {
       filename: "Asia CEO Awards.PNG",
       alt: "Asia CEO Awards",
-      achievement: "Regional Champion",
+      achievement: "Asia CEO",
       year: "2024–2025",
       category: "Leadership & Innovation",
       description: "Southeast Asia's premier recognition for visionary business leadership",
@@ -508,6 +508,9 @@ const HeroSection = () => {
                         let blur = 'blur(3px)';
                         let rotateY = 0;
 
+                        let isAdjacent = false;
+                        let isFar = false;
+
                         if (isActive) {
                           zIndex = 30;
                           scale = isMd ? 1.12 : 0.95;
@@ -516,7 +519,8 @@ const HeroSection = () => {
                           // Shift left when this card is hovered to make room for the detail panel
                           xOffset = hoveredIndex === index ? (isMd ? -175 : -110) : 0;
                         } else if ((highlightedIndex === 0 && isRight) || (highlightedIndex === 2 && isLeft) || (highlightedIndex === 1 && (isLeft || isRight))) {
-                          // Adjacent card — visible but not interactive
+                          // Adjacent card — clickable to switch
+                          isAdjacent = true;
                           const goLeft = (highlightedIndex === 0 && isCenter) || (highlightedIndex === 2 && isCenter) || (highlightedIndex === 1 && isLeft);
                           xOffset = goLeft ? -sideX : sideX;
                           rotateY = goLeft ? 20 : -20;
@@ -526,17 +530,18 @@ const HeroSection = () => {
                           blur = 'blur(0px)';
                         } else {
                           // Far card — pushed below, completely passive
+                          isFar = true;
                           yOffset = farY;
                           zIndex = 10;
                           scale = 0.6;
                           opacity = 0.12;
                           blur = 'blur(6px)';
                         }
-                        
+
                         return (
                           <motion.div
                             key={award.filename}
-                            className={`absolute w-full max-w-xs md:max-w-md ${isActive ? 'cursor-pointer' : 'pointer-events-none'}`}
+                            className={`absolute w-full max-w-xs md:max-w-md ${isFar ? 'pointer-events-none' : 'cursor-pointer'}`}
                             style={{ zIndex, transformStyle: 'preserve-3d' }}
                             initial={{ opacity: 0, scale: 0.3, y: 200, rotateX: 90 }}
                             animate={{
@@ -565,6 +570,7 @@ const HeroSection = () => {
                                 mass: 0.7,
                               },
                             }}
+                            onClick={isAdjacent ? () => setHighlightedIndex(index) : undefined}
                             onMouseEnter={isActive ? () => handleCardMouseEnter(index) : undefined}
                             onMouseLeave={isActive ? handleCardMouseLeave : undefined}
                           >

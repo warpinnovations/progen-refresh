@@ -90,7 +90,7 @@ const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
       <motion.div
         className="relative w-full rounded-xl overflow-hidden"
         style={{
-          aspectRatio: "3/4",
+          height: "320px",
           border: isActive
             ? "2px solid rgba(212, 175, 55, 0.7)"
             : "1px solid rgba(255, 255, 255, 0.06)",
@@ -284,15 +284,15 @@ const StarshipCaptainsSection = () => {
         </motion.p>
       </div>
 
-      {/* Team Grid — row-based so each row fills full width */}
+      {/* Team Grid — uniform card size, rows centered */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="flex flex-col gap-3 sm:gap-4 md:gap-5">
           {[storyTellers.slice(0, 5), storyTellers.slice(5)].map((row, rowIdx) => (
-            <div key={rowIdx} className="flex w-full gap-3 sm:gap-4 md:gap-5">
+            <div key={rowIdx} className="flex justify-center gap-3 sm:gap-4 md:gap-5">
               {row.map((person, i) => {
                 const globalIdx = rowIdx === 0 ? i : 5 + i;
                 return (
-                  <div key={globalIdx} style={{ width: `${100 / row.length}%`, flexShrink: 0 }}>
+                  <div key={globalIdx} style={{ width: "180px", flexShrink: 0 }}>
                     <CaptainCard
                       person={person}
                       index={globalIdx}

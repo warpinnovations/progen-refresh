@@ -3,7 +3,6 @@
 import React from "react";
 import CardComponentSection from "@/components/About/CardComponentSection";
 import AllAwardsSection from "@/components/About/AllAwardsSection";
-import StarShipsSection from "@/components/About/StarShipSection";
 import StarshipCaptainsSection from "@/components/About/StarshipCaptainsSection";
 import Footer from "@/components/Global/Footer";
 import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter";
@@ -144,7 +143,10 @@ const MainSectionAbout = () => {
         </div>
       </section>
 
-      {/* ========== VISION & MISSION BREAK (2nd) ========== */}
+      {/* ========== COMPANY INFO / BUILT ON PURPOSE (2nd) ========== */}
+      <CardComponentSection />
+
+      {/* ========== VISION & MISSION BREAK (3rd) ========== */}
       <section className="relative py-10 sm:py-12 overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
@@ -209,9 +211,6 @@ const MainSectionAbout = () => {
 
       {/* ========== STARSHIP CAPTAINS SECTION (3rd) ========== */}
       <StarshipCaptainsSection />
-
-      {/* ========== COMPANY INFO SECTION ========== */}
-      <CardComponentSection />
 
       {/* ========== ALL AWARDS SECTION ========== */}
       <AllAwardsSection />
