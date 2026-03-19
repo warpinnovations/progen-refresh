@@ -10,10 +10,9 @@ import FuturisticDivider from "../Global/FuturisticLine";
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 
-// Row-based layout — each row fills full width, height set per tier
-// NOTE: Add /brandLogos/Hafele.png to enable the Häfele slot in row 3
+// Row-based layout matching reference — each row fills full width, height set per tier
 const BRAND_ROWS = [
-  // Row 1 — 5 hero logos
+  // Row 1 — 5 hero logos (largest)
   [
     { name: "More Power",                 image: "/brandLogos/MorePower(white).png" },
     { name: "Asia Pacific Medical Center",image: "/brandLogos/APMC.png" },
@@ -21,31 +20,36 @@ const BRAND_ROWS = [
     { name: "Home Credit",                image: "/brandLogos/Home Credit.png" },
     { name: "Monde Nissin",               image: "/brandLogos/Monde Nissin.png" },
   ],
-  // Row 2 — 8 logos
+  // Row 2 — 7 logos
   [
     { name: "DSWD",                       image: "/brandLogos/DSWD.png" },
+    { name: "DOST",                       image: "/brandLogos/DOST.png" },
     { name: "Japan Foundation",           image: "/brandLogos/Japan Foundation.png" },
     { name: "Imperial Appliance Plaza",   image: "/addedbrands/IAP_WHITE_DROP_SHADOW.png" },
     { name: "Bootcamp | Adidas",          image: "/addedbrands/Logo_with_label.png" },
     { name: "Honda",                      image: "/brandLogos/Honda.png" },
     { name: "Ford",                       image: "/brandLogos/Ford.png" },
+  ],
+  // Row 3 — 4 large text/brand logos (Haier, Häfele, Nike, Isuzu)
+  [
     { name: "Haier",                      image: "/brandLogos/Haier.png" },
+    { name: "Häfele",                     image: "/brandLogos/Hafele.png" },
+    { name: "Nike Iloilo",                image: "/brandLogos/Nike.png" },
     { name: "Isuzu",                      image: "/brandLogos/Isuzu Logo - White.png" },
   ],
-  // Row 3 — 6 logos (add Häfele file to unlock slot)
-  [
-    { name: "Häfele",                     image: "/brandLogos/Hafele.png" },
-    { name: "Nike",                       image: "/brandLogos/Nike.png" },
-    { name: "Daily Guardian",             image: "/brandLogos/Daily Guardian.png" },
-    { name: "Dinagyang Festival",         image: "/brandLogos/Dinagyang Festival.png" },
-    { name: "Courtyard by Marriott",      image: "/brandLogos/Courtyard.png" },
-    { name: "Metro Pacific Iloilo Water", image: "/brandLogos/Metro Pacific Iloilo Water.png" },
-  ],
-  // Row 4 — 9 logos
+  // Row 4 — 7 logos
   [
     { name: "Pueblo de Panay",            image: "/addedbrands/Pueblo de Panay logo.png" },
     { name: "Coffee Brewthorhood",        image: "/brandLogos/Coffee Brewthorhood.png" },
     { name: "Premier Family Business",    image: "/addedbrands/Premiere.png" },
+    { name: "Dinagyang Festival",         image: "/brandLogos/Dinagyang Festival.png" },
+    { name: "Iloilo Business Club",       image: "/brandLogos/IBC.png" },
+    { name: "Courtyard by Marriott",      image: "/brandLogos/Courtyard.png" },
+    { name: "Metro Pacific Iloilo Water", image: "/brandLogos/Metro Pacific Iloilo Water.png" },
+  ],
+  // Row 5 — 7 logos
+  [
+    { name: "Daily Guardian",             image: "/brandLogos/Daily Guardian.png" },
     { name: "Freshood",                   image: "/addedbrands/Freshood_Logo_Primary.png" },
     { name: "Bread Basket",               image: "/brandLogos/Bread Basket.png" },
     { name: "Iloilo Grand Hotel",         image: "/addedbrands/IGH Logo.jpeg" },
@@ -53,7 +57,7 @@ const BRAND_ROWS = [
     { name: "AC Energy",                  image: "/addedbrands/AC Energy Logo.png" },
     { name: "Fiesta One Ayala",           image: "/addedbrands/Fiesta One ayala.png" },
   ],
-  // Row 5 — 9 logos
+  // Row 6 — 10 logos
   [
     { name: "One UPV",                    image: "/addedbrands/One UPV logo.png" },
     { name: "101 Food",                   image: "/brandLogos/101 Food.png" },
@@ -61,18 +65,16 @@ const BRAND_ROWS = [
     { name: "Nifty Fifty",                image: "/addedbrands/Nifty fifty logo.jpg" },
     { name: "BeOzzy",                     image: "/addedbrands/BeOzzy-MainLogo_H-Tagline-RGB-White.png" },
     { name: "PCCI",                       image: "/brandLogos/PCCI.png" },
-    { name: "IBC",                        image: "/brandLogos/IBC.png" },
     { name: "Datasoftlogic",              image: "/addedbrands/DATASOFTLOGIC_LOGO.png" },
-    { name: "DOST",                       image: "/brandLogos/DOST.png" },
+    { name: "E.Curate",                   image: "/addedbrands/E.Curate Logo_stacked white.png" },
+    { name: "LiDU",                       image: "/addedbrands/Lidu.png" },
+    { name: "Superhouse Solutions",       image: "/addedbrands/Superhouse Solutions - Stacked.png" },
   ],
-  // Row 6 — 12 extra-small logos
+  // Row 7 — 9 logos (smallest)
   [
     { name: "Hotel Veronica",             image: "/addedbrands/Hotel Veronica logo.jpg" },
     { name: "IloEsports",                 image: "/addedbrands/IloEsports Logo.png" },
     { name: "GOOZAM",                     image: "/brandLogos/Goozam.png" },
-    { name: "E.Curate",                   image: "/addedbrands/E.Curate Logo_stacked white.png" },
-    { name: "LiDU",                       image: "/addedbrands/Lidu.png" },
-    { name: "Superhouse Solutions",       image: "/addedbrands/Superhouse Solutions - Stacked.png" },
     { name: "Iloilo United Royals",       image: "/addedbrands/Iloilo united royals.jpg" },
     { name: "FIR Multi-Purpose",          image: "/addedbrands/FIR.jpg" },
     { name: "Kwadra TBI",                 image: "/addedbrands/KTBI_KWADRA FULL COLOR VERTICAL.png" },
@@ -82,8 +84,8 @@ const BRAND_ROWS = [
   ],
 ];
 
-// Logo height per row index — larger on top, smaller on bottom
-const ROW_HEIGHT = ["100px", "76px", "76px", "56px", "56px", "44px"];
+// Logo height per row — tapers from large to small, Row 3 taller for big text logos
+const ROW_HEIGHT = ["120px", "84px", "90px", "66px", "60px", "48px", "38px"];
 
 
 // Flatten all brands into one array for the mobile marquee
@@ -179,7 +181,7 @@ const BrandsSection = () => {
           {BRAND_ROWS.map((row, rowIdx) => {
             const logoH = ROW_HEIGHT[rowIdx] || "34px";
             const cellW = `${100 / row.length}%`;
-            const pad = rowIdx <= 1 ? "px-3 py-3 sm:px-4 sm:py-4" : rowIdx <= 2 ? "px-2 py-3 sm:px-3" : "px-1.5 py-2 sm:px-2";
+            const pad = rowIdx <= 1 ? "px-3 py-3 sm:px-4 sm:py-4" : rowIdx === 2 ? "px-4 py-3 sm:px-6" : rowIdx <= 4 ? "px-2 py-2 sm:px-3" : "px-1.5 py-2 sm:px-2";
             return (
               <motion.div
                 key={rowIdx}

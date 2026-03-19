@@ -34,21 +34,25 @@ const PhilippineServiceMap = () => {
       viewport={{ once: true }}
       transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
     >
+      {/* Glow backdrop */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 55% 70% at 50% 50%, rgba(150,137,95,0.1) 0%, transparent 70%)"
+        background: "radial-gradient(ellipse 65% 75% at 50% 45%, rgba(150,137,95,0.15) 0%, transparent 70%)"
       }} />
 
-      <div className="text-center mb-5 relative z-10">
-        <p className={`${RajdhaniFont.className} text-xs uppercase tracking-[0.22em] mb-1`}
-           style={{ color: "rgba(150,137,95,0.65)" }}>Nationwide Coverage</p>
-        <p className={`${MoonlanderFont.className} text-2xl md:text-3xl`}
-           style={{ color: "#B8A76F", textShadow: "0 0 30px rgba(150,137,95,0.3)" }}>3 Island Groups</p>
+      {/* Header */}
+      <div className="text-center mb-4 relative z-10">
+        <p className={`${RajdhaniFont.className} text-[11px] uppercase tracking-[0.28em] mb-1`}
+           style={{ color: "rgba(150,137,95,0.6)" }}>Nationwide Coverage</p>
+        <p className={`${MoonlanderFont.className} text-2xl md:text-3xl lg:text-4xl`}
+           style={{ color: "#C8A84B", textShadow: "0 0 40px rgba(212,175,55,0.35)" }}>
+          3 Island Groups
+        </p>
       </div>
 
       <svg
-        viewBox="0 0 400 620"
-        className="w-full max-w-[220px] sm:max-w-[260px] md:max-w-[290px] lg:max-w-[320px] relative z-10"
-        style={{ filter: "drop-shadow(0 0 16px rgba(150,137,95,0.18))" }}
+        viewBox="0 0 400 560"
+        className="w-full max-w-[300px] sm:max-w-[360px] md:max-w-[420px] lg:max-w-[480px] relative z-10"
+        style={{ filter: "drop-shadow(0 0 24px rgba(150,137,95,0.22))" }}
       >
         <style>{`
           @keyframes mapPulse {
@@ -457,51 +461,62 @@ const PhilippineServiceMap = () => {
           );
         })}
 
-        {/* ── LEGEND ── */}
-        <g>
-          <circle cx="14" cy="572" r="4"   fill="#D4AF37" />
-          <text x="23" y="576" fill="rgba(150,137,95,0.72)" fontSize="7.8" fontFamily="sans-serif">Home Base · Iloilo City</text>
-          <circle cx="14" cy="586" r="3.5" fill="#B8A76F" />
-          <text x="23" y="590" fill="rgba(150,137,95,0.72)" fontSize="7.8" fontFamily="sans-serif">Key Service Cities</text>
-          <circle cx="14" cy="599" r="2.5" fill="#96895F" />
-          <text x="23" y="603" fill="rgba(150,137,95,0.72)" fontSize="7.8" fontFamily="sans-serif">Service Areas</text>
-        </g>
       </svg>
 
-      {/* CTA Buttons — matches site design system */}
-      <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-sm relative z-10">
-        <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="flex-1">
+      {/* ── LEGEND ── */}
+      <div className="relative z-10 mt-5 flex flex-row items-center justify-center gap-5 sm:gap-7">
+        {[
+          { color: "#D4AF37", size: 10, label: "Home Base · Iloilo City" },
+          { color: "#B8A76F", size: 9,  label: "Key Service Cities" },
+          { color: "#96895F", size: 7,  label: "Service Areas" },
+        ].map(({ color, size, label }) => (
+          <div key={label} className="flex items-center gap-2">
+            <div className="rounded-full flex-shrink-0"
+              style={{ width: size, height: size, background: color,
+                boxShadow: `0 0 8px 2px ${color}55` }} />
+            <span className={`${RajdhaniFont.className} text-[11px] sm:text-xs uppercase tracking-[0.14em]`}
+              style={{ color: "rgba(180,160,100,0.80)" }}>
+              {label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── CTA BUTTONS ── */}
+      <div className="relative z-10 mt-6 flex flex-row gap-3 w-full max-w-sm">
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="flex-1">
           <Link href="/contact"
-            className={`${RajdhaniFont.className} group relative inline-flex items-center justify-center w-full overflow-hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-widest transition-all duration-300`}
+            className={`${RajdhaniFont.className} group relative inline-flex items-center justify-center w-full overflow-hidden rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300`}
             style={{
-              background: "rgba(150,137,95,0.18)",
-              border: "1.5px solid rgba(150,137,95,0.65)",
+              background: "linear-gradient(135deg, rgba(212,175,55,0.25) 0%, rgba(150,137,95,0.15) 100%)",
+              border: "1.5px solid rgba(212,175,55,0.6)",
               color: "#D4AF37",
-              boxShadow: "0 0 18px -4px rgba(150,137,95,0.35)",
+              boxShadow: "0 0 22px -6px rgba(212,175,55,0.5), inset 0 1px 0 rgba(255,255,255,0.06)",
             }}
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <span className="relative flex items-center gap-2">
               Contact Us
-              <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </span>
           </Link>
         </motion.div>
-        <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} className="flex-1">
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="flex-1">
           <Link href="/works"
-            className={`${RajdhaniFont.className} group relative inline-flex items-center justify-center w-full overflow-hidden rounded-full px-5 py-3 text-sm font-bold uppercase tracking-widest transition-all duration-300`}
+            className={`${RajdhaniFont.className} group relative inline-flex items-center justify-center w-full overflow-hidden rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-widest transition-all duration-300`}
             style={{
               background: "transparent",
-              border: "1.5px solid rgba(150,137,95,0.40)",
-              color: "rgba(150,137,95,0.80)",
+              border: "1.5px solid rgba(150,137,95,0.45)",
+              color: "rgba(200,168,75,0.9)",
             }}
           >
-            <span className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full" style={{ background: "rgba(150,137,95,0.12)" }} />
+            <span className="absolute inset-0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"
+              style={{ background: "rgba(150,137,95,0.14)" }} />
             <span className="relative flex items-center gap-2">
               Our Works
-              <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </span>
