@@ -197,11 +197,13 @@ const BrandsSection = () => {
                     className={`flex items-center justify-center ${pad}`}
                     style={{ width: cellW, flexShrink: 0 }}
                   >
-                    <img
+                    <motion.img
                       src={brand.image}
                       alt={brand.name}
                       loading="lazy"
-                      style={{ height: logoH, width: 'auto', maxWidth: '90%', opacity: 0.85, objectFit: 'contain' }}
+                      whileHover={{ opacity: 1, scale: 1.08, filter: "brightness(1.25) drop-shadow(0 0 8px rgba(212,175,55,0.45))" }}
+                      transition={{ duration: 0.2 }}
+                      style={{ height: logoH, width: 'auto', maxWidth: '90%', opacity: 0.7, objectFit: 'contain', cursor: 'default' }}
                     />
                   </div>
                 ))}
