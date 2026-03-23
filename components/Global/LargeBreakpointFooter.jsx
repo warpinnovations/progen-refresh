@@ -107,7 +107,7 @@ const ThreeColumnFooter = () => (
           </p>
         </div> */}
 
-        {/* Col 5: Vision */}
+        {/* Col 5: Vision ***/}
         <div className="w-1/2 md:w-1/5 mb-8 md:mb-0 text-sm">
           <ColTitle>Vision</ColTitle>
           <p className={`font-medium text-sm leading-loose ${RajdhaniFont.className}`}
