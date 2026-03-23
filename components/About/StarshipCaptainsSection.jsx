@@ -221,28 +221,6 @@ const StarshipCaptainsSection = () => {
         }}
       />
 
-      {/* Quote */}
-      <motion.div
-        className="relative z-10 w-full max-w-3xl mx-auto px-4 text-center mb-16 sm:mb-20 md:mb-24"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-      >
-        <div
-          className={`${RajdhaniFont.className} text-white/70 text-lg sm:text-xl md:text-2xl lg:text-3xl italic`}
-          style={{
-            letterSpacing: "0.04em",
-            lineHeight: "1.6",
-            fontWeight: "500",
-          }}
-        >
-          <span className="text-[#D4AF37] text-3xl md:text-4xl">&ldquo;</span>
-          To forever chase excellence with curiosity as our guide.
-          <span className="text-[#D4AF37] text-3xl md:text-4xl">&rdquo;</span>
-        </div>
-      </motion.div>
-
       {/* Section Header */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 text-center mb-10 md:mb-14">
         <motion.div

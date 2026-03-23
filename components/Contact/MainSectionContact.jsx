@@ -17,28 +17,28 @@ const RajdhaniFont = Rajdhani({ weight: "700", subsets: ["latin"] });
 
 const jobOpenings = [
   {
-    title: "Content Producer",
+    title: "Video Editor",
     type: "Full-time",
     location: "Iloilo City",
-    description: "Create compelling video and photo content for our diverse roster of regional and national clients.",
+    description: "Edit and produce high-quality video content for social media and digital campaigns using Adobe Premiere Pro, DaVinci Resolve, After Effects, and similar tools. Agency experience preferred.",
   },
   {
-    title: "Accounts Manager",
+    title: "Videographer",
     type: "Full-time",
     location: "Iloilo City",
-    description: "Manage client relationships, campaign timelines, and deliverables across multiple accounts simultaneously.",
+    description: "Capture compelling footage for brand campaigns and events. Must have basic knowledge in operating a camera, composition and framing, and video-editing tools. Relative fitness and stamina required.",
   },
   {
-    title: "Creative Copywriter",
+    title: "Graphic Designer",
     type: "Full-time",
     location: "Iloilo City",
-    description: "Craft sharp, strategic copy for social media, campaigns, and brand communications.",
+    description: "Conceptualize and design visuals from scratch using Photoshop, Illustrator, and Canva. Must be able to interpret creative briefs accurately, work with minimal supervision, and have a strong design portfolio.",
   },
   {
-    title: "Media Relations Specialist",
+    title: "Copywriter",
     type: "Full-time",
     location: "Iloilo City",
-    description: "Build and maintain relationships with regional media outlets to secure high-impact press coverage for our clients.",
+    description: "Write clear, compelling, and error-free content across platforms. Must have strong technical and creative writing skills, and the ability to interpret creative direction and collaborate closely with other teams.",
   },
 ];
 

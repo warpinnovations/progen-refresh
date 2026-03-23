@@ -99,13 +99,13 @@ const ThreeColumnFooter = () => (
         </div>
 
         {/* Col 4: Mission */}
-        <div className="w-1/2 md:w-1/5 mb-8 md:mb-0 text-sm">
+        {/* <div className="w-1/2 md:w-1/5 mb-8 md:mb-0 text-sm">
           <ColTitle>Mission</ColTitle>
           <p className={`font-medium text-sm leading-loose ${RajdhaniFont.className}`}
             style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.04em" }}>
             To forever chase excellence with curiosity as our guide.
           </p>
-        </div>
+        </div> */}
 
         {/* Col 5: Vision */}
         <div className="w-1/2 md:w-1/5 mb-8 md:mb-0 text-sm">
