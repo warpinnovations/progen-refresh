@@ -81,8 +81,9 @@ const Footer = () => {
             <img src="/LandingPageAssets/logoNavbar.png" alt="Prometheus Logo" className="w-44 mb-5" />
             <div className={`space-y-1.5 text-sm mb-7 ${RajdhaniFont.className}`}
               style={{ color: "rgba(150,137,95,0.65)", letterSpacing: "0.05em" }}>
-              <p>Daily Guardian Corporate Center</p>
-              <p>Iloilo City, 5000</p>
+              <p>Daily Guardian Center</p>
+              <p>Mandurriao, Iloilo City</p>
+              <p>Philippines</p>
             </div>
             <div className="flex gap-2.5">
               <SocialIconCircle href="https://facebook.com/PrometheusPr"                  icon={FaFacebookF} />

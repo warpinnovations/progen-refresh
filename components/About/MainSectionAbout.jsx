@@ -172,7 +172,7 @@ const MainSectionAbout = () => {
               </p>
               <p className={`${RajdhaniFont.className} text-white/80 text-base sm:text-lg md:text-xl`}
                 style={{ letterSpacing: "0.04em", lineHeight: "1.65" }}>
-                To be the leading creative force in the region, setting new benchmarks in marketing excellence.
+                To forever chase excellence with curiosity as our guide.
               </p>
             </motion.div>
 
@@ -197,7 +197,7 @@ const MainSectionAbout = () => {
               </p>
               <p className={`${RajdhaniFont.className} text-white/80 text-base sm:text-lg md:text-xl`}
                 style={{ letterSpacing: "0.04em", lineHeight: "1.65" }}>
-                To build powerful connections through creativity and innovation.
+                To build powerful connections through creativity and innovation across the widest variety of mediums and platforms.
               </p>
             </motion.div>
 

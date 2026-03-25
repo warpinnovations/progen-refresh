@@ -30,12 +30,14 @@ const BRAND_ROWS = [
     { name: "Honda",                      image: "/brandLogos/Honda.png" },
     { name: "Ford",                       image: "/brandLogos/Ford.png" },
   ],
-  // Row 3 — 4 large text/brand logos (Haier, Häfele, Nike, Isuzu)
+  // Row 3 — 6 logos
   [
     { name: "Haier",                      image: "/brandLogos/Haier.png" },
     { name: "Häfele",                     image: "/brandLogos/Hafele.png" },
     { name: "Nike Iloilo",                image: "/brandLogos/Nike.png" },
     { name: "Isuzu",                      image: "/brandLogos/Isuzu Logo - White.png" },
+    { name: "OWNDAYS",                    image: "/brandLogos/Owndays.png" },
+    { name: "Daily Guardian",             image: "/brandLogos/Daily Guardian.png" },
   ],
   // Row 4 — 7 logos
   [
@@ -47,9 +49,8 @@ const BRAND_ROWS = [
     { name: "Courtyard by Marriott",      image: "/brandLogos/Courtyard.png" },
     { name: "Metro Pacific Iloilo Water", image: "/brandLogos/Metro Pacific Iloilo Water.png" },
   ],
-  // Row 5 — 7 logos
+  // Row 5 — 6 logos
   [
-    { name: "Daily Guardian",             image: "/brandLogos/Daily Guardian.png" },
     { name: "Freshood",                   image: "/addedbrands/Freshood_Logo_Primary.png" },
     { name: "Bread Basket",               image: "/brandLogos/Bread Basket.png" },
     { name: "Iloilo Grand Hotel",         image: "/addedbrands/IGH Logo.jpeg" },
@@ -181,7 +182,7 @@ const BrandsSection = () => {
           {BRAND_ROWS.map((row, rowIdx) => {
             const logoH = ROW_HEIGHT[rowIdx] || "34px";
             const cellW = `${100 / row.length}%`;
-            const pad = rowIdx <= 1 ? "px-3 py-3 sm:px-4 sm:py-4" : rowIdx === 2 ? "px-4 py-3 sm:px-6" : rowIdx <= 4 ? "px-2 py-2 sm:px-3" : "px-1.5 py-2 sm:px-2";
+            const pad = rowIdx <= 1 ? "px-3 py-3 sm:px-4 sm:py-4" : rowIdx === 2 ? "px-2 py-2 sm:px-3" : rowIdx <= 4 ? "px-2 py-2 sm:px-3" : "px-1.5 py-2 sm:px-2";
             return (
               <motion.div
                 key={rowIdx}
@@ -203,7 +204,7 @@ const BrandsSection = () => {
                       loading="lazy"
                       whileHover={{ opacity: 1, scale: 1.08, filter: "brightness(1.25) drop-shadow(0 0 8px rgba(212,175,55,0.45))" }}
                       transition={{ duration: 0.2 }}
-                      style={{ height: logoH, width: 'auto', maxWidth: '90%', opacity: 0.7, objectFit: 'contain', cursor: 'default' }}
+                      style={{ height: logoH, width: 'auto', maxWidth: '95%', opacity: 0.7, objectFit: 'contain', objectPosition: 'center', cursor: 'default' }}
                     />
                   </div>
                 ))}

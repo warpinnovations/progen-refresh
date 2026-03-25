@@ -66,7 +66,7 @@ const ThreeColumnFooter = () => (
           <img src="/LandingPageAssets/logoNavbar.png" className="w-44 mb-4" alt="Logo" />
           <p className={`mt-2 font-medium text-sm leading-loose ${RajdhaniFont.className}`}
             style={{ color: "rgba(150,137,95,0.65)" }}>
-            Daily Guardian<br />Corporate Center<br />Iloilo City, 5000
+            Daily Guardian Center<br />Mandurriao, Iloilo City<br />Philippines
           </p>
           <div className="mt-5">
             <SocialLink href="https://facebook.com/PrometheusPr"                  icon={FaFacebookF} />

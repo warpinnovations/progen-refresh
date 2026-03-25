@@ -32,16 +32,28 @@ const storyTellers = [
     role: "Executive Creative Director",
   },
   {
-    name: "Kevin Ryan Atutubo",
-    img: "/LandingPageAssets/storytellers/kevin_formal.webp",
-    imgColored: "/LandingPageAssets/storytellers/kevin_wacky.webp",
-    role: "Chief Technology Officer",
+    name: "Cho",
+    img: "/LandingPageAssets/storytellers/cho_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/cho_formal.jpg",
+    role: "Creative Director",
+  },
+  {
+    name: "Junica",
+    img: "/LandingPageAssets/storytellers/junica_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/junica_formal.jpg",
+    role: "Associate Creative Director",
   },
   {
     name: "Blessed Bea Plondaya",
     img: "/LandingPageAssets/storytellers/bea_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/bea_wacky.webp",
     role: "Chief Operations Officer",
+  },
+  {
+    name: "Kevin Ryan Atutubo",
+    img: "/LandingPageAssets/storytellers/kevin_formal.webp",
+    imgColored: "/LandingPageAssets/storytellers/kevin_wacky.webp",
+    role: "Chief Technology Officer",
   },
   {
     name: "Jayvee Bayaban",
@@ -265,7 +277,7 @@ const StarshipCaptainsSection = () => {
       {/* Team Grid — uniform card size, rows centered */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="flex flex-col gap-3 sm:gap-4 md:gap-5">
-          {[storyTellers.slice(0, 5), storyTellers.slice(5)].map((row, rowIdx) => (
+          {[storyTellers.slice(0, 6), storyTellers.slice(6)].map((row, rowIdx) => (
             <div key={rowIdx} className="flex justify-center gap-3 sm:gap-4 md:gap-5">
               {row.map((person, i) => {
                 const globalIdx = rowIdx === 0 ? i : 5 + i;

@@ -351,25 +351,6 @@ const AllAwardsSection = () => {
             <FuturisticDivider color="#96895F" className="mt-6" />
           </motion.div>
 
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className={`${RajdhaniFont.className} flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-8 text-sm`}
-          >
-            {[
-              { value: "10+", label: "Award Wins" },
-              { value: "3", label: "Award Bodies" },
-              { value: "2023–2025", label: "Consistent Recognition" },
-            ].map(({ value, label }) => (
-              <div key={label} className="flex flex-col items-center gap-0.5">
-                <span className={`${OxaniumFont.className} text-prOrange text-2xl font-bold`} style={{ letterSpacing: "0.04em" }}>{value}</span>
-                <span className={`${OxaniumFont.className} text-[#96895f]/70 text-xs uppercase tracking-widest`}>{label}</span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* Awards grid */}
