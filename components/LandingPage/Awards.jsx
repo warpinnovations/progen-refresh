@@ -133,7 +133,7 @@ const awarditems = [
         year: '2023',
         body: 'Marketing Excellence Awards',
         title: 'Marketing Leader of the Year',
-        recognition: 'Finalist',
+        recognition: 'Bronze',
         planetimg: '/LandingPageAssets/planets/moon.png',
         awardimg: '/LandingPageAssets/awards/MEA Logo.png',
         aboutAward: 'The Marketing Leader of the Year award is given to a brand-side marketing leader for achieving significant impact and showing outstanding leadership. The award recognizes excellence across core areas of marketing competency, including creative strategy, forward-thinking execution, and effective team motivation.',
@@ -146,8 +146,9 @@ const awarditems = [
 const recognitionColor = (recognition) => {
     if (recognition === 'Anvil')    return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
     if (recognition === 'MEA')      return { color: '#C0C0C0', glow: 'rgba(192,192,192,0.4)' };
+    if (recognition === 'Bronze')   return { color: 'rgba(160,120,80,0.65)', glow: 'rgba(160,120,80,0.15)' };
+    if (recognition === 'Finalist') return { color: 'rgba(160,120,80,0.65)', glow: 'rgba(160,120,80,0.15)' };
     if (recognition === 'Asia CEO') return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
-    if (recognition === 'Finalist') return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
     return { color: '#D4AF37', glow: 'rgba(212,175,55,0.4)' };
 };
 

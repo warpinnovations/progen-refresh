@@ -178,7 +178,15 @@ const HeroSection = () => {
       description: "Breakthrough digital, experiential and on-the-ground campaigns",
       awardBody: "Marketing Excellence Awards",
       subtitle: "by Marketing-Interactive · Asia-Pacific",
-      wins: [],
+      wins: [
+        { year: "2025", category: "Excellence in Location-Based Marketing", recognition: "Finalist", aboutAward: "The Marketing Excellence Awards recognizes campaigns that creatively leverage location-based strategies to deliver precision marketing, creating relevant audience experiences rooted in place and context." },
+        { year: "2025", category: "Excellence in Customer Engagement", recognition: "Finalist", aboutAward: "This recognition honors campaigns that demonstrate outstanding ability to build meaningful, lasting connections with customers through innovative and measurable engagement strategies." },
+        { year: "2025", category: "Excellence in Marketing to a Specific Audience", recognition: "Finalist", aboutAward: "This award category celebrates campaigns that demonstrate exceptional audience intelligence and targeting, delivering precisely crafted messages that achieve high impact with a defined demographic." },
+        { year: "2024", category: "Excellence in Anniversary Marketing", recognition: "Silver", aboutAward: "The Marketing Excellence Awards (MEA) is a highly-regarded program that honors outstanding brand-building initiatives and effective marketing campaigns. It honors campaigns that utilize a corporate anniversary to create positive market resonance and expand competitive standing." },
+        { year: "2024", category: "Excellence in Urban Guerrilla Marketing", recognition: "Silver", aboutAward: "This Marketing Excellence Award recognizes the most creative, bold, and high-impact non-traditional marketing campaigns. This category celebrates campaigns that leverage a business's anniversary to generate positive public attention and significantly boost market growth." },
+        { year: "2023", category: "Marketing Leader of the Year", recognition: "Bronze", aboutAward: "The Marketing Leader of the Year award is given to a brand-side marketing leader for achieving significant impact and showing outstanding leadership. The award recognizes excellence across core areas of marketing competency, including creative strategy, forward-thinking execution, and effective team motivation." },
+        { year: "2023", category: "Excellence in Public Sector Marketing", recognition: "Finalist", aboutAward: "This Marketing Excellence Award honors outstanding campaigns executed for government agencies or public institutions, recognizing effective communication strategies that serve and engage the public." },
+      ],
     },
     {
       filename: "Anvil Awards Logo.png",
@@ -189,7 +197,12 @@ const HeroSection = () => {
       description: "Awarded for strategic communication and measurable impact",
       awardBody: "Anvil Awards",
       subtitle: "by PRSP · Only Provincial Agency Honored",
-      wins: [],
+      wins: [
+        { year: "2026", category: "PR Tools: Special Events and Exhibits", recognition: "Silver", aboutAward: "This category of the Anvil Awards recognizes the most outstanding event activations and exhibit designs that effectively achieve public relations goals and strengthen stakeholder relationships." },
+        { year: "2026", category: "PR-Led Integrated Campaign", recognition: "Finalist", aboutAward: "This Anvil Award category honors comprehensive campaigns that seamlessly integrate multiple PR disciplines into a single, cohesive strategy achieving significant public relations results." },
+        { year: "2025", category: "Best PR-Led Integrated Campaign", recognition: "Silver", aboutAward: "The Anvil Awards represents the highest national honor for excellence in strategic communications and public relations in the Philippines. This particular category recognizes the best comprehensive campaign that was driven by a strong PR-led strategy." },
+        { year: "2025", category: "PR Tools: Special Events and Exhibits", recognition: "Silver", aboutAward: "This Anvil Award category specifically recognizes the most effective and creative event activation through the use of innovative platforms and interactive elements that capture audience engagement in order to achieve campaign goals." },
+      ],
     },
     {
       filename: "Asia CEO Awards.PNG",
@@ -200,7 +213,12 @@ const HeroSection = () => {
       description: "Southeast Asia's premier recognition for visionary business leadership",
       awardBody: "Asia CEO Awards",
       subtitle: "Largest Business Awards in Southeast Asia",
-      wins: [],
+      wins: [
+        { year: "2025", category: "Young Leader of the Year", recognition: "Winner", aboutAward: "This recognition is one of the most prestigious honors from one of Southeast Asia's largest business award-giving bodies. It celebrates leaders who are creating significant national impact through innovation and dedicated community empowerment initiatives." },
+        { year: "2025", category: "SME Company of the Year", recognition: "Winner", aboutAward: "The SME Company of the Year celebrates organizations that demonstrate exceptional growth trajectory and maintain high operational excellence. The award also places a strong emphasis on the company's positive social impact within its operating region." },
+        { year: "2024", category: "Young Leader of the Year", recognition: "Winner", aboutAward: "This award acknowledges individuals who are actively shaping the future landscape of Philippine business and driving significant change. Atty. Lcid Crescent Fernandez was honored for his exemplary and boundary-pushing leadership in the regional business community." },
+        { year: "2024", category: "SME Company of the Year", recognition: "Winner", aboutAward: "The Asia CEO Awards recognizes small and medium enterprises (SMEs) that exhibit remarkable growth, competitiveness, and commitment to social impact. Prometheus was honored for its impressive and rapid transformation from a local startup into a multi-division agency." },
+      ],
     },
     {
       filename: "/AwardsExhibitAssets/Logos/Pr Awards 2025/PR_Awards.png",
@@ -211,7 +229,9 @@ const HeroSection = () => {
       description: "Regional recognition for outstanding PR campaigns across Asia-Pacific",
       awardBody: "PR Awards Singapore",
       subtitle: "by Marketing Interactive · Singapore",
-      wins: [],
+      wins: [
+        { year: "2025", category: "Best Experiential PR Campaign", recognition: "Finalist", aboutAward: "The PR Awards is a highly respected regional recognition program held in Singapore that celebrates excellence in public relations. It specifically recognizes outstanding PR campaigns that have demonstrated innovative strategy and impressive results across the Asia-Pacific, South Asia, and Oceania regions. Prometheus secured a finalist spot in this competition." },
+      ],
     },
   ];
 
@@ -918,23 +938,6 @@ const HeroSection = () => {
                                     </h4>
                                   </div>
 
-                                  {/* Win-count badge */}
-                                  <motion.div
-                                    className="shrink-0 flex flex-col items-center justify-center w-12 h-12 rounded-xl border-2 border-[#96895f] bg-[#96895f]/10"
-                                    animate={{
-                                      boxShadow: [
-                                        '0 0 14px rgba(150,137,95,0.3)',
-                                        '0 0 30px rgba(150,137,95,0.55)',
-                                        '0 0 14px rgba(150,137,95,0.3)',
-                                      ]
-                                    }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                  >
-                                    <span className={`${MoonlanderFont.className} text-[#96895f] text-xl font-black leading-none`}>
-                                      {awards[hoveredIndex].wins.length}
-                                    </span>
-                                    <span className={`${RajdhaniFont.className} text-[#96895f]/65 text-[8px] uppercase tracking-widest`}>wins</span>
-                                  </motion.div>
                                 </div>
 
                                 {/* Animated separator */}
