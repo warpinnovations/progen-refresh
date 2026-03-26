@@ -1,26 +1,42 @@
 import React from 'react';
-import HeroSection from '@/components/LandingPage/HeroSection';
 import PageTransition from '@/components/Global/PageTransition';
-import PrometheusPlayer from '@/components/LandingPage/PrometheusPlayer';
-import Services from '@/components/LandingPage/Services';
-import OurServices from '@/components/LandingPage/OurServices';
 import Footer from '@/components/Global/Footer';
-import StarshipCaptains from '@/components/LandingPage/StarshipCaptains';
 import dynamic from 'next/dynamic';
-import Contact from '@/components/LandingPage/ContactUs';
-import ThreeColumnFooter from '@/components/Global/LargeBreakpointFooter';
 import NavbarGroup from '@/components/Global/NavbarGroup';
-import Certifications from '@/components/LandingPage/Certifications';
-import Awards from "@/components/LandingPage/Awards";
-import ProminentSection from '@/components/LandingPage/ProminentSection';
-
-const StarshipandBrandsNoSSR = dynamic(
-  () => import('@/components/LandingPage/StarshipsAndBrands'),
-  { ssr: false }
-);
 
 const HeroSectionDynamicNoSSR = dynamic(() => import('@/components/LandingPage/HeroSection'), {
   ssr: false
+});
+
+// Lazy load below-the-fold sections to reduce initial bundle and rendering cost
+const FeaturedWorksGrid = dynamic(() => import('@/components/OurWorks/FeaturedWorksGrid'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[50vh] bg-black" />,
+});
+
+const PrometheusPlayer = dynamic(() => import('@/components/LandingPage/PrometheusPlayer'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[50vh] bg-black" />,
+});
+
+const Certifications = dynamic(() => import('@/components/LandingPage/Certifications'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[50vh] bg-black" />,
+});
+
+const StarshipandBrandsNoSSR = dynamic(
+  () => import('@/components/LandingPage/StarshipsAndBrands'),
+  { ssr: false, loading: () => <div className="w-full h-[50vh] bg-black" /> }
+);
+
+const OurServices = dynamic(() => import('@/components/LandingPage/OurServices'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[50vh] bg-black" />,
+});
+
+const AnniversarySection = dynamic(() => import('@/components/LandingPage/AnniversarySection'), {
+  ssr: false,
+  loading: () => <div className="w-full h-[50vh] bg-black" />,
 });
 
 const LandingPage = () => {
@@ -29,20 +45,19 @@ const LandingPage = () => {
       <PageTransition>
         <NavbarGroup />
         <HeroSectionDynamicNoSSR />
+        <FeaturedWorksGrid />
         <div className='w-full'>
           <div className='flex justify-center items-center'>
             <PrometheusPlayer />
           </div>
         </div>
-        {/* <Services /> */}
-        <OurServices />
-        <StarshipandBrandsNoSSR />
-        <StarshipCaptains />
         <Certifications />
-     
-        <Awards></Awards>
-        <ProminentSection />
-        <ThreeColumnFooter />
+        {/* <Services /> */}
+        <StarshipandBrandsNoSSR />
+        {/* <StarshipCaptains /> */}
+        <OurServices />
+        {/* <ProminentSection /> */}
+        <AnniversarySection />
         <Footer />
       </PageTransition>
     </div>

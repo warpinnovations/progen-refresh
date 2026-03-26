@@ -28,11 +28,11 @@ const StarshipCaptains = () => {
         <div className='absolute inset-0 z-10 bg-gradient-to-b from-black via-transparent to-black opacity-90' />
       </div>
 
-      <div className='w-3/5 mb-52 mt-52 z-10'>
+      {/* <div className='w-3/5 mb-52 mt-52 z-10'>
         <h1 className={`text-xl md:text-4xl ${OxaniumFont.className} text-white text-center`}>
           To forever chase excellence with curiosity as our guide.
         </h1>
-      </div>
+      </div> */}
 
       <div className='w-full text-center z-10'>
         <h1 className={`${MoonlanderFont.className} font-black text-xl md:text-5xl text-prOrange`}>

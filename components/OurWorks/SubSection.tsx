@@ -7,106 +7,230 @@ import { Carousel } from "react-responsive-carousel";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { AiFillPlayCircle } from "react-icons/ai";
-import Header from "@/components/Global/HeaderHero";
-import PageTitle from "@/components/Global/PageTitle";
 import Link from "next/link";
-import ThreeColumnFooter from "@/components/Global/LargeBreakpointFooter";
+import Image from "next/image";
 import Footer from "@/components/Global/Footer";
 import Navbar from "../Global/Navbar";
+import { motion } from "framer-motion";
+
 const SubSectionPage = () => {
   const searchParams = useSearchParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const getIndex = searchParams?.get("index") as string;
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const work = workData[Number(getIndex)] as any;
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
-    <Suspense fallback={<div>AiFillPlayCircle...</div>}>
-      <>
-      <Navbar />
-          <Header />
-        <div className="mt-5 relative h-auto">
-          <PageTitle title="Works" />
-          <Link href={`/works`} className="text-white/70">
-            <button className="flex flex-row space-x-1 cursor-pointer pt-5  w-full h-full ">
-              <div className="flex">
-                <HiOutlineArrowNarrowLeft className="h-8 w-8 ml-10 mb-5" />
-              </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="bg-black min-h-screen">
+        {!isModalOpen && <Navbar />}
 
-              <div className="flex h-8 z-50 w-8 items-center font-bold font-ox">
-                <p>BACK</p>
-              </div>
-            </button>
-          </Link>
-          <div className="w-full h-96 flex justify-center items-center relative">
-            <AiFillPlayCircle
-              className="absolute z-10 w-16 h-16 md:w-16 md:h-16 text-white cursor-pointer"
-              onClick={openModal}
-            />
-            <img
-              src={workData[Number(getIndex)].img}
-              className="w-full h-full object-cover px-10"
-            />
+        {/* ── Hero ── */}
+        <div className="relative w-full h-screen overflow-hidden">
 
-            <div className="absolute flex flex-col bg-black/60 w-full h-full justify-end">
-              <div className="mt-auto px-14 flex flex-col justify-start mb-10">
-                <p className="text-white text-lg md:text-4xl lg:text-4xl font-ox font-black">
-                  {workData[Number(getIndex)].title.toLocaleUpperCase()}
-                </p>
-                <p className="text-white text-sm md:text-2xl font-ox">
-                  {workData[Number(getIndex)].description}
-                </p>
-              </div>
-            </div>
+          {/* Background: always use static key visual */}
+          <Image
+            src={work.img}
+            alt={work.title}
+            fill
+            className="object-cover"
+            priority
+          />
+
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 pointer-events-none" />
+
+          {/* Back button */}
+          <div className="absolute top-32 left-8 md:left-16 z-20">
+            <Link href="/" className="flex items-center gap-2 text-white/60 hover:text-prOrange transition-colors duration-300 group">
+              <HiOutlineArrowNarrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+              <span className="font-ox text-xs tracking-[0.3em] uppercase">Back</span>
+            </Link>
           </div>
 
-          {isModalOpen && (
-            <div className="fixed top-0 left-0 pb-40 z-50 w-full h-full flex justify-center items-center bg-black bg-opacity-75">
-              <div className="p-4 rounded-lg flex justify-center items-center">
-                <div className="flex flex-col justify-center items-center w-screen h-auto md:w-full md:h-full">
-                  <div className="flex justify-end w-full">
-                    <button className="text-white" onClick={closeModal}>
-                      <IoMdCloseCircleOutline className="w-6 h-6 mb-2 mr-3" />
-                    </button>
-                  </div>
-
-                  {workData[Number(getIndex)].videoLink ? (
-                    <ReactPlayer
-                      controls={true}
-                      playing
-                      url={workData[Number(getIndex)].videoLink}
-                    />
-                  ) : (
-                    <div className="w-2/3 pb-[800px] ">
-                      <Carousel>
-                        {workData[Number(getIndex)].images?.map(
-                          (image: string) => {
-                            return (
-                              <div key={getIndex}>
-                                <img src={image} />
-                              </div>
-                            );
-                          }
-                        )}
-                      </Carousel>
-                    </div>
-                  )}
-                </div>
-              </div>
+          {/* Play / Gallery trigger */}
+          {(work.videoLink || work.images) && (
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <button onClick={openModal} className="flex flex-col items-center gap-3 group">
+                <AiFillPlayCircle className="w-20 h-20 text-white/80 group-hover:text-prOrange transition-colors duration-300 drop-shadow-lg" />
+                <span className="font-ox text-[10px] tracking-[0.3em] uppercase text-white/50 group-hover:text-prOrange transition-colors duration-300">
+                  {work.videoLink ? "Watch Video" : "View Gallery"}
+                </span>
+              </button>
             </div>
           )}
+
+          {/* Hero title – bottom left */}
+          <div className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-14 z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+            >
+              <div className="w-12 h-0.5 bg-prOrange mb-5" />
+              <h1 className="font-ox text-3xl md:text-5xl lg:text-6xl text-white font-black uppercase leading-tight max-w-3xl">
+                {work.headline || work.title}
+              </h1>
+              {work.subheadline && (
+                <p className="font-ox text-sm md:text-base text-white/60 mt-4 max-w-2xl leading-relaxed">
+                  {work.subheadline}
+                </p>
+              )}
+            </motion.div>
+          </div>
         </div>
 
+        {/* ── Content ── */}
+        <div className="bg-black px-8 md:px-16 lg:px-28 py-20">
+          <div className="max-w-4xl">
+
+            {/* Tagline */}
+            {work.description && (
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="text-prOrange font-ox text-base md:text-lg tracking-wide leading-relaxed mb-10"
+              >
+                {work.description}
+              </motion.p>
+            )}
+
+            {/* Divider */}
+            <div className="w-full h-px bg-gradient-to-r from-prOrange/50 via-prOrange/20 to-transparent mb-10" />
+
+            {/* Body copy */}
+            {work.body && (
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="text-white/75 text-base md:text-lg leading-loose font-ox whitespace-pre-line"
+              >
+                {work.body}
+              </motion.p>
+            )}
+
+            {/* Awards Won */}
+            {work.awards?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                className="mt-16"
+              >
+                <div className="w-full h-px bg-gradient-to-r from-prOrange/50 via-prOrange/20 to-transparent mb-10" />
+                <p className="font-ox text-[10px] tracking-[0.35em] uppercase text-prOrange mb-6">
+                  Awards Won
+                </p>
+                <div className="flex flex-col gap-4">
+                  {work.awards.map((award: string, i: number) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <div className="w-1.5 h-1.5 rounded-full bg-prOrange shrink-0" />
+                      <span className="text-white/65 font-ox text-sm tracking-wide">
+                        {award}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Services Provided */}
+            {work.services?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="mt-16"
+              >
+                <div className="w-full h-px bg-gradient-to-r from-prOrange/50 via-prOrange/20 to-transparent mb-10" />
+                <p className="font-ox text-[10px] tracking-[0.35em] uppercase text-prOrange mb-6">
+                  Services Provided
+                </p>
+                <div className="flex flex-col gap-4">
+                  {work.services.map((service: string, i: number) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <div className="w-1.5 h-1.5 rounded-full bg-prOrange shrink-0" />
+                      <span className="text-white/65 font-ox text-sm tracking-wide">
+                        {service}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Modal ── */}
+        {isModalOpen && (
+          <>
+            {/* Backdrop – click anywhere outside video to close */}
+            <div
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
+              onClick={closeModal}
+            />
+
+            {/* Close button – fixed to viewport, always above iframe */}
+            <button
+              className="fixed top-6 right-6 z-[60] text-white/70 hover:text-prOrange transition-colors duration-300"
+              onClick={closeModal}
+            >
+              <IoMdCloseCircleOutline className="w-9 h-9" />
+            </button>
+
+            {/* Video / Gallery content */}
+            <div
+              className="fixed inset-0 z-[55] flex justify-center items-center px-4 pointer-events-none"
+            >
+              <div
+                className="relative w-full max-w-5xl pointer-events-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {work.videoLink ? (
+                  <div className="aspect-video w-full">
+                    {work.videoLink.includes("drive.google.com") ? (
+                      <iframe
+                        src={work.videoLink}
+                        className="w-full h-full"
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <ReactPlayer
+                        controls
+                        playing
+                        url={work.videoLink}
+                        width="100%"
+                        height="100%"
+                      />
+                    )}
+                  </div>
+                ) : work.images ? (
+                  <Carousel>
+                    {work.images.map((image: string, i: number) => (
+                      <div key={i}>
+                        <Image src={image} alt={`${work.title} ${i + 1}`} width={1920} height={1080} className="w-full" />
+                      </div>
+                    ))}
+                  </Carousel>
+                ) : null}
+              </div>
+            </div>
+          </>
+        )}
+
         <div className="pt-16">
-          <ThreeColumnFooter />
           <Footer />
         </div>
-      </>
+      </div>
     </Suspense>
   );
 };

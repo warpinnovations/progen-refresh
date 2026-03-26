@@ -186,6 +186,104 @@ export const awarditems = [
     ]
   },
   {
+    id: "mea25loc",
+    title: "Marketing Excellence Awards 2025",
+    category: "Excellence in Location-Based Marketing",
+    description: "The Marketing Excellence Awards recognizes campaigns that creatively leverage location-based strategies to deliver precision marketing, creating relevant audience experiences rooted in place and context.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745879/4_sglq3p.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764732645/47a01988-36eb-4981-8365-fe83747ef663_dsrivd.png",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764732722/92809027-745d-46a5-8a1c-e7932ea8f9d9_aea85y.png",
+      ],
+    },
+    award_body: "The Marketing Excellence Awards is organized and presented by Marketing-Interactive, a leading authority on advertising, marketing, and media intelligence across the Asia-Pacific region.",
+    campaign: "Prometheus was recognized for campaigns that creatively leveraged location-based strategies to deliver precision marketing with relevant audience experiences rooted in place and context across the Philippines.",
+  },
+  {
+    id: "mea25cust",
+    title: "Marketing Excellence Awards 2025",
+    category: "Excellence in Customer Engagement",
+    description: "This recognition honors campaigns that demonstrate outstanding ability to build meaningful, lasting connections with customers through innovative and measurable engagement strategies.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745875/5_w2tset.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764732640/485311015_4026412521014731_6998582125153420940_n_vex7qx.jpg",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764732642/8799e6b5-9ebd-4023-83df-83da35e6b61d_gz9jgu.png",
+      ],
+    },
+    award_body: "The Marketing Excellence Awards is organized and presented by Marketing-Interactive, a leading authority on advertising, marketing, and media intelligence across the Asia-Pacific region.",
+    campaign: "Prometheus was recognized for campaigns demonstrating outstanding ability to build meaningful, lasting connections with customers through innovative and measurable engagement strategies.",
+  },
+  {
+    id: "mea25spec",
+    title: "Marketing Excellence Awards 2025",
+    category: "Excellence in Marketing to a Specific Audience",
+    description: "This award category celebrates campaigns that demonstrate exceptional audience intelligence and targeting, delivering precisely crafted messages that achieve high impact with a defined demographic.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745884/10_okwax8.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764824795/HC_x_EMCOR_L-64_h1sl6j.jpg",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764824744/HC_x_EMCOR_L-76_x18efl.jpg",
+      ],
+    },
+    award_body: "The Marketing Excellence Awards is organized and presented by Marketing-Interactive, a leading authority on advertising, marketing, and media intelligence across the Asia-Pacific region.",
+    campaign: "Prometheus was recognized for campaigns demonstrating exceptional audience intelligence and precision targeting, delivering high-impact messages crafted for a specific demographic group.",
+  },
+  {
+    id: "mea23pub",
+    title: "Marketing Excellence Awards 2023",
+    category: "Excellence in Public Sector Marketing",
+    description: "This Marketing Excellence Award honors outstanding campaigns executed for government agencies or public institutions, recognizing effective communication strategies that serve and engage the public.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745884/1_xtt0aq.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731812/033A1727_tm6n6d.webp",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731811/033A1726_ov4rwd.webp",
+      ],
+    },
+    award_body: "The Marketing Excellence Awards (MEA) are a regional initiative organized by Marketing-Interactive to honor the best marketing campaigns in the Asia-Pacific.",
+    campaign: "Prometheus was recognized for its outstanding campaigns executed for government agencies and public institutions in the Philippines, demonstrating effective communication strategies that serve and engage the public.",
+  },
+  {
+    id: "anvil26spe",
+    title: "ANVIL Awards 2026",
+    category: "PR Tools: Special Events and Exhibits",
+    description: "This category of the Anvil Awards recognizes the most outstanding event activations and exhibit designs that effectively achieve public relations goals and strengthen stakeholder relationships.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745881/6_vddmfc.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731153/ANVIL_AWARDS_1_mmgwq6.webp",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731155/ANVIL_AWARDS_4_gdj04h.webp",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764825029/Copy_of_15cef1db-f8b2-45eb-949c-aa367b226f34_idxrno.png",
+      ],
+    },
+    award_body: "The Anvil Awards are presented by the Public Relations Society of the Philippines (PRSP), the country's premier organization for PR professionals, setting the standard for excellence in public relations.",
+    campaign: "Prometheus earned the Silver Anvil for its outstanding event activation and exhibit design that effectively achieved public relations goals and strengthened stakeholder relationships on a national scale.",
+  },
+  {
+    id: "anvil26int",
+    title: "ANVIL Awards 2026",
+    category: "PR-Led Integrated Campaign",
+    description: "This Anvil Award category honors comprehensive campaigns that seamlessly integrate multiple PR disciplines into a single, cohesive strategy achieving significant public relations results.",
+    media: {
+      mainImage: "https://res.cloudinary.com/dmiderwqe/image/upload/v1764745880/7_p66rpj.png",
+      videos: ["/VideoAssets/Lake.gif"],
+      photos: [
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731154/ANVIL_AWARDS_3_oh0hrr.webp",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764731154/ANVIL_AWARDS_2_kbhond.webp",
+        "https://res.cloudinary.com/dmiderwqe/image/upload/v1764825006/Copy_of_836ee5b4-d984-4a71-b30b-f2fdba39a27a_p8gfy8.png",
+      ],
+    },
+    award_body: "The Anvil Awards are presented by the Public Relations Society of the Philippines (PRSP) to recognize and celebrate excellence in public relations practice.",
+    campaign: "Prometheus was recognized as a Finalist for its comprehensive integrated campaign that seamlessly combined multiple PR disciplines into a cohesive national-scale strategy with significant measurable results.",
+  },
+  {
     id: "fzqmrklpw",
     title: "Marketing Excellence Awards 2023",
     category: "Marketing Leader of the Year",

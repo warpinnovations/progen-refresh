@@ -91,7 +91,7 @@ const Sidebar = () => {
             href="/about"
             className={`text-sm font-bold text-white  ${OxaniumFont.className}  px-4 py-2  hover:underline`}
           >
-            ABOUT US
+            ABOUT
           </Link>
 
           <Link
