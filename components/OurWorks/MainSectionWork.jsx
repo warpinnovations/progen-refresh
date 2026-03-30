@@ -319,19 +319,23 @@ const INTERVAL = 6000;
 const WorksCarousel = ({ works }) => {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
   const total = works.length;
-  const progressRef = useRef(null);
+  const rafRef = useRef(null);
   const startTimeRef = useRef(null);
+  const progressBarRef = useRef(null);
 
   const prev = (current - 1 + total) % total;
   const next = (current + 1) % total;
 
-  const resetProgress = useCallback(() => {
-    if (progressRef.current) cancelAnimationFrame(progressRef.current);
-    setProgress(0);
-    startTimeRef.current = performance.now();
+  const setProgressDOM = useCallback((pct) => {
+    if (progressBarRef.current) progressBarRef.current.style.width = `${pct}%`;
   }, []);
+
+  const resetProgress = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    setProgressDOM(0);
+    startTimeRef.current = performance.now();
+  }, [setProgressDOM]);
 
   const goPrev = useCallback(() => {
     setCurrent((i) => (i - 1 + total) % total);
@@ -345,26 +349,26 @@ const WorksCarousel = ({ works }) => {
 
   useEffect(() => {
     if (paused) {
-      if (progressRef.current) cancelAnimationFrame(progressRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       return;
     }
     startTimeRef.current = performance.now();
     const tick = (now) => {
       const elapsed = now - startTimeRef.current;
       const pct = Math.min((elapsed / INTERVAL) * 100, 100);
-      setProgress(pct);
+      setProgressDOM(pct);
       if (pct < 100) {
-        progressRef.current = requestAnimationFrame(tick);
+        rafRef.current = requestAnimationFrame(tick);
       } else {
         setCurrent((i) => (i + 1) % total);
-        setProgress(0);
+        setProgressDOM(0);
         startTimeRef.current = performance.now();
-        progressRef.current = requestAnimationFrame(tick);
+        rafRef.current = requestAnimationFrame(tick);
       }
     };
-    progressRef.current = requestAnimationFrame(tick);
-    return () => { if (progressRef.current) cancelAnimationFrame(progressRef.current); };
-  }, [paused, current, total]);
+    rafRef.current = requestAnimationFrame(tick);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [paused, total, setProgressDOM]);
 
   const centerWork = works[current];
   const prevWork = works[prev];
@@ -372,6 +376,7 @@ const WorksCarousel = ({ works }) => {
 
   const CARD_W = "clamp(300px, 27vw, 430px)";
   const CARD_H = "460px";
+  const MOBILE_H = "340px";
   const ease = [0.25, 0.46, 0.45, 0.94];
 
   return (
@@ -387,7 +392,7 @@ const WorksCarousel = ({ works }) => {
         className="absolute z-30 group"
         style={{ left: "clamp(8px, 2vw, 32px)", top: `calc(${CARD_H} / 2)`, transform: "translateY(-50%)" }}
       >
-        <div className="w-14 h-14 rounded-full flex items-center justify-center border border-[#96895f]/40 bg-black/60 backdrop-blur-sm transition-all duration-300 group-hover:border-[#D4AF37]/80 group-hover:bg-[#D4AF37]/12 group-hover:shadow-[0_0_24px_rgba(212,175,55,0.25)]">
+        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-[#96895f]/40 bg-black/60 backdrop-blur-sm transition-all duration-300 group-hover:border-[#D4AF37]/80 group-hover:bg-[#D4AF37]/12 group-hover:shadow-[0_0_24px_rgba(212,175,55,0.25)]">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M11 3.5L5.5 9L11 14.5" stroke="rgba(150,137,95,0.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
               className="group-hover:stroke-[#D4AF37] transition-all duration-300" />
@@ -397,27 +402,27 @@ const WorksCarousel = ({ works }) => {
 
       {/* ── 3 Cards in a row ── */}
       <div
-        className="w-full flex items-center justify-center gap-4 xl:gap-6 px-20 xl:px-28"
+        className="w-full flex items-center justify-center gap-4 xl:gap-6 px-14 md:px-20 xl:px-28"
         style={{ perspective: "1600px" }}
       >
-        {/* Left card — tilted inward */}
+        {/* Left card — tilted inward (desktop only) */}
         <motion.div
           key={`prev-${prev}`}
           animate={{ rotateY: 16, scale: 0.88, opacity: 0.6 }}
           transition={{ duration: 0.5, ease }}
-          className="flex-shrink-0 pointer-events-none"
+          className="hidden md:flex flex-shrink-0 pointer-events-none"
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
         >
           <SidePreview work={prevWork} dataIndex={prevWork.originalIndex} />
         </motion.div>
 
-        {/* Center card — flat & full */}
+        {/* Center card — full width on mobile, fixed on desktop */}
         <motion.div
           key={`center-${current}`}
           animate={{ rotateY: 0, scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease }}
-          className="flex-shrink-0 relative"
-          style={{ width: CARD_W, height: CARD_H, perspective: "1200px", zIndex: 10 }}
+          className="flex-shrink-0 relative w-full md:w-auto"
+          style={{ height: CARD_H, perspective: "1200px", zIndex: 10, maxWidth: "100%" }}
         >
           {/* Gold glow halo */}
           <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{
@@ -432,12 +437,12 @@ const WorksCarousel = ({ works }) => {
           />
         </motion.div>
 
-        {/* Right card — tilted inward */}
+        {/* Right card — tilted inward (desktop only) */}
         <motion.div
           key={`next-${next}`}
           animate={{ rotateY: -16, scale: 0.88, opacity: 0.6 }}
           transition={{ duration: 0.5, ease }}
-          className="flex-shrink-0 pointer-events-none"
+          className="hidden md:flex flex-shrink-0 pointer-events-none"
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
         >
           <SidePreview work={nextWork} dataIndex={nextWork.originalIndex} />
@@ -451,7 +456,7 @@ const WorksCarousel = ({ works }) => {
         className="absolute z-30 group"
         style={{ right: "clamp(8px, 2vw, 32px)", top: `calc(${CARD_H} / 2)`, transform: "translateY(-50%)" }}
       >
-        <div className="w-14 h-14 rounded-full flex items-center justify-center border border-[#96895f]/40 bg-black/60 backdrop-blur-sm transition-all duration-300 group-hover:border-[#D4AF37]/80 group-hover:bg-[#D4AF37]/12 group-hover:shadow-[0_0_24px_rgba(212,175,55,0.25)]">
+        <div className="w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-[#96895f]/40 bg-black/60 backdrop-blur-sm transition-all duration-300 group-hover:border-[#D4AF37]/80 group-hover:bg-[#D4AF37]/12 group-hover:shadow-[0_0_24px_rgba(212,175,55,0.25)]">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M7 3.5L12.5 9L7 14.5" stroke="rgba(150,137,95,0.7)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
               className="group-hover:stroke-[#D4AF37] transition-all duration-300" />
@@ -464,9 +469,10 @@ const WorksCarousel = ({ works }) => {
         {/* Progress bar */}
         <div className="w-full h-[2px] rounded-full overflow-hidden mb-5" style={{ background: "rgba(255,255,255,0.08)" }}>
           <div
+            ref={progressBarRef}
             style={{
               height: "100%",
-              width: `${progress}%`,
+              width: "0%",
               background: "linear-gradient(90deg, #96895F, #D4AF37)",
               boxShadow: "0 0 8px rgba(212,175,55,0.45)",
               transition: "none",
@@ -662,8 +668,8 @@ const MainSectionWork = () => {
             <WorksCarousel works={allWorks} />
           </div>
 
-          {/* Mobile: 2-col grid */}
-          <div className="lg:hidden grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
+          {/* Mobile: 1-col on xs, 2-col on sm+ */}
+          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
             {allWorks.map((work, i) => (
               <motion.div
                 key={i}
@@ -671,7 +677,7 @@ const MainSectionWork = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
-                className="h-[170px] sm:h-[210px]"
+                className="aspect-video w-full"
                 style={{ perspective: "1200px" }}
               >
                 <WorkCard

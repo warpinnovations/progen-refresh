@@ -32,18 +32,6 @@ const storyTellers = [
     role: "Executive Creative Director",
   },
   {
-    name: "Cho",
-    img: "/LandingPageAssets/storytellers/cho_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/cho_formal.jpg",
-    role: "Creative Director",
-  },
-  {
-    name: "Junica",
-    img: "/LandingPageAssets/storytellers/junica_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/junica_formal.jpg",
-    role: "Associate Creative Director",
-  },
-  {
     name: "Blessed Bea Plondaya",
     img: "/LandingPageAssets/storytellers/bea_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/bea_wacky.webp",
@@ -54,6 +42,18 @@ const storyTellers = [
     img: "/LandingPageAssets/storytellers/kevin_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/kevin_wacky.webp",
     role: "Chief Technology Officer",
+  },
+  {
+    name: "Cho",
+    img: "/LandingPageAssets/storytellers/cho_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/cho_formal.jpg",
+    role: "Creative Director",
+  },
+  {
+    name: "Junica",
+    img: "/LandingPageAssets/storytellers/junica_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/junica_formal.jpg",
+    role: "Associate Creative Director",
   },
   {
     name: "Jayvee Bayaban",
@@ -100,9 +100,8 @@ const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
       onMouseEnter={() => setActiveIndex(index)}
     >
       <motion.div
-        className="relative w-full rounded-xl overflow-hidden"
+        className="relative w-full rounded-xl overflow-hidden h-[240px] sm:h-[280px] md:h-[320px]"
         style={{
-          height: "320px",
           border: isActive
             ? "2px solid rgba(212, 175, 55, 0.7)"
             : "1px solid rgba(255, 255, 255, 0.06)",
@@ -117,7 +116,7 @@ const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
         <img
           src={isActive ? person.imgColored : person.img}
           alt={person.name}
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-500"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500"
           style={{
             filter: isActive ? "grayscale(0)" : "grayscale(1)",
             transform: isActive ? "scale(1.05)" : "scale(1)",
@@ -274,13 +273,28 @@ const StarshipCaptainsSection = () => {
         </motion.p>
       </div>
 
-      {/* Team Grid — uniform card size, rows centered */}
+      {/* Team Grid — 2-col on mobile, row-based on desktop */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex flex-col gap-3 sm:gap-4 md:gap-5">
+
+        {/* Mobile: 2-column grid */}
+        <div className="grid grid-cols-2 gap-3 sm:hidden">
+          {storyTellers.map((person, i) => (
+            <CaptainCard
+              key={i}
+              person={person}
+              index={i}
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
+            />
+          ))}
+        </div>
+
+        {/* Desktop: row-based centered flex */}
+        <div className="hidden sm:flex flex-col gap-4 md:gap-5">
           {[storyTellers.slice(0, 6), storyTellers.slice(6)].map((row, rowIdx) => (
-            <div key={rowIdx} className="flex justify-center gap-3 sm:gap-4 md:gap-5">
+            <div key={rowIdx} className="flex justify-center gap-4 md:gap-5">
               {row.map((person, i) => {
-                const globalIdx = rowIdx === 0 ? i : 5 + i;
+                const globalIdx = rowIdx === 0 ? i : 6 + i;
                 return (
                   <div key={globalIdx} style={{ width: "180px", flexShrink: 0 }}>
                     <CaptainCard
