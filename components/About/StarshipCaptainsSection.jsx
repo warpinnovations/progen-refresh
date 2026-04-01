@@ -46,7 +46,7 @@ const storyTellers = [
   {
     name: "Cho",
     img: "/LandingPageAssets/storytellers/cho_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/cho_formal.jpg",
+    imgColored: "/LandingPageAssets/storytellers/cho_wacky.jpg",
     role: "Creative Director",
   },
   {
