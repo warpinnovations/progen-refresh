@@ -21,8 +21,8 @@ const storyTellers = [
   },
   {
     name: "Lawrence Clark Fernandez",
-    img: "/LandingPageAssets/storytellers/lawrence_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/lawrence_formal.jpg",
+    img: "/LandingPageAssets/storytellers/lawrence_formal.png",
+    imgColored: "/LandingPageAssets/storytellers/lawrence_wacky.png",
     role: "Chief Administrative Officer",
   },
   {
@@ -45,14 +45,14 @@ const storyTellers = [
   },
   {
     name: "Cho",
-    img: "/LandingPageAssets/storytellers/cho_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/cho_wacky.jpg",
+    img: "/LandingPageAssets/storytellers/cho_Formal.png",
+    imgColored: "/LandingPageAssets/storytellers/cho_wacky.png",
     role: "Creative Director",
   },
   {
     name: "Junica",
-    img: "/LandingPageAssets/storytellers/junica_formal.jpg",
-    imgColored: "/LandingPageAssets/storytellers/junica_formal.jpg",
+    img: "/LandingPageAssets/storytellers/junica_formal.png",
+    imgColored: "/LandingPageAssets/storytellers/junica_formal.png",
     role: "Associate Creative Director",
   },
   {
@@ -82,7 +82,7 @@ const storyTellers = [
 ];
 
 // --- CAPTAIN CARD --- //
-const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
+const CaptainCard = ({ person, index, activeIndex, setActiveIndex, imgScale = 1 }) => {
   const isActive = activeIndex === index;
 
   return (
@@ -119,7 +119,7 @@ const CaptainCard = ({ person, index, activeIndex, setActiveIndex }) => {
           className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500"
           style={{
             filter: isActive ? "grayscale(0)" : "grayscale(1)",
-            transform: isActive ? "scale(1.05)" : "scale(1)",
+            transform: isActive ? `scale(${1.05 * imgScale})` : `scale(${imgScale})`,
           }}
         />
 
@@ -285,6 +285,7 @@ const StarshipCaptainsSection = () => {
               index={i}
               activeIndex={activeIndex}
               setActiveIndex={setActiveIndex}
+              imgScale={person.name === "Cho" ? 1.3 : 1}
             />
           ))}
         </div>
@@ -302,6 +303,7 @@ const StarshipCaptainsSection = () => {
                       index={globalIdx}
                       activeIndex={activeIndex}
                       setActiveIndex={setActiveIndex}
+                      imgScale={person.name === "Cho" ? 1.3 : 1}
                     />
                   </div>
                 );
