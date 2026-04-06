@@ -12,19 +12,19 @@ const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 const features = [
   {
     supertitle: "INNOVATE",
-    youtubeId: "emjtaMdLf5s", // Innovate
+    youtubeId: "F7tG8IOQDW8", // Innovate
     isVertical: true,
     description: "Transform bold ideas into groundbreaking solutions with cutting-edge technology and creative excellence."
   },
   {
     supertitle: "COLLABORATE",
-    youtubeId: "b4YDux88Iyk", // Collaborate
+    youtubeId: "vfcgtFgS0tA", // Collaborate
     isVertical: false,
     description: "Partner with us to create exceptional experiences that drive growth and exceed expectations."
   },
   {
     supertitle: "ELEVATE",
-    youtubeId: "3-q0FsSEgkI", // Elevate
+    youtubeId: "3FkIMvPCxjk", // Elevate
     isVertical: true,
     description: "Amplify your brand's impact through strategic innovation and flawless execution that sets you apart."
   },

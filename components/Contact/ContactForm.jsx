@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import sendEmail from "../Contact/emailAPI";
@@ -29,6 +29,7 @@ const services = [
   "Social Media",
   "Event Management",
   "Software Solutions",
+  "Market Research",
 ];
 
 const internAreas = [
@@ -42,8 +43,47 @@ const internAreas = [
   "Photography / Video",
 ];
 
+// --- File Upload Field ---
+const FileField = ({ label, name, accept, onChange, file, fontClass }) => {
+  const inputRef = React.useRef(null);
+  return (
+    <div>
+      <label className={`block text-[11px] sm:text-xs text-[#96895F] uppercase tracking-[0.15em] font-bold mb-2 ${fontClass}`}>
+        {label}
+      </label>
+      <div
+        className="flex items-center gap-3 w-full p-3 rounded-xl cursor-pointer transition-all duration-300"
+        onClick={() => inputRef.current?.click()}
+        style={{
+          background: "rgba(255,255,255,0.04)",
+          border: file ? "1px solid rgba(212,175,55,0.5)" : "1px solid rgba(150,137,95,0.2)",
+          color: file ? "#D4AF37" : "rgba(255,255,255,0.3)",
+        }}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+          className="w-4 h-4 shrink-0" style={{ color: file ? "#D4AF37" : "rgba(150,137,95,0.5)" }}>
+          <path fillRule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clipRule="evenodd" />
+        </svg>
+        <span className={`text-xs sm:text-sm truncate ${fontClass}`}>
+          {file ? file.name : "Click to upload"}
+        </span>
+        <input
+          ref={inputRef}
+          type="file"
+          name={name}
+          accept={accept}
+          className="hidden"
+          onChange={onChange}
+        />
+      </div>
+    </div>
+  );
+}
+
 const ContactForm = () => {
-  const [mode, setMode] = useState("contact"); // "contact" | "intern"
+  const formRef = useRef(null);
+  const [mode, setMode] = useState("contact");
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -52,10 +92,16 @@ const ContactForm = () => {
     message: "",
     services: [],
   });
+  const [files, setFiles] = useState({
+    appLetter: null,
+    resume: null,
+    portfolio: null,
+  });
 
   const handleModeSwitch = (newMode) => {
     setMode(newMode);
     setFormData({ firstName: "", lastName: "", email: "", number: "", message: "", services: [] });
+    setFiles({ appLetter: null, resume: null, portfolio: null });
   };
 
   const handleServiceToggle = (service) => {
@@ -72,63 +118,77 @@ const ContactForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    const { name, files: fileList } = e.target;
+    setFiles((prev) => ({ ...prev, [name]: fileList[0] || null }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.services.length === 0) {
-      toast.error(mode === "intern" ? "Please select at least one area of interest." : "Please select at least one service.");
+
+    if (mode === "contact" && formData.services.length === 0) {
+      toast.error("Please select at least one service.");
       return;
     }
+    if (mode === "intern" && formData.services.length === 0) {
+      toast.error("Please select at least one area of interest.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const sanitized = {
+        firstName: escapeHTML(DOMPurify.sanitize(formData.firstName)),
+        lastName: escapeHTML(DOMPurify.sanitize(formData.lastName)),
+        email: escapeHTML(DOMPurify.sanitize(formData.email)),
+        number: escapeHTML(DOMPurify.sanitize(formData.number)),
+        message: escapeHTML(DOMPurify.sanitize(formData.message)),
+      };
 
-    const sanitizedData = {
-      ...formData,
-      firstName: escapeHTML(DOMPurify.sanitize(formData.firstName)),
-      lastName: escapeHTML(DOMPurify.sanitize(formData.lastName)),
-      email: escapeHTML(DOMPurify.sanitize(formData.email)),
-      number: escapeHTML(DOMPurify.sanitize(formData.number)),
-      message: escapeHTML(DOMPurify.sanitize(formData.message)),
-    };
+      const isCareer = mode === "career";
+      const isIntern = mode === "intern";
 
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      number: "",
-      message: "",
-      services: [],
-    });
+      const messageBody = isCareer
+        ? `💼 CAREER APPLICATION\n\nName: ${sanitized.firstName} ${sanitized.lastName}\nContact: ${sanitized.number}\nEmail: ${sanitized.email}\n\n(Applicant will send documents via email)`
+        : isIntern
+        ? `⭐ INTERNSHIP APPLICATION\n\nName: ${sanitized.firstName} ${sanitized.lastName}\nContact: ${sanitized.number}\nEmail: ${sanitized.email}\nAreas of Interest: ${formData.services.join(", ")}\n\n(Applicant will send documents via email)`
+        : sanitized.message;
 
-    const isIntern = mode === "intern";
-    sendEmail({
-      from_email: "marketing@prometheus.ph",
-      from_name: "Prometheus",
-      to_name: sanitizedData.firstName + " " + sanitizedData.lastName,
-      user_email: sanitizedData.email,
-      number: sanitizedData.number,
-      message: isIntern
-        ? `
-        ⭐ INTERNSHIP APPLICATION ⭐ \n
-        First Name: ${sanitizedData.firstName} \n
-        Last Name: ${sanitizedData.lastName} \n
-        Number: ${sanitizedData.number} \n
-        Email: ${sanitizedData.email} \n
-        Area(s) of Interest: ${sanitizedData.services.join(", ")} \n
-        Message / About Me: ${sanitizedData.message}
-        `
-        : `
-        First Name: ${sanitizedData.firstName} \n
-        Last Name: ${sanitizedData.lastName} \n
-        Number: ${sanitizedData.number} \n
-        Email: ${sanitizedData.email} \n
-        Services Selected: ${sanitizedData.services.join(", ")} \n
-        Message: ${sanitizedData.message}
-        `,
-    });
+      await sendEmail({
+        from_email: "marketing@prometheus.ph",
+        from_name: "Prometheus",
+        to_name: sanitized.firstName + " " + sanitized.lastName,
+        user_email: sanitized.email,
+        number: sanitized.number,
+        application_type: isCareer ? "💼 CAREER APPLICATION" : isIntern ? "⭐ INTERNSHIP APPLICATION" : "📩 INQUIRY",
+        selected_services: formData.services.join(", "),
+        message: messageBody,
+        to_email: isCareer ? "admin@prometheus.ph" : isIntern ? "internships@prometheus.ph" : "marketing@prometheus.ph",
+      });
 
-    toast.success(mode === "intern" ? "Application submitted! We'll be in touch." : "Email has been sent!");
+      setFormData({ firstName: "", lastName: "", email: "", number: "", message: "", services: [] });
+      setFiles({ appLetter: null, resume: null, portfolio: null });
+      toast.success(mode === "contact" ? "Email has been sent!" : "Application submitted! We'll be in touch.");
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClasses = `${RajdhaniFont.className} w-full p-3 rounded-xl bg-white/[0.04] border border-[#96895F]/20 text-white/90 text-sm sm:text-base placeholder-white/25 focus:outline-none focus:border-[#D4AF37]/60 focus:ring-1 focus:ring-[#D4AF37]/30 transition-all duration-300`;
   const labelClasses = `${OxaniumFont.className} block text-[11px] sm:text-xs text-[#96895F] uppercase tracking-[0.15em] font-bold mb-2`;
+
+  const leftTitle = mode === "intern"
+    ? <><span className="text-[#f5f5f5]">Start Your</span><br /><span className="text-prOrange">Journey Here</span></>
+    : mode === "career"
+    ? <><span className="text-[#f5f5f5]">Launch Your</span><br /><span className="text-prOrange">Career Here</span></>
+    : <><span className="text-[#f5f5f5]">Your Ticket to</span><br /><span className="text-prOrange">Greater Heights</span></>;
+
+  const leftBody = mode === "intern"
+    ? "Join the team. Learn fast. Get hands-on experience on real campaigns."
+    : mode === "career"
+    ? "Join the crew. Grow fast. Work on real campaigns with the best in Western Visayas."
+    : "We're aiming for greatness. Let's build something extraordinary together.";
 
   return (
     <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
@@ -140,8 +200,7 @@ const ContactForm = () => {
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 50%, rgba(150, 137, 95, 0.04) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse 80% 50% at 50% 50%, rgba(150, 137, 95, 0.04) 0%, transparent 70%)",
         }}
       />
 
@@ -157,18 +216,15 @@ const ContactForm = () => {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="relative rounded-2xl border-2 overflow-hidden backdrop-blur-sm"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(15,15,15,0.9), rgba(20,18,14,0.85))",
+            background: "linear-gradient(135deg, rgba(15,15,15,0.9), rgba(20,18,14,0.85))",
             borderColor: "rgba(150, 137, 95, 0.15)",
-            boxShadow:
-              "0 20px 60px -15px rgba(0, 0, 0, 0.6), inset 0 0 80px rgba(150, 137, 95, 0.03)",
+            boxShadow: "0 20px 60px -15px rgba(0, 0, 0, 0.6), inset 0 0 80px rgba(150, 137, 95, 0.03)",
           }}
         >
-          {/* Inner dark layer */}
           <div className="absolute inset-[2px] rounded-2xl bg-black/30 pointer-events-none" />
 
           <div className="relative z-10 flex flex-col md:flex-row">
-            {/* Left side - Logo + Info */}
+            {/* Left side */}
             <div className="hidden md:flex flex-col items-center justify-center flex-1 p-8 lg:p-12">
               <motion.img
                 className="w-64 lg:w-80 opacity-70"
@@ -178,22 +234,16 @@ const ContactForm = () => {
               />
               <div className="mt-8 text-center">
                 <h3
-                  className={`${MoonlanderFont.className} text-xl lg:text-2xl font-black text-white uppercase mb-3`}
+                  className={`${MoonlanderFont.className} text-xl lg:text-2xl font-black uppercase mb-3`}
                   style={{ textShadow: "0 0 20px rgba(150, 137, 95, 0.15)" }}
                 >
-                  {mode === "intern" ? (
-                    <>Launch Your<br /><span className="text-prOrange">Career Here</span></>
-                  ) : (
-                    <>Your Ticket to<br /><span className="text-prOrange">Greater Heights</span></>
-                  )}
+                  {leftTitle}
                 </h3>
                 <p
                   className={`${RajdhaniFont.className} text-white/50 text-sm lg:text-base max-w-xs mx-auto`}
                   style={{ letterSpacing: "0.04em", lineHeight: "1.6" }}
                 >
-                  {mode === "intern"
-                    ? "Join the crew. Grow fast. Work on real campaigns with the best in Western Visayas."
-                    : "We're aiming for greatness. Let's build something extraordinary together."}
+                  {leftBody}
                 </p>
               </div>
             </div>
@@ -203,12 +253,13 @@ const ContactForm = () => {
 
             {/* Right side - Form */}
             <div className="flex-1 p-6 sm:p-8 md:p-10 lg:p-12">
-              {/* Mode tab switcher */}
+              {/* Mode tabs */}
               <div className="mb-6">
                 <div className="flex gap-1 p-1 rounded-xl mb-5 w-fit" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(150,137,95,0.15)" }}>
                   {[
                     { id: "contact", label: "Inquire" },
-                    { id: "intern", label: "Apply as Intern" },
+                    { id: "career", label: "Career" },
+                    { id: "intern", label: "Intern" },
                   ].map(({ id, label }) => (
                     <button
                       key={id}
@@ -227,167 +278,211 @@ const ContactForm = () => {
                   ))}
                 </div>
 
-                <div
-                  className={`${OxaniumFont.className} text-[#96895f] uppercase tracking-[0.2em] text-[10px] sm:text-xs font-bold mb-2 flex items-center gap-2`}
-                >
+                <div className={`${OxaniumFont.className} text-[#96895f] uppercase tracking-[0.2em] text-[10px] sm:text-xs font-bold mb-2 flex items-center gap-2`}>
                   <motion.div
                     className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
-                    animate={{
-                      boxShadow: [
-                        "0 0 6px rgba(212, 175, 55, 0.6)",
-                        "0 0 12px rgba(212, 175, 55, 1)",
-                        "0 0 6px rgba(212, 175, 55, 0.6)",
-                      ],
-                    }}
+                    animate={{ boxShadow: ["0 0 6px rgba(212,175,55,0.6)", "0 0 12px rgba(212,175,55,1)", "0 0 6px rgba(212,175,55,0.6)"] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span>{mode === "intern" ? "Internship Application" : "Send Us A Message"}</span>
+                  <span>
+                    {mode === "intern" ? "Internship Application" : mode === "career" ? "Career Application" : "Send Us A Message"}
+                  </span>
                 </div>
                 <div className="h-[2px] w-16 bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent" />
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+                {/* Hidden fields read by EmailJS sendForm */}
+                <input type="hidden" name="to_email" value={mode === "contact" ? "marketing@prometheus.ph" : "admin@prometheus.ph"} />
+                <input type="hidden" name="application_type" value={mode === "career" ? "💼 CAREER APPLICATION" : "⭐ INTERNSHIP APPLICATION"} />
+                <input type="hidden" name="selected_services" value={formData.services.join(", ")} />
                 {/* Name row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className={labelClasses}>
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      placeholder="Peter"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className={inputClasses}
-                      required
-                    />
+                    <label htmlFor="firstName" className={labelClasses}>First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Peter"
+                      value={formData.firstName} onChange={handleChange} className={inputClasses} required />
                   </div>
                   <div>
-                    <label htmlFor="lastName" className={labelClasses}>
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      placeholder="Weyland"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className={inputClasses}
-                      required
-                    />
+                    <label htmlFor="lastName" className={labelClasses}>Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Weyland"
+                      value={formData.lastName} onChange={handleChange} className={inputClasses} required />
                   </div>
                 </div>
 
                 {/* Contact row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="number" className={labelClasses}>
-                      Contact Number
-                    </label>
-                    <input
-                      type="text"
-                      id="number"
-                      name="number"
-                      placeholder="09123456789"
-                      value={formData.number}
-                      onChange={handleChange}
-                      pattern="[0-9]{11}"
-                      title="Please enter a 11-digit phone number e.g. (09123456789)"
-                      className={inputClasses}
-                      required
-                    />
+                    <label htmlFor="number" className={labelClasses}>Contact Number</label>
+                    <input type="text" id="number" name="number" placeholder="09123456789"
+                      value={formData.number} onChange={handleChange}
+                      pattern="[0-9]{11}" title="Please enter an 11-digit phone number"
+                      className={inputClasses} required />
                   </div>
                   <div>
-                    <label htmlFor="email" className={labelClasses}>
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder="peterweyland@gmail.com"
-                      value={formData.email}
+                    <label htmlFor="email" className={labelClasses}>Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="peterweyland@gmail.com"
+                      value={formData.email} onChange={handleChange} className={inputClasses} required />
+                  </div>
+                </div>
+
+                {/* Areas of Interest — intern only */}
+                {mode === "intern" && (
+                  <div>
+                    <label className={labelClasses}>Area(s) of Interest</label>
+                    <div className="flex flex-wrap gap-2">
+                      {internAreas.map((item) => {
+                        const isSelected = formData.services.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            onClick={() => handleServiceToggle(item)}
+                            className={`${RajdhaniFont.className} px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 border`}
+                            style={{
+                              background: isSelected ? "linear-gradient(135deg, rgba(150,137,95,0.2), rgba(212,175,55,0.1))" : "rgba(255,255,255,0.03)",
+                              borderColor: isSelected ? "rgba(212,175,55,0.6)" : "rgba(150,137,95,0.15)",
+                              color: isSelected ? "#D4AF37" : "rgba(255,255,255,0.5)",
+                              boxShadow: isSelected ? "0 0 15px rgba(212,175,55,0.15)" : "none",
+                            }}
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Services — contact only */}
+                {mode === "contact" && (
+                  <div>
+                    <label className={labelClasses}>Select Services</label>
+                    <div className="flex flex-wrap gap-2">
+                      {services.map((item) => {
+                        const isSelected = formData.services.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            onClick={() => handleServiceToggle(item)}
+                            className={`${RajdhaniFont.className} px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 border`}
+                            style={{
+                              background: isSelected ? "linear-gradient(135deg, rgba(150,137,95,0.2), rgba(212,175,55,0.1))" : "rgba(255,255,255,0.03)",
+                              borderColor: isSelected ? "rgba(212,175,55,0.6)" : "rgba(150,137,95,0.15)",
+                              color: isSelected ? "#D4AF37" : "rgba(255,255,255,0.5)",
+                              boxShadow: isSelected ? "0 0 15px rgba(212,175,55,0.15)" : "none",
+                            }}
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* File uploads — career */}
+                {mode === "career" && (
+                  <div className="space-y-3">
+                    <FileField
+                      label="Application Letter *"
+                      name="appLetter"
+                      accept=".pdf,.doc,.docx"
+                      required
+                      onChange={handleFileChange}
+                      file={files.appLetter}
+                      fontClass={OxaniumFont.className}
+                    />
+                    <FileField
+                      label="Resume / CV *"
+                      name="resume"
+                      accept=".pdf,.doc,.docx"
+                      required
+                      onChange={handleFileChange}
+                      file={files.resume}
+                      fontClass={OxaniumFont.className}
+                    />
+                    <FileField
+                      label="Creative Portfolio (if applicable)"
+                      name="portfolio"
+                      accept=".pdf,.zip,.png,.jpg,.jpeg"
+                      required={false}
+                      onChange={handleFileChange}
+                      file={files.portfolio}
+                      fontClass={OxaniumFont.className}
+                    />
+                  </div>
+                )}
+
+                {/* File uploads — intern */}
+                {mode === "intern" && (
+                  <div className="space-y-3">
+                    <FileField
+                      label="Internship Letter *"
+                      name="appLetter"
+                      accept=".pdf,.doc,.docx"
+                      required
+                      onChange={handleFileChange}
+                      file={files.appLetter}
+                      fontClass={OxaniumFont.className}
+                    />
+                    <FileField
+                      label="Resume / CV *"
+                      name="resume"
+                      accept=".pdf,.doc,.docx"
+                      required
+                      onChange={handleFileChange}
+                      file={files.resume}
+                      fontClass={OxaniumFont.className}
+                    />
+                    <FileField
+                      label="Creative Portfolio (if applicable)"
+                      name="portfolio"
+                      accept=".pdf,.zip,.png,.jpg,.jpeg"
+                      required={false}
+                      onChange={handleFileChange}
+                      file={files.portfolio}
+                      fontClass={OxaniumFont.className}
+                    />
+                  </div>
+                )}
+
+                {/* Message — contact only */}
+                {mode === "contact" && (
+                  <div>
+                    <label htmlFor="message" className={labelClasses}>Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      placeholder="Tell us your story or ask us anything!"
                       onChange={handleChange}
                       className={inputClasses}
+                      rows="5"
+                      style={{ resize: "none" }}
                       required
                     />
                   </div>
-                </div>
-
-                {/* Services / Intern Areas */}
-                <div>
-                  <label className={labelClasses}>
-                    {mode === "intern" ? "Area(s) of Interest" : "Select Services"}
-                  </label>
-                  <div className="flex flex-wrap gap-2">
-                    {(mode === "intern" ? internAreas : services).map((item) => {
-                      const isSelected = formData.services.includes(item);
-                      return (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => handleServiceToggle(item)}
-                          className={`${RajdhaniFont.className} px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 border`}
-                          style={{
-                            background: isSelected
-                              ? "linear-gradient(135deg, rgba(150, 137, 95, 0.2), rgba(212, 175, 55, 0.1))"
-                              : "rgba(255,255,255,0.03)",
-                            borderColor: isSelected
-                              ? "rgba(212, 175, 55, 0.6)"
-                              : "rgba(150, 137, 95, 0.15)",
-                            color: isSelected ? "#D4AF37" : "rgba(255,255,255,0.5)",
-                            boxShadow: isSelected
-                              ? "0 0 15px rgba(212, 175, 55, 0.15)"
-                              : "none",
-                          }}
-                        >
-                          {item}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label htmlFor="message" className={labelClasses}>
-                    {mode === "intern" ? "About You" : "Message"}
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    placeholder={mode === "intern" ? "Tell us about yourself, your skills, and why you want to join Prometheus!" : "Tell us your story or ask us anything!"}
-                    onChange={handleChange}
-                    className={inputClasses}
-                    rows="5"
-                    style={{ resize: "none" }}
-                    required
-                  />
-                </div>
+                )}
 
                 {/* Submit */}
                 <div className="flex justify-end pt-2">
                   <motion.button
                     type="submit"
+                    disabled={submitting}
                     className={`${OxaniumFont.className} px-8 py-3 rounded-xl text-sm uppercase tracking-[0.15em] font-bold transition-all duration-300`}
                     style={{
-                      background:
-                        "linear-gradient(135deg, rgba(150, 137, 95, 0.2), rgba(212, 175, 55, 0.15))",
-                      border: "1.5px solid rgba(212, 175, 55, 0.5)",
-                      color: "#D4AF37",
-                      boxShadow: "0 0 20px rgba(212, 175, 55, 0.1)",
+                      background: "linear-gradient(135deg, rgba(150,137,95,0.2), rgba(212,175,55,0.15))",
+                      border: "1.5px solid rgba(212,175,55,0.5)",
+                      color: submitting ? "rgba(212,175,55,0.4)" : "#D4AF37",
+                      boxShadow: "0 0 20px rgba(212,175,55,0.1)",
+                      cursor: submitting ? "not-allowed" : "pointer",
                     }}
-                    whileHover={{
-                      boxShadow: "0 0 30px rgba(212, 175, 55, 0.25)",
-                      scale: 1.02,
-                    }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={!submitting ? { boxShadow: "0 0 30px rgba(212,175,55,0.25)", scale: 1.02 } : {}}
+                    whileTap={!submitting ? { scale: 0.98 } : {}}
                   >
-                    {mode === "intern" ? "Submit Application" : "Send Message"}
+                    {submitting ? "Uploading..." : mode === "contact" ? "Send Message" : "Submit Application"}
                   </motion.button>
                 </div>
               </form>
