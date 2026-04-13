@@ -28,14 +28,14 @@ const SubSectionPage = () => {
         {!isModalOpen && <Navbar />}
 
         {/* ── Hero ── */}
-        <div className="relative w-full h-screen overflow-hidden">
+        <div className="relative w-full h-[60vh] sm:h-[75vh] md:h-screen overflow-hidden">
 
           {/* Background: always use static key visual */}
           <Image
             src={work.img}
             alt={work.title}
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
           />
 
@@ -43,7 +43,7 @@ const SubSectionPage = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 pointer-events-none" />
 
           {/* Back button */}
-          <div className="absolute top-32 left-8 md:left-16 z-20">
+          <div className="absolute top-20 sm:top-24 md:top-32 left-8 md:left-16 z-20">
             <Link href="/" className="flex items-center gap-2 text-white/60 hover:text-prOrange transition-colors duration-300 group">
               <HiOutlineArrowNarrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
               <span className="font-ox text-xs tracking-[0.3em] uppercase">Back</span>
@@ -70,7 +70,7 @@ const SubSectionPage = () => {
               transition={{ duration: 0.9, ease: "easeOut" }}
             >
               <div className="w-12 h-0.5 bg-prOrange mb-5" />
-              <h1 className="font-ox text-3xl md:text-5xl lg:text-6xl text-white font-black uppercase leading-tight max-w-3xl">
+              <h1 className="font-ox text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white font-black uppercase leading-tight max-w-3xl">
                 {work.headline || work.title}
               </h1>
               {work.subheadline && (
