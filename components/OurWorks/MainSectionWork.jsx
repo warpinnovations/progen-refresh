@@ -409,9 +409,11 @@ const WorksCarousel = ({ works }) => {
         <motion.div
           key={`prev-${prev}`}
           animate={{ rotateY: 16, scale: 0.88, opacity: 0.6 }}
+          whileHover={{ scale: 0.93, opacity: 0.8 }}
           transition={{ duration: 0.5, ease }}
-          className="hidden md:flex flex-shrink-0 pointer-events-none"
+          className="hidden md:flex flex-shrink-0 cursor-pointer"
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
+          onClick={goPrev}
         >
           <SidePreview work={prevWork} dataIndex={prevWork.originalIndex} />
         </motion.div>
@@ -421,8 +423,8 @@ const WorksCarousel = ({ works }) => {
           key={`center-${current}`}
           animate={{ rotateY: 0, scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease }}
-          className="flex-shrink-0 relative w-full md:w-auto"
-          style={{ height: CARD_H, perspective: "1200px", zIndex: 10, maxWidth: "100%" }}
+          className="flex-shrink-0 relative"
+          style={{ width: CARD_W, height: CARD_H, perspective: "1200px", zIndex: 10, maxWidth: "100%" }}
         >
           {/* Gold glow halo */}
           <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{
@@ -441,9 +443,11 @@ const WorksCarousel = ({ works }) => {
         <motion.div
           key={`next-${next}`}
           animate={{ rotateY: -16, scale: 0.88, opacity: 0.6 }}
+          whileHover={{ scale: 0.93, opacity: 0.8 }}
           transition={{ duration: 0.5, ease }}
-          className="hidden md:flex flex-shrink-0 pointer-events-none"
+          className="hidden md:flex flex-shrink-0 cursor-pointer"
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
+          onClick={goNext}
         >
           <SidePreview work={nextWork} dataIndex={nextWork.originalIndex} />
         </motion.div>
