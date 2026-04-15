@@ -216,7 +216,7 @@ export const workData = [
     title: 'KServico | Home Credit',
     headline: 'Driving the Future of Filipino Mobility Through Strategic Financing',
     subheadline: 'Home Credit and KServico unite to empower Luzon riders with accessible, tech-driven installment solutions for seamless motorcycle ownership.',
-    img: '/newOurWorkAssets/kServico.PNG',
+    img: '/newOurWorkAssets/kservico.JPG',
     videoLink: '', // Paste Google Drive embed URL: https://drive.google.com/file/d/FILE_ID/preview
     description: 'Home Credit and KServico unite to empower Luzon riders with accessible, tech-driven installment solutions for seamless motorcycle ownership.',
     body: "In March 2025, Prometheus orchestrated the Luzon launch for the Home Credit x KServico 2-Wheeler Partnership. Leveraging KServico's 180-store network, we positioned the collaboration as the premier choice for accessible mobility through \"fast and easy\" financing. The campaign highlighted key offers, including 10% downpayments and one-minute processing, making ownership a reality for Metro Manila residents and regional commuters.\n\nPrometheus drove engagement through a tech-infused strategy featuring the #RidePhilippines Challenge and a tiered influencer network. We activated \"Road Warriors\" and \"Explorers\" to spark organic growth, which culminated in a digital map-type execution that showcased motorcycle tourism. Through HCTV features and experiential in-store activations, Prometheus secured dominant media coverage and solidified both brands as visionary leaders in the regional automotive landscape.",
