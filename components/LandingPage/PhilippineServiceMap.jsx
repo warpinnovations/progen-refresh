@@ -13,12 +13,14 @@ const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
 // y = (21.1 - lat) * 36.1
 
 const SERVICE_CITIES = [
-  { name: "Metro Manila",    x: 172, y: 238, r: 5,   tier: "major", delay: 0   },
+  { name: "Metro Manila",    x: 172, y: 238, r: 7,   tier: "major", delay: 0   },
   { name: "Iloilo City",    x: 224, y: 374, r: 5.5, tier: "home",  delay: 0.4 },
   { name: "Cebu City",      x: 288, y: 385, r: 4.5, tier: "major", delay: 0.8 },
   { name: "Davao City",     x: 348, y: 500, r: 4.5, tier: "major", delay: 1.2 },
   { name: "Cagayan de Oro", x: 308, y: 455, r: 3.5, tier: "area",  delay: 1.6 },
   { name: "Bacolod",        x: 250, y: 390, r: 3.5, tier: "area",  delay: 2.0 },
+  { name: "Isabela",        x: 208, y: 152, r: 3.5, tier: "area",  delay: 2.4 },
+  { name: "Siquijor",       x: 276, y: 433, r: 3,   tier: "area",  delay: 2.8 },
 ];
 
 const COLORS = { home: "#D4AF37", major: "#B8A76F", area: "#96895F" };
@@ -349,6 +351,10 @@ const PhilippineServiceMap = () => {
         {/* ── CAMIGUIN — 9.2N,124.7E ── */}
         <ellipse cx="322" cy="432" rx="8" ry="6"
           fill="rgba(150,137,95,0.10)" stroke="rgba(150,137,95,0.36)" strokeWidth="0.8" />
+
+        {/* ── SIQUIJOR — 9.2N,123.5E ── */}
+        <ellipse cx="276" cy="433" rx="9" ry="6"
+          fill="rgba(150,137,95,0.11)" stroke="rgba(150,137,95,0.38)" strokeWidth="0.8" />
 
         {/* VISAYAS label */}
         <text x="268" y="350" textAnchor="middle" fill="rgba(150,137,95,0.5)"

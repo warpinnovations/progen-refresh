@@ -141,31 +141,6 @@ const SubSectionPage = () => {
               </motion.div>
             )}
 
-            {/* Services Provided */}
-            {work.services?.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="mt-16"
-              >
-                <div className="w-full h-px bg-gradient-to-r from-prOrange/50 via-prOrange/20 to-transparent mb-10" />
-                <p className="font-ox text-[10px] tracking-[0.35em] uppercase text-prOrange mb-6">
-                  Services Provided
-                </p>
-                <div className="flex flex-col gap-4">
-                  {work.services.map((service: string, i: number) => (
-                    <div key={i} className="flex items-center gap-4">
-                      <div className="w-1.5 h-1.5 rounded-full bg-prOrange shrink-0" />
-                      <span className="text-white/65 font-ox text-sm tracking-wide">
-                        {service}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
           </div>
         </div>
 

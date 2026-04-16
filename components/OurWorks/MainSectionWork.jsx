@@ -131,22 +131,11 @@ const WorkCard = ({ work, detail, index, dataIndex }) => {
 
         {/* Content */}
         <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-7 md:p-8 pointer-events-none">
-          {/* Top: Project Number + Reel badge */}
+          {/* Top: Reel badge */}
           <div
-            className="relative z-10 flex items-start justify-between transition-all duration-300 ease-out"
+            className="relative z-10 flex items-start justify-end transition-all duration-300 ease-out"
             style={{ transform: isHovered ? "translateY(-4px)" : "translateY(0)" }}
           >
-            <p
-              className={`text-[10px] sm:text-xs uppercase font-semibold transition-all duration-300 ${OxaniumFont.className}`}
-              style={{
-                color: isHovered ? "#D4AF37" : "rgba(150, 137, 95, 0.6)",
-                textShadow: isHovered ? "0 0 12px rgba(212, 175, 55, 0.6)" : "none",
-                letterSpacing: "0.15em",
-              }}
-            >
-              Project {String(subpageIndex + 1).padStart(2, "0")}
-            </p>
-
             {hasVideo && (
               <div
                 className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] sm:text-[10px] uppercase tracking-wider transition-all duration-300 ${OxaniumFont.className}`}
@@ -278,8 +267,9 @@ const WorkCard = ({ work, detail, index, dataIndex }) => {
 };
 
 // --- SIDE PREVIEW (carousel non-center cards) ---
-const SidePreview = ({ work, dataIndex }) => {
+const SidePreview = ({ work, dataIndex, displayIndex }) => {
   const hasVideo = dataIndex < videoSources.length;
+  const labelNum = (displayIndex ?? dataIndex) + 1;
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden relative bg-slate-900"
       style={{ border: "1px solid rgba(255,255,255,0.05)" }}>
@@ -300,10 +290,6 @@ const SidePreview = ({ work, dataIndex }) => {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 pointer-events-none" />
       <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-between pointer-events-none">
-        <p className={`text-[10px] uppercase tracking-[0.15em] ${OxaniumFont.className}`}
-          style={{ color: "rgba(150,137,95,0.5)" }}>
-          Project {String(dataIndex + 1).padStart(2, "0")}
-        </p>
         <h3 className={`font-bold uppercase text-white/60 leading-tight ${RajdhaniFont.className}`}
           style={{ fontSize: work.title.length > 25 ? "0.875rem" : "1rem", letterSpacing: "0.06em" }}>
           {work.title}
@@ -415,7 +401,7 @@ const WorksCarousel = ({ works }) => {
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
           onClick={goPrev}
         >
-          <SidePreview work={prevWork} dataIndex={prevWork.originalIndex} />
+          <SidePreview work={prevWork} dataIndex={prevWork.originalIndex} displayIndex={prev} />
         </motion.div>
 
         {/* Center card — full width on mobile, fixed on desktop */}
@@ -449,7 +435,7 @@ const WorksCarousel = ({ works }) => {
           style={{ width: CARD_W, height: CARD_H, transformStyle: "preserve-3d" }}
           onClick={goNext}
         >
-          <SidePreview work={nextWork} dataIndex={nextWork.originalIndex} />
+          <SidePreview work={nextWork} dataIndex={nextWork.originalIndex} displayIndex={next} />
         </motion.div>
       </div>
 

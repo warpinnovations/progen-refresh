@@ -259,7 +259,7 @@ const ContactForm = () => {
                   {[
                     { id: "contact", label: "Inquire" },
                     { id: "career", label: "Career" },
-                    { id: "intern", label: "Intern" },
+                    { id: "intern", label: "Internships" },
                   ].map(({ id, label }) => (
                     <button
                       key={id}
@@ -289,6 +289,13 @@ const ContactForm = () => {
                   </span>
                 </div>
                 <div className="h-[2px] w-16 bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent" />
+                <p className={`${OxaniumFont.className} text-xs text-[#96895F]/70 mt-3 tracking-wide`}>
+                  {mode === "career"
+                    ? <>Submissions go to <span className="text-[#96895F]">admin@prometheus.ph</span></>
+                    : mode === "intern"
+                    ? <>Submissions go to <span className="text-[#96895F]">internships@prometheus.ph</span></>
+                    : <>Reach us at <span className="text-[#96895F]">marketing@prometheus.ph</span></>}
+                </p>
               </div>
 
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">

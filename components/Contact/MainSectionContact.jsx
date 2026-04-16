@@ -40,6 +40,18 @@ const jobOpenings = [
     location: "Iloilo City",
     description: "Write clear, compelling, and error-free content across platforms. Must have strong technical and creative writing skills, and the ability to interpret creative direction and collaborate closely with other teams.",
   },
+  {
+    title: "Accounts Executive",
+    type: "Full-time",
+    location: "Iloilo City",
+    description: "Manage client relationships and serve as the primary point of contact for assigned accounts. Coordinate project timelines, deliverables, and communications between clients and internal teams.",
+  },
+  {
+    title: "Marketing Strategist",
+    type: "Full-time",
+    location: "Iloilo City",
+    description: "Develop and execute data-driven marketing strategies for diverse clients. Conduct market research, identify growth opportunities, and craft integrated campaigns that align with client business objectives.",
+  },
 ];
 
 const JobCard = ({ job, index }) => {

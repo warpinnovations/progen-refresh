@@ -53,7 +53,7 @@ const storyTellers = [
     name: "Junica",
     img: "/LandingPageAssets/storytellers/junica_formal.png",
     imgColored: "/LandingPageAssets/storytellers/junica_formal.png",
-    role: "Associate Creative Director",
+    role: "Junior Associate Creative Director",
   },
   {
     name: "Jayvee Bayaban",
@@ -71,7 +71,7 @@ const storyTellers = [
     name: "Esther Marie Sazon",
     img: "/LandingPageAssets/storytellers/esther_formal.webp",
     imgColored: "/LandingPageAssets/storytellers/esther_wacky.webp",
-    role: "Junior Associate Creative Director",
+    role: "Associate Creative Director",
   },
   {
     name: "Eddyl Rafael Tolentino",

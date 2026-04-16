@@ -58,7 +58,7 @@ const BRAND_ROWS = [
     { name: "AC Energy",                  image: "/addedbrands/AC Energy Logo.png" },
     { name: "Fiesta One Ayala",           image: "/addedbrands/Fiesta One ayala.png" },
   ],
-  // Row 6 — 10 logos
+  // Row 6 — 13 logos
   [
     { name: "One UPV",                    image: "/addedbrands/One UPV logo.png" },
     { name: "101 Food",                   image: "/brandLogos/101 Food.png" },
@@ -70,8 +70,11 @@ const BRAND_ROWS = [
     { name: "E.Curate",                   image: "/addedbrands/E.Curate Logo_stacked white.png" },
     { name: "LiDU",                       image: "/addedbrands/Lidu.png" },
     { name: "Superhouse Solutions",       image: "/addedbrands/Superhouse Solutions - Stacked.png" },
+    { name: "DOT",                        image: "/brandLogos/DOT Watermark.png" },
+    { name: "PMC",                        image: "/brandLogos/PMC Logo.png" },
+    { name: "WVMC",                       image: "/brandLogos/WVMC.png" },
   ],
-  // Row 7 — 9 logos (smallest)
+  // Row 7 — 12 logos (smallest)
   [
     { name: "Hotel Veronica",             image: "/addedbrands/Hotel Veronica logo.jpg" },
     { name: "IloEsports",                 image: "/addedbrands/IloEsports Logo.png" },
@@ -82,6 +85,9 @@ const BRAND_ROWS = [
     { name: "VSG Group",                  image: "/addedbrands/VSG Logo_Stacked.png" },
     { name: "PSG",                        image: "/addedbrands/PSG-LOGO.png" },
     { name: "Iloilo Coffee Festival",     image: "/addedbrands/ICFLOGO_Stacked_Kayumanggi.png" },
+    { name: "Estancia",                   image: "/brandLogos/estancia.PNG" },
+    { name: "Baja",                       image: "/brandLogos/baja.webp" },
+    { name: "Trimotors",                  image: "/brandLogos/trimotors.png" },
   ],
 ];
 
@@ -119,7 +125,7 @@ const MarqueeRow = ({ brands, direction = "left", speed = 35 }) => {
               src={brand.image}
               alt={brand.name}
               loading="lazy"
-              style={{ height: "48px", width: "auto", maxWidth: "120px", opacity: 0.85, objectFit: "contain" }}
+              style={{ height: "48px", width: "auto", maxWidth: "120px", opacity: 0.95, objectFit: "contain" }}
             />
           </div>
         ))}
@@ -204,7 +210,7 @@ const BrandsSection = () => {
                       loading="lazy"
                       whileHover={{ opacity: 1, scale: 1.08, filter: "brightness(1.25) drop-shadow(0 0 8px rgba(212,175,55,0.45))" }}
                       transition={{ duration: 0.2 }}
-                      style={{ height: logoH, width: 'auto', maxWidth: '95%', opacity: 0.7, objectFit: 'contain', objectPosition: 'center', cursor: 'default' }}
+                      style={{ height: logoH, width: 'auto', maxWidth: '95%', opacity: 0.88, objectFit: 'contain', objectPosition: 'center', cursor: 'default' }}
                     />
                   </div>
                 ))}
