@@ -123,6 +123,7 @@ const servicesData = [
         color: '#96895F',
         services: [
             'Custom Website Development',
+            'E-commerce Development',
             'Website Design and Re-design',
             'CMS Website Development',
             'Front End Custom Design',
