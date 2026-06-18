@@ -1,142 +1,153 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useRouter } from 'next/navigation';
 import localFont from 'next/font/local';
-import { Rajdhani } from 'next/font/google';
-import Link from 'next/link';
+import { Rajdhani, Oxanium } from 'next/font/google';
 import CSSStars from '@/components/Global/CSSStars';
 import FuturisticDivider from '@/components/Global/FuturisticLine';
 
 // --- FONT DEFINITIONS ---
 const MoonlanderFont = localFont({ src: '../../Fonts/Moonlander.ttf' });
 const RajdhaniFont = Rajdhani({ weight: '600', subsets: ['latin'] });
+const OxaniumFont = Oxanium({ weight: '600', subsets: ['latin'] });
 
 // --- SERVICES DATA WITH DETAILED BREAKDOWNS ---
 const servicesData = [
     {
         id: 'strategy',
+        href: '/services/strategy-services',
         name: 'Strategy Services',
         icon: '◈',
         color: '#96895F',
+        tagline: 'Data-driven decisions to improve audience understanding, strengthen campaigns, and support long-term business growth.',
         services: [
-            'Situation Analysis',
-            'Consumer Research and Analysis',
-            'Insighting',
-            'Strategy Development',
-            'Digital Consultation',
-            'Promotion Mechanics Formulation',
-            'Digital Marketing 101 Workshop',
-            'Social Listening',
+            { name: 'Consumer Research', description: 'We gather and analyze consumer data to support audience understanding, campaign planning, and decision-making.' },
+            { name: 'Insighting', description: 'We dive deeper to understand consumer behavior, category trends, and cultural insights, helping brands develop more relevant, unique, and effective campaigns.' },
+            { name: 'Strategy Development', description: 'We build tailored marketing and communication strategies aligned with brand goals, audience needs, and market opportunities.' },
+            { name: 'Social Listening', description: 'We monitor online conversations and audience sentiment before, during, and after running campaigns to stay informed, responsive, and clear on their real impacts.' },
+            { name: 'Digital Marketing Workshops', description: 'We conduct Digital Marketing 101 workshops designed to equip teams with practical knowledge on digital platforms, trends, and campaign fundamentals.' },
         ]
     },
     {
         id: 'creative',
+        href: '/services/creative-services',
         name: 'Creative Services',
         icon: '✧',
         color: '#96895F',
+        tagline: 'Compelling visual and digital experiences that strengthen communication, elevate brand identity, and connect with audiences across platforms.',
         services: [
-            'Website Design',
-            'Banner Ad Design',
-            'Graphic Design',
-            'Video Shoot',
-            'Video Editing',
-            'Video Animation',
-            'Video Storyboarding',
-            'Scriptwriting',
-            'Photography',
-            'Content Planning',
-            'Ad Copywriting',
-            'Social Copywriting',
+            { name: 'Website Design', description: 'We create responsive and user-focused websites designed to strengthen brand presence and improve customer experience online.' },
+            { name: 'Graphic Design', description: 'We develop visual materials that communicate your brand clearly across campaigns, presentations, digital platforms, and print assets.' },
+            { name: 'Banner Ad Design', description: 'We design attention-grabbing banner ads optimized for digital campaigns, promotions, and audience engagement.' },
+            { name: 'Video Production', description: 'We handle video shoots, editing, and production management to create compelling visual content tailored to your brand objectives.' },
+            { name: 'Motion Graphics', description: 'We produce animated videos and visual elements that simplify messages, increase engagement, and enhance digital storytelling.' },
+            { name: 'Storyboarding and Scripting', description: 'We develop storyboards and scripts that provide clear creative direction and support cohesive storytelling.' },
+            { name: 'Photography Services', description: 'We capture high-quality photos for campaigns, events, products, corporate materials, and brand communications.' },
+            { name: 'Content Planning', description: 'We build structured content plans that align messaging, platform strategy, and campaign objectives across digital channels.' },
+            { name: 'Copywriting Services', description: 'We create ad copy, social media captions, and campaign messaging designed to strengthen brand communication and audience engagement.' },
         ]
     },
     {
         id: 'branding',
+        href: '/services/branding-services',
         name: 'Branding Services',
         icon: '✦',
         color: '#96895F',
+        tagline: 'Clear, impactful, and memorable brand identities through strategic branding services that strengthen positioning and audience connection.',
         services: [
-            'Big Idea Formulation',
-            'Mock-up and Design',
-            'Target Market Identification',
-            'Strategy Development',
-            'Communications Planning',
-            'Social Card Design',
+            { name: 'Big Idea Development', description: 'We develop strong creative concepts and brand narratives that serve as the foundation for campaigns, positioning, and communication.' },
+            { name: 'Brand Mock-Ups and Design', description: 'We create visual mock-ups and branding materials that bring ideas to life and establish a cohesive brand identity across platforms.' },
+            { name: 'Target Market Identification', description: 'We identify and analyze target audiences to help brands communicate more effectively and build stronger customer connections.' },
+            { name: 'Brand Strategy Development', description: 'We create tailored branding strategies aligned with business goals, market positioning, and audience behavior.' },
+            { name: 'Communications Planning', description: 'We develop structured communication plans that ensure consistent messaging across campaigns, platforms, and customer touchpoints.' },
+            { name: 'Social Card Design', description: 'We design visually engaging social media cards that support brand visibility, campaign messaging, and digital engagement.' },
         ]
     },
     {
         id: 'digital-marketing',
+        href: '/services/digital-marketing',
         name: 'Digital Marketing Services',
         icon: '◉',
         color: '#96895F',
+        tagline: 'Results-driven digital marketing services designed to improve visibility, strengthen engagement, and support sustainable brand growth.',
         services: [
-            'Search Engine Optimization',
-            'Strategy Development',
-            'E-mail Direct Marketing',
-            'Content Tagging',
+            { name: 'Search Engine Optimization (SEO)', description: 'We optimize website structure, content, and keywords to improve search visibility and help brands rank higher on search engines.' },
+            { name: 'Digital Strategy Development', description: 'We create data-informed digital marketing strategies aligned with business goals, audience behavior, and campaign objectives.' },
+            { name: 'E-mail Direct Marketing', description: 'We design and execute targeted email campaigns that nurture leads, strengthen customer relationships, and drive conversions.' },
+            { name: 'Content Tagging and Optimization', description: 'We implement proper content tagging and structuring to improve discoverability, organization, and performance across digital platforms.' },
+            { name: 'Website Development', description: 'We create responsive and user-focused websites designed to strengthen brand presence and improve customer experience online.' },
         ]
     },
     {
         id: 'media',
+        href: '/services/media-services',
         name: 'Media Services',
         icon: '◇',
         color: '#96895F',
+        tagline: 'Strategic media services designed to help brands reach the right audiences, maximize campaign performance, and ensure efficient use of media investments.',
         services: [
-            'Media Planning and Strategy',
-            'Media Buying and Deployment',
-            'Media Monitoring and Optimization',
-            'Media Reporting',
+            { name: 'Media Planning and Strategy', description: 'We develop data-driven media strategies that identify the right channels, timing, and audience segments to maximize campaign reach and effectiveness.' },
+            { name: 'Media Buying and Deployment', description: 'We execute strategic media placements across traditional and digital platforms to ensure optimal visibility and audience targeting.' },
+            { name: 'Media Monitoring and Optimization', description: 'We continuously track campaign performance and make real-time adjustments to improve reach, engagement, and efficiency.' },
+            { name: 'Media Reporting and Analysis', description: 'We provide detailed performance reports that measure campaign impact, audience reach, and overall media effectiveness to guide future strategies.' },
         ]
     },
     {
         id: 'social-media',
+        href: '/services/social-media-services',
         name: 'Social Media Services',
         icon: '◆',
         color: '#96895F',
+        tagline: 'Strategic social media services that strengthen brand presence, grow audience engagement, and drive meaningful conversations across digital platforms.',
         services: [
-            'KPI Monitoring & Social Media Scanning',
-            'Social Media Strategy',
-            'Digital Brand Analysis',
-            'Social Media Planning and Conversation Curation',
-            'Influencer / KOL Marketing',
-            'Campaign Management',
+            { name: 'KPI Monitoring & Social Listening', description: 'We track key performance indicators and monitor online conversations to understand audience sentiment and measure campaign effectiveness.' },
+            { name: 'Social Media Strategy', description: 'We create data-driven strategies that define content direction, platform focus, and engagement goals aligned with brand objectives.' },
+            { name: 'Digital Brand Analysis', description: 'We evaluate brand performance across social platforms to identify strengths, gaps, and opportunities for improvement.' },
+            { name: 'Content Planning', description: 'We plan content calendars and curate meaningful conversations that encourage engagement and build community interaction.' },
+            { name: 'Influencer and KOL Marketing', description: 'We manage influencer and KOL partnerships that amplify brand messaging and extend reach to targeted audiences.' },
+            { name: 'Campaign Management', description: 'We oversee end-to-end social media campaigns, ensuring consistent execution, engagement, and performance tracking across platforms.' },
         ]
     },
     {
         id: 'event-management',
+        href: '/services/event-management',
         name: 'Event Management',
         icon: '◈',
         color: '#96895F',
+        tagline: 'End-to-end event management solutions that deliver seamless, high-impact events and experiences that strengthen audience engagement.',
         services: [
-            'Event Planning and Concept Development',
-            'On-ground Activation Management',
-            'End-to-end Program and Broadcast Management',
-            'On-site Setup, Staging, and Coordination',
-            'Guest, Audience, and Registration Management',
-            'Supplier and Talent Management',
+            { name: 'Strategic Planning', description: 'We develop event concepts, timelines, and program structures that align with your brand and business objectives.' },
+            { name: 'Program Management', description: 'We oversee scripting, technical direction, and broadcast coordination to keep every event running smoothly.' },
+            { name: 'Guest Management', description: 'We manage registration, attendee communication, and guest flow to create a seamless event experience.' },
+            { name: 'Brand Activation', description: 'We create interactive event components that strengthen customer engagement and elevate campaign visibility.' },
+            { name: 'On-Site Coordination', description: 'We supervise staging, setup, and real-time operations to ensure smooth execution on event day.' },
+            { name: 'Talent Coordination', description: 'We handle coordination with suppliers, performers, and manage influencer/celebrity partnerships to keep every moving part aligned.' },
         ]
     },
     {
         id: 'software',
+        href: '/services/software-solutions',
         name: 'Software Solutions',
         icon: '✦',
         color: '#96895F',
+        tagline: 'Custom software solutions designed to build high-performing digital platforms, enhance user experience, and support business growth.',
         services: [
-            'Custom Website Development',
-            'E-commerce Development',
-            'Website Design and Re-design',
-            'CMS Website Development',
-            'Front End Custom Design',
-            'Website Copywriting',
-            'Conversion Optimization',
-            'Search Engine Optimization',
-            'AR/VR/MR Development',
-            'App Development',
+            { name: 'Custom Website Development', description: 'We build tailored websites designed to meet specific business needs, ensuring functionality, performance, and scalability.' },
+            { name: 'Website Design and Re-Design', description: 'We create and refresh website designs to improve user experience, visual appeal, and overall brand consistency.' },
+            { name: 'CMS Website Development', description: 'We develop CMS websites that allow easy updates, flexibility, and efficient content control.' },
+            { name: 'Front-End Custom Design', description: 'We design responsive and interactive front-end interfaces that enhance usability and deliver seamless user experiences across devices.' },
+            { name: 'Website Copywriting', description: 'We craft clear, persuasive website content that communicates brand value and supports user engagement and conversion goals.' },
+            { name: 'Conversion Optimization', description: 'We optimize website structure and user journeys to improve engagement, lead generation, and overall conversion performance.' },
+            { name: 'Search Engine Optimization (SEO)', description: 'We implement SEO best practices to improve search visibility, increase organic traffic, and strengthen online presence.' },
+            { name: 'AR/VR/MR Development', description: 'We develop immersive augmented, virtual, and mixed reality experiences that enhance engagement and create innovative brand interactions.' },
+            { name: 'App Development', description: 'We build mobile and web applications that support business operations, improve accessibility, and enhance customer engagement.' },
         ]
     },
 ];
 
-// --- CIRCULAR TEXT COMPONENT (lightweight SVG) ---
+// --- CIRCULAR TEXT COMPONENT ---
 const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'rgba(150,137,95,0.5)', direction = 1 }) => {
     const pathId = `circlePath-${radiusX}-${direction}`;
     const w = radiusX * 2;
@@ -161,143 +172,6 @@ const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'rgba(150,
     );
 };
 
-// --- SERVICE DETAIL MODAL ---
-const ServiceDetailModal = ({ service, onClose }) => {
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, []);
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-            onClick={onClose}
-        >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
-
-            {/* Modal Content */}
-            <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                transition={{ type: "spring", damping: 25 }}
-                className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-            >
-                {/* Modal Card */}
-                <div className="relative bg-black/90 border-2 border-[#96895F]/30 rounded-2xl p-6 md:p-8 backdrop-blur-md">
-                    {/* Animated border glow */}
-                    <motion.div
-                        className="absolute inset-0 rounded-2xl pointer-events-none"
-                        style={{
-                            background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.2), transparent)',
-                            backgroundSize: '200% 200%',
-                        }}
-                        animate={{
-                            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                        }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                    />
-
-                    {/* Close Button */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-[#96895F]/10 border border-[#96895F]/30 hover:bg-[#96895F]/20 transition-all duration-300 group z-10"
-                    >
-                        <svg
-                            className="w-5 h-5 text-[#96895F] group-hover:rotate-90 transition-transform duration-300"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-
-                    {/* Header */}
-                    <div className="mb-6 pr-12">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96895F]/30 to-[#96895F]/10 border border-[#96895F]/40 flex items-center justify-center">
-                                <span className="text-2xl text-[#96895F]">{service.icon}</span>
-                            </div>
-                            <h3 className={`${MoonlanderFont.className} text-2xl md:text-3xl font-black text-white uppercase`}>
-                                {service.name}
-                            </h3>
-                        </div>
-                        <div className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/50 to-transparent" />
-                    </div>
-
-                    {/* Services List */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {service.services.map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                                className={`group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300 ${RajdhaniFont.className}`}
-                            >
-                                <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-[#96895F] group-hover:scale-125 transition-transform duration-300" />
-                                <span className="text-sm md:text-base text-white/80 group-hover:text-white transition-colors duration-300"
-                                      style={{ letterSpacing: '0.04em' }}>
-                                    {item}
-                                </span>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Contact Us CTA */}
-                    <div className="mt-8 flex justify-center">
-                        <Link href="/contact">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.97 }}
-                                className={`${RajdhaniFont.className} relative px-8 py-3 rounded-full border-2 border-[#96895F]/60 bg-[#96895F]/10 hover:bg-[#96895F]/25 text-[#96895F] hover:text-white text-base md:text-lg font-semibold uppercase tracking-widest transition-all duration-300 group overflow-hidden`}
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    Contact Us
-                                    <svg
-                                        className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </span>
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-[#96895F]/0 via-[#96895F]/20 to-[#96895F]/0"
-                                    animate={{ x: ['-100%', '100%'] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                                />
-                            </motion.button>
-                        </Link>
-                    </div>
-
-                    {/* Footer ornament */}
-                    <div className="mt-6 flex justify-center">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
-                            <div className="w-16 h-[1px] bg-gradient-to-r from-[#96895F]/40 to-transparent" />
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/60" />
-                            <div className="w-16 h-[1px] bg-gradient-to-l from-[#96895F]/40 to-transparent" />
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
-        </motion.div>
-    );
-};
-
 // --- SERVICE CARD COMPONENT ---
 const ServiceCard = ({ service, index, onClick }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -313,12 +187,9 @@ const ServiceCard = ({ service, index, onClick }) => {
             onClick={onClick}
             className="relative group h-full cursor-pointer"
         >
-            {/* Card Container */}
             <motion.div
                 className="relative h-full p-5 sm:p-6 md:p-7 rounded-2xl border-2 bg-black/50 backdrop-blur-sm overflow-hidden flex flex-col"
-                style={{
-                    borderColor: isHovered ? `${service.color}80` : `${service.color}20`,
-                }}
+                style={{ borderColor: isHovered ? `${service.color}80` : `${service.color}20` }}
                 whileHover={{ scale: 1.02, y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -330,13 +201,11 @@ const ServiceCard = ({ service, index, onClick }) => {
                         background: `linear-gradient(135deg, transparent, ${service.color}30, transparent)`,
                         backgroundSize: '200% 200%',
                     }}
-                    animate={isHovered ? {
-                        backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-                    } : {}}
+                    animate={isHovered ? { backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] } : {}}
                     transition={{ duration: 2, repeat: Infinity }}
                 />
 
-                {/* Inner glow effect */}
+                {/* Inner glow */}
                 <div className="absolute inset-[2px] rounded-2xl bg-black/60 backdrop-blur-sm" />
 
                 {/* Content */}
@@ -351,10 +220,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                                     ? `linear-gradient(135deg, ${service.color}20, ${service.color}10)`
                                     : `linear-gradient(135deg, ${service.color}15, ${service.color}05)`,
                             }}
-                            animate={isHovered ? {
-                                rotate: [0, 5, -5, 0],
-                                scale: [1, 1.05, 1],
-                            } : {}}
+                            animate={isHovered ? { rotate: [0, 5, -5, 0], scale: [1, 1.05, 1] } : {}}
                             transition={{ duration: 0.6 }}
                         >
                             <span className="text-xl sm:text-2xl md:text-3xl" style={{ color: service.color }}>
@@ -362,7 +228,7 @@ const ServiceCard = ({ service, index, onClick }) => {
                             </span>
                         </motion.div>
 
-                        {/* Text Content */}
+                        {/* Text */}
                         <div className="flex-1 min-w-0">
                             <h3
                                 className={`${MoonlanderFont.className} text-lg sm:text-xl md:text-2xl font-black text-white uppercase leading-tight transition-all duration-300`}
@@ -373,41 +239,27 @@ const ServiceCard = ({ service, index, onClick }) => {
                             >
                                 {service.name}
                             </h3>
-
-                            {/* Animated underline */}
                             <motion.div
                                 className="h-[2px] mt-2 rounded-full"
-                                style={{
-                                    background: `linear-gradient(90deg, ${service.color}, transparent)`,
-                                }}
+                                style={{ background: `linear-gradient(90deg, ${service.color}, transparent)` }}
                                 initial={{ width: '30%' }}
                                 animate={{ width: isHovered ? '100%' : '30%' }}
                                 transition={{ duration: 0.4 }}
                             />
-
                         </div>
                     </div>
 
-                    {/* Arrow indicator */}
+                    {/* Arrow */}
                     <motion.div
                         className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 flex items-center justify-center"
                         style={{
                             borderColor: isHovered ? `${service.color}60` : `${service.color}20`,
                             background: isHovered ? `${service.color}15` : 'transparent',
                         }}
-                        animate={isHovered ? {
-                            x: [0, 5, 0],
-                        } : {}}
+                        animate={isHovered ? { x: [0, 5, 0] } : {}}
                         transition={{ duration: 1, repeat: isHovered ? Infinity : 0 }}
                     >
-                        <svg
-                            className="w-5 h-5 sm:w-6 sm:h-6"
-                            style={{ color: service.color }}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                        >
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6" style={{ color: service.color }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </motion.div>
@@ -418,21 +270,13 @@ const ServiceCard = ({ service, index, onClick }) => {
                     <>
                         <motion.div
                             className="absolute top-0 right-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl pointer-events-none"
-                            style={{
-                                background: `radial-gradient(circle at top right, ${service.color}15, transparent)`,
-                            }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
+                            style={{ background: `radial-gradient(circle at top right, ${service.color}15, transparent)` }}
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
                         />
                         <motion.div
                             className="absolute bottom-0 left-0 w-14 h-14 md:w-16 md:h-16 rounded-2xl pointer-events-none"
-                            style={{
-                                background: `radial-gradient(circle at bottom left, ${service.color}10, transparent)`,
-                            }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
+                            style={{ background: `radial-gradient(circle at bottom left, ${service.color}10, transparent)` }}
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
                         />
                     </>
                 )}
@@ -443,19 +287,13 @@ const ServiceCard = ({ service, index, onClick }) => {
                         <motion.div
                             className="absolute w-1.5 h-1.5 rounded-full"
                             style={{ background: service.color, top: '15%', right: '10%', opacity: 0.6 }}
-                            animate={{
-                                y: [0, -20, 0],
-                                opacity: [0.6, 1, 0.6],
-                            }}
+                            animate={{ y: [0, -20, 0], opacity: [0.6, 1, 0.6] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
                         <motion.div
                             className="absolute w-1 h-1 rounded-full"
                             style={{ background: service.color, bottom: '20%', left: '15%', opacity: 0.4 }}
-                            animate={{
-                                y: [0, 20, 0],
-                                opacity: [0.4, 0.8, 0.4],
-                            }}
+                            animate={{ y: [0, 20, 0], opacity: [0.4, 0.8, 0.4] }}
                             transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
                         />
                     </>
@@ -468,11 +306,10 @@ const ServiceCard = ({ service, index, onClick }) => {
 // --- MAIN COMPONENT ---
 function OurServices() {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
-    const [selectedService, setSelectedService] = useState(null);
+    const router = useRouter();
     const [radii, setRadii] = useState({ primary: 450, secondary: 550 });
     const [animationKey, setAnimationKey] = useState(0);
 
-    // --- RESPONSIVE RADII LOGIC ---
     useEffect(() => {
         const updateDimensions = () => {
             if (window.innerWidth < 768) {
@@ -483,17 +320,15 @@ function OurServices() {
                 setRadii({ primary: 450, secondary: 550 });
             }
         };
-
         updateDimensions();
         window.addEventListener('resize', updateDimensions);
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
-    // --- FIX FOR ANIMATION PAUSING ON TAB OUT ---
     useEffect(() => {
         const handleVisibilityChange = () => {
             if (document.visibilityState === 'visible') {
-                setAnimationKey(prevKey => prevKey + 1);
+                setAnimationKey(prev => prev + 1);
             }
         };
         document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -505,26 +340,24 @@ function OurServices() {
             ref={ref}
             className='w-full flex justify-center items-center py-12 sm:py-16 md:py-20 lg:py-32 relative overflow-hidden'
         >
-            {/* --- BACKGROUND ELEMENTS --- */}
+            {/* Background */}
             <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
                 <CSSStars />
                 <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 90% 70% at 50% 50%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.85) 100%)" }} />
                 <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(150, 137, 95, 0.08) 0%, rgba(150, 137, 95, 0) 70%)" }} />
             </div>
-            <div className="absolute inset-0 z-10 pointer-events-none bg-black/30"></div>
+            <div className="absolute inset-0 z-10 pointer-events-none bg-black/30" />
 
-            {/* --- CIRCULAR TEXT ANIMATION (BACKGROUND) --- */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-20">
-                <motion.div
-                    className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2"
-                >
+            {/* Circular text ornament */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-20 pointer-events-none">
+                <motion.div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2">
                     <CircularText
                         key={animationKey + '_secondary'}
                         text=" / STRATEGY / BRANDING / CREATIVE / MARKETING / MEDIA / SOCIAL MEDIA / SOFTWARE / EVENTS"
                         radiusX={radii.secondary}
                         radiusY={Math.round(radii.secondary * 0.65)}
                         duration={30}
-                        textColor="text-prOrange/60"
+                        textColor="rgba(150,137,95,0.6)"
                         direction={-1}
                     />
                 </motion.div>
@@ -540,7 +373,7 @@ function OurServices() {
                 </div>
             </div>
 
-            {/* --- MAIN CONTENT --- */}
+            {/* Main content */}
             <div className="relative z-30 w-full max-w-7xl mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-12 md:mb-16 lg:mb-20">
@@ -557,7 +390,6 @@ function OurServices() {
                         </h2>
                     </motion.div>
 
-                    {/* Futuristic Divider */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
@@ -571,17 +403,13 @@ function OurServices() {
                         animate={inView ? { opacity: 1 } : { opacity: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                         className={`${RajdhaniFont.className} text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/85 mt-4 md:mt-6 max-w-4xl mx-auto`}
-                        style={{ 
-                            letterSpacing: '0.06em',
-                            lineHeight: '1.5',
-                            fontWeight: '500'
-                        }}
+                        style={{ letterSpacing: '0.06em', lineHeight: '1.5', fontWeight: '500' }}
                     >
-                        Click on any service to explore our comprehensive offerings
+                        Explore our comprehensive range of services
                     </motion.p>
                 </div>
 
-                {/* Services Grid — flex-wrap so last row centers */}
+                {/* Services grid */}
                 <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
                     {servicesData.map((service, index) => (
                         <div
@@ -591,22 +419,13 @@ function OurServices() {
                             <ServiceCard
                                 service={service}
                                 index={index}
-                                onClick={() => setSelectedService(service)}
+                                onClick={() => router.push(service.href)}
                             />
                         </div>
                     ))}
                 </div>
             </div>
 
-            {/* Service Detail Modal */}
-            <AnimatePresence>
-                {selectedService && (
-                    <ServiceDetailModal
-                        service={selectedService}
-                        onClose={() => setSelectedService(null)}
-                    />
-                )}
-            </AnimatePresence>
         </section>
     );
 }
