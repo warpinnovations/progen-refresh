@@ -8,6 +8,10 @@ export const NavData = [
     Link: '/works'
   },
   {
+    nav: 'Our Services',
+    Link: '/services'
+  },
+  {
     nav: 'About',
     Link: '/about'
   },
@@ -20,6 +24,36 @@ export const NavData = [
     Link: '/contact'
   }
 ];
+
+// --- SERVICE PAGES (canonical) ---
+// Maps the free-form service strings used across workData to the 8 real
+// service detail pages, so Our Work tags always link somewhere valid.
+export const SERVICE_PAGES = [
+  { name: 'Strategy Services', href: '/services/strategy-services', match: ['strategy'] },
+  { name: 'Social Media Services', href: '/services/social-media-services', match: ['social', 'influencer', 'kol'] },
+  { name: 'Digital Marketing', href: '/services/digital-marketing', match: ['digital marketing', 'seo'] },
+  { name: 'Branding Services', href: '/services/branding-services', match: ['brand'] },
+  { name: 'Event Management', href: '/services/event-management', match: ['event', 'activation'] },
+  { name: 'Creative Services', href: '/services/creative-services', match: ['creative', 'production', 'design', 'photo', 'video'] },
+  { name: 'Software Solutions', href: '/services/software-solutions', match: ['software', 'app', 'website', 'web dev'] },
+  { name: 'Media Services', href: '/services/media-services', match: ['media'] },
+];
+
+// Resolve a list of free-form service strings into unique, clickable service
+// page links ({ name, href }), preserving the order they first appear.
+export const getServiceLinks = (services: string[] = []) => {
+  const seen = new Set<string>();
+  const links: { name: string; href: string }[] = [];
+  for (const raw of services) {
+    const value = (raw || '').toLowerCase();
+    const page = SERVICE_PAGES.find((p) => p.match.some((kw) => value.includes(kw)));
+    if (page && !seen.has(page.href)) {
+      seen.add(page.href);
+      links.push({ name: page.name, href: page.href });
+    }
+  }
+  return links;
+};
 
 export const worksData = [
   {

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import localFont from 'next/font/local';
 import { Rajdhani, Oxanium } from 'next/font/google';
 import CSSStars from '@/components/Global/CSSStars';
@@ -172,6 +172,128 @@ const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'rgba(150,
     );
 };
 
+// --- SERVICE DETAIL MODAL ---
+const ServiceDetailModal = ({ service, onClose }) => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+            onClick={onClose}
+        >
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+            {/* Modal Content */}
+            <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                transition={{ type: "spring", damping: 25 }}
+                className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Modal Card */}
+                <div className="relative bg-black/90 border-2 border-[#96895F]/30 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+                    {/* Animated border glow */}
+                    <motion.div
+                        className="absolute inset-0 rounded-2xl pointer-events-none"
+                        style={{
+                            background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.2), transparent)',
+                            backgroundSize: '200% 200%',
+                        }}
+                        animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                    />
+
+                    {/* Close Button */}
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-[#96895F]/10 border border-[#96895F]/30 hover:bg-[#96895F]/20 transition-all duration-300 group z-10"
+                    >
+                        <svg className="w-5 h-5 text-[#96895F] group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Header */}
+                    <div className="mb-6 pr-12">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96895F]/30 to-[#96895F]/10 border border-[#96895F]/40 flex items-center justify-center">
+                                <span className="text-2xl text-[#96895F]">{service.icon}</span>
+                            </div>
+                            <h3 className={`${MoonlanderFont.className} text-2xl md:text-3xl font-black text-white uppercase`}>
+                                {service.name}
+                            </h3>
+                        </div>
+                        <div className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/50 to-transparent" />
+                    </div>
+
+                    {/* Services List */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {service.services.map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className={`group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300 ${RajdhaniFont.className}`}
+                            >
+                                <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-[#96895F] group-hover:scale-125 transition-transform duration-300" />
+                                <span className="text-sm md:text-base text-white/85 group-hover:text-white transition-colors duration-300" style={{ letterSpacing: '0.04em' }}>
+                                    {typeof item === 'string' ? item : item.name}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* View Full Page CTA */}
+                    <div className="mt-8 flex justify-center">
+                        <Link href={service.href}>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.97 }}
+                                className={`${RajdhaniFont.className} relative px-8 py-3 rounded-full border-2 border-[#96895F]/60 bg-[#96895F]/10 hover:bg-[#96895F]/25 text-[#96895F] hover:text-white text-base md:text-lg font-semibold uppercase tracking-widest transition-all duration-300 group overflow-hidden`}
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    View Service Page
+                                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </span>
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-r from-[#96895F]/0 via-[#96895F]/20 to-[#96895F]/0"
+                                    animate={{ x: ['-100%', '100%'] }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                                />
+                            </motion.button>
+                        </Link>
+                    </div>
+
+                    {/* Footer ornament */}
+                    <div className="mt-6 flex justify-center">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
+                            <div className="w-16 h-[1px] bg-gradient-to-r from-[#96895F]/40 to-transparent" />
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/60" />
+                            <div className="w-16 h-[1px] bg-gradient-to-l from-[#96895F]/40 to-transparent" />
+                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+};
+
 // --- SERVICE CARD COMPONENT ---
 const ServiceCard = ({ service, index, onClick }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -306,9 +428,9 @@ const ServiceCard = ({ service, index, onClick }) => {
 // --- MAIN COMPONENT ---
 function OurServices() {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
-    const router = useRouter();
     const [radii, setRadii] = useState({ primary: 450, secondary: 550 });
     const [animationKey, setAnimationKey] = useState(0);
+    const [selectedService, setSelectedService] = useState(null);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -419,13 +541,22 @@ function OurServices() {
                             <ServiceCard
                                 service={service}
                                 index={index}
-                                onClick={() => router.push(service.href)}
+                                onClick={() => setSelectedService(service)}
                             />
                         </div>
                     ))}
                 </div>
             </div>
 
+            {/* Service Detail Modal */}
+            <AnimatePresence>
+                {selectedService && (
+                    <ServiceDetailModal
+                        service={selectedService}
+                        onClose={() => setSelectedService(null)}
+                    />
+                )}
+            </AnimatePresence>
         </section>
     );
 }

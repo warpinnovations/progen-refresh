@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { workData } from "@/app/contants";
+import { workData, getServiceLinks } from "@/app/contants";
 import ReactPlayer from "react-player";
 import { Carousel } from "react-responsive-carousel";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
@@ -77,6 +77,21 @@ const SubSectionPage = () => {
                 <p className="font-ox text-sm md:text-base text-white/60 mt-4 max-w-2xl leading-relaxed">
                   {work.subheadline}
                 </p>
+              )}
+
+              {/* Service tags – clickable, lead to each service page */}
+              {getServiceLinks(work.services).length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-6 max-w-3xl">
+                  {getServiceLinks(work.services).map((service) => (
+                    <Link
+                      key={service.href}
+                      href={service.href}
+                      className="font-ox text-[10px] sm:text-xs uppercase tracking-[0.15em] text-prOrange/90 border border-prOrange/40 hover:bg-prOrange hover:text-black hover:border-prOrange px-3 py-1.5 rounded-full transition-colors duration-300"
+                    >
+                      {service.name}
+                    </Link>
+                  ))}
+                </div>
               )}
             </motion.div>
           </div>
