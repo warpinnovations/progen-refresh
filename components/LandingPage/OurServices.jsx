@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import localFont from 'next/font/local';
 import { Rajdhani, Oxanium } from 'next/font/google';
 import CSSStars from '@/components/Global/CSSStars';
@@ -31,38 +31,20 @@ const servicesData = [
         ]
     },
     {
-        id: 'creative',
-        href: '/services/creative-services',
-        name: 'Creative Services',
-        icon: '✧',
-        color: '#96895F',
-        tagline: 'Compelling visual and digital experiences that strengthen communication, elevate brand identity, and connect with audiences across platforms.',
-        services: [
-            { name: 'Website Design', description: 'We create responsive and user-focused websites designed to strengthen brand presence and improve customer experience online.' },
-            { name: 'Graphic Design', description: 'We develop visual materials that communicate your brand clearly across campaigns, presentations, digital platforms, and print assets.' },
-            { name: 'Banner Ad Design', description: 'We design attention-grabbing banner ads optimized for digital campaigns, promotions, and audience engagement.' },
-            { name: 'Video Production', description: 'We handle video shoots, editing, and production management to create compelling visual content tailored to your brand objectives.' },
-            { name: 'Motion Graphics', description: 'We produce animated videos and visual elements that simplify messages, increase engagement, and enhance digital storytelling.' },
-            { name: 'Storyboarding and Scripting', description: 'We develop storyboards and scripts that provide clear creative direction and support cohesive storytelling.' },
-            { name: 'Photography Services', description: 'We capture high-quality photos for campaigns, events, products, corporate materials, and brand communications.' },
-            { name: 'Content Planning', description: 'We build structured content plans that align messaging, platform strategy, and campaign objectives across digital channels.' },
-            { name: 'Copywriting Services', description: 'We create ad copy, social media captions, and campaign messaging designed to strengthen brand communication and audience engagement.' },
-        ]
-    },
-    {
-        id: 'branding',
-        href: '/services/branding-services',
-        name: 'Branding Services',
+        id: 'branding-creative',
+        href: '/services/branding-creative-services',
+        name: 'Branding & Creative Services',
         icon: '✦',
         color: '#96895F',
-        tagline: 'Clear, impactful, and memorable brand identities through strategic branding services that strengthen positioning and audience connection.',
+        tagline: 'Clear, impactful brand identities and compelling creative experiences that strengthen positioning, elevate communication, and connect with audiences across platforms.',
         services: [
-            { name: 'Big Idea Development', description: 'We develop strong creative concepts and brand narratives that serve as the foundation for campaigns, positioning, and communication.' },
-            { name: 'Brand Mock-Ups and Design', description: 'We create visual mock-ups and branding materials that bring ideas to life and establish a cohesive brand identity across platforms.' },
-            { name: 'Target Market Identification', description: 'We identify and analyze target audiences to help brands communicate more effectively and build stronger customer connections.' },
-            { name: 'Brand Strategy Development', description: 'We create tailored branding strategies aligned with business goals, market positioning, and audience behavior.' },
-            { name: 'Communications Planning', description: 'We develop structured communication plans that ensure consistent messaging across campaigns, platforms, and customer touchpoints.' },
-            { name: 'Social Card Design', description: 'We design visually engaging social media cards that support brand visibility, campaign messaging, and digital engagement.' },
+            { name: 'Brand Development', description: 'We shape brand identities through strategic design and messaging that help organizations stand out and connect with their audiences—whether launching a new brand or refreshing an existing one.' },
+            { name: 'Campaign Ideation', description: 'We develop strong creative concepts and brand narratives that serve as the foundation for campaigns, positioning, and communication.' },
+            { name: 'Graphic Design', description: 'We develop visual materials that communicate your brand clearly across campaigns, presentations, digital platforms, and print assets.' },
+            { name: 'Video Production', description: 'We develop storyboards and scripts that provide clear creative direction and support cohesive storytelling across video and campaign materials.' },
+            { name: 'Motion Graphics', description: 'We produce animated videos and visual elements that simplify messages, increase engagement, and enhance digital storytelling.' },
+            { name: 'Photography Services', description: 'We capture high-quality photos for campaigns, events, products, corporate materials, and brand communications.' },
+            { name: 'Copywriting Services', description: 'We create ad copy, social media captions, and campaign messaging designed to strengthen brand communication and audience engagement.' },
         ]
     },
     {
@@ -169,128 +151,6 @@ const CircularText = ({ text, radiusX, radiusY, duration, textColor = 'rgba(150,
                 }
             `}</style>
         </div>
-    );
-};
-
-// --- SERVICE DETAIL MODAL ---
-const ServiceDetailModal = ({ service, onClose }) => {
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, []);
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-            onClick={onClose}
-        >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
-
-            {/* Modal Content */}
-            <motion.div
-                initial={{ scale: 0.9, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
-                transition={{ type: "spring", damping: 25 }}
-                className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-            >
-                {/* Modal Card */}
-                <div className="relative bg-black/90 border-2 border-[#96895F]/30 rounded-2xl p-6 md:p-8 backdrop-blur-md">
-                    {/* Animated border glow */}
-                    <motion.div
-                        className="absolute inset-0 rounded-2xl pointer-events-none"
-                        style={{
-                            background: 'linear-gradient(45deg, transparent, rgba(150, 137, 95, 0.2), transparent)',
-                            backgroundSize: '200% 200%',
-                        }}
-                        animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                        transition={{ duration: 3, repeat: Infinity }}
-                    />
-
-                    {/* Close Button */}
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-[#96895F]/10 border border-[#96895F]/30 hover:bg-[#96895F]/20 transition-all duration-300 group z-10"
-                    >
-                        <svg className="w-5 h-5 text-[#96895F] group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-
-                    {/* Header */}
-                    <div className="mb-6 pr-12">
-                        <div className="flex items-center gap-3 mb-3">
-                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#96895F]/30 to-[#96895F]/10 border border-[#96895F]/40 flex items-center justify-center">
-                                <span className="text-2xl text-[#96895F]">{service.icon}</span>
-                            </div>
-                            <h3 className={`${MoonlanderFont.className} text-2xl md:text-3xl font-black text-white uppercase`}>
-                                {service.name}
-                            </h3>
-                        </div>
-                        <div className="h-[2px] bg-gradient-to-r from-[#96895F] via-[#96895F]/50 to-transparent" />
-                    </div>
-
-                    {/* Services List */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {service.services.map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                                className={`group flex items-start gap-3 p-3 rounded-lg bg-[#96895F]/5 border border-[#96895F]/10 hover:border-[#96895F]/30 hover:bg-[#96895F]/10 transition-all duration-300 ${RajdhaniFont.className}`}
-                            >
-                                <div className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-[#96895F] group-hover:scale-125 transition-transform duration-300" />
-                                <span className="text-sm md:text-base text-white/85 group-hover:text-white transition-colors duration-300" style={{ letterSpacing: '0.04em' }}>
-                                    {typeof item === 'string' ? item : item.name}
-                                </span>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* View Full Page CTA */}
-                    <div className="mt-8 flex justify-center">
-                        <Link href={service.href}>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.97 }}
-                                className={`${RajdhaniFont.className} relative px-8 py-3 rounded-full border-2 border-[#96895F]/60 bg-[#96895F]/10 hover:bg-[#96895F]/25 text-[#96895F] hover:text-white text-base md:text-lg font-semibold uppercase tracking-widest transition-all duration-300 group overflow-hidden`}
-                            >
-                                <span className="relative z-10 flex items-center gap-2">
-                                    View Service Page
-                                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </span>
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-[#96895F]/0 via-[#96895F]/20 to-[#96895F]/0"
-                                    animate={{ x: ['-100%', '100%'] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                                />
-                            </motion.button>
-                        </Link>
-                    </div>
-
-                    {/* Footer ornament */}
-                    <div className="mt-6 flex justify-center">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
-                            <div className="w-16 h-[1px] bg-gradient-to-r from-[#96895F]/40 to-transparent" />
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/60" />
-                            <div className="w-16 h-[1px] bg-gradient-to-l from-[#96895F]/40 to-transparent" />
-                            <div className="w-2 h-2 rounded-full bg-[#96895F]/40" />
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
-        </motion.div>
     );
 };
 
@@ -428,9 +288,9 @@ const ServiceCard = ({ service, index, onClick }) => {
 // --- MAIN COMPONENT ---
 function OurServices() {
     const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+    const router = useRouter();
     const [radii, setRadii] = useState({ primary: 450, secondary: 550 });
     const [animationKey, setAnimationKey] = useState(0);
-    const [selectedService, setSelectedService] = useState(null);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -475,7 +335,7 @@ function OurServices() {
                 <motion.div className="absolute top-1/2 left-[60%] -translate-x-1/2 -translate-y-1/2">
                     <CircularText
                         key={animationKey + '_secondary'}
-                        text=" / STRATEGY / BRANDING / CREATIVE / MARKETING / MEDIA / SOCIAL MEDIA / SOFTWARE / EVENTS"
+                        text=" / STRATEGY / BRANDING & CREATIVE / MARKETING / MEDIA / SOCIAL MEDIA / SOFTWARE / EVENTS"
                         radiusX={radii.secondary}
                         radiusY={Math.round(radii.secondary * 0.65)}
                         duration={30}
@@ -541,22 +401,12 @@ function OurServices() {
                             <ServiceCard
                                 service={service}
                                 index={index}
-                                onClick={() => setSelectedService(service)}
+                                onClick={() => router.push(service.href)}
                             />
                         </div>
                     ))}
                 </div>
             </div>
-
-            {/* Service Detail Modal */}
-            <AnimatePresence>
-                {selectedService && (
-                    <ServiceDetailModal
-                        service={selectedService}
-                        onClose={() => setSelectedService(null)}
-                    />
-                )}
-            </AnimatePresence>
         </section>
     );
 }

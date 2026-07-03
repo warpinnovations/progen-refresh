@@ -79,10 +79,11 @@ const SubSectionPage = () => {
                 </p>
               )}
 
-              {/* Service tags – clickable, lead to each service page */}
-              {getServiceLinks(work.services).length > 0 && (
+              {/* Service tags – clickable, lead to each service page.
+                  Prefer explicit serviceTags; fall back to the fuzzy services list. */}
+              {getServiceLinks(work.serviceTags || work.services).length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-6 max-w-3xl">
-                  {getServiceLinks(work.services).map((service) => (
+                  {getServiceLinks(work.serviceTags || work.services).map((service) => (
                     <Link
                       key={service.href}
                       href={service.href}

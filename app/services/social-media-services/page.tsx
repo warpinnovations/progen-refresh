@@ -10,24 +10,19 @@ const data = {
     "We provide end-to-end social media solutions that combine strategy, analytics, content planning, and campaign execution to help brands stay relevant.",
   services: [
     {
-      name: "KPI Monitoring & Social Listening",
+      name: "Social Listening & KPI Monitoring",
       description:
-        "We track key performance indicators and monitor online conversations to understand audience sentiment and measure campaign effectiveness.",
+        "We track key performance indicators, monitor online conversations, analyze audience sentiment, and measure campaign effectiveness through Meltwater, our social intelligence platform.",
     },
     {
       name: "Social Media Strategy",
       description:
-        "We create data-driven strategies that define content direction, platform focus, and engagement goals aligned with brand objectives.",
+        "We craft data-driven strategies that define content direction, platform focus, and engagement goals aligned with brand objectives.",
     },
     {
-      name: "Digital Brand Analysis",
+      name: "Content Planning & Production",
       description:
-        "We evaluate brand performance across social platforms to identify strengths, gaps, and opportunities for improvement.",
-    },
-    {
-      name: "Content Planning",
-      description:
-        "We plan content calendars and curate meaningful conversations that encourage engagement and build community interaction.",
+        "We plan content calendars and curate meaningful content that encourages engagement and builds community interaction.",
     },
     {
       name: "Influencer and KOL Marketing",

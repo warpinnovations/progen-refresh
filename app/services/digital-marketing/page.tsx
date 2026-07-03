@@ -34,6 +34,11 @@ const data = {
       description:
         "We create responsive and user-focused websites designed to strengthen brand presence and improve customer experience online.",
     },
+    {
+      name: "Content Writing",
+      description:
+        "We craft clear, persuasive website content that communicates brand value and supports user engagement and conversion goals.",
+    },
   ],
   closingTitle: "Digital Marketing with Prometheus",
   closingText:
