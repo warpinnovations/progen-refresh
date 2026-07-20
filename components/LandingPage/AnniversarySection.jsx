@@ -150,7 +150,7 @@ const StatCard = ({ stat, index }) => {
 
                     {/* Number - Larger and bolder */}
                     <div
-                        className={`${MoonlanderFont.className} text-6xl md:text-7xl font-black tracking-tighter mb-3`}
+                        className={`${MoonlanderFont.className} text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.15] mb-3`}
                         style={{
                             color: isHovered ? '#B8A76F' : '#96895F',
                             textShadow: isHovered 

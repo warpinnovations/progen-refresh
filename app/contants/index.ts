@@ -8,6 +8,10 @@ export const NavData = [
     Link: '/works'
   },
   {
+    nav: 'Our Services',
+    Link: '/services'
+  },
+  {
     nav: 'About',
     Link: '/about'
   },
@@ -20,6 +24,35 @@ export const NavData = [
     Link: '/contact'
   }
 ];
+
+// --- SERVICE PAGES (canonical) ---
+// Maps the free-form service strings used across workData to the 8 real
+// service detail pages, so Our Work tags always link somewhere valid.
+export const SERVICE_PAGES = [
+  { name: 'Strategy Services', href: '/services/strategy-services', match: ['strategy'] },
+  { name: 'Social Media Services', href: '/services/social-media-services', match: ['social', 'influencer', 'kol'] },
+  { name: 'Digital Marketing', href: '/services/digital-marketing', match: ['digital marketing', 'seo'] },
+  { name: 'Branding & Creative Services', href: '/services/branding-creative-services', match: ['brand', 'creative', 'production', 'design', 'photo', 'video'] },
+  { name: 'Event Management', href: '/services/event-management', match: ['event', 'activation'] },
+  { name: 'Software Solutions', href: '/services/software-solutions', match: ['software', 'app', 'website', 'web dev'] },
+  { name: 'Media Services', href: '/services/media-services', match: ['media'] },
+];
+
+// Resolve a list of free-form service strings into unique, clickable service
+// page links ({ name, href }), preserving the order they first appear.
+export const getServiceLinks = (services: string[] = []) => {
+  const seen = new Set<string>();
+  const links: { name: string; href: string }[] = [];
+  for (const raw of services) {
+    const value = (raw || '').toLowerCase();
+    const page = SERVICE_PAGES.find((p) => p.match.some((kw) => value.includes(kw)));
+    if (page && !seen.has(page.href)) {
+      seen.add(page.href);
+      links.push({ name: page.name, href: page.href });
+    }
+  }
+  return links;
+};
 
 export const worksData = [
   {
@@ -183,6 +216,14 @@ export const workData = [
     videoLink: '',
     description: "Prometheus utilized tech-forward strategy and witty creative executions to modernize brand perception and accelerate lead generation throughout Isuzu Iloilo's 2026 marketing campaign.",
     body: "Prometheus collaborated with Isuzu Iloilo to orchestrate a sophisticated 2026 marketing campaign aimed at securing its position as the region's premier automotive dealer. Our strategic framework shifted the brand's narrative toward a younger, more influential demographic while maintaining the professional prestige associated with the Ayala Group. By implementing a comprehensive content plan that included detailed situational analysis and social media strategy, Prometheus enhanced the brand's online presence across major platforms. We successfully tailored messaging for diverse product lines, highlighting the rugged utility of the D-Max for versatile family use and the unwavering operational reliability of commercial trucks for established business owners.\n\nThe execution phase focused on high-engagement multimedia, featuring witty social media reels and lifestyle photography that resonated deeply with the target audience. Prometheus facilitated community-driven initiatives, such as the \"Drive Me Home\" program and the highly anticipated \"Truckfest,\" which strengthened local partnerships and generated a high volume of quality leads. By showcasing real-life success stories from prominent local clients, we reinforced Isuzu's core values of reliability and dedicated partnership. This campaign significantly boosted brand reach and inquiry rates through automated response systems and strategic digital boosting, effectively elevating Isuzu Iloilo's market identity.",
+    // Explicit service-page tags (the entries below are campaign activities, not service categories)
+    serviceTags: [
+      'Strategy Services',
+      'Social Media Services',
+      'Branding & Creative Services',
+      'Digital Marketing',
+      'Event Management'
+    ],
     services: [
       'Ongoing Engagement',
       'Bankers Night 2026',
