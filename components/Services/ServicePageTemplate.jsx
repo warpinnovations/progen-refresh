@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import localFont from "next/font/local";
@@ -69,6 +70,62 @@ function ContactButton({ label }) {
   );
 }
 
+function GalleryItem({ item, index }) {
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: (index % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative w-full rounded-2xl overflow-hidden border border-[#96895F]/25 bg-white/[0.02] hover:border-[#96895F]/60 transition-all duration-300 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]"
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        {item.type === "video" ? (
+          <video
+            src={item.src}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        ) : (
+          <Image
+            src={item.src}
+            alt={item.caption || "Project"}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        )}
+
+        {/* Hover gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-300 pointer-events-none" />
+
+        {/* Corner accents */}
+        <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-[#96895F]/60 rounded-tl-md opacity-0 group-hover:opacity-100 group-hover:w-7 group-hover:h-7 transition-all duration-300 pointer-events-none" />
+        <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-[#96895F]/60 rounded-br-md opacity-0 group-hover:opacity-100 group-hover:w-7 group-hover:h-7 transition-all duration-300 pointer-events-none" />
+      </div>
+      {(item.caption || item.location) && (
+        <div className="p-3">
+          {item.caption && (
+            <p className={`${OxaniumFont.className} text-sm font-semibold text-white`} style={{ letterSpacing: "0.03em" }}>
+              {item.caption}
+            </p>
+          )}
+          {item.location && (
+            <p className={`${RajdhaniFont.className} text-xs text-[#96895F] uppercase tracking-widest mt-0.5`}>
+              {item.location}
+            </p>
+          )}
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
 export default function ServicePageTemplate({
   title,
   subtitle,
@@ -78,6 +135,7 @@ export default function ServicePageTemplate({
   services,
   closingTitle,
   closingText,
+  gallery = /** @type {any[]} */ ([]),
 }) {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [sec2Ref, sec2InView] = useInView({ triggerOnce: true, threshold: 0.05 });
@@ -229,11 +287,25 @@ export default function ServicePageTemplate({
             <FuturisticDivider color={GOLD} />
           </motion.div>
 
+          {/* Project gallery (images + video) — featured near the top of the section */}
+          {gallery && gallery.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-5 mt-10 text-left">
+              {gallery.map((item, i) => (
+                <div
+                  key={i}
+                  className="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
+                >
+                  <GalleryItem item={item} index={i} />
+                </div>
+              ))}
+            </div>
+          )}
+
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={sec3InView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className={`${RajdhaniFont.className} text-white/60 mt-5 mb-12 text-base md:text-lg max-w-2xl mx-auto`}
+            className={`${RajdhaniFont.className} text-white/60 mt-12 mb-12 text-base md:text-lg max-w-2xl mx-auto`}
           >
             {closingText}
           </motion.p>

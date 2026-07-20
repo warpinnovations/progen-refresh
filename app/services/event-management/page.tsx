@@ -42,6 +42,14 @@ const data = {
   closingTitle: "Event Management with Prometheus",
   closingText:
     "From intimate corporate gatherings to large-scale public events, brands and organizations partner with us in transforming ideas into well-executed experiences.",
+  gallery: [
+    { type: "image", src: "/EventManagement/iphone17-launch.jpg" },
+    { type: "image", src: "/EventManagement/nike-opening.jpg" },
+    { type: "image", src: "/EventManagement/jff.jpg" },
+    { type: "image", src: "/EventManagement/sony.jpg" },
+    { type: "image", src: "/EventManagement/event-01.jpg" },
+    { type: "image", src: "/EventManagement/event-02.png" },
+  ],
 };
 
 export const metadata = {

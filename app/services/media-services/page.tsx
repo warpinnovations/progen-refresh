@@ -33,6 +33,13 @@ const data = {
   closingTitle: "Media Campaigns with Prometheus",
   closingText:
     "From strategic planning to performance optimization, Prometheus delivers media solutions that ensure brands reach the right audience at the right time with the right message.",
+  gallery: [
+    { type: "image", src: "/media/vertex-event.jpg" },
+    { type: "image", src: "/media/bb-xmas.jpg" },
+    { type: "image", src: "/media/marker-calle-real.jpg" },
+    { type: "image", src: "/media/damires-hills.jpg" },
+    { type: "image", src: "/media/nike-store-opening.jpg" },
+  ],
 };
 
 export const metadata = {

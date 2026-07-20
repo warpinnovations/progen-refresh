@@ -43,6 +43,14 @@ const data = {
   closingTitle: "Explore Software Solutions with Prometheus",
   closingText:
     "From custom websites to immersive digital experiences, Prometheus develops software solutions that combine functionality, design, and performance to support modern business needs.",
+  gallery: [
+    { type: "image", src: "/softwareSolutions/prominent-capitol-1.jpg" },
+    { type: "image", src: "/softwareSolutions/prominent-maasin-1.jpg" },
+    { type: "image", src: "/softwareSolutions/avatar.png" },
+    { type: "image", src: "/softwareSolutions/prominent-capitol-2.jpg" },
+    { type: "image", src: "/softwareSolutions/prominent-maasin-2.jpg" },
+    { type: "image", src: "/softwareSolutions/digital-assessment.png" },
+  ],
 };
 
 export const metadata = {

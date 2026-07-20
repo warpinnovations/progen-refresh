@@ -48,6 +48,11 @@ const data = {
   closingTitle: "Branding with Prometheus",
   closingText:
     "From brand development to campaign identity systems, Prometheus creates branding solutions and creative experiences that help organizations communicate with clarity, consistency, and purpose.",
+  gallery: [
+    { type: "image", src: "/brandingAndCreative/bootcamp-adidas.jpg" },
+    { type: "image", src: "/brandingAndCreative/rev.jpg" },
+    { type: "image", src: "/brandingAndCreative/social-card.jpg" },
+  ],
 };
 
 export const metadata = {
