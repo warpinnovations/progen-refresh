@@ -134,6 +134,19 @@ const ContactForm = () => {
       toast.error("Please select at least one area of interest.");
       return;
     }
+
+    const isCareer = mode === "career";
+    const isIntern = mode === "intern";
+
+    // Career / Internship: require the essential documents since they now get
+    // emailed straight to the admin as real attachments.
+    if (isCareer || isIntern) {
+      if (!files.appLetter || !files.resume) {
+        toast.error("Please attach your application letter and resume/CV.");
+        return;
+      }
+    }
+
     setSubmitting(true);
     try {
       const sanitized = {
@@ -144,32 +157,50 @@ const ContactForm = () => {
         message: escapeHTML(DOMPurify.sanitize(formData.message)),
       };
 
-      const isCareer = mode === "career";
-      const isIntern = mode === "intern";
+      if (isCareer || isIntern) {
+        // Send the files to our API route, which emails the admin with the
+        // documents attached — the applicant just clicks submit, nothing else.
+        const payload = new FormData();
+        payload.append("mode", mode);
+        payload.append("firstName", sanitized.firstName);
+        payload.append("lastName", sanitized.lastName);
+        payload.append("email", sanitized.email);
+        payload.append("number", sanitized.number);
+        payload.append("services", formData.services.join(", "));
+        if (files.appLetter) payload.append("appLetter", files.appLetter);
+        if (files.resume) payload.append("resume", files.resume);
+        if (files.portfolio) payload.append("portfolio", files.portfolio);
 
-      const messageBody = isCareer
-        ? `💼 CAREER APPLICATION\n\nName: ${sanitized.firstName} ${sanitized.lastName}\nContact: ${sanitized.number}\nEmail: ${sanitized.email}\n\n(Applicant will send documents via email)`
-        : isIntern
-        ? `⭐ INTERNSHIP APPLICATION\n\nName: ${sanitized.firstName} ${sanitized.lastName}\nContact: ${sanitized.number}\nEmail: ${sanitized.email}\nAreas of Interest: ${formData.services.join(", ")}\n\n(Applicant will send documents via email)`
-        : sanitized.message;
+        const res = await fetch("/api/applications", { method: "POST", body: payload });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || "Failed to send application.");
+        }
 
+        setFormData({ firstName: "", lastName: "", email: "", number: "", message: "", services: [] });
+        setFiles({ appLetter: null, resume: null, portfolio: null });
+        toast.success("Application submitted! We'll be in touch.");
+        return;
+      }
+
+      // Plain inquiry: still handled by EmailJS (no attachments needed).
       await sendEmail({
         from_email: "marketing@prometheus.ph",
         from_name: "Prometheus",
         to_name: sanitized.firstName + " " + sanitized.lastName,
         user_email: sanitized.email,
         number: sanitized.number,
-        application_type: isCareer ? "💼 CAREER APPLICATION" : isIntern ? "⭐ INTERNSHIP APPLICATION" : "📩 INQUIRY",
+        application_type: "📩 INQUIRY",
         selected_services: formData.services.join(", "),
-        message: messageBody,
-        to_email: isCareer ? "admin@prometheus.ph" : isIntern ? "internships@prometheus.ph" : "marketing@prometheus.ph",
+        message: sanitized.message,
+        to_email: "marketing@prometheus.ph",
       });
 
       setFormData({ firstName: "", lastName: "", email: "", number: "", message: "", services: [] });
       setFiles({ appLetter: null, resume: null, portfolio: null });
-      toast.success(mode === "contact" ? "Email has been sent!" : "Application submitted! We'll be in touch.");
-    } catch {
-      toast.error("Something went wrong. Please try again.");
+      toast.success("Email has been sent!");
+    } catch (err) {
+      toast.error(err?.message || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -291,9 +322,9 @@ const ContactForm = () => {
                 <div className="h-[2px] w-16 bg-gradient-to-r from-[#D4AF37] via-[#96895F] to-transparent" />
                 <p className={`${OxaniumFont.className} text-xs text-[#96895F]/70 mt-3 tracking-wide`}>
                   {mode === "career"
-                    ? <>Submissions go to <span className="text-[#96895F]">admin@prometheus.ph</span></>
+                    ? <>Your documents are sent straight to <span className="text-[#96895F]">admin@prometheus.ph</span></>
                     : mode === "intern"
-                    ? <>Submissions go to <span className="text-[#96895F]">internships@prometheus.ph</span></>
+                    ? <>Your documents are sent straight to <span className="text-[#96895F]">internships@prometheus.ph</span></>
                     : <>Reach us at <span className="text-[#96895F]">marketing@prometheus.ph</span></>}
                 </p>
               </div>
@@ -489,7 +520,7 @@ const ContactForm = () => {
                     whileHover={!submitting ? { boxShadow: "0 0 30px rgba(212,175,55,0.25)", scale: 1.02 } : {}}
                     whileTap={!submitting ? { scale: 0.98 } : {}}
                   >
-                    {submitting ? "Uploading..." : mode === "contact" ? "Send Message" : "Submit Application"}
+                    {submitting ? "Submitting..." : mode === "contact" ? "Send Message" : "Submit Application"}
                   </motion.button>
                 </div>
               </form>
